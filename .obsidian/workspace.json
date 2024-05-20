@@ -23,11 +23,9 @@
             "id": "7779f13d4cbd7c96",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "image",
               "state": {
-                "file": "Инструкция преподавателя.md",
-                "mode": "source",
-                "source": false
+                "file": "Pasted image 20240520160030.png"
               }
             }
           }
@@ -98,7 +96,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Инструкция преподавателя.md",
+                "file": "Pasted image 20240520160030.png",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +113,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Инструкция преподавателя.md",
+                "file": "Pasted image 20240520160030.png",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +136,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Инструкция преподавателя.md"
+                "file": "Pasted image 20240520160030.png"
               }
             }
           }
@@ -164,10 +162,11 @@
   },
   "active": "7779f13d4cbd7c96",
   "lastOpenFiles": [
+    "Пользовательские инструкции/Инструкция преподавателя.md",
+    "Пользовательские инструкции",
+    "Pasted image 20240520160030.png",
     "Техническое задание на разработку системы.md",
-    "Инструкция преподавателя.md",
     "model_1.bpmn",
-    "README.md",
-    "Без названия"
+    "README.md"
   ]
 }
