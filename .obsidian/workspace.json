@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Техническое задание.md",
+                "file": "Техническое задание на разработку системы.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Техническое задание.md",
+                "file": "Техническое задание на разработку системы.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Техническое задание.md",
+                "file": "Техническое задание на разработку системы.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Техническое задание.md"
+                "file": "Техническое задание на разработку системы.md"
               }
             }
           }
@@ -152,7 +152,7 @@
   "active": "03c3b6847822ff76",
   "lastOpenFiles": [
     "model_1.bpmn",
-    "Техническое задание.md",
+    "Техническое задание на разработку системы.md",
     "README.md",
     "Без названия"
   ]
