@@ -23,9 +23,11 @@
             "id": "7779f13d4cbd7c96",
             "type": "leaf",
             "state": {
-              "type": "image",
+              "type": "markdown",
               "state": {
-                "file": "Pasted image 20240520160030.png"
+                "file": "Пользовательские инструкции/Инструкция преподавателя.md",
+                "mode": "source",
+                "source": false
               }
             }
           }
@@ -96,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Pasted image 20240520160030.png",
+                "file": "Пользовательские инструкции/Инструкция преподавателя.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -113,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Pasted image 20240520160030.png",
+                "file": "Пользовательские инструкции/Инструкция преподавателя.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -136,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Pasted image 20240520160030.png"
+                "file": "Пользовательские инструкции/Инструкция преподавателя.md"
               }
             }
           }
@@ -162,9 +164,15 @@
   },
   "active": "7779f13d4cbd7c96",
   "lastOpenFiles": [
+    "Пользовательские инструкции/attachments/Pasted image 20240520160455.png",
+    "Пользовательские инструкции/attachments/Pasted image 20240520160337.png",
+    "Пользовательские инструкции/attachments/Pasted image 20240520160259.png",
+    "Пользовательские инструкции/attachments/Pasted image 20240520160227.png",
+    "Пользовательские инструкции/attachments/Pasted image 20240520160138.png",
+    "Пользовательские инструкции/attachments",
+    "Pasted image 20240520160030.png",
     "Пользовательские инструкции/Инструкция преподавателя.md",
     "Пользовательские инструкции",
-    "Pasted image 20240520160030.png",
     "Техническое задание на разработку системы.md",
     "model_1.bpmn",
     "README.md"
