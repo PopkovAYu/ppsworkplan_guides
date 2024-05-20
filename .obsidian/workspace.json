@@ -18,8 +18,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "7779f13d4cbd7c96",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Инструкция преподавателя.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -85,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Техническое задание на разработку системы.md",
+                "file": "Инструкция преподавателя.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Техническое задание на разработку системы.md",
+                "file": "Инструкция преподавателя.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Техническое задание на разработку системы.md"
+                "file": "Инструкция преподавателя.md"
               }
             }
           }
@@ -149,10 +162,11 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "03c3b6847822ff76",
+  "active": "7779f13d4cbd7c96",
   "lastOpenFiles": [
-    "model_1.bpmn",
     "Техническое задание на разработку системы.md",
+    "Инструкция преподавателя.md",
+    "model_1.bpmn",
     "README.md",
     "Без названия"
   ]
