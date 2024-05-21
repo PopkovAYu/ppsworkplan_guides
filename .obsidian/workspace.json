@@ -30,9 +30,39 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "fcc6050f682b0806",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Пользовательские инструкции/Инструкция заведующего кафедрой.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
+      },
+      {
+        "id": "aae44d8e45a8128d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "502bde8de868e61c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Пользовательские инструкции/Инструкция преподавателя.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
       }
     ],
     "direction": "vertical"
@@ -98,7 +128,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Пользовательские инструкции/Инструкция преподавателя.md",
+                "file": "Пользовательские инструкции/Инструкция заведующего кафедрой.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +145,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Пользовательские инструкции/Инструкция преподавателя.md",
+                "file": "Пользовательские инструкции/Инструкция заведующего кафедрой.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +168,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Пользовательские инструкции/Инструкция преподавателя.md"
+                "file": "Пользовательские инструкции/Инструкция заведующего кафедрой.md"
               }
             }
           }
@@ -162,8 +192,11 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "7779f13d4cbd7c96",
+  "active": "fcc6050f682b0806",
   "lastOpenFiles": [
+    "Пользовательские инструкции/Инструкция преподавателя.md",
+    "Пользовательские инструкции/Инструкция заведующего кафедрой.md",
+    "Пользовательские инструкции/attachments/Pasted image 20240521115613.png",
     "Пользовательские инструкции/attachments/Pasted image 20240521114129.png",
     "Пользовательские инструкции/attachments/Pasted image 20240521103823.png",
     "Пользовательские инструкции/attachments/Pasted image 20240521103541.png",
@@ -173,9 +206,6 @@
     "Пользовательские инструкции/attachments/Pasted image 20240521102453.png",
     "Пользовательские инструкции/attachments/Pasted image 20240521102203.png",
     "Пользовательские инструкции/attachments/Pasted image 20240520173252.png",
-    "Пользовательские инструкции/attachments/Pasted image 20240520173046.png",
-    "Пользовательские инструкции/attachments/Pasted image 20240520170744.png",
-    "Пользовательские инструкции/Инструкция преподавателя.md",
     "Пользовательские инструкции/attachments",
     "Пользовательские инструкции",
     "Техническое задание на разработку системы.md",
