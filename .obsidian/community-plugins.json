@@ -7,5 +7,6 @@
   "obsidian-pandoc",
   "settings-search",
   "templater-obsidian",
-  "better-export-pdf"
+  "better-export-pdf",
+  "obsidian-link-converter"
 ]
