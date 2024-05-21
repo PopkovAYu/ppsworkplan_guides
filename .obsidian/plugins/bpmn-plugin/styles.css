@@ -44,6 +44,7 @@
   --palette-toggle-hover-background-color: var(--color-grey-225-10-55);
   --palette-background-color: var(--color-grey-225-10-97);
   --palette-border-color: var(--color-grey-225-10-75);
+  --popup-font-family: "IBM Plex Sans", sans-serif;
   --popup-font-size: 14px;
   --popup-header-entry-selected-color: var(--color-blue-205-100-50);
   --popup-header-font-weight: bolder;
@@ -372,27 +373,20 @@ marker.djs-dragger tspan {
 .djs-context-pad.open {
   display: block;
 }
-.djs-popup-backdrop {
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  z-index: 200;
-  line-height: 1;
-  font-family: "IBM Plex Sans", sans-serif;
-}
 .djs-popup {
+  line-height: 1;
   box-sizing: border-box;
   width: min-content;
   background: var(--popup-background-color);
   overflow: hidden;
-  position: absolute;
+  position: fixed;
+  z-index: 200;
   box-shadow: 0px 2px 6px var(--popup-shadow-color);
   border: solid 1px var(--popup-border-color);
   min-width: 120px;
   outline: none;
   font-size: var(--popup-font-size);
+  font-family: var(--popup-font-family);
 }
 .djs-popup-search input {
   width: 100%;
@@ -416,6 +410,11 @@ marker.djs-dragger tspan {
 }
 .djs-popup-header .entry {
   border-radius: 2px;
+}
+.djs-popup button.entry {
+  padding: 0;
+  background: transparent;
+  border: 0;
 }
 .djs-popup-header .entry.active {
   color: var(--popup-header-entry-selected-color);
@@ -508,6 +507,10 @@ marker.djs-dragger tspan {
 .djs-popup-entry-description {
   line-height: 1.4em;
 }
+.djs-popup .entry,
+.djs-popup .entry-header {
+  margin: 1px;
+}
 .djs-popup-title,
 .djs-popup-label,
 .djs-popup-entry-description,
@@ -518,12 +521,6 @@ marker.djs-dragger tspan {
 }
 .djs-popup-entry-name {
   display: flex;
-}
-.entry-content {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  overflow: hidden;
 }
 .djs-popup-body {
   flex-direction: column;
@@ -2765,22 +2762,18 @@ textarea.bio-properties-panel-input {
   --token-simulation-silver-darken-94: #EFEFEF;
   --token-simulation-white: #FFFFFF;
 }
-.bjs-container {
-  border: solid 4px transparent;
-  box-sizing: border-box;
-}
 .bjs-breadcrumbs {
   top: 60px;
   left: 50px;
 }
-.bjs-container.simulation {
-  border-color: var(--token-simulation-green-base-44, #10D070);
+.bjs-container.simulation .djs-container {
+  box-shadow: inset 0px 0px 0px 4px var(--token-simulation-green-base-44, #10D070);
 }
-.bjs-container.simulation.paused {
-  border-color: var(--token-simulation-grey-base-40, #666666);
+.bjs-container.simulation.paused .djs-container {
+  box-shadow: inset 0px 0px 0px 4px var(--token-simulation-grey-base-40, #666666);
 }
-.bjs-container.simulation.warning {
-  border-color: var(--token-simulation-red-base-62, #FF3D3D) !important;
+.bjs-container.simulation.warning .djs-container {
+  box-shadow: inset 0px 0px 0px 4px var(--token-simulation-red-base-62, #FF3D3D) !important;
 }
 .bts-context-pad {
   cursor: pointer;
@@ -2971,13 +2964,14 @@ textarea.bio-properties-panel-input {
 .bjs-container .djs-palette {
   top: 60px;
 }
-.bjs-container.simulation .djs-palette {
-  display: none;
-}
-.bjs-container.simulation .djs-outline,
 .bjs-container.simulation .djs-bendpoint,
-.bjs-container.simulation .djs-segment-dragger,
-.bjs-container.simulation .djs-resizer {
+.bjs-container.simulation .djs-outline,
+.bjs-container.simulation .djs-palette,
+.bjs-container.simulation .djs-resizer,
+.bjs-container.simulation .djs-segment-dragger {
+  display: none !important;
+}
+.bjs-container.simulation .djs-overlay:not(.djs-overlay-bts-context-menu, .djs-overlay-bts-element-notification, .djs-overlay-bts-token-count) {
   display: none !important;
 }
 .bts-palette {
@@ -3352,13 +3346,13 @@ textarea.bio-properties-panel-input {
 }
 @font-face {
   font-family: "bpmn";
-  src: url(https://unpkg.com/bpmn-js@17.0.2/dist/assets/bpmn-font/font/bpmn.eot?21877404);
+  src: url(https://unpkg.com/bpmn-js@17.5.0/dist/assets/bpmn-font/font/bpmn.eot?21877404);
   src:
-    url(https://unpkg.com/bpmn-js@17.0.2/dist/assets/bpmn-font/font/bpmn.eot?21877404#iefix) format("embedded-opentype"),
-    url(https://unpkg.com/bpmn-js@17.0.2/dist/assets/bpmn-font/font/bpmn.woff2?21877404) format("woff2"),
-    url(https://unpkg.com/bpmn-js@17.0.2/dist/assets/bpmn-font/font/bpmn.woff?21877404) format("woff"),
-    url(https://unpkg.com/bpmn-js@117.0.2/dist/assets/bpmn-font/font/bpmn.ttf?21877404) format("truetype"),
-    url(https://unpkg.com/bpmn-js@17.0.2/dist/assets/bpmn-font/font/bpmn.svg?21877404#bpmn) format("svg");
+    url(https://unpkg.com/bpmn-js@17.5.0/dist/assets/bpmn-font/font/bpmn.eot?21877404#iefix) format("embedded-opentype"),
+    url(https://unpkg.com/bpmn-js@17.5.0/dist/assets/bpmn-font/font/bpmn.woff2?21877404) format("woff2"),
+    url(https://unpkg.com/bpmn-js@17.5.0/dist/assets/bpmn-font/font/bpmn.woff?21877404) format("woff"),
+    url(https://unpkg.com/bpmn-js@17.5.0/dist/assets/bpmn-font/font/bpmn.ttf?21877404) format("truetype"),
+    url(https://unpkg.com/bpmn-js@17.5.0/dist/assets/bpmn-font/font/bpmn.svg?21877404#bpmn) format("svg");
   font-weight: normal;
   font-style: normal;
 }

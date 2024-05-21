@@ -12,9 +12,9 @@ var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __commonJS = (cb, mod) => function __require() {
   return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
 };
-var __export = (target, all2) => {
-  for (var name2 in all2)
-    __defProp(target, name2, { get: all2[name2], enumerable: true });
+var __export = (target, all3) => {
+  for (var name2 in all3)
+    __defProp(target, name2, { get: all3[name2], enumerable: true });
 };
 var __copyProps = (to, from, except, desc) => {
   if (from && typeof from === "object" || typeof from === "function") {
@@ -42,34 +42,34 @@ var require_classnames = __commonJS({
       var hasOwn = {}.hasOwnProperty;
       var nativeCodeString = "[native code]";
       function classNames() {
-        var classes3 = [];
+        var classes4 = [];
         for (var i7 = 0; i7 < arguments.length; i7++) {
           var arg = arguments[i7];
           if (!arg)
             continue;
           var argType = typeof arg;
           if (argType === "string" || argType === "number") {
-            classes3.push(arg);
+            classes4.push(arg);
           } else if (Array.isArray(arg)) {
             if (arg.length) {
               var inner = classNames.apply(null, arg);
               if (inner) {
-                classes3.push(inner);
+                classes4.push(inner);
               }
             }
           } else if (argType === "object") {
             if (arg.toString !== Object.prototype.toString && !arg.toString.toString().includes("[native code]")) {
-              classes3.push(arg.toString());
+              classes4.push(arg.toString());
               continue;
             }
             for (var key in arg) {
               if (hasOwn.call(arg, key) && arg[key]) {
-                classes3.push(key);
+                classes4.push(key);
               }
             }
           }
         }
-        return classes3.join(" ");
+        return classes4.join(" ");
       }
       if (typeof module2 !== "undefined" && module2.exports) {
         classNames.default = classNames;
@@ -193,8 +193,8 @@ var require_dist = __commonJS({
       return result;
     }
     function every2(collection, matcher) {
-      return !!reduce2(collection, function(matches3, val, key) {
-        return matches3 && matcher(val, key);
+      return !!reduce2(collection, function(matches4, val, key) {
+        return matches4 && matcher(val, key);
       }, true);
     }
     function some2(collection, matcher) {
@@ -293,12 +293,12 @@ var require_dist = __commonJS({
           return schedule(scheduledDiff);
         }
         fn2.apply(lastThis, lastArgs);
-        clear3();
+        clear4();
       }
       function schedule(timeout2) {
         timer = setTimeout(fire, timeout2);
       }
-      function clear3() {
+      function clear4() {
         if (timer) {
           clearTimeout(timer);
         }
@@ -308,7 +308,7 @@ var require_dist = __commonJS({
         if (timer) {
           fire(true);
         }
-        clear3();
+        clear4();
       }
       function callback(...args) {
         lastNow = Date.now();
@@ -319,7 +319,7 @@ var require_dist = __commonJS({
         }
       }
       callback.flush = flush;
-      callback.cancel = clear3;
+      callback.cancel = clear4;
       return callback;
     }
     function throttle(fn2, interval) {
@@ -335,7 +335,7 @@ var require_dist = __commonJS({
         }, interval);
       };
     }
-    function bind3(fn2, target) {
+    function bind4(fn2, target) {
       return fn2.bind(target);
     }
     function assign3(target, ...others) {
@@ -427,7 +427,7 @@ var require_dist = __commonJS({
       return target;
     }
     exports.assign = assign3;
-    exports.bind = bind3;
+    exports.bind = bind4;
     exports.debounce = debounce2;
     exports.ensureArray = ensureArray2;
     exports.every = every2;
@@ -1093,6 +1093,59 @@ var require_dist2 = __commonJS({
   }
 });
 
+// node_modules/bpmn-js-token-simulation/node_modules/domify/index.js
+var require_domify = __commonJS({
+  "node_modules/bpmn-js-token-simulation/node_modules/domify/index.js"(exports, module2) {
+    var wrapMap = {
+      legend: [1, "<fieldset>", "</fieldset>"],
+      tr: [2, "<table><tbody>", "</tbody></table>"],
+      col: [2, "<table><tbody></tbody><colgroup>", "</colgroup></table>"],
+      _default: [0, "", ""]
+    };
+    wrapMap.td = wrapMap.th = [3, "<table><tbody><tr>", "</tr></tbody></table>"];
+    wrapMap.option = wrapMap.optgroup = [1, '<select multiple="multiple">', "</select>"];
+    wrapMap.thead = wrapMap.tbody = wrapMap.colgroup = wrapMap.caption = wrapMap.tfoot = [1, "<table>", "</table>"];
+    wrapMap.polyline = wrapMap.ellipse = wrapMap.polygon = wrapMap.circle = wrapMap.text = wrapMap.line = wrapMap.path = wrapMap.rect = wrapMap.g = [1, '<svg xmlns="http://www.w3.org/2000/svg" version="1.1">', "</svg>"];
+    function domify2(htmlString, document2 = globalThis.document) {
+      var _a;
+      if (typeof htmlString !== "string") {
+        throw new TypeError("String expected");
+      }
+      const commentMatch = /^<!--(.*?)-->$/s.exec(htmlString);
+      if (commentMatch) {
+        return document2.createComment(commentMatch[1]);
+      }
+      const tagName = (_a = /<([\w:]+)/.exec(htmlString)) == null ? void 0 : _a[1];
+      if (!tagName) {
+        return document2.createTextNode(htmlString);
+      }
+      htmlString = htmlString.trim();
+      if (tagName === "body") {
+        const element2 = document2.createElement("html");
+        element2.innerHTML = htmlString;
+        const { lastChild } = element2;
+        lastChild.remove();
+        return lastChild;
+      }
+      let [depth, prefix4, suffix] = Object.hasOwn(wrapMap, tagName) ? wrapMap[tagName] : wrapMap._default;
+      let element = document2.createElement("div");
+      element.innerHTML = prefix4 + htmlString + suffix;
+      while (depth--) {
+        element = element.lastChild;
+      }
+      if (element.firstChild === element.lastChild) {
+        const { firstChild } = element;
+        firstChild.remove();
+        return firstChild;
+      }
+      const fragment = document2.createDocumentFragment();
+      fragment.append(...element.childNodes);
+      return fragment;
+    }
+    module2.exports = domify2;
+  }
+});
+
 // node_modules/randomcolor/randomColor.js
 var require_randomColor = __commonJS({
   "node_modules/randomcolor/randomColor.js"(exports, module2) {
@@ -1243,8 +1296,8 @@ var require_randomColor = __commonJS({
           var s1 = lowerBounds[i7][0], v1 = lowerBounds[i7][1];
           var s22 = lowerBounds[i7 + 1][0], v22 = lowerBounds[i7 + 1][1];
           if (S3 >= s1 && S3 <= s22) {
-            var m6 = (v22 - v1) / (s22 - s1), b5 = v1 - m6 * s1;
-            return m6 * S3 + b5;
+            var m5 = (v22 - v1) / (s22 - s1), b5 = v1 - m5 * s1;
+            return m5 * S3 + b5;
           }
         }
         return 0;
@@ -1369,7 +1422,7 @@ var require_randomColor = __commonJS({
         }
         h5 = h5 / 360;
         var s5 = hsv[1] / 100, v5 = hsv[2] / 100;
-        var h_i = Math.floor(h5 * 6), f6 = h5 * 6 - h_i, p5 = v5 * (1 - s5), q5 = v5 * (1 - f6 * s5), t7 = v5 * (1 - (1 - f6) * s5), r7 = 256, g6 = 256, b5 = 256;
+        var h_i = Math.floor(h5 * 6), f6 = h5 * 6 - h_i, p5 = v5 * (1 - s5), q6 = v5 * (1 - f6 * s5), t7 = v5 * (1 - (1 - f6) * s5), r7 = 256, g6 = 256, b5 = 256;
         switch (h_i) {
           case 0:
             r7 = v5;
@@ -1377,7 +1430,7 @@ var require_randomColor = __commonJS({
             b5 = p5;
             break;
           case 1:
-            r7 = q5;
+            r7 = q6;
             g6 = v5;
             b5 = p5;
             break;
@@ -1388,7 +1441,7 @@ var require_randomColor = __commonJS({
             break;
           case 3:
             r7 = p5;
-            g6 = q5;
+            g6 = q6;
             b5 = v5;
             break;
           case 4:
@@ -1399,7 +1452,7 @@ var require_randomColor = __commonJS({
           case 5:
             r7 = v5;
             g6 = p5;
-            b5 = q5;
+            b5 = q6;
             break;
         }
         var result = [Math.floor(r7 * 255), Math.floor(g6 * 255), Math.floor(b5 * 255)];
@@ -1637,12 +1690,12 @@ var require_hammer = __commonJS({
         return results;
       }
       function prefixed(obj, property) {
-        var prefix3, prop;
+        var prefix4, prop;
         var camelProp = property[0].toUpperCase() + property.slice(1);
         var i7 = 0;
         while (i7 < VENDOR_PREFIXES.length) {
-          prefix3 = VENDOR_PREFIXES[i7];
-          prop = prefix3 ? prefix3 + camelProp : property;
+          prefix4 = VENDOR_PREFIXES[i7];
+          prop = prefix4 ? prefix4 + camelProp : property;
           if (prop in obj) {
             return prop;
           }
@@ -1769,7 +1822,7 @@ var require_hammer = __commonJS({
         input.timeStamp = now();
         input.deltaTime = input.timeStamp - firstInput.timeStamp;
         input.angle = getAngle2(offsetCenter, center2);
-        input.distance = getDistance3(offsetCenter, center2);
+        input.distance = getDistance4(offsetCenter, center2);
         computeDeltaXY(session, input);
         input.offsetDirection = getDirection2(input.deltaX, input.deltaY);
         var overallVelocity = getVelocity(input.deltaTime, input.deltaX, input.deltaY);
@@ -1852,51 +1905,51 @@ var require_hammer = __commonJS({
             y: round14(pointers[0].clientY)
           };
         }
-        var x5 = 0, y5 = 0, i7 = 0;
+        var x6 = 0, y5 = 0, i7 = 0;
         while (i7 < pointersLength) {
-          x5 += pointers[i7].clientX;
+          x6 += pointers[i7].clientX;
           y5 += pointers[i7].clientY;
           i7++;
         }
         return {
-          x: round14(x5 / pointersLength),
+          x: round14(x6 / pointersLength),
           y: round14(y5 / pointersLength)
         };
       }
-      function getVelocity(deltaTime, x5, y5) {
+      function getVelocity(deltaTime, x6, y5) {
         return {
-          x: x5 / deltaTime || 0,
+          x: x6 / deltaTime || 0,
           y: y5 / deltaTime || 0
         };
       }
-      function getDirection2(x5, y5) {
-        if (x5 === y5) {
+      function getDirection2(x6, y5) {
+        if (x6 === y5) {
           return DIRECTION_NONE;
         }
-        if (abs9(x5) >= abs9(y5)) {
-          return x5 < 0 ? DIRECTION_LEFT : DIRECTION_RIGHT;
+        if (abs9(x6) >= abs9(y5)) {
+          return x6 < 0 ? DIRECTION_LEFT : DIRECTION_RIGHT;
         }
         return y5 < 0 ? DIRECTION_UP : DIRECTION_DOWN;
       }
-      function getDistance3(p1, p22, props) {
+      function getDistance4(p1, p22, props) {
         if (!props) {
           props = PROPS_XY;
         }
-        var x5 = p22[props[0]] - p1[props[0]], y5 = p22[props[1]] - p1[props[1]];
-        return Math.sqrt(x5 * x5 + y5 * y5);
+        var x6 = p22[props[0]] - p1[props[0]], y5 = p22[props[1]] - p1[props[1]];
+        return Math.sqrt(x6 * x6 + y5 * y5);
       }
       function getAngle2(p1, p22, props) {
         if (!props) {
           props = PROPS_XY;
         }
-        var x5 = p22[props[0]] - p1[props[0]], y5 = p22[props[1]] - p1[props[1]];
-        return Math.atan2(y5, x5) * 180 / Math.PI;
+        var x6 = p22[props[0]] - p1[props[0]], y5 = p22[props[1]] - p1[props[1]];
+        return Math.atan2(y5, x6) * 180 / Math.PI;
       }
       function getRotation(start, end) {
         return getAngle2(end[1], end[0], PROPS_CLIENT_XY) + getAngle2(start[1], start[0], PROPS_CLIENT_XY);
       }
       function getScale(start, end) {
-        return getDistance3(end[0], end[1], PROPS_CLIENT_XY) / getDistance3(start[0], start[1], PROPS_CLIENT_XY);
+        return getDistance4(end[0], end[1], PROPS_CLIENT_XY) / getDistance4(start[0], start[1], PROPS_CLIENT_XY);
       }
       var MOUSE_INPUT_MAP = {
         mousedown: INPUT_START,
@@ -2036,12 +2089,12 @@ var require_hammer = __commonJS({
         }
       });
       function normalizeSingleTouches(ev, type) {
-        var all2 = toArray2(ev.touches);
+        var all3 = toArray2(ev.touches);
         var changed = toArray2(ev.changedTouches);
         if (type & (INPUT_END | INPUT_CANCEL)) {
-          all2 = uniqueArray(all2.concat(changed), "identifier", true);
+          all3 = uniqueArray(all3.concat(changed), "identifier", true);
         }
-        return [all2, changed];
+        return [all3, changed];
       }
       var TOUCH_INPUT_MAP = {
         touchstart: INPUT_START,
@@ -2168,10 +2221,10 @@ var require_hammer = __commonJS({
         }
       }
       function isSyntheticEvent(eventData) {
-        var x5 = eventData.srcEvent.clientX, y5 = eventData.srcEvent.clientY;
+        var x6 = eventData.srcEvent.clientX, y5 = eventData.srcEvent.clientY;
         for (var i7 = 0; i7 < this.lastTouches.length; i7++) {
           var t7 = this.lastTouches[i7];
-          var dx = Math.abs(x5 - t7.x), dy = Math.abs(y5 - t7.y);
+          var dx = Math.abs(x6 - t7.x), dy = Math.abs(y5 - t7.y);
           if (dx <= DEDUP_DISTANCE && dy <= DEDUP_DISTANCE) {
             return true;
           }
@@ -2409,8 +2462,8 @@ var require_hammer = __commonJS({
         emit: function(input) {
           var self2 = this;
           var state = this.state;
-          function emit(event2) {
-            self2.manager.emit(event2, input);
+          function emit(event3) {
+            self2.manager.emit(event3, input);
           }
           if (state < STATE_ENDED) {
             emit(self2.options.event + stateStr(state));
@@ -2605,12 +2658,12 @@ var require_hammer = __commonJS({
           var hasMoved = true;
           var distance3 = input.distance;
           var direction = input.direction;
-          var x5 = input.deltaX;
+          var x6 = input.deltaX;
           var y5 = input.deltaY;
           if (!(direction & options2.direction)) {
             if (options2.direction & DIRECTION_HORIZONTAL) {
-              direction = x5 === 0 ? DIRECTION_NONE : x5 < 0 ? DIRECTION_LEFT : DIRECTION_RIGHT;
-              hasMoved = x5 != this.pX;
+              direction = x6 === 0 ? DIRECTION_NONE : x6 < 0 ? DIRECTION_LEFT : DIRECTION_RIGHT;
+              hasMoved = x6 != this.pX;
               distance3 = Math.abs(input.deltaX);
             } else {
               direction = y5 === 0 ? DIRECTION_NONE : y5 < 0 ? DIRECTION_UP : DIRECTION_DOWN;
@@ -2817,7 +2870,7 @@ var require_hammer = __commonJS({
               return this.failTimeout();
             }
             var validInterval = this.pTime ? input.timeStamp - this.pTime < options2.interval : true;
-            var validMultiTap = !this.pCenter || getDistance3(this.pCenter, input.center) < options2.posThreshold;
+            var validMultiTap = !this.pCenter || getDistance4(this.pCenter, input.center) < options2.posThreshold;
             this.pTime = input.timeStamp;
             this.pCenter = input.center;
             if (!validMultiTap || !validInterval) {
@@ -3109,9 +3162,9 @@ var require_hammer = __commonJS({
             return;
           }
           var handlers = this.handlers;
-          each(splitStr(events), function(event2) {
-            handlers[event2] = handlers[event2] || [];
-            handlers[event2].push(handler);
+          each(splitStr(events), function(event3) {
+            handlers[event3] = handlers[event3] || [];
+            handlers[event3].push(handler);
           });
           return this;
         },
@@ -3126,11 +3179,11 @@ var require_hammer = __commonJS({
             return;
           }
           var handlers = this.handlers;
-          each(splitStr(events), function(event2) {
+          each(splitStr(events), function(event3) {
             if (!handler) {
-              delete handlers[event2];
+              delete handlers[event3];
             } else {
-              handlers[event2] && handlers[event2].splice(inArray(handlers[event2], handler), 1);
+              handlers[event3] && handlers[event3].splice(inArray(handlers[event3], handler), 1);
             }
           });
           return this;
@@ -3140,15 +3193,15 @@ var require_hammer = __commonJS({
          * @param {String} event
          * @param {Object} data
          */
-        emit: function(event2, data) {
+        emit: function(event3, data) {
           if (this.options.domEvents) {
-            triggerDomEvent(event2, data);
+            triggerDomEvent(event3, data);
           }
-          var handlers = this.handlers[event2] && this.handlers[event2].slice();
+          var handlers = this.handlers[event3] && this.handlers[event3].slice();
           if (!handlers || !handlers.length) {
             return;
           }
-          data.type = event2;
+          data.type = event3;
           data.preventDefault = function() {
             data.srcEvent.preventDefault();
           };
@@ -3189,9 +3242,9 @@ var require_hammer = __commonJS({
           manager.oldCssProps = {};
         }
       }
-      function triggerDomEvent(event2, data) {
+      function triggerDomEvent(event3, data) {
         var gestureEvent = document2.createEvent("Event");
-        gestureEvent.initEvent(event2, true, true);
+        gestureEvent.initEvent(event3, true, true);
         gestureEvent.gesture = data;
         data.target.dispatchEvent(gestureEvent);
       }
@@ -3485,8 +3538,8 @@ function reduce(collection, iterator, result) {
   return result;
 }
 function every(collection, matcher) {
-  return !!reduce(collection, function(matches3, val, key) {
-    return matches3 && matcher(val, key);
+  return !!reduce(collection, function(matches4, val, key) {
+    return matches4 && matcher(val, key);
   }, true);
 }
 function some(collection, matcher) {
@@ -3585,12 +3638,12 @@ function debounce(fn2, timeout) {
       return schedule(scheduledDiff);
     }
     fn2.apply(lastThis, lastArgs);
-    clear3();
+    clear4();
   }
   function schedule(timeout2) {
     timer = setTimeout(fire, timeout2);
   }
-  function clear3() {
+  function clear4() {
     if (timer) {
       clearTimeout(timer);
     }
@@ -3600,7 +3653,7 @@ function debounce(fn2, timeout) {
     if (timer) {
       fire(true);
     }
-    clear3();
+    clear4();
   }
   function callback(...args) {
     lastNow = Date.now();
@@ -3611,7 +3664,7 @@ function debounce(fn2, timeout) {
     }
   }
   callback.flush = flush;
-  callback.cancel = clear3;
+  callback.cancel = clear4;
   return callback;
 }
 function bind(fn2, target) {
@@ -3769,8 +3822,8 @@ function isEventSubProcess(element) {
 }
 function hasEventDefinition(element, eventType) {
   var eventDefinitions = getBusinessObject(element).eventDefinitions;
-  return some(eventDefinitions, function(event2) {
-    return is(event2, eventType);
+  return some(eventDefinitions, function(event3) {
+    return is(event3, eventType);
   });
 }
 function hasErrorEventDefinition(element) {
@@ -3809,13 +3862,13 @@ function getFlowLabelPosition(waypoints) {
   var second = waypoints[Math.ceil(mid4 + 0.01)];
   var position = getWaypointsMid(waypoints);
   var angle = Math.atan((second.y - first2.y) / (second.x - first2.x));
-  var x5 = position.x, y5 = position.y;
+  var x6 = position.x, y5 = position.y;
   if (Math.abs(angle) < Math.PI / 2) {
     y5 -= FLOW_LABEL_INDENT;
   } else {
-    x5 += FLOW_LABEL_INDENT;
+    x6 += FLOW_LABEL_INDENT;
   }
-  return { x: x5, y: y5 };
+  return { x: x6, y: y5 };
 }
 function getWaypointsMid(waypoints) {
   var mid4 = waypoints.length / 2 - 1;
@@ -4333,8 +4386,8 @@ function getPointAtLength(start, end, length2) {
     y: start.y + deltaY * percent
   };
 }
-function vectorLength(x5, y5) {
-  return Math.sqrt(Math.pow(x5, 2) + Math.pow(y5, 2));
+function vectorLength(x6, y5) {
+  return Math.sqrt(Math.pow(x6, 2) + Math.pow(y5, 2));
 }
 function createLine(points, attrs, radius) {
   if (isNumber(attrs)) {
@@ -4361,13 +4414,13 @@ function updateLine(gfx, points) {
 // node_modules/bpmn-js/lib/draw/BpmnRenderUtil.js
 var black = "hsl(225, 10%, 15%)";
 var white = "white";
-function isTypedEvent(event2, eventDefinitionType) {
-  return some(event2.eventDefinitions, function(definition) {
+function isTypedEvent(event3, eventDefinitionType) {
+  return some(event3.eventDefinitions, function(definition) {
     return definition.$type === eventDefinitionType;
   });
 }
-function isThrowEvent(event2) {
-  return event2.$type === "bpmn:IntermediateThrowEvent" || event2.$type === "bpmn:EndEvent";
+function isThrowEvent(event3) {
+  return event3.$type === "bpmn:IntermediateThrowEvent" || event3.$type === "bpmn:EndEvent";
 }
 function isCollection(element) {
   var dataObject = element.dataObjectRef;
@@ -4397,9 +4450,9 @@ function getCirclePath(shape) {
   return componentsToPath(circlePath2);
 }
 function getRoundRectPath(shape, borderRadius) {
-  var x5 = shape.x, y5 = shape.y, width = shape.width, height = shape.height;
+  var x6 = shape.x, y5 = shape.y, width = shape.width, height = shape.height;
   var roundRectPath = [
-    ["M", x5 + borderRadius, y5],
+    ["M", x6 + borderRadius, y5],
     ["l", width - borderRadius * 2, 0],
     ["a", borderRadius, borderRadius, 0, 0, 1, borderRadius, borderRadius],
     ["l", 0, height - borderRadius * 2],
@@ -4413,9 +4466,9 @@ function getRoundRectPath(shape, borderRadius) {
   return componentsToPath(roundRectPath);
 }
 function getDiamondPath(shape) {
-  var width = shape.width, height = shape.height, x5 = shape.x, y5 = shape.y, halfWidth = width / 2, halfHeight = height / 2;
+  var width = shape.width, height = shape.height, x6 = shape.x, y5 = shape.y, halfWidth = width / 2, halfHeight = height / 2;
   var diamondPath = [
-    ["M", x5 + halfWidth, y5],
+    ["M", x6 + halfWidth, y5],
     ["l", halfWidth, halfHeight],
     ["l", -halfWidth, halfHeight],
     ["l", -halfWidth, -halfHeight],
@@ -4424,9 +4477,9 @@ function getDiamondPath(shape) {
   return componentsToPath(diamondPath);
 }
 function getRectPath(shape) {
-  var x5 = shape.x, y5 = shape.y, width = shape.width, height = shape.height;
+  var x6 = shape.x, y5 = shape.y, width = shape.width, height = shape.height;
   var rectPath = [
-    ["M", x5, y5],
+    ["M", x6, y5],
     ["l", width, 0],
     ["l", 0, height],
     ["l", -width, 0],
@@ -4448,8 +4501,8 @@ function getHeight(bounds, overrides = {}) {
 }
 
 // node_modules/min-dom/dist/index.esm.js
-function _mergeNamespaces(n4, m6) {
-  m6.forEach(function(e7) {
+function _mergeNamespaces(n4, m5) {
+  m5.forEach(function(e7) {
     e7 && typeof e7 !== "string" && !Array.isArray(e7) && Object.keys(e7).forEach(function(k6) {
       if (k6 !== "default" && !(k6 in n4)) {
         var d5 = Object.getOwnPropertyDescriptor(e7, k6);
@@ -4663,11 +4716,11 @@ function parse2(html, doc) {
     throw new TypeError("String expected");
   if (!doc)
     doc = document;
-  var m6 = /<([\w:]+)/.exec(html);
-  if (!m6)
+  var m5 = /<([\w:]+)/.exec(html);
+  if (!m5)
     return doc.createTextNode(html);
   html = html.replace(/^\s+|\s+$/g, "");
-  var tag = m6[1];
+  var tag = m5[1];
   if (tag == "body") {
     var el = doc.createElement("html");
     el.innerHTML = html;
@@ -4675,10 +4728,10 @@ function parse2(html, doc) {
   }
   var wrap2 = Object.prototype.hasOwnProperty.call(map2, tag) ? map2[tag] : map2._default;
   var depth = wrap2[0];
-  var prefix3 = wrap2[1];
+  var prefix4 = wrap2[1];
   var suffix = wrap2[2];
   var el = doc.createElement("div");
-  el.innerHTML = prefix3 + html + suffix;
+  el.innerHTML = prefix4 + html + suffix;
   while (depth--)
     el = el.lastChild;
   if (el.firstChild == el.lastChild) {
@@ -4704,18 +4757,18 @@ function remove2(el) {
 }
 
 // node_modules/diagram-js/lib/util/SvgTransformUtil.js
-function transform2(gfx, x5, y5, angle, amount) {
+function transform2(gfx, x6, y5, angle, amount) {
   var translate3 = createTransform();
-  translate3.setTranslate(x5, y5);
+  translate3.setTranslate(x6, y5);
   var rotate2 = createTransform();
   rotate2.setRotate(angle || 0, 0, 0);
   var scale = createTransform();
   scale.setScale(amount || 1, amount || 1);
   transform(gfx, [translate3, rotate2, scale]);
 }
-function translate(gfx, x5, y5) {
+function translate(gfx, x6, y5) {
   var translate3 = createTransform();
-  translate3.setTranslate(x5, y5);
+  translate3.setTranslate(x6, y5);
   transform(gfx, translate3);
 }
 function rotate(gfx, angle) {
@@ -4743,13 +4796,13 @@ var hat_1 = createCommonjsModule(function(module2) {
     var rem = digits - Math.floor(digits);
     var res = "";
     for (var i7 = 0; i7 < Math.floor(digits); i7++) {
-      var x5 = Math.floor(Math.random() * base).toString(base);
-      res = x5 + res;
+      var x6 = Math.floor(Math.random() * base).toString(base);
+      res = x6 + res;
     }
     if (rem) {
       var b5 = Math.pow(base, rem);
-      var x5 = Math.floor(Math.random() * b5).toString(base);
-      res = x5 + res;
+      var x6 = Math.floor(Math.random() * b5).toString(base);
+      res = x6 + res;
     }
     var parsed = parseInt(res, base);
     if (parsed !== Infinity && parsed >= Math.pow(2, bits)) {
@@ -4795,10 +4848,10 @@ function Ids(seed) {
 Ids.prototype.next = function(element) {
   return this._seed(element || true);
 };
-Ids.prototype.nextPrefixed = function(prefix3, element) {
+Ids.prototype.nextPrefixed = function(prefix4, element) {
   var id;
   do {
-    id = prefix3 + this.next(true);
+    id = prefix4 + this.next(true);
   } while (this.assigned(id));
   this.claim(id, element);
   return id;
@@ -5147,164 +5200,164 @@ function BpmnRenderer(config, eventBus, styles, pathMap, canvas, textRenderer, p
       }
       return circle;
     },
-    "bpmn:EscalationEventDefinition": function(parentGfx, event2, attrs = {}, isThrowing) {
+    "bpmn:EscalationEventDefinition": function(parentGfx, event3, attrs = {}, isThrowing) {
       var pathData = pathMap.getScaledPath("EVENT_ESCALATION", {
         xScaleFactor: 1,
         yScaleFactor: 1,
-        containerWidth: event2.width,
-        containerHeight: event2.height,
+        containerWidth: event3.width,
+        containerHeight: event3.height,
         position: {
           mx: 0.5,
           my: 0.2
         }
       });
-      var fill = isThrowing ? getStrokeColor(event2, defaultStrokeColor, attrs.stroke) : getFillColor(event2, defaultFillColor, attrs.fill);
+      var fill = isThrowing ? getStrokeColor(event3, defaultStrokeColor, attrs.stroke) : getFillColor(event3, defaultFillColor, attrs.fill);
       return drawPath2(parentGfx, pathData, {
         fill,
-        stroke: getStrokeColor(event2, defaultStrokeColor, attrs.stroke),
+        stroke: getStrokeColor(event3, defaultStrokeColor, attrs.stroke),
         strokeWidth: 1
       });
     },
-    "bpmn:ConditionalEventDefinition": function(parentGfx, event2, attrs = {}) {
+    "bpmn:ConditionalEventDefinition": function(parentGfx, event3, attrs = {}) {
       var pathData = pathMap.getScaledPath("EVENT_CONDITIONAL", {
         xScaleFactor: 1,
         yScaleFactor: 1,
-        containerWidth: event2.width,
-        containerHeight: event2.height,
+        containerWidth: event3.width,
+        containerHeight: event3.height,
         position: {
           mx: 0.5,
           my: 0.222
         }
       });
       return drawPath2(parentGfx, pathData, {
-        fill: getFillColor(event2, defaultFillColor, attrs.fill),
-        stroke: getStrokeColor(event2, defaultStrokeColor, attrs.stroke),
+        fill: getFillColor(event3, defaultFillColor, attrs.fill),
+        stroke: getStrokeColor(event3, defaultStrokeColor, attrs.stroke),
         strokeWidth: 1
       });
     },
-    "bpmn:LinkEventDefinition": function(parentGfx, event2, attrs = {}, isThrowing) {
+    "bpmn:LinkEventDefinition": function(parentGfx, event3, attrs = {}, isThrowing) {
       var pathData = pathMap.getScaledPath("EVENT_LINK", {
         xScaleFactor: 1,
         yScaleFactor: 1,
-        containerWidth: event2.width,
-        containerHeight: event2.height,
+        containerWidth: event3.width,
+        containerHeight: event3.height,
         position: {
           mx: 0.57,
           my: 0.263
         }
       });
-      var fill = isThrowing ? getStrokeColor(event2, defaultStrokeColor, attrs.stroke) : getFillColor(event2, defaultFillColor, attrs.fill);
+      var fill = isThrowing ? getStrokeColor(event3, defaultStrokeColor, attrs.stroke) : getFillColor(event3, defaultFillColor, attrs.fill);
       return drawPath2(parentGfx, pathData, {
         fill,
-        stroke: getStrokeColor(event2, defaultStrokeColor, attrs.stroke),
+        stroke: getStrokeColor(event3, defaultStrokeColor, attrs.stroke),
         strokeWidth: 1
       });
     },
-    "bpmn:ErrorEventDefinition": function(parentGfx, event2, attrs = {}, isThrowing) {
+    "bpmn:ErrorEventDefinition": function(parentGfx, event3, attrs = {}, isThrowing) {
       var pathData = pathMap.getScaledPath("EVENT_ERROR", {
         xScaleFactor: 1.1,
         yScaleFactor: 1.1,
-        containerWidth: event2.width,
-        containerHeight: event2.height,
+        containerWidth: event3.width,
+        containerHeight: event3.height,
         position: {
           mx: 0.2,
           my: 0.722
         }
       });
-      var fill = isThrowing ? getStrokeColor(event2, defaultStrokeColor, attrs.stroke) : getFillColor(event2, defaultFillColor, attrs.fill);
+      var fill = isThrowing ? getStrokeColor(event3, defaultStrokeColor, attrs.stroke) : getFillColor(event3, defaultFillColor, attrs.fill);
       return drawPath2(parentGfx, pathData, {
         fill,
-        stroke: getStrokeColor(event2, defaultStrokeColor, attrs.stroke),
+        stroke: getStrokeColor(event3, defaultStrokeColor, attrs.stroke),
         strokeWidth: 1
       });
     },
-    "bpmn:CancelEventDefinition": function(parentGfx, event2, attrs = {}, isThrowing) {
+    "bpmn:CancelEventDefinition": function(parentGfx, event3, attrs = {}, isThrowing) {
       var pathData = pathMap.getScaledPath("EVENT_CANCEL_45", {
         xScaleFactor: 1,
         yScaleFactor: 1,
-        containerWidth: event2.width,
-        containerHeight: event2.height,
+        containerWidth: event3.width,
+        containerHeight: event3.height,
         position: {
           mx: 0.638,
           my: -0.055
         }
       });
-      var fill = isThrowing ? getStrokeColor(event2, defaultStrokeColor, attrs.stroke) : "none";
+      var fill = isThrowing ? getStrokeColor(event3, defaultStrokeColor, attrs.stroke) : "none";
       var path = drawPath2(parentGfx, pathData, {
         fill,
-        stroke: getStrokeColor(event2, defaultStrokeColor, attrs.stroke),
+        stroke: getStrokeColor(event3, defaultStrokeColor, attrs.stroke),
         strokeWidth: 1
       });
       rotate(path, 45);
       return path;
     },
-    "bpmn:CompensateEventDefinition": function(parentGfx, event2, attrs = {}, isThrowing) {
+    "bpmn:CompensateEventDefinition": function(parentGfx, event3, attrs = {}, isThrowing) {
       var pathData = pathMap.getScaledPath("EVENT_COMPENSATION", {
         xScaleFactor: 1,
         yScaleFactor: 1,
-        containerWidth: event2.width,
-        containerHeight: event2.height,
+        containerWidth: event3.width,
+        containerHeight: event3.height,
         position: {
           mx: 0.22,
           my: 0.5
         }
       });
-      var fill = isThrowing ? getStrokeColor(event2, defaultStrokeColor, attrs.stroke) : getFillColor(event2, defaultFillColor, attrs.fill);
+      var fill = isThrowing ? getStrokeColor(event3, defaultStrokeColor, attrs.stroke) : getFillColor(event3, defaultFillColor, attrs.fill);
       return drawPath2(parentGfx, pathData, {
         fill,
-        stroke: getStrokeColor(event2, defaultStrokeColor, attrs.stroke),
+        stroke: getStrokeColor(event3, defaultStrokeColor, attrs.stroke),
         strokeWidth: 1
       });
     },
-    "bpmn:SignalEventDefinition": function(parentGfx, event2, attrs = {}, isThrowing) {
+    "bpmn:SignalEventDefinition": function(parentGfx, event3, attrs = {}, isThrowing) {
       var pathData = pathMap.getScaledPath("EVENT_SIGNAL", {
         xScaleFactor: 0.9,
         yScaleFactor: 0.9,
-        containerWidth: event2.width,
-        containerHeight: event2.height,
+        containerWidth: event3.width,
+        containerHeight: event3.height,
         position: {
           mx: 0.5,
           my: 0.2
         }
       });
-      var fill = isThrowing ? getStrokeColor(event2, defaultStrokeColor, attrs.stroke) : getFillColor(event2, defaultFillColor, attrs.fill);
+      var fill = isThrowing ? getStrokeColor(event3, defaultStrokeColor, attrs.stroke) : getFillColor(event3, defaultFillColor, attrs.fill);
       return drawPath2(parentGfx, pathData, {
         strokeWidth: 1,
         fill,
-        stroke: getStrokeColor(event2, defaultStrokeColor, attrs.stroke)
+        stroke: getStrokeColor(event3, defaultStrokeColor, attrs.stroke)
       });
     },
-    "bpmn:MultipleEventDefinition": function(parentGfx, event2, attrs = {}, isThrowing) {
+    "bpmn:MultipleEventDefinition": function(parentGfx, event3, attrs = {}, isThrowing) {
       var pathData = pathMap.getScaledPath("EVENT_MULTIPLE", {
         xScaleFactor: 1.1,
         yScaleFactor: 1.1,
-        containerWidth: event2.width,
-        containerHeight: event2.height,
+        containerWidth: event3.width,
+        containerHeight: event3.height,
         position: {
           mx: 0.222,
           my: 0.36
         }
       });
-      var fill = isThrowing ? getStrokeColor(event2, defaultStrokeColor, attrs.stroke) : getFillColor(event2, defaultFillColor, attrs.fill);
+      var fill = isThrowing ? getStrokeColor(event3, defaultStrokeColor, attrs.stroke) : getFillColor(event3, defaultFillColor, attrs.fill);
       return drawPath2(parentGfx, pathData, {
         fill,
         strokeWidth: 1
       });
     },
-    "bpmn:ParallelMultipleEventDefinition": function(parentGfx, event2, attrs = {}) {
+    "bpmn:ParallelMultipleEventDefinition": function(parentGfx, event3, attrs = {}) {
       var pathData = pathMap.getScaledPath("EVENT_PARALLEL_MULTIPLE", {
         xScaleFactor: 1.2,
         yScaleFactor: 1.2,
-        containerWidth: event2.width,
-        containerHeight: event2.height,
+        containerWidth: event3.width,
+        containerHeight: event3.height,
         position: {
           mx: 0.458,
           my: 0.194
         }
       });
       return drawPath2(parentGfx, pathData, {
-        fill: getFillColor(event2, defaultFillColor, attrs.fill),
-        stroke: getStrokeColor(event2, defaultStrokeColor, attrs.stroke),
+        fill: getFillColor(event3, defaultFillColor, attrs.fill),
+        stroke: getStrokeColor(event3, defaultStrokeColor, attrs.stroke),
         strokeWidth: 1
       });
     },
@@ -5764,7 +5817,7 @@ function BpmnRenderer(config, eventBus, styles, pathMap, canvas, textRenderer, p
       if (!cancelActivity) {
         attrs.strokeDasharray = "6";
       }
-      var event2 = renderEvent(parentGfx, element, attrs);
+      var event3 = renderEvent(parentGfx, element, attrs);
       drawCircle(parentGfx, element.width, element.height, INNER_OUTER_DIST, {
         ...attrs,
         fill: "none"
@@ -5772,7 +5825,7 @@ function BpmnRenderer(config, eventBus, styles, pathMap, canvas, textRenderer, p
       if (renderIcon) {
         renderEventIcon(element, parentGfx, attrs);
       }
-      return event2;
+      return event3;
     },
     "bpmn:BusinessRuleTask": function(parentGfx, element, attrs = {}) {
       attrs = pickAttrs(attrs, [
@@ -5923,14 +5976,14 @@ function BpmnRenderer(config, eventBus, styles, pathMap, canvas, textRenderer, p
         "fill",
         "stroke"
       ]);
-      var event2 = renderEvent(parentGfx, element, {
+      var event3 = renderEvent(parentGfx, element, {
         ...attrs,
         strokeWidth: 4
       });
       if (renderIcon) {
         renderEventIcon(element, parentGfx, attrs);
       }
-      return event2;
+      return event3;
     },
     "bpmn:EventBasedGateway": function(parentGfx, element, attrs = {}) {
       attrs = pickAttrs(attrs, [
@@ -6396,11 +6449,11 @@ function BpmnRenderer(config, eventBus, styles, pathMap, canvas, textRenderer, p
           strokeDasharray: "6"
         };
       }
-      var event2 = renderEvent(parentGfx, element, attrs);
+      var event3 = renderEvent(parentGfx, element, attrs);
       if (renderIcon) {
         renderEventIcon(element, parentGfx, attrs);
       }
-      return event2;
+      return event3;
     },
     "bpmn:SubProcess": function(parentGfx, element, attrs = {}) {
       if (isExpanded(element)) {
@@ -6506,11 +6559,11 @@ function BpmnRenderer(config, eventBus, styles, pathMap, canvas, textRenderer, p
         "stroke"
       ]);
       var task = renderTask(parentGfx, element, attrs);
-      var x5 = 15;
+      var x6 = 15;
       var y5 = 12;
       var pathDataUser1 = pathMap.getScaledPath("TASK_TYPE_USER_1", {
         abspos: {
-          x: x5,
+          x: x6,
           y: y5
         }
       });
@@ -6521,7 +6574,7 @@ function BpmnRenderer(config, eventBus, styles, pathMap, canvas, textRenderer, p
       });
       var pathDataUser2 = pathMap.getScaledPath("TASK_TYPE_USER_2", {
         abspos: {
-          x: x5,
+          x: x6,
           y: y5
         }
       });
@@ -6532,7 +6585,7 @@ function BpmnRenderer(config, eventBus, styles, pathMap, canvas, textRenderer, p
       });
       var pathDataUser3 = pathMap.getScaledPath("TASK_TYPE_USER_3", {
         abspos: {
-          x: x5,
+          x: x6,
           y: y5
         }
       });
@@ -6751,20 +6804,20 @@ Text.prototype.layoutText = function(text, options2) {
   var textElement = create("text");
   attr(textElement, style);
   forEach(layouted, function(line) {
-    var x5;
+    var x6;
     y5 += lineHeight || line.height;
     switch (align.horizontal) {
       case "left":
-        x5 = padding.left;
+        x6 = padding.left;
         break;
       case "right":
-        x5 = (fitBox ? maxLineWidth : maxWidth) - padding.right - line.width;
+        x6 = (fitBox ? maxLineWidth : maxWidth) - padding.right - line.width;
         break;
       default:
-        x5 = Math.max(((fitBox ? maxLineWidth : maxWidth) - line.width) / 2 + padding.left, 0);
+        x6 = Math.max(((fitBox ? maxLineWidth : maxWidth) - line.width) / 2 + padding.left, 0);
     }
     var tspan = create("tspan");
-    attr(tspan, { x: x5, y: y5 });
+    attr(tspan, { x: x6, y: y5 });
     tspan.textContent = line.text;
     append(textElement, tspan);
   });
@@ -7119,9 +7172,9 @@ function PathMap() {
 }
 var tokenRegex = /\{([^{}]+)\}/g;
 var objNotationRegex = /(?:(?:^|\.)(.+?)(?=\[|\.|$|\()|\[('|")(.+?)\2\])(\(\))?/g;
-function replacer(all2, key, obj) {
+function replacer(all3, key, obj) {
   var res = obj;
-  key.replace(objNotationRegex, function(all3, name2, quote, quotedName, isFunc) {
+  key.replace(objNotationRegex, function(all4, name2, quote, quotedName, isFunc) {
     name2 = name2 || quotedName;
     if (res) {
       if (name2 in res) {
@@ -7130,12 +7183,12 @@ function replacer(all2, key, obj) {
       typeof res == "function" && isFunc && (res = res());
     }
   });
-  res = (res == null || res == obj ? all2 : res) + "";
+  res = (res == null || res == obj ? all3 : res) + "";
   return res;
 }
 function format(str, obj) {
-  return String(str).replace(tokenRegex, function(all2, key) {
-    return replacer(all2, key, obj);
+  return String(str).replace(tokenRegex, function(all3, key) {
+    return replacer(all3, key, obj);
   });
 }
 
@@ -7150,7 +7203,7 @@ var draw_default = {
 // node_modules/diagram-js/lib/i18n/translate/translate.js
 function translate2(template, replacements) {
   replacements = replacements || {};
-  return template.replace(/{([^}]+)}/g, function(_4, key) {
+  return template.replace(/{([^}]+)}/g, function(_5, key) {
     return replacements[key] || "{" + key + "}";
   });
 }
@@ -7169,14 +7222,14 @@ function pointDistance(a6, b5) {
     Math.pow(a6.x - b5.x, 2) + Math.pow(a6.y - b5.y, 2)
   );
 }
-function pointsOnLine(p5, q5, r7, accuracy) {
+function pointsOnLine(p5, q6, r7, accuracy) {
   if (typeof accuracy === "undefined") {
     accuracy = 5;
   }
-  if (!p5 || !q5 || !r7) {
+  if (!p5 || !q6 || !r7) {
     return false;
   }
-  var val = (q5.x - p5.x) * (r7.y - p5.y) - (q5.y - p5.y) * (r7.x - p5.x), dist = pointDistance(p5, q5);
+  var val = (q6.x - p5.x) * (r7.y - p5.y) - (q6.y - p5.y) * (r7.x - p5.x), dist = pointDistance(p5, q6);
   return Math.abs(val / dist) <= accuracy;
 }
 var ALIGNED_THRESHOLD = 2;
@@ -7203,10 +7256,10 @@ function pointInRect(p5, rect, tolerance) {
   tolerance = tolerance || 0;
   return p5.x > rect.x - tolerance && p5.y > rect.y - tolerance && p5.x < rect.x + rect.width + tolerance && p5.y < rect.y + rect.height + tolerance;
 }
-function getMidPoint(p5, q5) {
+function getMidPoint(p5, q6) {
   return {
-    x: Math.round(p5.x + (q5.x - p5.x) / 2),
-    y: Math.round(p5.y + (q5.y - p5.y) / 2)
+    x: Math.round(p5.x + (q6.x - p5.x) / 2),
+    y: Math.round(p5.y + (q6.y - p5.y) / 2)
   };
 }
 
@@ -7313,19 +7366,19 @@ function paths(ps) {
   });
   return p5[ps];
 }
-function rectBBox(x5, y5, width, height) {
+function rectBBox(x6, y5, width, height) {
   if (arguments.length === 1) {
-    y5 = x5.y;
-    width = x5.width;
-    height = x5.height;
-    x5 = x5.x;
+    y5 = x6.y;
+    width = x6.width;
+    height = x6.height;
+    x6 = x6.x;
   }
   return {
-    x: x5,
+    x: x6,
     y: y5,
     width,
     height,
-    x2: x5 + width,
+    x2: x6 + width,
     y2: y5 + height
   };
 }
@@ -7338,9 +7391,9 @@ function pathClone(pathArray) {
   return res;
 }
 function findDotsAtSegment(p1x, p1y, c1x, c1y, c2x, c2y, p2x, p2y, t7) {
-  var t1 = 1 - t7, t13 = pow(t1, 3), t12 = pow(t1, 2), t22 = t7 * t7, t32 = t22 * t7, x5 = t13 * p1x + t12 * 3 * t7 * c1x + t1 * 3 * t7 * t7 * c2x + t32 * p2x, y5 = t13 * p1y + t12 * 3 * t7 * c1y + t1 * 3 * t7 * t7 * c2y + t32 * p2y;
+  var t1 = 1 - t7, t13 = pow(t1, 3), t12 = pow(t1, 2), t22 = t7 * t7, t32 = t22 * t7, x6 = t13 * p1x + t12 * 3 * t7 * c1x + t1 * 3 * t7 * t7 * c2x + t32 * p2x, y5 = t13 * p1y + t12 * 3 * t7 * c1y + t1 * 3 * t7 * t7 * c2y + t32 * p2y;
   return {
-    x: fixError(x5),
+    x: fixError(x6),
     y: fixError(y5)
   };
 }
@@ -7353,8 +7406,8 @@ function bezierBBox(points) {
     bbox.y1 - bbox.y0
   );
 }
-function isPointInsideBBox(bbox, x5, y5) {
-  return x5 >= bbox.x && x5 <= bbox.x + bbox.width && y5 >= bbox.y && y5 <= bbox.y + bbox.height;
+function isPointInsideBBox(bbox, x6, y5) {
+  return x6 >= bbox.x && x6 <= bbox.x + bbox.width && y5 >= bbox.y && y5 <= bbox.y + bbox.height;
 }
 function isBBoxIntersect(bbox1, bbox2) {
   bbox1 = rectBBox(bbox1);
@@ -7498,14 +7551,14 @@ function pathToAbsolute(pathArray) {
   if (!pathArray || !pathArray.length) {
     return [["M", 0, 0]];
   }
-  var res = [], x5 = 0, y5 = 0, mx = 0, my = 0, start = 0, pa0;
+  var res = [], x6 = 0, y5 = 0, mx = 0, my = 0, start = 0, pa0;
   if (pathArray[0][0] == "M") {
-    x5 = +pathArray[0][1];
+    x6 = +pathArray[0][1];
     y5 = +pathArray[0][2];
-    mx = x5;
+    mx = x6;
     my = y5;
     start++;
-    res[0] = ["M", x5, y5];
+    res[0] = ["M", x6, y5];
   }
   for (var r7, pa, i7 = start, ii = pathArray.length; i7 < ii; i7++) {
     res.push(r7 = []);
@@ -7520,21 +7573,21 @@ function pathToAbsolute(pathArray) {
           r7[3] = pa[3];
           r7[4] = pa[4];
           r7[5] = pa[5];
-          r7[6] = +pa[6] + x5;
+          r7[6] = +pa[6] + x6;
           r7[7] = +pa[7] + y5;
           break;
         case "V":
           r7[1] = +pa[1] + y5;
           break;
         case "H":
-          r7[1] = +pa[1] + x5;
+          r7[1] = +pa[1] + x6;
           break;
         case "M":
-          mx = +pa[1] + x5;
+          mx = +pa[1] + x6;
           my = +pa[2] + y5;
         default:
           for (var j6 = 1, jj = pa.length; j6 < jj; j6++) {
-            r7[j6] = +pa[j6] + (j6 % 2 ? x5 : y5);
+            r7[j6] = +pa[j6] + (j6 % 2 ? x6 : y5);
           }
       }
     } else {
@@ -7545,11 +7598,11 @@ function pathToAbsolute(pathArray) {
     pa0 = pa0.toUpperCase();
     switch (r7[0]) {
       case "Z":
-        x5 = +mx;
+        x6 = +mx;
         y5 = +my;
         break;
       case "H":
-        x5 = r7[1];
+        x6 = r7[1];
         break;
       case "V":
         y5 = r7[1];
@@ -7558,7 +7611,7 @@ function pathToAbsolute(pathArray) {
         mx = r7[r7.length - 2];
         my = r7[r7.length - 1];
       default:
-        x5 = r7[r7.length - 2];
+        x6 = r7[r7.length - 2];
         y5 = r7[r7.length - 1];
     }
   }
@@ -7591,8 +7644,8 @@ function qubicToCurve(x1, y1, ax, ay, x22, y22) {
   ];
 }
 function arcToCurve(x1, y1, rx, ry, angle, large_arc_flag, sweep_flag, x22, y22, recursive) {
-  var _120 = PI * 120 / 180, rad = PI / 180 * (+angle || 0), res = [], xy, rotate2 = cacher(function(x6, y6, rad2) {
-    var X2 = x6 * math.cos(rad2) - y6 * math.sin(rad2), Y2 = x6 * math.sin(rad2) + y6 * math.cos(rad2);
+  var _120 = PI * 120 / 180, rad = PI / 180 * (+angle || 0), res = [], xy, rotate2 = cacher(function(x7, y6, rad2) {
+    var X2 = x7 * math.cos(rad2) - y6 * math.sin(rad2), Y2 = x7 * math.sin(rad2) + y6 * math.cos(rad2);
     return { x: X2, y: Y2 };
   });
   if (!recursive) {
@@ -7602,14 +7655,14 @@ function arcToCurve(x1, y1, rx, ry, angle, large_arc_flag, sweep_flag, x22, y22,
     xy = rotate2(x22, y22, -rad);
     x22 = xy.x;
     y22 = xy.y;
-    var x5 = (x1 - x22) / 2, y5 = (y1 - y22) / 2;
-    var h5 = x5 * x5 / (rx * rx) + y5 * y5 / (ry * ry);
+    var x6 = (x1 - x22) / 2, y5 = (y1 - y22) / 2;
+    var h5 = x6 * x6 / (rx * rx) + y5 * y5 / (ry * ry);
     if (h5 > 1) {
       h5 = math.sqrt(h5);
       rx = h5 * rx;
       ry = h5 * ry;
     }
-    var rx2 = rx * rx, ry2 = ry * ry, k6 = (large_arc_flag == sweep_flag ? -1 : 1) * math.sqrt(abs((rx2 * ry2 - rx2 * y5 * y5 - ry2 * x5 * x5) / (rx2 * y5 * y5 + ry2 * x5 * x5))), cx = k6 * rx * y5 / ry + (x1 + x22) / 2, cy = k6 * -ry * x5 / rx + (y1 + y22) / 2, f1 = math.asin(((y1 - cy) / ry).toFixed(9)), f22 = math.asin(((y22 - cy) / ry).toFixed(9));
+    var rx2 = rx * rx, ry2 = ry * ry, k6 = (large_arc_flag == sweep_flag ? -1 : 1) * math.sqrt(abs((rx2 * ry2 - rx2 * y5 * y5 - ry2 * x6 * x6) / (rx2 * y5 * y5 + ry2 * x6 * x6))), cx = k6 * rx * y5 / ry + (x1 + x22) / 2, cy = k6 * -ry * x6 / rx + (y1 + y22) / 2, f1 = math.asin(((y1 - cy) / ry).toFixed(9)), f22 = math.asin(((y22 - cy) / ry).toFixed(9));
     f1 = x1 < cx ? PI - f1 : f1;
     f22 = x22 < cx ? PI - f22 : f22;
     f1 < 0 && (f1 = PI * 2 + f1);
@@ -7950,19 +8003,16 @@ function getWaypoints(di, source, target) {
     return { x: p5.x, y: p5.y };
   });
 }
-function notYetDrawn(translate3, semantic, refSemantic, property) {
-  return new Error(translate3("element {element} referenced by {referenced}#{property} not yet drawn", {
-    element: elementToString(refSemantic),
-    referenced: elementToString(semantic),
-    property
-  }));
+function notYetDrawn(semantic, refSemantic, property) {
+  return new Error(
+    `element ${elementToString(refSemantic)} referenced by ${elementToString(semantic)}#${property} not yet drawn`
+  );
 }
-function BpmnImporter(eventBus, canvas, elementFactory, elementRegistry, translate3, textRenderer) {
+function BpmnImporter(eventBus, canvas, elementFactory, elementRegistry, textRenderer) {
   this._eventBus = eventBus;
   this._canvas = canvas;
   this._elementFactory = elementFactory;
   this._elementRegistry = elementRegistry;
-  this._translate = translate3;
   this._textRenderer = textRenderer;
 }
 BpmnImporter.$inject = [
@@ -7970,11 +8020,10 @@ BpmnImporter.$inject = [
   "canvas",
   "elementFactory",
   "elementRegistry",
-  "translate",
   "textRenderer"
 ];
 BpmnImporter.prototype.add = function(semantic, di, parentElement) {
-  var element, translate3 = this._translate, hidden;
+  var element, hidden;
   var parentIndex;
   if (is(di, "bpmndi:BPMNPlane")) {
     var attrs = is(semantic, "bpmn:SubProcess") ? { id: semantic.id + "_plane" } : {};
@@ -8019,10 +8068,9 @@ BpmnImporter.prototype.add = function(semantic, di, parentElement) {
     }
     this._canvas.addConnection(element, parentElement, parentIndex);
   } else {
-    throw new Error(translate3("unknown di {di} for element {semantic}", {
-      di: elementToString(di),
-      semantic: elementToString(semantic)
-    }));
+    throw new Error(
+      `unknown di ${elementToString(di)} for element ${elementToString(semantic)}`
+    );
   }
   if (isLabelExternal(semantic) && getLabel(element)) {
     this.addLabel(semantic, di, element);
@@ -8031,16 +8079,15 @@ BpmnImporter.prototype.add = function(semantic, di, parentElement) {
   return element;
 };
 BpmnImporter.prototype._attachBoundary = function(boundarySemantic, boundaryElement) {
-  var translate3 = this._translate;
   var hostSemantic = boundarySemantic.attachedToRef;
   if (!hostSemantic) {
-    throw new Error(translate3("missing {semantic}#attachedToRef", {
-      semantic: elementToString(boundarySemantic)
-    }));
+    throw new Error(
+      `missing ${elementToString(boundarySemantic)}#attachedToRef`
+    );
   }
   var host = this._elementRegistry.get(hostSemantic.id), attachers = host && host.attachers;
   if (!host) {
-    throw notYetDrawn(translate3, boundarySemantic, hostSemantic, "attachedToRef");
+    throw notYetDrawn(boundarySemantic, hostSemantic, "attachedToRef");
   }
   boundaryElement.host = host;
   if (!attachers) {
@@ -8070,7 +8117,7 @@ BpmnImporter.prototype.addLabel = function(semantic, di, element) {
   return this._canvas.addShape(label, element.parent);
 };
 BpmnImporter.prototype._getConnectedElement = function(semantic, side) {
-  var element, refSemantic, type = semantic.$type, translate3 = this._translate;
+  var element, refSemantic, type = semantic.$type;
   refSemantic = semantic[side + "Ref"];
   if (side === "source" && type === "bpmn:DataInputAssociation") {
     refSemantic = refSemantic && refSemantic[0];
@@ -8083,12 +8130,11 @@ BpmnImporter.prototype._getConnectedElement = function(semantic, side) {
     return element;
   }
   if (refSemantic) {
-    throw notYetDrawn(translate3, semantic, refSemantic, side + "Ref");
+    throw notYetDrawn(semantic, refSemantic, side + "Ref");
   } else {
-    throw new Error(translate3("{semantic}#{side} Ref not specified", {
-      semantic: elementToString(semantic),
-      side
-    }));
+    throw new Error(
+      `${elementToString(semantic)}#${side} Ref not specified`
+    );
   }
 };
 BpmnImporter.prototype._getSource = function(semantic) {
@@ -8101,8 +8147,8 @@ BpmnImporter.prototype._getElement = function(semantic) {
   return this._elementRegistry.get(semantic.id);
 };
 function isPointInsideBBox2(bbox, point) {
-  var x5 = point.x, y5 = point.y;
-  return x5 >= bbox.x && x5 <= bbox.x + bbox.width && y5 >= bbox.y && y5 <= bbox.y + bbox.height;
+  var x6 = point.x, y5 = point.y;
+  return x6 >= bbox.x && x6 <= bbox.x + bbox.width && y5 >= bbox.y && y5 <= bbox.y + bbox.height;
 }
 function isFrameElement(semantic) {
   return is(semantic, "bpmn:Group");
@@ -8122,279 +8168,6 @@ var core_default = {
     draw_default,
     import_default
   ]
-};
-
-// node_modules/diagram-js/lib/util/Event.js
-function __stopPropagation(event2) {
-  if (!event2 || typeof event2.stopPropagation !== "function") {
-    return;
-  }
-  event2.stopPropagation();
-}
-function getOriginal(event2) {
-  return event2.originalEvent || event2.srcEvent;
-}
-function stopPropagation(event2) {
-  __stopPropagation(event2);
-  __stopPropagation(getOriginal(event2));
-}
-function toPoint(event2) {
-  if (event2.pointers && event2.pointers.length) {
-    event2 = event2.pointers[0];
-  }
-  if (event2.touches && event2.touches.length) {
-    event2 = event2.touches[0];
-  }
-  return event2 ? {
-    x: event2.clientX,
-    y: event2.clientY
-  } : null;
-}
-
-// node_modules/diagram-js/lib/util/Platform.js
-function isMac() {
-  return /mac/i.test(navigator.platform);
-}
-
-// node_modules/diagram-js/lib/util/Mouse.js
-function isButton(event2, button) {
-  return (getOriginal(event2) || event2).button === button;
-}
-function isPrimaryButton(event2) {
-  return isButton(event2, 0);
-}
-function isAuxiliaryButton(event2) {
-  return isButton(event2, 1);
-}
-function hasPrimaryModifier(event2) {
-  var originalEvent = getOriginal(event2) || event2;
-  if (!isPrimaryButton(event2)) {
-    return false;
-  }
-  if (isMac()) {
-    return originalEvent.metaKey;
-  } else {
-    return originalEvent.ctrlKey;
-  }
-}
-function hasSecondaryModifier(event2) {
-  var originalEvent = getOriginal(event2) || event2;
-  return isPrimaryButton(event2) && originalEvent.shiftKey;
-}
-
-// node_modules/diagram-js/lib/features/interaction-events/InteractionEvents.js
-function allowAll(event2) {
-  return true;
-}
-function allowPrimaryAndAuxiliary(event2) {
-  return isPrimaryButton(event2) || isAuxiliaryButton(event2);
-}
-var LOW_PRIORITY = 500;
-function InteractionEvents(eventBus, elementRegistry, styles) {
-  var self2 = this;
-  function fire(type, event2, element) {
-    if (isIgnored(type, event2)) {
-      return;
-    }
-    var target, gfx, returnValue;
-    if (!element) {
-      target = event2.delegateTarget || event2.target;
-      if (target) {
-        gfx = target;
-        element = elementRegistry.get(gfx);
-      }
-    } else {
-      gfx = elementRegistry.getGraphics(element);
-    }
-    if (!gfx || !element) {
-      return;
-    }
-    returnValue = eventBus.fire(type, {
-      element,
-      gfx,
-      originalEvent: event2
-    });
-    if (returnValue === false) {
-      event2.stopPropagation();
-      event2.preventDefault();
-    }
-  }
-  var handlers = {};
-  function mouseHandler(localEventName) {
-    return handlers[localEventName];
-  }
-  function isIgnored(localEventName, event2) {
-    var filter2 = ignoredFilters[localEventName] || isPrimaryButton;
-    return !filter2(event2);
-  }
-  var bindings = {
-    click: "element.click",
-    contextmenu: "element.contextmenu",
-    dblclick: "element.dblclick",
-    mousedown: "element.mousedown",
-    mousemove: "element.mousemove",
-    mouseover: "element.hover",
-    mouseout: "element.out",
-    mouseup: "element.mouseup"
-  };
-  var ignoredFilters = {
-    "element.contextmenu": allowAll,
-    "element.mousedown": allowPrimaryAndAuxiliary,
-    "element.mouseup": allowPrimaryAndAuxiliary,
-    "element.click": allowPrimaryAndAuxiliary,
-    "element.dblclick": allowPrimaryAndAuxiliary
-  };
-  function triggerMouseEvent(eventName, event2, targetElement) {
-    var localEventName = bindings[eventName];
-    if (!localEventName) {
-      throw new Error("unmapped DOM event name <" + eventName + ">");
-    }
-    return fire(localEventName, event2, targetElement);
-  }
-  var ELEMENT_SELECTOR2 = "svg, .djs-element";
-  function registerEvent(node2, event2, localEvent, ignoredFilter) {
-    var handler = handlers[localEvent] = function(event3) {
-      fire(localEvent, event3);
-    };
-    if (ignoredFilter) {
-      ignoredFilters[localEvent] = ignoredFilter;
-    }
-    handler.$delegate = delegate.bind(node2, ELEMENT_SELECTOR2, event2, handler);
-  }
-  function unregisterEvent(node2, event2, localEvent) {
-    var handler = mouseHandler(localEvent);
-    if (!handler) {
-      return;
-    }
-    delegate.unbind(node2, event2, handler.$delegate);
-  }
-  function registerEvents(svg) {
-    forEach(bindings, function(val, key) {
-      registerEvent(svg, key, val);
-    });
-  }
-  function unregisterEvents(svg) {
-    forEach(bindings, function(val, key) {
-      unregisterEvent(svg, key, val);
-    });
-  }
-  eventBus.on("canvas.destroy", function(event2) {
-    unregisterEvents(event2.svg);
-  });
-  eventBus.on("canvas.init", function(event2) {
-    registerEvents(event2.svg);
-  });
-  eventBus.on(["shape.added", "connection.added"], function(event2) {
-    var element = event2.element, gfx = event2.gfx;
-    eventBus.fire("interactionEvents.createHit", { element, gfx });
-  });
-  eventBus.on([
-    "shape.changed",
-    "connection.changed"
-  ], LOW_PRIORITY, function(event2) {
-    var element = event2.element, gfx = event2.gfx;
-    eventBus.fire("interactionEvents.updateHit", { element, gfx });
-  });
-  eventBus.on("interactionEvents.createHit", LOW_PRIORITY, function(event2) {
-    var element = event2.element, gfx = event2.gfx;
-    self2.createDefaultHit(element, gfx);
-  });
-  eventBus.on("interactionEvents.updateHit", function(event2) {
-    var element = event2.element, gfx = event2.gfx;
-    self2.updateDefaultHit(element, gfx);
-  });
-  var STROKE_HIT_STYLE = createHitStyle("djs-hit djs-hit-stroke");
-  var CLICK_STROKE_HIT_STYLE = createHitStyle("djs-hit djs-hit-click-stroke");
-  var ALL_HIT_STYLE = createHitStyle("djs-hit djs-hit-all");
-  var NO_MOVE_HIT_STYLE = createHitStyle("djs-hit djs-hit-no-move");
-  var HIT_TYPES = {
-    "all": ALL_HIT_STYLE,
-    "click-stroke": CLICK_STROKE_HIT_STYLE,
-    "stroke": STROKE_HIT_STYLE,
-    "no-move": NO_MOVE_HIT_STYLE
-  };
-  function createHitStyle(classNames, attrs) {
-    attrs = assign({
-      stroke: "white",
-      strokeWidth: 15
-    }, attrs || {});
-    return styles.cls(classNames, ["no-fill", "no-border"], attrs);
-  }
-  function applyStyle(hit, type) {
-    var attrs = HIT_TYPES[type];
-    if (!attrs) {
-      throw new Error("invalid hit type <" + type + ">");
-    }
-    attr(hit, attrs);
-    return hit;
-  }
-  function appendHit(gfx, hit) {
-    append(gfx, hit);
-  }
-  this.removeHits = function(gfx) {
-    var hits = all(".djs-hit", gfx);
-    forEach(hits, remove);
-  };
-  this.createDefaultHit = function(element, gfx) {
-    var waypoints = element.waypoints, isFrame = element.isFrame, boxType;
-    if (waypoints) {
-      return this.createWaypointsHit(gfx, waypoints);
-    } else {
-      boxType = isFrame ? "stroke" : "all";
-      return this.createBoxHit(gfx, boxType, {
-        width: element.width,
-        height: element.height
-      });
-    }
-  };
-  this.createWaypointsHit = function(gfx, waypoints) {
-    var hit = createLine(waypoints);
-    applyStyle(hit, "stroke");
-    appendHit(gfx, hit);
-    return hit;
-  };
-  this.createBoxHit = function(gfx, type, attrs) {
-    attrs = assign({
-      x: 0,
-      y: 0
-    }, attrs);
-    var hit = create("rect");
-    applyStyle(hit, type);
-    attr(hit, attrs);
-    appendHit(gfx, hit);
-    return hit;
-  };
-  this.updateDefaultHit = function(element, gfx) {
-    var hit = query(".djs-hit", gfx);
-    if (!hit) {
-      return;
-    }
-    if (element.waypoints) {
-      updateLine(hit, element.waypoints);
-    } else {
-      attr(hit, {
-        width: element.width,
-        height: element.height
-      });
-    }
-    return hit;
-  };
-  this.fire = fire;
-  this.triggerMouseEvent = triggerMouseEvent;
-  this.mouseHandler = mouseHandler;
-  this.registerEvent = registerEvent;
-  this.unregisterEvent = unregisterEvent;
-}
-InteractionEvents.$inject = [
-  "eventBus",
-  "elementRegistry",
-  "styles"
-];
-
-// node_modules/diagram-js/lib/features/interaction-events/index.js
-var interaction_events_default = {
-  __init__: ["interactionEvents"],
-  interactionEvents: ["type", InteractionEvents]
 };
 
 // node_modules/diagram-js/lib/util/Elements.js
@@ -8508,15 +8281,15 @@ function getBBox(elements, stopRecursion) {
     if (element.waypoints && !stopRecursion) {
       bbox = getBBox(element.waypoints, true);
     }
-    var x5 = bbox.x, y5 = bbox.y, height = bbox.height || 0, width = bbox.width || 0;
-    if (x5 < minX || minX === void 0) {
-      minX = x5;
+    var x6 = bbox.x, y5 = bbox.y, height = bbox.height || 0, width = bbox.width || 0;
+    if (x6 < minX || minX === void 0) {
+      minX = x6;
     }
     if (y5 < minY || minY === void 0) {
       minY = y5;
     }
-    if (x5 + width > maxX || maxX === void 0) {
-      maxX = x5 + width;
+    if (x6 + width > maxX || maxX === void 0) {
+      maxX = x6 + width;
     }
     if (y5 + height > maxY || maxY === void 0) {
       maxY = y5 + height;
@@ -8568,318 +8341,10 @@ function copyObject(src1, src2) {
   return assign({}, src1 || {}, src2 || {});
 }
 
-// node_modules/diagram-js/lib/features/outline/Outline.js
-var LOW_PRIORITY2 = 500;
-var DEFAULT_PRIORITY = 1e3;
-function Outline(eventBus, styles) {
-  this._eventBus = eventBus;
-  this.offset = 5;
-  var OUTLINE_STYLE = styles.cls("djs-outline", ["no-fill"]);
-  var self2 = this;
-  function createOutline(gfx) {
-    var outline = create("rect");
-    attr(outline, assign({
-      x: 0,
-      y: 0,
-      rx: 4,
-      width: 100,
-      height: 100
-    }, OUTLINE_STYLE));
-    return outline;
-  }
-  eventBus.on(["shape.added", "shape.changed"], LOW_PRIORITY2, function(event2) {
-    var element = event2.element, gfx = event2.gfx;
-    var outline = query(".djs-outline", gfx);
-    if (!outline) {
-      outline = self2.getOutline(element) || createOutline(gfx);
-      append(gfx, outline);
-    }
-    self2.updateShapeOutline(outline, element);
-  });
-  eventBus.on(["connection.added", "connection.changed"], function(event2) {
-    var element = event2.element, gfx = event2.gfx;
-    var outline = query(".djs-outline", gfx);
-    if (!outline) {
-      outline = createOutline(gfx);
-      append(gfx, outline);
-    }
-    self2.updateConnectionOutline(outline, element);
-  });
-}
-Outline.prototype.updateShapeOutline = function(outline, element) {
-  var updated = false;
-  var providers = this._getProviders();
-  if (providers.length) {
-    forEach(providers, function(provider) {
-      updated = updated || provider.updateOutline(element, outline);
-    });
-  }
-  if (!updated) {
-    attr(outline, {
-      x: -this.offset,
-      y: -this.offset,
-      width: element.width + this.offset * 2,
-      height: element.height + this.offset * 2
-    });
-  }
-};
-Outline.prototype.updateConnectionOutline = function(outline, connection) {
-  var bbox = getBBox(connection);
-  attr(outline, {
-    x: bbox.x - this.offset,
-    y: bbox.y - this.offset,
-    width: bbox.width + this.offset * 2,
-    height: bbox.height + this.offset * 2
-  });
-};
-Outline.prototype.registerProvider = function(priority, provider) {
-  if (!provider) {
-    provider = priority;
-    priority = DEFAULT_PRIORITY;
-  }
-  this._eventBus.on("outline.getProviders", priority, function(event2) {
-    event2.providers.push(provider);
-  });
-};
-Outline.prototype._getProviders = function() {
-  var event2 = this._eventBus.createEvent({
-    type: "outline.getProviders",
-    providers: []
-  });
-  this._eventBus.fire(event2);
-  return event2.providers;
-};
-Outline.prototype.getOutline = function(element) {
-  var outline;
-  var providers = this._getProviders();
-  forEach(providers, function(provider) {
-    if (!isFunction(provider.getOutline)) {
-      return;
-    }
-    outline = outline || provider.getOutline(element);
-  });
-  return outline;
-};
-Outline.$inject = ["eventBus", "styles", "elementRegistry"];
-
-// node_modules/diagram-js/lib/features/outline/index.js
-var outline_default = {
-  __init__: ["outline"],
-  outline: ["type", Outline]
-};
-
-// node_modules/diagram-js/lib/features/selection/Selection.js
-function Selection(eventBus, canvas) {
-  this._eventBus = eventBus;
-  this._canvas = canvas;
-  this._selectedElements = [];
-  var self2 = this;
-  eventBus.on(["shape.remove", "connection.remove"], function(e7) {
-    var element = e7.element;
-    self2.deselect(element);
-  });
-  eventBus.on(["diagram.clear", "root.set"], function(e7) {
-    self2.select(null);
-  });
-}
-Selection.$inject = ["eventBus", "canvas"];
-Selection.prototype.deselect = function(element) {
-  var selectedElements = this._selectedElements;
-  var idx = selectedElements.indexOf(element);
-  if (idx !== -1) {
-    var oldSelection = selectedElements.slice();
-    selectedElements.splice(idx, 1);
-    this._eventBus.fire("selection.changed", { oldSelection, newSelection: selectedElements });
-  }
-};
-Selection.prototype.get = function() {
-  return this._selectedElements;
-};
-Selection.prototype.isSelected = function(element) {
-  return this._selectedElements.indexOf(element) !== -1;
-};
-Selection.prototype.select = function(elements, add3) {
-  var selectedElements = this._selectedElements, oldSelection = selectedElements.slice();
-  if (!isArray(elements)) {
-    elements = elements ? [elements] : [];
-  }
-  var canvas = this._canvas;
-  var rootElement = canvas.getRootElement();
-  elements = elements.filter(function(element) {
-    var elementRoot = canvas.findRoot(element);
-    return rootElement === elementRoot;
-  });
-  if (add3) {
-    forEach(elements, function(element) {
-      if (selectedElements.indexOf(element) !== -1) {
-        return;
-      } else {
-        selectedElements.push(element);
-      }
-    });
-  } else {
-    this._selectedElements = selectedElements = elements.slice();
-  }
-  this._eventBus.fire("selection.changed", { oldSelection, newSelection: selectedElements });
-};
-
-// node_modules/diagram-js/lib/features/selection/SelectionVisuals.js
-var MARKER_HOVER = "hover";
-var MARKER_SELECTED = "selected";
-var SELECTION_OUTLINE_PADDING = 6;
-function SelectionVisuals(canvas, eventBus, selection2) {
-  this._canvas = canvas;
-  var self2 = this;
-  this._multiSelectionBox = null;
-  function addMarker(e7, cls) {
-    canvas.addMarker(e7, cls);
-  }
-  function removeMarker(e7, cls) {
-    canvas.removeMarker(e7, cls);
-  }
-  eventBus.on("element.hover", function(event2) {
-    addMarker(event2.element, MARKER_HOVER);
-  });
-  eventBus.on("element.out", function(event2) {
-    removeMarker(event2.element, MARKER_HOVER);
-  });
-  eventBus.on("selection.changed", function(event2) {
-    function deselect(s5) {
-      removeMarker(s5, MARKER_SELECTED);
-    }
-    function select(s5) {
-      addMarker(s5, MARKER_SELECTED);
-    }
-    var oldSelection = event2.oldSelection, newSelection = event2.newSelection;
-    forEach(oldSelection, function(e7) {
-      if (newSelection.indexOf(e7) === -1) {
-        deselect(e7);
-      }
-    });
-    forEach(newSelection, function(e7) {
-      if (oldSelection.indexOf(e7) === -1) {
-        select(e7);
-      }
-    });
-    self2._updateSelectionOutline(newSelection);
-  });
-  eventBus.on("element.changed", function(event2) {
-    if (selection2.isSelected(event2.element)) {
-      self2._updateSelectionOutline(selection2.get());
-    }
-  });
-}
-SelectionVisuals.$inject = [
-  "canvas",
-  "eventBus",
-  "selection"
-];
-SelectionVisuals.prototype._updateSelectionOutline = function(selection2) {
-  var layer = this._canvas.getLayer("selectionOutline");
-  clear(layer);
-  var enabled = selection2.length > 1;
-  var container = this._canvas.getContainer();
-  classes(container)[enabled ? "add" : "remove"]("djs-multi-select");
-  if (!enabled) {
-    return;
-  }
-  var bBox = addSelectionOutlinePadding(getBBox(selection2));
-  var rect = create("rect");
-  attr(rect, assign({
-    rx: 3
-  }, bBox));
-  classes(rect).add("djs-selection-outline");
-  append(layer, rect);
-};
-function addSelectionOutlinePadding(bBox) {
-  return {
-    x: bBox.x - SELECTION_OUTLINE_PADDING,
-    y: bBox.y - SELECTION_OUTLINE_PADDING,
-    width: bBox.width + SELECTION_OUTLINE_PADDING * 2,
-    height: bBox.height + SELECTION_OUTLINE_PADDING * 2
-  };
-}
-
-// node_modules/diagram-js/lib/features/selection/SelectionBehavior.js
-function SelectionBehavior(eventBus, selection2, canvas, elementRegistry) {
-  eventBus.on("create.end", 500, function(event2) {
-    var context = event2.context, canExecute = context.canExecute, elements = context.elements, hints = context.hints || {}, autoSelect = hints.autoSelect;
-    if (canExecute) {
-      if (autoSelect === false) {
-        return;
-      }
-      if (isArray(autoSelect)) {
-        selection2.select(autoSelect);
-      } else {
-        selection2.select(elements.filter(isShown));
-      }
-    }
-  });
-  eventBus.on("connect.end", 500, function(event2) {
-    var context = event2.context, connection = context.connection;
-    if (connection) {
-      selection2.select(connection);
-    }
-  });
-  eventBus.on("shape.move.end", 500, function(event2) {
-    var previousSelection = event2.previousSelection || [];
-    var shape = elementRegistry.get(event2.context.shape.id);
-    var isSelected = find(previousSelection, function(selectedShape) {
-      return shape.id === selectedShape.id;
-    });
-    if (!isSelected) {
-      selection2.select(shape);
-    }
-  });
-  eventBus.on("element.click", function(event2) {
-    if (!isPrimaryButton(event2)) {
-      return;
-    }
-    var element = event2.element;
-    if (element === canvas.getRootElement()) {
-      element = null;
-    }
-    var isSelected = selection2.isSelected(element), isMultiSelect = selection2.get().length > 1;
-    var add3 = hasSecondaryModifier(event2);
-    if (isSelected && isMultiSelect) {
-      if (add3) {
-        return selection2.deselect(element);
-      } else {
-        return selection2.select(element);
-      }
-    } else if (!isSelected) {
-      selection2.select(element, add3);
-    } else {
-      selection2.deselect(element);
-    }
-  });
-}
-SelectionBehavior.$inject = [
-  "eventBus",
-  "selection",
-  "canvas",
-  "elementRegistry"
-];
-function isShown(element) {
-  return !element.hidden;
-}
-
-// node_modules/diagram-js/lib/features/selection/index.js
-var selection_default = {
-  __init__: ["selectionVisuals", "selectionBehavior"],
-  __depends__: [
-    interaction_events_default,
-    outline_default
-  ],
-  selection: ["type", Selection],
-  selectionVisuals: ["type", SelectionVisuals],
-  selectionBehavior: ["type", SelectionBehavior]
-};
-
 // node_modules/diagram-js/lib/util/IdGenerator.js
-function IdGenerator(prefix3) {
+function IdGenerator(prefix4) {
   this._counter = 0;
-  this._prefix = (prefix3 ? prefix3 + "-" : "") + Math.floor(Math.random() * 1e9) + "-";
+  this._prefix = (prefix4 ? prefix4 + "-" : "") + Math.floor(Math.random() * 1e9) + "-";
 }
 IdGenerator.prototype.next = function() {
   return this._prefix + ++this._counter;
@@ -8887,7 +8352,7 @@ IdGenerator.prototype.next = function() {
 
 // node_modules/diagram-js/lib/features/overlays/Overlays.js
 var ids = new IdGenerator("ov");
-var LOW_PRIORITY3 = 500;
+var LOW_PRIORITY = 500;
 function Overlays(config, eventBus, canvas, elementRegistry) {
   this._eventBus = eventBus;
   this._canvas = canvas;
@@ -8996,13 +8461,13 @@ Overlays.prototype.clear = function() {
 };
 Overlays.prototype._updateOverlayContainer = function(container) {
   var element = container.element, html = container.html;
-  var x5 = element.x, y5 = element.y;
+  var x6 = element.x, y5 = element.y;
   if (element.waypoints) {
     var bbox = getBBox(element);
-    x5 = bbox.x;
+    x6 = bbox.x;
     y5 = bbox.y;
   }
-  setPosition(html, x5, y5);
+  setPosition(html, x6, y5);
   attr2(container.html, "data-container-id", element.id);
 };
 Overlays.prototype._updateOverlay = function(overlay) {
@@ -9137,11 +8602,11 @@ Overlays.prototype._init = function() {
     self2._updateOverlaysVisibilty(viewbox);
     self2.show();
   }
-  eventBus.on("canvas.viewbox.changing", function(event2) {
+  eventBus.on("canvas.viewbox.changing", function(event3) {
     self2.hide();
   });
-  eventBus.on("canvas.viewbox.changed", function(event2) {
-    updateViewbox(event2.viewbox);
+  eventBus.on("canvas.viewbox.changed", function(event3) {
+    updateViewbox(event3.viewbox);
   });
   eventBus.on(["shape.remove", "connection.remove"], function(e7) {
     var element = e7.element;
@@ -9158,7 +8623,7 @@ Overlays.prototype._init = function() {
       }
     }
   });
-  eventBus.on("element.changed", LOW_PRIORITY3, function(e7) {
+  eventBus.on("element.changed", LOW_PRIORITY, function(e7) {
     var element = e7.element;
     var container = self2._getOverlayContainer(element, true);
     if (container) {
@@ -9191,16 +8656,16 @@ function createRoot(parentNode) {
   parentNode.insertBefore(root, parentNode.firstChild);
   return root;
 }
-function setPosition(el, x5, y5) {
-  assign2(el, { left: x5 + "px", top: y5 + "px" });
+function setPosition(el, x6, y5) {
+  assign2(el, { left: x6 + "px", top: y5 + "px" });
 }
 function setVisible(el, visible) {
   el.style.display = visible === false ? "none" : "";
 }
 function setTransform(el, transform3) {
   el.style["transform-origin"] = "top left";
-  ["", "-ms-", "-webkit-"].forEach(function(prefix3) {
-    el.style[prefix3 + "transform"] = transform3;
+  ["", "-ms-", "-webkit-"].forEach(function(prefix4) {
+    el.style[prefix4 + "transform"] = transform3;
   });
 }
 
@@ -9212,28 +8677,28 @@ var overlays_default = {
 
 // node_modules/diagram-js/lib/features/change-support/ChangeSupport.js
 function ChangeSupport(eventBus, canvas, elementRegistry, graphicsFactory) {
-  eventBus.on("element.changed", function(event2) {
-    var element = event2.element;
+  eventBus.on("element.changed", function(event3) {
+    var element = event3.element;
     if (element.parent || element === canvas.getRootElement()) {
-      event2.gfx = elementRegistry.getGraphics(element);
+      event3.gfx = elementRegistry.getGraphics(element);
     }
-    if (!event2.gfx) {
+    if (!event3.gfx) {
       return;
     }
-    eventBus.fire(getType(element) + ".changed", event2);
+    eventBus.fire(getType(element) + ".changed", event3);
   });
-  eventBus.on("elements.changed", function(event2) {
-    var elements = event2.elements;
+  eventBus.on("elements.changed", function(event3) {
+    var elements = event3.elements;
     elements.forEach(function(e7) {
       eventBus.fire("element.changed", { element: e7 });
     });
     graphicsFactory.updateContainments(elements);
   });
-  eventBus.on("shape.changed", function(event2) {
-    graphicsFactory.update("shape", event2.element, event2.gfx);
+  eventBus.on("shape.changed", function(event3) {
+    graphicsFactory.update("shape", event3.element, event3.gfx);
   });
-  eventBus.on("connection.changed", function(event2) {
-    graphicsFactory.update("connection", event2.element, event2.gfx);
+  eventBus.on("connection.changed", function(event3) {
+    graphicsFactory.update("connection", event3.element, event3.gfx);
   });
 }
 ChangeSupport.$inject = [
@@ -9250,14 +8715,14 @@ var change_support_default = {
 };
 
 // node_modules/diagram-js/lib/command/CommandInterceptor.js
-var DEFAULT_PRIORITY2 = 1e3;
+var DEFAULT_PRIORITY = 1e3;
 function CommandInterceptor(eventBus) {
   this._eventBus = eventBus;
 }
 CommandInterceptor.$inject = ["eventBus"];
 function unwrapEvent(fn2, that) {
-  return function(event2) {
-    return fn2.call(that || null, event2.context, event2.command, event2);
+  return function(event3) {
+    return fn2.call(that || null, event3.context, event3.command, event3);
   };
 }
 CommandInterceptor.prototype.on = function(events, hook, priority, handlerFn, unwrap, that) {
@@ -9272,7 +8737,7 @@ CommandInterceptor.prototype.on = function(events, hook, priority, handlerFn, un
     that = unwrap;
     unwrap = handlerFn;
     handlerFn = priority;
-    priority = DEFAULT_PRIORITY2;
+    priority = DEFAULT_PRIORITY;
   }
   if (isObject(unwrap)) {
     that = unwrap;
@@ -9285,8 +8750,8 @@ CommandInterceptor.prototype.on = function(events, hook, priority, handlerFn, un
     events = [events];
   }
   var eventBus = this._eventBus;
-  forEach(events, function(event2) {
-    var fullEvent = ["commandStack", event2, hook].filter(function(e7) {
+  forEach(events, function(event3) {
+    var fullEvent = ["commandStack", event3, hook].filter(function(e7) {
       return e7;
     }).join(".");
     eventBus.on(fullEvent, priority, unwrap ? unwrapEvent(handlerFn, that) : handlerFn, that);
@@ -9318,16 +8783,16 @@ function createHook(hook) {
 // node_modules/diagram-js/lib/features/root-elements/RootElementsBehavior.js
 function RootElementsBehavior(canvas, injector) {
   injector.invoke(CommandInterceptor, this);
-  this.executed(function(event2) {
-    var context = event2.context;
+  this.executed(function(event3) {
+    var context = event3.context;
     if (context.rootElement) {
       canvas.setRootElement(context.rootElement);
     } else {
       context.rootElement = canvas.getRootElement();
     }
   });
-  this.revert(function(event2) {
-    var context = event2.context;
+  this.revert(function(event3) {
+    var context = event3.context;
     if (context.rootElement) {
       canvas.setRootElement(context.rootElement);
     }
@@ -9395,8 +8860,8 @@ function DrilldownBreadcrumbs(eventBus, elementRegistry, canvas) {
   var containerClasses = classes2(container);
   container.appendChild(breadcrumbs);
   var businessObjectParents = [];
-  eventBus.on("element.changed", function(event2) {
-    var shape = event2.element, businessObject = getBusinessObject(shape);
+  eventBus.on("element.changed", function(event3) {
+    var shape = event3.element, businessObject = getBusinessObject(shape);
     var isPresent = find(businessObjectParents, function(element) {
       return element === businessObject;
     });
@@ -9432,8 +8897,8 @@ function DrilldownBreadcrumbs(eventBus, elementRegistry, canvas) {
       breadcrumbs.appendChild(element2);
     });
   }
-  eventBus.on("root.set", function(event2) {
-    updateBreadcrumbs(event2.element);
+  eventBus.on("root.set", function(event3) {
+    updateBreadcrumbs(event3.element);
   });
 }
 DrilldownBreadcrumbs.$inject = ["eventBus", "elementRegistry", "canvas"];
@@ -9452,8 +8917,8 @@ function getBusinessObjectParentChain(child) {
 function DrilldownCentering(eventBus, canvas) {
   var currentRoot = null;
   var positionMap = new Map2();
-  eventBus.on("root.set", function(event2) {
-    var newRoot = event2.element;
+  eventBus.on("root.set", function(event3) {
+    var newRoot = event3.element;
     var currentViewbox = canvas.viewbox();
     var storedViewbox = positionMap.get(newRoot);
     positionMap.set(currentRoot, {
@@ -9672,7 +9137,7 @@ function shouldMoveToPlane(businessObject, plane) {
 }
 
 // node_modules/bpmn-js/lib/features/drilldown/DrilldownOverlayBehavior.js
-var LOW_PRIORITY4 = 250;
+var LOW_PRIORITY2 = 250;
 var ARROW_DOWN_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.81801948,3.50735931 L10.4996894,9.1896894 L10.5,4 L12,4 L12,12 L4,12 L4,10.5 L9.6896894,10.4996894 L3.75735931,4.56801948 C3.46446609,4.27512627 3.46446609,3.80025253 3.75735931,3.50735931 C4.05025253,3.21446609 4.52512627,3.21446609 4.81801948,3.50735931 Z"/></svg>';
 var EMPTY_MARKER = "bjs-drilldown-empty";
 function DrilldownOverlayBehavior(canvas, eventBus, elementRegistry, overlays) {
@@ -9682,7 +9147,7 @@ function DrilldownOverlayBehavior(canvas, eventBus, elementRegistry, overlays) {
   this._elementRegistry = elementRegistry;
   this._overlays = overlays;
   var self2 = this;
-  this.executed("shape.toggleCollapse", LOW_PRIORITY4, function(context) {
+  this.executed("shape.toggleCollapse", LOW_PRIORITY2, function(context) {
     var shape = context.shape;
     if (self2._canDrillDown(shape)) {
       self2._addOverlay(shape);
@@ -9690,7 +9155,7 @@ function DrilldownOverlayBehavior(canvas, eventBus, elementRegistry, overlays) {
       self2._removeOverlay(shape);
     }
   }, true);
-  this.reverted("shape.toggleCollapse", LOW_PRIORITY4, function(context) {
+  this.reverted("shape.toggleCollapse", LOW_PRIORITY2, function(context) {
     var shape = context.shape;
     if (self2._canDrillDown(shape)) {
       self2._addOverlay(shape);
@@ -9700,7 +9165,7 @@ function DrilldownOverlayBehavior(canvas, eventBus, elementRegistry, overlays) {
   }, true);
   this.executed(
     ["shape.create", "shape.move", "shape.delete"],
-    LOW_PRIORITY4,
+    LOW_PRIORITY2,
     function(context) {
       var oldParent = context.oldParent, newParent = context.newParent || context.parent, shape = context.shape;
       if (self2._canDrillDown(shape)) {
@@ -9714,7 +9179,7 @@ function DrilldownOverlayBehavior(canvas, eventBus, elementRegistry, overlays) {
   );
   this.reverted(
     ["shape.create", "shape.move", "shape.delete"],
-    LOW_PRIORITY4,
+    LOW_PRIORITY2,
     function(context) {
       var oldParent = context.oldParent, newParent = context.newParent || context.parent, shape = context.shape;
       if (self2._canDrillDown(shape)) {
@@ -9802,7 +9267,709 @@ var drilldown_default = {
   subprocessCompatibility: ["type", SubprocessCompatibility]
 };
 
-// node_modules/didi/dist/index.esm.js
+// node_modules/diagram-js/lib/features/outline/Outline.js
+var LOW_PRIORITY3 = 500;
+var DEFAULT_PRIORITY2 = 1e3;
+function Outline(eventBus, styles) {
+  this._eventBus = eventBus;
+  this.offset = 5;
+  var OUTLINE_STYLE = styles.cls("djs-outline", ["no-fill"]);
+  var self2 = this;
+  function createOutline(gfx) {
+    var outline = create("rect");
+    attr(outline, assign({
+      x: 0,
+      y: 0,
+      rx: 4,
+      width: 100,
+      height: 100
+    }, OUTLINE_STYLE));
+    return outline;
+  }
+  eventBus.on(["shape.added", "shape.changed"], LOW_PRIORITY3, function(event3) {
+    var element = event3.element, gfx = event3.gfx;
+    var outline = query(".djs-outline", gfx);
+    if (!outline) {
+      outline = self2.getOutline(element) || createOutline(gfx);
+      append(gfx, outline);
+    }
+    self2.updateShapeOutline(outline, element);
+  });
+  eventBus.on(["connection.added", "connection.changed"], function(event3) {
+    var element = event3.element, gfx = event3.gfx;
+    var outline = query(".djs-outline", gfx);
+    if (!outline) {
+      outline = createOutline(gfx);
+      append(gfx, outline);
+    }
+    self2.updateConnectionOutline(outline, element);
+  });
+}
+Outline.prototype.updateShapeOutline = function(outline, element) {
+  var updated = false;
+  var providers = this._getProviders();
+  if (providers.length) {
+    forEach(providers, function(provider) {
+      updated = updated || provider.updateOutline(element, outline);
+    });
+  }
+  if (!updated) {
+    attr(outline, {
+      x: -this.offset,
+      y: -this.offset,
+      width: element.width + this.offset * 2,
+      height: element.height + this.offset * 2
+    });
+  }
+};
+Outline.prototype.updateConnectionOutline = function(outline, connection) {
+  var bbox = getBBox(connection);
+  attr(outline, {
+    x: bbox.x - this.offset,
+    y: bbox.y - this.offset,
+    width: bbox.width + this.offset * 2,
+    height: bbox.height + this.offset * 2
+  });
+};
+Outline.prototype.registerProvider = function(priority, provider) {
+  if (!provider) {
+    provider = priority;
+    priority = DEFAULT_PRIORITY2;
+  }
+  this._eventBus.on("outline.getProviders", priority, function(event3) {
+    event3.providers.push(provider);
+  });
+};
+Outline.prototype._getProviders = function() {
+  var event3 = this._eventBus.createEvent({
+    type: "outline.getProviders",
+    providers: []
+  });
+  this._eventBus.fire(event3);
+  return event3.providers;
+};
+Outline.prototype.getOutline = function(element) {
+  var outline;
+  var providers = this._getProviders();
+  forEach(providers, function(provider) {
+    if (!isFunction(provider.getOutline)) {
+      return;
+    }
+    outline = outline || provider.getOutline(element);
+  });
+  return outline;
+};
+Outline.$inject = ["eventBus", "styles", "elementRegistry"];
+
+// node_modules/diagram-js/lib/features/outline/index.js
+var outline_default = {
+  __init__: ["outline"],
+  outline: ["type", Outline]
+};
+
+// node_modules/bpmn-js/lib/features/outline/OutlineUtil.js
+var DATA_OBJECT_REFERENCE_OUTLINE_PATH = "M44.7648 11.3263L36.9892 2.64074C36.0451 1.58628 34.5651 0.988708 33.1904 0.988708H5.98667C3.22688 0.988708 0.989624 3.34892 0.989624 6.26039V55.0235C0.989624 57.9349 3.22688 60.2952 5.98667 60.2952H40.966C43.7257 60.2952 45.963 57.9349 45.963 55.0235V14.9459C45.963 13.5998 45.6407 12.3048 44.7648 11.3263Z";
+var DATA_STORE_REFERENCE_OUTLINE_PATH = "M1.03845 48.1347C1.03845 49.3511 1.07295 50.758 1.38342 52.064C1.69949 53.3938 2.32428 54.7154 3.56383 55.6428C6.02533 57.4841 10.1161 58.7685 14.8212 59.6067C19.5772 60.4538 25.1388 60.8738 30.6831 60.8738C36.2276 60.8738 41.7891 60.4538 46.545 59.6067C51.2504 58.7687 55.3412 57.4842 57.8028 55.6429C59.0424 54.7156 59.6673 53.3938 59.9834 52.064C60.2938 50.7579 60.3285 49.351 60.3285 48.1344V13.8415C60.3285 12.6249 60.2938 11.218 59.9834 9.91171C59.6673 8.58194 59.0423 7.2602 57.8027 6.33294C55.341 4.49168 51.2503 3.20723 46.545 2.36914C41.7891 1.522 36.2276 1.10204 30.6831 1.10205C25.1388 1.10206 19.5772 1.52206 14.8213 2.36923C10.1162 3.20734 6.02543 4.49183 3.5639 6.33314C2.32433 7.26038 1.69951 8.58206 1.38343 9.91181C1.07295 11.2179 1.03845 12.6247 1.03845 13.8411V48.1347Z";
+var DATA_OBJECT_REFERENCE_STANDARD_SIZE = { width: 36, height: 50 };
+var DATA_STORE_REFERENCE_STANDARD_SIZE = { width: 50, height: 50 };
+function createPath(path, attrs, OUTLINE_STYLE) {
+  return create("path", {
+    d: path,
+    strokeWidth: 2,
+    transform: `translate(${attrs.x}, ${attrs.y})`,
+    ...OUTLINE_STYLE
+  });
+}
+
+// node_modules/bpmn-js/lib/features/outline/OutlineProvider.js
+var DEFAULT_OFFSET = 5;
+function OutlineProvider(outline, styles) {
+  this._styles = styles;
+  outline.registerProvider(this);
+}
+OutlineProvider.$inject = [
+  "outline",
+  "styles"
+];
+OutlineProvider.prototype.getOutline = function(element) {
+  const OUTLINE_STYLE = this._styles.cls("djs-outline", ["no-fill"]);
+  var outline;
+  if (isLabel(element)) {
+    return;
+  }
+  if (is(element, "bpmn:Gateway")) {
+    outline = create("rect");
+    assign(outline.style, {
+      "transform-box": "fill-box",
+      "transform": "rotate(45deg)",
+      "transform-origin": "center"
+    });
+    attr(outline, assign({
+      x: 2,
+      y: 2,
+      rx: 4,
+      width: element.width - 4,
+      height: element.height - 4
+    }, OUTLINE_STYLE));
+  } else if (isAny(element, ["bpmn:Task", "bpmn:SubProcess", "bpmn:Group"])) {
+    outline = create("rect");
+    attr(outline, assign({
+      x: -DEFAULT_OFFSET,
+      y: -DEFAULT_OFFSET,
+      rx: 14,
+      width: element.width + DEFAULT_OFFSET * 2,
+      height: element.height + DEFAULT_OFFSET * 2
+    }, OUTLINE_STYLE));
+  } else if (is(element, "bpmn:EndEvent")) {
+    outline = create("circle");
+    attr(outline, assign({
+      cx: element.width / 2,
+      cy: element.height / 2,
+      r: element.width / 2 + DEFAULT_OFFSET + 1
+    }, OUTLINE_STYLE));
+  } else if (is(element, "bpmn:Event")) {
+    outline = create("circle");
+    attr(outline, assign({
+      cx: element.width / 2,
+      cy: element.height / 2,
+      r: element.width / 2 + DEFAULT_OFFSET
+    }, OUTLINE_STYLE));
+  } else if (is(element, "bpmn:DataObjectReference") && isStandardSize(element, "bpmn:DataObjectReference")) {
+    outline = createPath(
+      DATA_OBJECT_REFERENCE_OUTLINE_PATH,
+      { x: -6, y: -6 },
+      OUTLINE_STYLE
+    );
+  } else if (is(element, "bpmn:DataStoreReference") && isStandardSize(element, "bpmn:DataStoreReference")) {
+    outline = createPath(
+      DATA_STORE_REFERENCE_OUTLINE_PATH,
+      { x: -6, y: -6 },
+      OUTLINE_STYLE
+    );
+  }
+  return outline;
+};
+OutlineProvider.prototype.updateOutline = function(element, outline) {
+  if (isLabel(element)) {
+    return;
+  }
+  if (isAny(element, ["bpmn:SubProcess", "bpmn:Group"])) {
+    attr(outline, {
+      width: element.width + DEFAULT_OFFSET * 2,
+      height: element.height + DEFAULT_OFFSET * 2
+    });
+    return true;
+  } else if (isAny(element, [
+    "bpmn:Event",
+    "bpmn:Gateway",
+    "bpmn:DataStoreReference",
+    "bpmn:DataObjectReference"
+  ])) {
+    return true;
+  }
+  return false;
+};
+function isStandardSize(element, type) {
+  var standardSize;
+  if (type === "bpmn:DataObjectReference") {
+    standardSize = DATA_OBJECT_REFERENCE_STANDARD_SIZE;
+  } else if (type === "bpmn:DataStoreReference") {
+    standardSize = DATA_STORE_REFERENCE_STANDARD_SIZE;
+  }
+  return element.width === standardSize.width && element.height === standardSize.height;
+}
+
+// node_modules/bpmn-js/lib/features/outline/index.js
+var outline_default2 = {
+  __depends__: [
+    outline_default
+  ],
+  __init__: ["outlineProvider"],
+  outlineProvider: ["type", OutlineProvider]
+};
+
+// node_modules/diagram-js/lib/util/Event.js
+function __stopPropagation(event3) {
+  if (!event3 || typeof event3.stopPropagation !== "function") {
+    return;
+  }
+  event3.stopPropagation();
+}
+function getOriginal(event3) {
+  return event3.originalEvent || event3.srcEvent;
+}
+function stopPropagation(event3) {
+  __stopPropagation(event3);
+  __stopPropagation(getOriginal(event3));
+}
+function toPoint(event3) {
+  if (event3.pointers && event3.pointers.length) {
+    event3 = event3.pointers[0];
+  }
+  if (event3.touches && event3.touches.length) {
+    event3 = event3.touches[0];
+  }
+  return event3 ? {
+    x: event3.clientX,
+    y: event3.clientY
+  } : null;
+}
+
+// node_modules/diagram-js/lib/util/Platform.js
+function isMac() {
+  return /mac/i.test(navigator.platform);
+}
+
+// node_modules/diagram-js/lib/util/Mouse.js
+function isButton(event3, button) {
+  return (getOriginal(event3) || event3).button === button;
+}
+function isPrimaryButton(event3) {
+  return isButton(event3, 0);
+}
+function isAuxiliaryButton(event3) {
+  return isButton(event3, 1);
+}
+function hasPrimaryModifier(event3) {
+  var originalEvent = getOriginal(event3) || event3;
+  if (!isPrimaryButton(event3)) {
+    return false;
+  }
+  if (isMac()) {
+    return originalEvent.metaKey;
+  } else {
+    return originalEvent.ctrlKey;
+  }
+}
+function hasSecondaryModifier(event3) {
+  var originalEvent = getOriginal(event3) || event3;
+  return isPrimaryButton(event3) && originalEvent.shiftKey;
+}
+
+// node_modules/diagram-js/lib/features/interaction-events/InteractionEvents.js
+function allowAll(event3) {
+  return true;
+}
+function allowPrimaryAndAuxiliary(event3) {
+  return isPrimaryButton(event3) || isAuxiliaryButton(event3);
+}
+var LOW_PRIORITY4 = 500;
+function InteractionEvents(eventBus, elementRegistry, styles) {
+  var self2 = this;
+  function fire(type, event3, element) {
+    if (isIgnored(type, event3)) {
+      return;
+    }
+    var target, gfx, returnValue;
+    if (!element) {
+      target = event3.delegateTarget || event3.target;
+      if (target) {
+        gfx = target;
+        element = elementRegistry.get(gfx);
+      }
+    } else {
+      gfx = elementRegistry.getGraphics(element);
+    }
+    if (!gfx || !element) {
+      return;
+    }
+    returnValue = eventBus.fire(type, {
+      element,
+      gfx,
+      originalEvent: event3
+    });
+    if (returnValue === false) {
+      event3.stopPropagation();
+      event3.preventDefault();
+    }
+  }
+  var handlers = {};
+  function mouseHandler(localEventName) {
+    return handlers[localEventName];
+  }
+  function isIgnored(localEventName, event3) {
+    var filter2 = ignoredFilters[localEventName] || isPrimaryButton;
+    return !filter2(event3);
+  }
+  var bindings = {
+    click: "element.click",
+    contextmenu: "element.contextmenu",
+    dblclick: "element.dblclick",
+    mousedown: "element.mousedown",
+    mousemove: "element.mousemove",
+    mouseover: "element.hover",
+    mouseout: "element.out",
+    mouseup: "element.mouseup"
+  };
+  var ignoredFilters = {
+    "element.contextmenu": allowAll,
+    "element.mousedown": allowPrimaryAndAuxiliary,
+    "element.mouseup": allowPrimaryAndAuxiliary,
+    "element.click": allowPrimaryAndAuxiliary,
+    "element.dblclick": allowPrimaryAndAuxiliary
+  };
+  function triggerMouseEvent(eventName, event3, targetElement) {
+    var localEventName = bindings[eventName];
+    if (!localEventName) {
+      throw new Error("unmapped DOM event name <" + eventName + ">");
+    }
+    return fire(localEventName, event3, targetElement);
+  }
+  var ELEMENT_SELECTOR2 = "svg, .djs-element";
+  function registerEvent(node2, event3, localEvent, ignoredFilter) {
+    var handler = handlers[localEvent] = function(event4) {
+      fire(localEvent, event4);
+    };
+    if (ignoredFilter) {
+      ignoredFilters[localEvent] = ignoredFilter;
+    }
+    handler.$delegate = delegate.bind(node2, ELEMENT_SELECTOR2, event3, handler);
+  }
+  function unregisterEvent(node2, event3, localEvent) {
+    var handler = mouseHandler(localEvent);
+    if (!handler) {
+      return;
+    }
+    delegate.unbind(node2, event3, handler.$delegate);
+  }
+  function registerEvents(svg) {
+    forEach(bindings, function(val, key) {
+      registerEvent(svg, key, val);
+    });
+  }
+  function unregisterEvents(svg) {
+    forEach(bindings, function(val, key) {
+      unregisterEvent(svg, key, val);
+    });
+  }
+  eventBus.on("canvas.destroy", function(event3) {
+    unregisterEvents(event3.svg);
+  });
+  eventBus.on("canvas.init", function(event3) {
+    registerEvents(event3.svg);
+  });
+  eventBus.on(["shape.added", "connection.added"], function(event3) {
+    var element = event3.element, gfx = event3.gfx;
+    eventBus.fire("interactionEvents.createHit", { element, gfx });
+  });
+  eventBus.on([
+    "shape.changed",
+    "connection.changed"
+  ], LOW_PRIORITY4, function(event3) {
+    var element = event3.element, gfx = event3.gfx;
+    eventBus.fire("interactionEvents.updateHit", { element, gfx });
+  });
+  eventBus.on("interactionEvents.createHit", LOW_PRIORITY4, function(event3) {
+    var element = event3.element, gfx = event3.gfx;
+    self2.createDefaultHit(element, gfx);
+  });
+  eventBus.on("interactionEvents.updateHit", function(event3) {
+    var element = event3.element, gfx = event3.gfx;
+    self2.updateDefaultHit(element, gfx);
+  });
+  var STROKE_HIT_STYLE = createHitStyle("djs-hit djs-hit-stroke");
+  var CLICK_STROKE_HIT_STYLE = createHitStyle("djs-hit djs-hit-click-stroke");
+  var ALL_HIT_STYLE = createHitStyle("djs-hit djs-hit-all");
+  var NO_MOVE_HIT_STYLE = createHitStyle("djs-hit djs-hit-no-move");
+  var HIT_TYPES = {
+    "all": ALL_HIT_STYLE,
+    "click-stroke": CLICK_STROKE_HIT_STYLE,
+    "stroke": STROKE_HIT_STYLE,
+    "no-move": NO_MOVE_HIT_STYLE
+  };
+  function createHitStyle(classNames, attrs) {
+    attrs = assign({
+      stroke: "white",
+      strokeWidth: 15
+    }, attrs || {});
+    return styles.cls(classNames, ["no-fill", "no-border"], attrs);
+  }
+  function applyStyle(hit, type) {
+    var attrs = HIT_TYPES[type];
+    if (!attrs) {
+      throw new Error("invalid hit type <" + type + ">");
+    }
+    attr(hit, attrs);
+    return hit;
+  }
+  function appendHit(gfx, hit) {
+    append(gfx, hit);
+  }
+  this.removeHits = function(gfx) {
+    var hits = all(".djs-hit", gfx);
+    forEach(hits, remove);
+  };
+  this.createDefaultHit = function(element, gfx) {
+    var waypoints = element.waypoints, isFrame = element.isFrame, boxType;
+    if (waypoints) {
+      return this.createWaypointsHit(gfx, waypoints);
+    } else {
+      boxType = isFrame ? "stroke" : "all";
+      return this.createBoxHit(gfx, boxType, {
+        width: element.width,
+        height: element.height
+      });
+    }
+  };
+  this.createWaypointsHit = function(gfx, waypoints) {
+    var hit = createLine(waypoints);
+    applyStyle(hit, "stroke");
+    appendHit(gfx, hit);
+    return hit;
+  };
+  this.createBoxHit = function(gfx, type, attrs) {
+    attrs = assign({
+      x: 0,
+      y: 0
+    }, attrs);
+    var hit = create("rect");
+    applyStyle(hit, type);
+    attr(hit, attrs);
+    appendHit(gfx, hit);
+    return hit;
+  };
+  this.updateDefaultHit = function(element, gfx) {
+    var hit = query(".djs-hit", gfx);
+    if (!hit) {
+      return;
+    }
+    if (element.waypoints) {
+      updateLine(hit, element.waypoints);
+    } else {
+      attr(hit, {
+        width: element.width,
+        height: element.height
+      });
+    }
+    return hit;
+  };
+  this.fire = fire;
+  this.triggerMouseEvent = triggerMouseEvent;
+  this.mouseHandler = mouseHandler;
+  this.registerEvent = registerEvent;
+  this.unregisterEvent = unregisterEvent;
+}
+InteractionEvents.$inject = [
+  "eventBus",
+  "elementRegistry",
+  "styles"
+];
+
+// node_modules/diagram-js/lib/features/interaction-events/index.js
+var interaction_events_default = {
+  __init__: ["interactionEvents"],
+  interactionEvents: ["type", InteractionEvents]
+};
+
+// node_modules/diagram-js/lib/features/selection/Selection.js
+function Selection(eventBus, canvas) {
+  this._eventBus = eventBus;
+  this._canvas = canvas;
+  this._selectedElements = [];
+  var self2 = this;
+  eventBus.on(["shape.remove", "connection.remove"], function(e7) {
+    var element = e7.element;
+    self2.deselect(element);
+  });
+  eventBus.on(["diagram.clear", "root.set"], function(e7) {
+    self2.select(null);
+  });
+}
+Selection.$inject = ["eventBus", "canvas"];
+Selection.prototype.deselect = function(element) {
+  var selectedElements = this._selectedElements;
+  var idx = selectedElements.indexOf(element);
+  if (idx !== -1) {
+    var oldSelection = selectedElements.slice();
+    selectedElements.splice(idx, 1);
+    this._eventBus.fire("selection.changed", { oldSelection, newSelection: selectedElements });
+  }
+};
+Selection.prototype.get = function() {
+  return this._selectedElements;
+};
+Selection.prototype.isSelected = function(element) {
+  return this._selectedElements.indexOf(element) !== -1;
+};
+Selection.prototype.select = function(elements, add3) {
+  var selectedElements = this._selectedElements, oldSelection = selectedElements.slice();
+  if (!isArray(elements)) {
+    elements = elements ? [elements] : [];
+  }
+  var canvas = this._canvas;
+  var rootElement = canvas.getRootElement();
+  elements = elements.filter(function(element) {
+    var elementRoot = canvas.findRoot(element);
+    return rootElement === elementRoot;
+  });
+  if (add3) {
+    forEach(elements, function(element) {
+      if (selectedElements.indexOf(element) !== -1) {
+        return;
+      } else {
+        selectedElements.push(element);
+      }
+    });
+  } else {
+    this._selectedElements = selectedElements = elements.slice();
+  }
+  this._eventBus.fire("selection.changed", { oldSelection, newSelection: selectedElements });
+};
+
+// node_modules/diagram-js/lib/features/selection/SelectionVisuals.js
+var MARKER_HOVER = "hover";
+var MARKER_SELECTED = "selected";
+var SELECTION_OUTLINE_PADDING = 6;
+function SelectionVisuals(canvas, eventBus, selection2) {
+  this._canvas = canvas;
+  var self2 = this;
+  this._multiSelectionBox = null;
+  function addMarker(e7, cls) {
+    canvas.addMarker(e7, cls);
+  }
+  function removeMarker(e7, cls) {
+    canvas.removeMarker(e7, cls);
+  }
+  eventBus.on("element.hover", function(event3) {
+    addMarker(event3.element, MARKER_HOVER);
+  });
+  eventBus.on("element.out", function(event3) {
+    removeMarker(event3.element, MARKER_HOVER);
+  });
+  eventBus.on("selection.changed", function(event3) {
+    function deselect(s5) {
+      removeMarker(s5, MARKER_SELECTED);
+    }
+    function select(s5) {
+      addMarker(s5, MARKER_SELECTED);
+    }
+    var oldSelection = event3.oldSelection, newSelection = event3.newSelection;
+    forEach(oldSelection, function(e7) {
+      if (newSelection.indexOf(e7) === -1) {
+        deselect(e7);
+      }
+    });
+    forEach(newSelection, function(e7) {
+      if (oldSelection.indexOf(e7) === -1) {
+        select(e7);
+      }
+    });
+    self2._updateSelectionOutline(newSelection);
+  });
+  eventBus.on("element.changed", function(event3) {
+    if (selection2.isSelected(event3.element)) {
+      self2._updateSelectionOutline(selection2.get());
+    }
+  });
+}
+SelectionVisuals.$inject = [
+  "canvas",
+  "eventBus",
+  "selection"
+];
+SelectionVisuals.prototype._updateSelectionOutline = function(selection2) {
+  var layer = this._canvas.getLayer("selectionOutline");
+  clear(layer);
+  var enabled = selection2.length > 1;
+  var container = this._canvas.getContainer();
+  classes(container)[enabled ? "add" : "remove"]("djs-multi-select");
+  if (!enabled) {
+    return;
+  }
+  var bBox = addSelectionOutlinePadding(getBBox(selection2));
+  var rect = create("rect");
+  attr(rect, assign({
+    rx: 3
+  }, bBox));
+  classes(rect).add("djs-selection-outline");
+  append(layer, rect);
+};
+function addSelectionOutlinePadding(bBox) {
+  return {
+    x: bBox.x - SELECTION_OUTLINE_PADDING,
+    y: bBox.y - SELECTION_OUTLINE_PADDING,
+    width: bBox.width + SELECTION_OUTLINE_PADDING * 2,
+    height: bBox.height + SELECTION_OUTLINE_PADDING * 2
+  };
+}
+
+// node_modules/diagram-js/lib/features/selection/SelectionBehavior.js
+function SelectionBehavior(eventBus, selection2, canvas, elementRegistry) {
+  eventBus.on("create.end", 500, function(event3) {
+    var context = event3.context, canExecute = context.canExecute, elements = context.elements, hints = context.hints || {}, autoSelect = hints.autoSelect;
+    if (canExecute) {
+      if (autoSelect === false) {
+        return;
+      }
+      if (isArray(autoSelect)) {
+        selection2.select(autoSelect);
+      } else {
+        selection2.select(elements.filter(isShown));
+      }
+    }
+  });
+  eventBus.on("connect.end", 500, function(event3) {
+    var context = event3.context, connection = context.connection;
+    if (connection) {
+      selection2.select(connection);
+    }
+  });
+  eventBus.on("shape.move.end", 500, function(event3) {
+    var previousSelection = event3.previousSelection || [];
+    var shape = elementRegistry.get(event3.context.shape.id);
+    var isSelected = find(previousSelection, function(selectedShape) {
+      return shape.id === selectedShape.id;
+    });
+    if (!isSelected) {
+      selection2.select(shape);
+    }
+  });
+  eventBus.on("element.click", function(event3) {
+    if (!isPrimaryButton(event3)) {
+      return;
+    }
+    var element = event3.element;
+    if (element === canvas.getRootElement()) {
+      element = null;
+    }
+    var isSelected = selection2.isSelected(element), isMultiSelect = selection2.get().length > 1;
+    var add3 = hasSecondaryModifier(event3);
+    if (isSelected && isMultiSelect) {
+      if (add3) {
+        return selection2.deselect(element);
+      } else {
+        return selection2.select(element);
+      }
+    } else if (!isSelected) {
+      selection2.select(element, add3);
+    } else {
+      selection2.deselect(element);
+    }
+  });
+}
+SelectionBehavior.$inject = [
+  "eventBus",
+  "selection",
+  "canvas",
+  "elementRegistry"
+];
+function isShown(element) {
+  return !element.hidden;
+}
+
+// node_modules/diagram-js/lib/features/selection/index.js
+var selection_default = {
+  __init__: ["selectionVisuals", "selectionBehavior"],
+  __depends__: [
+    interaction_events_default,
+    outline_default
+  ],
+  selection: ["type", Selection],
+  selectionVisuals: ["type", SelectionVisuals],
+  selectionBehavior: ["type", SelectionBehavior]
+};
+
+// node_modules/didi/dist/index.js
 var CLASS_PATTERN = /^class[ {]/;
 function isClass(fn2) {
   return CLASS_PATTERN.test(fn2.toString());
@@ -9839,8 +10006,9 @@ function parseAnnotations(fn2) {
     return (argMatch && argMatch[1] || arg).trim();
   }) || [];
 }
-function Injector(modules, parent) {
-  parent = parent || {
+function Injector(modules, _parent) {
+  const parent = _parent || /** @type InjectorContext */
+  {
     get: function(name2, strict) {
       currentlyResolving.push(name2);
       if (strict === false) {
@@ -9860,11 +10028,17 @@ function Injector(modules, parent) {
     return new Error(stack ? `${msg} (Resolving: ${stack})` : msg);
   };
   function get3(name2, strict) {
-    if (!providers[name2] && name2.indexOf(".") !== -1) {
+    if (!providers[name2] && name2.includes(".")) {
       const parts = name2.split(".");
-      let pivot = get3(parts.shift());
+      let pivot = get3(
+        /** @type { string } */
+        parts.shift()
+      );
       while (parts.length) {
-        pivot = pivot[parts.shift()];
+        pivot = pivot[
+          /** @type { string } */
+          parts.shift()
+        ];
       }
       return pivot;
     }
@@ -9912,7 +10086,7 @@ function Injector(modules, parent) {
       fn: fn2,
       dependencies
     } = fnDef(type);
-    const Constructor = Function.prototype.bind.apply(fn2, [null].concat(dependencies));
+    const Constructor = Function.prototype.bind.call(fn2, null, ...dependencies);
     return new Constructor();
   }
   function invoke(func, context, locals) {
@@ -10024,12 +10198,16 @@ function Injector(modules, parent) {
       if (key === "__init__" || key === "__depends__") {
         return;
       }
-      if (moduleDefinition[key][2] === "private") {
-        providers[key] = moduleDefinition[key];
+      const typeDeclaration = (
+        /** @type { TypedDeclaration } */
+        moduleDefinition[key]
+      );
+      if (typeDeclaration[2] === "private") {
+        providers[key] = typeDeclaration;
         return;
       }
-      const type = moduleDefinition[key][0];
-      const value = moduleDefinition[key][1];
+      const type = typeDeclaration[0];
+      const value = typeDeclaration[1];
       providers[key] = [factoryMap[type], arrayUnwrap(type, value), type];
     });
     return createInitializer(moduleDefinition, self2);
@@ -10102,9 +10280,9 @@ DefaultRenderer.prototype.drawConnection = function drawConnection(visuals, conn
   return line;
 };
 DefaultRenderer.prototype.getShapePath = function getShapePath(shape) {
-  var x5 = shape.x, y5 = shape.y, width = shape.width, height = shape.height;
+  var x6 = shape.x, y5 = shape.y, width = shape.width, height = shape.height;
   var shapePath = [
-    ["M", x5, y5],
+    ["M", x6, y5],
     ["l", width, 0],
     ["l", 0, height],
     ["l", -width, 0],
@@ -10522,7 +10700,7 @@ Canvas.prototype.removeRootElement = function(rootElement) {
 };
 Canvas.prototype.setRootElement = function(rootElement) {
   if (rootElement === this._rootElement) {
-    return;
+    return rootElement;
   }
   let plane;
   if (!rootElement) {
@@ -10639,17 +10817,17 @@ Canvas.prototype.viewbox = function(box) {
     return this._cachedViewbox;
   }
   const viewport = this._viewport, outerBox = this.getSize();
-  let innerBox, matrix, activeLayer, transform3, scale, x5, y5;
+  let innerBox, matrix, activeLayer, transform3, scale, x6, y5;
   if (!box) {
     activeLayer = this._rootElement ? this.getActiveLayer() : null;
     innerBox = activeLayer && activeLayer.getBBox() || {};
     transform3 = transform(viewport);
     matrix = transform3 ? transform3.matrix : createMatrix();
     scale = round(matrix.a, 1e3);
-    x5 = round(-matrix.e || 0, 1e3);
+    x6 = round(-matrix.e || 0, 1e3);
     y5 = round(-matrix.f || 0, 1e3);
     box = this._cachedViewbox = {
-      x: x5 ? x5 / scale : 0,
+      x: x6 ? x6 / scale : 0,
       y: y5 ? y5 / scale : 0,
       width: outerBox.width / scale,
       height: outerBox.height / scale,
@@ -10746,8 +10924,8 @@ Canvas.prototype.zoom = function(newScale, center2) {
   });
   return round(matrix.a, 1e3);
 };
-function setCTM(node2, m6) {
-  const mstr = "matrix(" + m6.a + "," + m6.b + "," + m6.c + "," + m6.d + "," + m6.e + "," + m6.f + ")";
+function setCTM(node2, m5) {
+  const mstr = "matrix(" + m5.a + "," + m5.b + "," + m5.c + "," + m5.d + "," + m5.e + "," + m5.f + ")";
   node2.setAttribute("transform", mstr);
 }
 Canvas.prototype._fitViewport = function(center2) {
@@ -10805,12 +10983,12 @@ Canvas.prototype.getAbsoluteBBox = function(element) {
   } else {
     bbox = element;
   }
-  const x5 = bbox.x * vbox.scale - vbox.x * vbox.scale;
+  const x6 = bbox.x * vbox.scale - vbox.x * vbox.scale;
   const y5 = bbox.y * vbox.scale - vbox.y * vbox.scale;
   const width = bbox.width * vbox.scale;
   const height = bbox.height * vbox.scale;
   return {
-    x: x5,
+    x: x6,
     y: y5,
     width,
     height
@@ -11212,17 +11390,17 @@ EventBus.prototype.once = function(events, priority, callback, that) {
 EventBus.prototype.off = function(events, callback) {
   events = isArray(events) ? events : [events];
   var self2 = this;
-  events.forEach(function(event2) {
-    self2._removeListener(event2, callback);
+  events.forEach(function(event3) {
+    self2._removeListener(event3, callback);
   });
 };
 EventBus.prototype.createEvent = function(data) {
-  var event2 = new InternalEvent();
-  event2.init(data);
-  return event2;
+  var event3 = new InternalEvent();
+  event3.init(data);
+  return event3;
 };
 EventBus.prototype.fire = function(type, data) {
-  var event2, firstListener, returnValue, args;
+  var event3, firstListener, returnValue, args;
   args = slice2.call(arguments);
   if (typeof type === "object") {
     data = type;
@@ -11236,23 +11414,23 @@ EventBus.prototype.fire = function(type, data) {
     return;
   }
   if (data instanceof InternalEvent) {
-    event2 = data;
+    event3 = data;
   } else {
-    event2 = this.createEvent(data);
+    event3 = this.createEvent(data);
   }
-  args[0] = event2;
-  var originalType = event2.type;
+  args[0] = event3;
+  var originalType = event3.type;
   if (type !== originalType) {
-    event2.type = type;
+    event3.type = type;
   }
   try {
-    returnValue = this._invokeListeners(event2, args, firstListener);
+    returnValue = this._invokeListeners(event3, args, firstListener);
   } finally {
     if (type !== originalType) {
-      event2.type = originalType;
+      event3.type = originalType;
     }
   }
-  if (returnValue === void 0 && event2.defaultPrevented) {
+  if (returnValue === void 0 && event3.defaultPrevented) {
     returnValue = false;
   }
   return returnValue;
@@ -11263,18 +11441,18 @@ EventBus.prototype.handleError = function(error4) {
 EventBus.prototype._destroy = function() {
   this._listeners = {};
 };
-EventBus.prototype._invokeListeners = function(event2, args, listener) {
+EventBus.prototype._invokeListeners = function(event3, args, listener) {
   var returnValue;
   while (listener) {
-    if (event2.cancelBubble) {
+    if (event3.cancelBubble) {
       break;
     }
-    returnValue = this._invokeListener(event2, args, listener);
+    returnValue = this._invokeListener(event3, args, listener);
     listener = listener.next;
   }
   return returnValue;
 };
-EventBus.prototype._invokeListener = function(event2, args, listener) {
+EventBus.prototype._invokeListener = function(event3, args, listener) {
   var returnValue;
   if (listener.callback.__isTomb) {
     return returnValue;
@@ -11282,11 +11460,11 @@ EventBus.prototype._invokeListener = function(event2, args, listener) {
   try {
     returnValue = invokeFunction(listener.callback, args);
     if (returnValue !== void 0) {
-      event2.returnValue = returnValue;
-      event2.stopPropagation();
+      event3.returnValue = returnValue;
+      event3.stopPropagation();
     }
     if (returnValue === false) {
-      event2.preventDefault();
+      event3.preventDefault();
     }
   } catch (error4) {
     if (!this.handleError(error4)) {
@@ -11296,10 +11474,10 @@ EventBus.prototype._invokeListener = function(event2, args, listener) {
   }
   return returnValue;
 };
-EventBus.prototype._addListener = function(event2, newListener) {
-  var listener = this._getListeners(event2), previousListener;
+EventBus.prototype._addListener = function(event3, newListener) {
+  var listener = this._getListeners(event3), previousListener;
   if (!listener) {
-    this._setListeners(event2, newListener);
+    this._setListeners(event3, newListener);
     return;
   }
   while (listener) {
@@ -11308,7 +11486,7 @@ EventBus.prototype._addListener = function(event2, newListener) {
       if (previousListener) {
         previousListener.next = newListener;
       } else {
-        this._setListeners(event2, newListener);
+        this._setListeners(event3, newListener);
       }
       return;
     }
@@ -11323,10 +11501,10 @@ EventBus.prototype._getListeners = function(name2) {
 EventBus.prototype._setListeners = function(name2, listener) {
   this._listeners[name2] = listener;
 };
-EventBus.prototype._removeListener = function(event2, callback) {
-  var listener = this._getListeners(event2), nextListener, previousListener, listenerCallback;
+EventBus.prototype._removeListener = function(event3, callback) {
+  var listener = this._getListeners(event3), nextListener, previousListener, listenerCallback;
   if (!callback) {
-    this._setListeners(event2, null);
+    this._setListeners(event3, null);
     return;
   }
   while (listener) {
@@ -11336,7 +11514,7 @@ EventBus.prototype._removeListener = function(event2, callback) {
       if (previousListener) {
         previousListener.next = nextListener;
       } else {
-        this._setListeners(event2, nextListener);
+        this._setListeners(event3, nextListener);
       }
     }
     previousListener = listener;
@@ -11509,11 +11687,15 @@ function createInjector(options2) {
   return bootstrap(modules);
 }
 function Diagram(options2, injector) {
-  this._injector = injector = injector || createInjector(options2);
-  this.get = injector.get;
-  this.invoke = injector.invoke;
+  this._injector = injector || createInjector(options2);
   this.get("eventBus").fire("diagram.init");
 }
+Diagram.prototype.get = function(name2, strict) {
+  return this._injector.get(name2, strict);
+};
+Diagram.prototype.invoke = function(func, context, locals) {
+  return this._injector.invoke(func, context, locals);
+};
 Diagram.prototype.destroy = function() {
   this.get("eventBus").fire("diagram.destroy");
 };
@@ -11595,20 +11777,20 @@ function isSimple(type) {
   return !!TYPE_CONVERTERS[type];
 }
 function parseName(name2, defaultPrefix) {
-  var parts = name2.split(/:/), localName, prefix3;
+  var parts = name2.split(/:/), localName, prefix4;
   if (parts.length === 1) {
     localName = name2;
-    prefix3 = defaultPrefix;
+    prefix4 = defaultPrefix;
   } else if (parts.length === 2) {
     localName = parts[1];
-    prefix3 = parts[0];
+    prefix4 = parts[0];
   } else {
     throw new Error("expected <prefix:localName> or <localName>, got " + name2);
   }
-  name2 = (prefix3 ? prefix3 + ":" : "") + localName;
+  name2 = (prefix4 ? prefix4 + ":" : "") + localName;
   return {
     name: name2,
-    prefix: prefix3,
+    prefix: prefix4,
     localName
   };
 }
@@ -12052,7 +12234,7 @@ var ENTITY_MAPPING = {
 Object.keys(ENTITY_MAPPING).forEach(function(k6) {
   ENTITY_MAPPING[k6.toUpperCase()] = ENTITY_MAPPING[k6];
 });
-function replaceEntities(_4, d5, x5, z6) {
+function replaceEntities(_5, d5, x6, z6) {
   if (z6) {
     if (hasOwnProperty2.call(ENTITY_MAPPING, z6)) {
       return ENTITY_MAPPING[z6];
@@ -12063,7 +12245,7 @@ function replaceEntities(_4, d5, x5, z6) {
   if (d5) {
     return fromCharCode(d5);
   }
-  return fromCharCode(parseInt(x5, 16));
+  return fromCharCode(parseInt(x6, 16));
 }
 function decodeEntities(s5) {
   if (s5.length > 3 && s5.indexOf("&") !== -1) {
@@ -12078,8 +12260,8 @@ var NON_WHITESPACE_OUTSIDE_ROOT_NODE = "non-whitespace outside of root node";
 function error(msg) {
   return new Error(msg);
 }
-function missingNamespaceForPrefix(prefix3) {
-  return "missing namespace for prefix <" + prefix3 + ">";
+function missingNamespaceForPrefix(prefix4) {
+  return "missing namespace for prefix <" + prefix4 + ">";
 }
 function getter(getFn) {
   return {
@@ -12094,15 +12276,15 @@ function cloneNsMatrix(nsMatrix) {
   }
   return clone3;
 }
-function uriPrefix(prefix3) {
-  return prefix3 + "$uri";
+function uriPrefix(prefix4) {
+  return prefix4 + "$uri";
 }
 function buildNsMatrix(nsUriToPrefix) {
-  var nsMatrix = {}, uri2, prefix3;
+  var nsMatrix = {}, uri2, prefix4;
   for (uri2 in nsUriToPrefix) {
-    prefix3 = nsUriToPrefix[uri2];
-    nsMatrix[prefix3] = prefix3;
-    nsMatrix[uriPrefix(prefix3)] = uri2;
+    prefix4 = nsUriToPrefix[uri2];
+    nsMatrix[prefix4] = prefix4;
+    nsMatrix[uriPrefix(prefix4)] = uri2;
   }
   return nsMatrix;
 }
@@ -12207,7 +12389,7 @@ function Parser(options2) {
     parseStop = true;
   };
   function parse3(xml2) {
-    var nsMatrixStack = isNamespace ? [] : null, nsMatrix = isNamespace ? buildNsMatrix(nsUriToPrefix) : null, _nsMatrix, nodeStack = [], anonymousNsCount = 0, tagStart = false, tagEnd = false, i7 = 0, j6 = 0, x5, y5, q5, w6, v5, xmlns, elementName, _elementName, elementProxy;
+    var nsMatrixStack = isNamespace ? [] : null, nsMatrix = isNamespace ? buildNsMatrix(nsUriToPrefix) : null, _nsMatrix, nodeStack = [], anonymousNsCount = 0, tagStart = false, tagEnd = false, i7 = 0, j6 = 0, x6, y5, q6, w6, v5, xmlns, elementName, _elementName, elementProxy;
     var attrsString = "", attrsStart = 0, cachedAttrs;
     function getAttrs() {
       if (cachedAttrs !== null) {
@@ -12483,8 +12665,8 @@ function Parser(options2) {
       }
       w6 = xml2.charCodeAt(i7 + 1);
       if (w6 === 33) {
-        q5 = xml2.charCodeAt(i7 + 2);
-        if (q5 === 91 && xml2.substr(i7 + 3, 6) === "CDATA[") {
+        q6 = xml2.charCodeAt(i7 + 2);
+        if (q6 === 91 && xml2.substr(i7 + 3, 6) === "CDATA[") {
           j6 = xml2.indexOf("]]>", i7);
           if (j6 === -1) {
             return handleError("unclosed cdata");
@@ -12498,7 +12680,7 @@ function Parser(options2) {
           j6 += 3;
           continue;
         }
-        if (q5 === 45 && xml2.charCodeAt(i7 + 3) === 45) {
+        if (q6 === 45 && xml2.charCodeAt(i7 + 3) === 45) {
           j6 = xml2.indexOf("-->", i7);
           if (j6 === -1) {
             return handleError("unclosed comment");
@@ -12527,20 +12709,20 @@ function Parser(options2) {
         j6 += 2;
         continue;
       }
-      for (x5 = i7 + 1; ; x5++) {
-        v5 = xml2.charCodeAt(x5);
+      for (x6 = i7 + 1; ; x6++) {
+        v5 = xml2.charCodeAt(x6);
         if (isNaN(v5)) {
           j6 = -1;
           return handleError("unclosed tag");
         }
         if (v5 === 34) {
-          q5 = xml2.indexOf('"', x5 + 1);
-          x5 = q5 !== -1 ? q5 : x5;
+          q6 = xml2.indexOf('"', x6 + 1);
+          x6 = q6 !== -1 ? q6 : x6;
         } else if (v5 === 39) {
-          q5 = xml2.indexOf("'", x5 + 1);
-          x5 = q5 !== -1 ? q5 : x5;
+          q6 = xml2.indexOf("'", x6 + 1);
+          x6 = q6 !== -1 ? q6 : x6;
         } else if (v5 === 62) {
-          j6 = x5;
+          j6 = x6;
           break;
         }
       }
@@ -12561,13 +12743,13 @@ function Parser(options2) {
         if (!nodeStack.length) {
           return handleError("missing open tag");
         }
-        x5 = elementName = nodeStack.pop();
-        q5 = i7 + 2 + x5.length;
-        if (xml2.substring(i7 + 2, q5) !== x5) {
+        x6 = elementName = nodeStack.pop();
+        q6 = i7 + 2 + x6.length;
+        if (xml2.substring(i7 + 2, q6) !== x6) {
           return handleError("closing tag mismatch");
         }
-        for (; q5 < j6; q5++) {
-          w6 = xml2.charCodeAt(q5);
+        for (; q6 < j6; q6++) {
+          w6 = xml2.charCodeAt(q6);
           if (w6 === 32 || w6 > 8 && w6 < 14) {
             continue;
           }
@@ -12575,24 +12757,24 @@ function Parser(options2) {
         }
       } else {
         if (xml2.charCodeAt(j6 - 1) === 47) {
-          x5 = elementName = xml2.substring(i7 + 1, j6 - 1);
+          x6 = elementName = xml2.substring(i7 + 1, j6 - 1);
           tagStart = true;
           tagEnd = true;
         } else {
-          x5 = elementName = xml2.substring(i7 + 1, j6);
+          x6 = elementName = xml2.substring(i7 + 1, j6);
           tagStart = true;
           tagEnd = false;
         }
         if (!(w6 > 96 && w6 < 123 || w6 > 64 && w6 < 91 || w6 === 95 || w6 === 58)) {
           return handleError("illegal first char nodeName");
         }
-        for (q5 = 1, y5 = x5.length; q5 < y5; q5++) {
-          w6 = x5.charCodeAt(q5);
+        for (q6 = 1, y5 = x6.length; q6 < y5; q6++) {
+          w6 = x6.charCodeAt(q6);
           if (w6 > 96 && w6 < 123 || w6 > 64 && w6 < 91 || w6 > 47 && w6 < 59 || w6 === 45 || w6 === 95 || w6 == 46) {
             continue;
           }
           if (w6 === 32 || w6 < 14 && w6 > 8) {
-            elementName = x5.substring(0, q5);
+            elementName = x6.substring(0, q6);
             cachedAttrs = null;
             break;
           }
@@ -12609,9 +12791,9 @@ function Parser(options2) {
             nsMatrixStack.push(_nsMatrix);
           }
           if (cachedAttrs === null) {
-            if (maybeNS = x5.indexOf("xmlns", q5) !== -1) {
-              attrsStart = q5;
-              attrsString = x5;
+            if (maybeNS = x6.indexOf("xmlns", q6) !== -1) {
+              attrsStart = q6;
+              attrsString = x6;
               getAttrs();
               maybeNS = false;
             }
@@ -12633,8 +12815,8 @@ function Parser(options2) {
         }
       }
       if (tagStart) {
-        attrsStart = q5;
-        attrsString = x5;
+        attrsStart = q6;
+        attrsString = x6;
         if (onOpenTag) {
           if (proxy) {
             onOpenTag(elementProxy, decodeEntities, tagEnd, getContext);
@@ -12981,7 +13163,7 @@ function GenericElementHandler(model, typeName, context) {
 }
 GenericElementHandler.prototype = Object.create(BaseElementHandler.prototype);
 GenericElementHandler.prototype.createElement = function(node2) {
-  var name2 = node2.name, ns2 = parseName(name2), prefix3 = ns2.prefix, uri2 = node2.ns[prefix3 + "$uri"], attributes = node2.attributes;
+  var name2 = node2.name, ns2 = parseName(name2), prefix4 = ns2.prefix, uri2 = node2.ns[prefix4 + "$uri"], attributes = node2.attributes;
   return this.model.createAny(name2, uri2, attributes);
 };
 GenericElementHandler.prototype.handleChild = function(node2) {
@@ -13202,11 +13384,11 @@ function Namespaces(parent) {
     }
     this.mapPrefix(ns2.prefix, ns2.uri);
   };
-  this.uriByPrefix = function(prefix3) {
-    return prefixMap[prefix3 || "xmlns"];
+  this.uriByPrefix = function(prefix4) {
+    return prefixMap[prefix4 || "xmlns"];
   };
-  this.mapPrefix = function(prefix3, uri2) {
-    prefixMap[prefix3 || "xmlns"] = uri2;
+  this.mapPrefix = function(prefix4, uri2) {
+    prefixMap[prefix4 || "xmlns"] = uri2;
   };
   this.getNSKey = function(ns2) {
     return ns2.prefix !== void 0 ? ns2.uri + "|" + ns2.prefix : ns2.uri;
@@ -13556,26 +13738,26 @@ ElementSerializer.prototype.logNamespace = function(ns2, wellknown, local) {
 };
 ElementSerializer.prototype.logNamespaceUsed = function(ns2, local) {
   var element = this.element, model = element.$model, namespaces = this.getNamespaces(local);
-  var prefix3 = ns2.prefix, uri2 = ns2.uri, newPrefix, idx, wellknownUri;
-  if (!prefix3 && !uri2) {
+  var prefix4 = ns2.prefix, uri2 = ns2.uri, newPrefix, idx, wellknownUri;
+  if (!prefix4 && !uri2) {
     return { localName: ns2.localName };
   }
-  wellknownUri = DEFAULT_NS_MAP[prefix3] || model && (model.getPackage(prefix3) || {}).uri;
-  uri2 = uri2 || wellknownUri || namespaces.uriByPrefix(prefix3);
+  wellknownUri = DEFAULT_NS_MAP[prefix4] || model && (model.getPackage(prefix4) || {}).uri;
+  uri2 = uri2 || wellknownUri || namespaces.uriByPrefix(prefix4);
   if (!uri2) {
-    throw new Error("no namespace uri given for prefix <" + prefix3 + ">");
+    throw new Error("no namespace uri given for prefix <" + prefix4 + ">");
   }
   ns2 = namespaces.byUri(uri2);
   if (!ns2) {
-    newPrefix = prefix3;
+    newPrefix = prefix4;
     idx = 1;
     while (namespaces.uriByPrefix(newPrefix)) {
-      newPrefix = prefix3 + "_" + idx++;
+      newPrefix = prefix4 + "_" + idx++;
     }
     ns2 = this.logNamespace({ prefix: newPrefix, uri: uri2 }, wellknownUri === uri2);
   }
-  if (prefix3) {
-    namespaces.mapPrefix(prefix3, uri2);
+  if (prefix4) {
+    namespaces.mapPrefix(prefix4, uri2);
   }
   return ns2;
 };
@@ -17402,7 +17584,7 @@ function findDisplayCandidate(definitions) {
     return is2(e7, "bpmn:Process") || is2(e7, "bpmn:Collaboration");
   });
 }
-function BpmnTreeWalker(handler, translate3) {
+function BpmnTreeWalker(handler) {
   var handledElements = {};
   var deferred = [];
   var diMap = {};
@@ -17421,7 +17603,7 @@ function BpmnTreeWalker(handler, translate3) {
     var gfx = element.gfx;
     if (gfx) {
       throw new Error(
-        translate3("already rendered {element}", { element: elementToString(element) })
+        "already rendered ${ elementToString(element) }"
       );
     }
     return handler.element(element, diMap[element.id], ctx);
@@ -17434,10 +17616,9 @@ function BpmnTreeWalker(handler, translate3) {
       var gfx = diMap[element.id] && visit(element, ctx);
       handled(element);
       return gfx;
-    } catch (e7) {
-      logError(e7.message, { element, error: e7 });
-      console.error(translate3("failed to import {element}", { element: elementToString(element) }));
-      console.error(e7);
+    } catch (error4) {
+      logError(error4.message, { element, error: error4 });
+      console.error(`failed to import ${elementToString(element)}`, error4);
     }
   }
   function logError(message, context) {
@@ -17448,9 +17629,7 @@ function BpmnTreeWalker(handler, translate3) {
     if (bpmnElement) {
       if (diMap[bpmnElement.id]) {
         logError(
-          translate3("multiple DI elements defined for {element}", {
-            element: elementToString(bpmnElement)
-          }),
+          `multiple DI elements defined for ${elementToString(bpmnElement)}`,
           { element: bpmnElement }
         );
       } else {
@@ -17459,9 +17638,7 @@ function BpmnTreeWalker(handler, translate3) {
       }
     } else {
       logError(
-        translate3("no bpmnElement referenced in {element}", {
-          element: elementToString(di)
-        }),
+        `no bpmnElement referenced in ${elementToString(di)}`,
         { element: di }
       );
     }
@@ -17479,34 +17656,30 @@ function BpmnTreeWalker(handler, translate3) {
   this.handleDefinitions = function handleDefinitions(definitions, diagram) {
     var diagrams = definitions.diagrams;
     if (diagram && diagrams.indexOf(diagram) === -1) {
-      throw new Error(translate3("diagram not part of bpmn:Definitions"));
+      throw new Error("diagram not part of <bpmn:Definitions />");
     }
     if (!diagram && diagrams && diagrams.length) {
       diagram = diagrams[0];
     }
     if (!diagram) {
-      throw new Error(translate3("no diagram to display"));
+      throw new Error("no diagram to display");
     }
     diMap = {};
     handleDiagram(diagram);
     var plane = diagram.plane;
     if (!plane) {
-      throw new Error(translate3(
-        "no plane for {element}",
-        { element: elementToString(diagram) }
-      ));
+      throw new Error(
+        `no plane for ${elementToString(diagram)}`
+      );
     }
     var rootElement = plane.bpmnElement;
     if (!rootElement) {
       rootElement = findDisplayCandidate(definitions);
       if (!rootElement) {
-        throw new Error(translate3("no process or collaboration to display"));
+        throw new Error("no process or collaboration to display");
       } else {
         logError(
-          translate3("correcting missing bpmnElement on {plane} to {rootElement}", {
-            plane: elementToString(plane),
-            rootElement: elementToString(rootElement)
-          })
+          `correcting missing bpmnElement on ${elementToString(plane)} to ${elementToString(rootElement)}`
         );
         plane.bpmnElement = rootElement;
         registerDi(plane);
@@ -17520,10 +17693,7 @@ function BpmnTreeWalker(handler, translate3) {
       handleUnhandledProcesses(definitions.rootElements, ctx);
     } else {
       throw new Error(
-        translate3("unsupported bpmnElement for {plane}: {rootElement}", {
-          plane: elementToString(plane),
-          rootElement: elementToString(rootElement)
-        })
+        `unsupported bpmnElement for ${elementToString(plane)}: ${elementToString(rootElement)}`
       );
     }
     handleDeferred(deferred);
@@ -17628,29 +17798,29 @@ function BpmnTreeWalker(handler, translate3) {
     }
   }
   function handleFlowElements(flowElements, context) {
-    forEach(flowElements, function(e7) {
-      if (is2(e7, "bpmn:SequenceFlow")) {
+    forEach(flowElements, function(flowElement) {
+      if (is2(flowElement, "bpmn:SequenceFlow")) {
         deferred.push(function() {
-          handleSequenceFlow(e7, context);
+          handleSequenceFlow(flowElement, context);
         });
-      } else if (is2(e7, "bpmn:BoundaryEvent")) {
+      } else if (is2(flowElement, "bpmn:BoundaryEvent")) {
         deferred.unshift(function() {
-          handleFlowNode(e7, context);
+          handleFlowNode(flowElement, context);
         });
-      } else if (is2(e7, "bpmn:FlowNode")) {
-        handleFlowNode(e7, context);
-      } else if (is2(e7, "bpmn:DataObject")) {
-      } else if (is2(e7, "bpmn:DataStoreReference")) {
-        handleDataElement(e7, context);
-      } else if (is2(e7, "bpmn:DataObjectReference")) {
-        handleDataElement(e7, context);
+      } else if (is2(flowElement, "bpmn:FlowNode")) {
+        handleFlowNode(flowElement, context);
+      } else if (is2(flowElement, "bpmn:DataObject")) {
+      } else if (is2(flowElement, "bpmn:DataStoreReference")) {
+        handleDataElement(flowElement, context);
+      } else if (is2(flowElement, "bpmn:DataObjectReference")) {
+        handleDataElement(flowElement, context);
       } else {
         logError(
-          translate3("unrecognized flowElement {element} in context {context}", {
-            element: elementToString(e7),
-            context: context ? elementToString(context.businessObject) : "null"
-          }),
-          { element: e7, context }
+          `unrecognized flowElement ${elementToString(flowElement)} in context ${elementToString(context && context.businessObject)}`,
+          {
+            element: flowElement,
+            context
+          }
         );
       }
     });
@@ -17681,7 +17851,7 @@ function BpmnTreeWalker(handler, translate3) {
 
 // node_modules/bpmn-js/lib/import/Importer.js
 function importBpmnDiagram(diagram, definitions, bpmnDiagram) {
-  var importer, eventBus, translate3, canvas;
+  var importer, eventBus, canvas;
   var error4, warnings = [];
   function render(definitions2, bpmnDiagram2) {
     var visitor = {
@@ -17695,11 +17865,11 @@ function importBpmnDiagram(diagram, definitions, bpmnDiagram) {
         warnings.push({ message, context });
       }
     };
-    var walker = new BpmnTreeWalker(visitor, translate3);
+    var walker = new BpmnTreeWalker(visitor);
     bpmnDiagram2 = bpmnDiagram2 || definitions2.diagrams && definitions2.diagrams[0];
     var diagramsToImport = getDiagramsToImport(definitions2, bpmnDiagram2);
     if (!diagramsToImport) {
-      throw new Error(translate3("no diagram to display"));
+      throw new Error("no diagram to display");
     }
     forEach(diagramsToImport, function(diagram2) {
       walker.handleDefinitions(definitions2, diagram2);
@@ -17713,7 +17883,6 @@ function importBpmnDiagram(diagram, definitions, bpmnDiagram) {
     try {
       importer = diagram.get("bpmnImporter");
       eventBus = diagram.get("eventBus");
-      translate3 = diagram.get("translate");
       canvas = diagram.get("canvas");
       eventBus.fire("import.render.start", { definitions });
       render(definitions, bpmnDiagram);
@@ -17841,7 +18010,7 @@ function createLightbox() {
 function open() {
   if (!lightbox) {
     createLightbox();
-    delegate.bind(lightbox, ".backdrop", "click", function(event2) {
+    delegate.bind(lightbox, ".backdrop", "click", function(event3) {
       document.body.removeChild(lightbox);
     });
   }
@@ -18040,8 +18209,8 @@ BaseViewer.prototype._init = function(container, moddle, options2) {
     this.attachTo(options2.container);
   }
 };
-BaseViewer.prototype._emit = function(type, event2) {
-  return this.get("eventBus").fire(type, event2);
+BaseViewer.prototype._emit = function(type, event3) {
+  return this.get("eventBus").fire(type, event3);
 };
 BaseViewer.prototype._createContainer = function(options2) {
   const container = domify$1('<div class="bjs-container"></div>');
@@ -18097,9 +18266,9 @@ function addProjectLogo(container) {
     zIndex: "100"
   });
   container.appendChild(linkElement);
-  event.bind(linkElement, "click", function(event2) {
+  event.bind(linkElement, "click", function(event3) {
     open();
-    event2.preventDefault();
+    event3.preventDefault();
   });
 }
 
@@ -18110,10 +18279,11 @@ function Viewer(options2) {
 e(Viewer, BaseViewer);
 Viewer.prototype._modules = [
   core_default,
-  translate_default,
-  selection_default,
+  drilldown_default,
+  outline_default2,
   overlays_default,
-  drilldown_default
+  selection_default,
+  translate_default
 ];
 Viewer.prototype._moddleExtensions = {};
 
@@ -18122,33 +18292,33 @@ var KEYS_COPY = ["c", "C"];
 var KEYS_PASTE = ["v", "V"];
 var KEYS_REDO = ["y", "Y"];
 var KEYS_UNDO = ["z", "Z"];
-function hasModifier(event2) {
-  return event2.ctrlKey || event2.metaKey || event2.shiftKey || event2.altKey;
+function hasModifier(event3) {
+  return event3.ctrlKey || event3.metaKey || event3.shiftKey || event3.altKey;
 }
-function isCmd(event2) {
-  if (event2.altKey) {
+function isCmd(event3) {
+  if (event3.altKey) {
     return false;
   }
-  return event2.ctrlKey || event2.metaKey;
+  return event3.ctrlKey || event3.metaKey;
 }
-function isKey(keys2, event2) {
+function isKey(keys2, event3) {
   keys2 = isArray(keys2) ? keys2 : [keys2];
-  return keys2.indexOf(event2.key) !== -1 || keys2.indexOf(event2.code) !== -1;
+  return keys2.indexOf(event3.key) !== -1 || keys2.indexOf(event3.code) !== -1;
 }
-function isShift(event2) {
-  return event2.shiftKey;
+function isShift(event3) {
+  return event3.shiftKey;
 }
-function isCopy(event2) {
-  return isCmd(event2) && isKey(KEYS_COPY, event2);
+function isCopy(event3) {
+  return isCmd(event3) && isKey(KEYS_COPY, event3);
 }
-function isPaste(event2) {
-  return isCmd(event2) && isKey(KEYS_PASTE, event2);
+function isPaste(event3) {
+  return isCmd(event3) && isKey(KEYS_PASTE, event3);
 }
-function isUndo(event2) {
-  return isCmd(event2) && !isShift(event2) && isKey(KEYS_UNDO, event2);
+function isUndo(event3) {
+  return isCmd(event3) && !isShift(event3) && isKey(KEYS_UNDO, event3);
 }
-function isRedo(event2) {
-  return isCmd(event2) && (isKey(KEYS_REDO, event2) || isKey(KEYS_UNDO, event2) && isShift(event2));
+function isRedo(event3) {
+  return isCmd(event3) && (isKey(KEYS_REDO, event3) || isKey(KEYS_UNDO, event3) && isShift(event3));
 }
 
 // node_modules/diagram-js/lib/features/keyboard/Keyboard.js
@@ -18182,37 +18352,37 @@ Keyboard.$inject = [
   "config.keyboard",
   "eventBus"
 ];
-Keyboard.prototype._keydownHandler = function(event2) {
-  this._keyHandler(event2, KEYDOWN_EVENT);
+Keyboard.prototype._keydownHandler = function(event3) {
+  this._keyHandler(event3, KEYDOWN_EVENT);
 };
-Keyboard.prototype._keyupHandler = function(event2) {
-  this._keyHandler(event2, KEYUP_EVENT);
+Keyboard.prototype._keyupHandler = function(event3) {
+  this._keyHandler(event3, KEYUP_EVENT);
 };
-Keyboard.prototype._keyHandler = function(event2, type) {
+Keyboard.prototype._keyHandler = function(event3, type) {
   var eventBusResult;
-  if (this._isEventIgnored(event2)) {
+  if (this._isEventIgnored(event3)) {
     return;
   }
   var context = {
-    keyEvent: event2
+    keyEvent: event3
   };
   eventBusResult = this._eventBus.fire(type || KEYDOWN_EVENT, context);
   if (eventBusResult) {
-    event2.preventDefault();
+    event3.preventDefault();
   }
 };
-Keyboard.prototype._isEventIgnored = function(event2) {
-  if (event2.defaultPrevented) {
+Keyboard.prototype._isEventIgnored = function(event3) {
+  if (event3.defaultPrevented) {
     return true;
   }
-  return isInput(event2.target) && this._isModifiedKeyIgnored(event2);
+  return (isInput(event3.target) || isButton2(event3.target) && isKey([" ", "Enter"], event3)) && this._isModifiedKeyIgnored(event3);
 };
-Keyboard.prototype._isModifiedKeyIgnored = function(event2) {
-  if (!isCmd(event2)) {
+Keyboard.prototype._isModifiedKeyIgnored = function(event3) {
+  if (!isCmd(event3)) {
     return true;
   }
-  var allowedModifiers = this._getAllowedModifiers(event2.target);
-  return allowedModifiers.indexOf(event2.key) === -1;
+  var allowedModifiers = this._getAllowedModifiers(event3.target);
+  return allowedModifiers.indexOf(event3.key) === -1;
 };
 Keyboard.prototype._getAllowedModifiers = function(element) {
   var modifierContainer = closest(element, "[" + HANDLE_MODIFIER_ATTRIBUTE + "]", true);
@@ -18240,8 +18410,8 @@ Keyboard.prototype.unbind = function() {
   }
   this._node = null;
 };
-Keyboard.prototype._fire = function(event2) {
-  this._eventBus.fire("keyboard." + event2, { node: this._node });
+Keyboard.prototype._fire = function(event3) {
+  this._eventBus.fire("keyboard." + event3, { node: this._node });
 };
 Keyboard.prototype.addListener = function(priority, listener, type) {
   if (isFunction(priority)) {
@@ -18261,13 +18431,16 @@ Keyboard.prototype.isKey = isKey;
 function isInput(target) {
   return target && (matches(target, "input, textarea") || target.contentEditable === "true");
 }
+function isButton2(target) {
+  return target && matches(target, "button, input[type=submit], input[type=button], a[href], [aria-role=button]");
+}
 
 // node_modules/diagram-js/lib/features/keyboard/KeyboardBindings.js
 var LOW_PRIORITY5 = 500;
 function KeyboardBindings(eventBus, keyboard) {
   var self2 = this;
-  eventBus.on("editorActions.init", LOW_PRIORITY5, function(event2) {
-    var editorActions = event2.editorActions;
+  eventBus.on("editorActions.init", LOW_PRIORITY5, function(event3) {
+    var editorActions = event3.editorActions;
     self2.registerBindings(keyboard, editorActions);
   });
 }
@@ -18282,57 +18455,57 @@ KeyboardBindings.prototype.registerBindings = function(keyboard, editorActions) 
     }
   }
   addListener("undo", function(context) {
-    var event2 = context.keyEvent;
-    if (isUndo(event2)) {
+    var event3 = context.keyEvent;
+    if (isUndo(event3)) {
       editorActions.trigger("undo");
       return true;
     }
   });
   addListener("redo", function(context) {
-    var event2 = context.keyEvent;
-    if (isRedo(event2)) {
+    var event3 = context.keyEvent;
+    if (isRedo(event3)) {
       editorActions.trigger("redo");
       return true;
     }
   });
   addListener("copy", function(context) {
-    var event2 = context.keyEvent;
-    if (isCopy(event2)) {
+    var event3 = context.keyEvent;
+    if (isCopy(event3)) {
       editorActions.trigger("copy");
       return true;
     }
   });
   addListener("paste", function(context) {
-    var event2 = context.keyEvent;
-    if (isPaste(event2)) {
+    var event3 = context.keyEvent;
+    if (isPaste(event3)) {
       editorActions.trigger("paste");
       return true;
     }
   });
   addListener("stepZoom", function(context) {
-    var event2 = context.keyEvent;
-    if (isKey(["+", "Add", "="], event2) && isCmd(event2)) {
+    var event3 = context.keyEvent;
+    if (isKey(["+", "Add", "="], event3) && isCmd(event3)) {
       editorActions.trigger("stepZoom", { value: 1 });
       return true;
     }
   });
   addListener("stepZoom", function(context) {
-    var event2 = context.keyEvent;
-    if (isKey(["-", "Subtract"], event2) && isCmd(event2)) {
+    var event3 = context.keyEvent;
+    if (isKey(["-", "Subtract"], event3) && isCmd(event3)) {
       editorActions.trigger("stepZoom", { value: -1 });
       return true;
     }
   });
   addListener("zoom", function(context) {
-    var event2 = context.keyEvent;
-    if (isKey("0", event2) && isCmd(event2)) {
+    var event3 = context.keyEvent;
+    if (isKey("0", event3) && isCmd(event3)) {
       editorActions.trigger("zoom", { value: 1 });
       return true;
     }
   });
   addListener("removeSelection", function(context) {
-    var event2 = context.keyEvent;
-    if (isKey(["Backspace", "Delete", "Del"], event2)) {
+    var event3 = context.keyEvent;
+    if (isKey(["Backspace", "Delete", "Del"], event3)) {
       editorActions.trigger("removeSelection");
       return true;
     }
@@ -18356,8 +18529,8 @@ function KeyboardMove(config, keyboard, canvas) {
   this._config = assign({}, DEFAULT_CONFIG, config || {});
   keyboard.addListener(arrowsListener);
   function arrowsListener(context) {
-    var event2 = context.keyEvent, config2 = self2._config;
-    if (!keyboard.isCmd(event2)) {
+    var event3 = context.keyEvent, config2 = self2._config;
+    if (!keyboard.isCmd(event3)) {
       return;
     }
     if (keyboard.isKey([
@@ -18369,10 +18542,10 @@ function KeyboardMove(config, keyboard, canvas) {
       "Down",
       "ArrowRight",
       "Right"
-    ], event2)) {
-      var speed = keyboard.isShift(event2) ? config2.moveSpeedAccelerated : config2.moveSpeed;
+    ], event3)) {
+      var speed = keyboard.isShift(event3) ? config2.moveSpeedAccelerated : config2.moveSpeed;
       var direction;
-      switch (event2.key) {
+      switch (event3.key) {
         case "ArrowLeft":
         case "Left":
           direction = "left";
@@ -18438,10 +18611,10 @@ var keyboard_move_default = {
 // node_modules/diagram-js/lib/util/Cursor.js
 var CURSOR_CLS_PATTERN = /^djs-cursor-.*$/;
 function set3(mode) {
-  var classes3 = classes2(document.body);
-  classes3.removeMatching(CURSOR_CLS_PATTERN);
+  var classes4 = classes2(document.body);
+  classes4.removeMatching(CURSOR_CLS_PATTERN);
   if (mode) {
-    classes3.add("djs-cursor-" + mode);
+    classes4.add("djs-cursor-" + mode);
   }
 }
 function unset() {
@@ -18482,8 +18655,8 @@ function MoveCanvas(eventBus, canvas) {
   eventBus.on("element.mousedown", 500, function(e7) {
     return handleStart(e7.originalEvent);
   });
-  function handleMove(event2) {
-    var start = context.start, button = context.button, position = toPoint(event2), delta2 = delta(position, start);
+  function handleMove(event3) {
+    var start = context.start, button = context.button, position = toPoint(event3), delta2 = delta(position, start);
     if (!context.dragging && length(delta2) > THRESHOLD) {
       context.dragging = true;
       if (button === 0) {
@@ -18500,25 +18673,25 @@ function MoveCanvas(eventBus, canvas) {
       });
       context.last = position;
     }
-    event2.preventDefault();
+    event3.preventDefault();
   }
-  function handleEnd(event2) {
+  function handleEnd(event3) {
     event.unbind(document, "mousemove", handleMove);
     event.unbind(document, "mouseup", handleEnd);
     context = null;
     unset();
   }
-  function handleStart(event2) {
-    if (closest(event2.target, ".djs-draggable")) {
+  function handleStart(event3) {
+    if (closest(event3.target, ".djs-draggable")) {
       return;
     }
-    var button = event2.button;
-    if (button >= 2 || event2.ctrlKey || event2.shiftKey || event2.altKey) {
+    var button = event3.button;
+    if (button >= 2 || event3.ctrlKey || event3.shiftKey || event3.altKey) {
       return;
     }
     context = {
       button,
-      start: toPoint(event2)
+      start: toPoint(event3)
     };
     event.bind(document, "mousemove", handleMove);
     event.bind(document, "mouseup", handleEnd);
@@ -18543,8 +18716,8 @@ var movecanvas_default = {
 };
 
 // node_modules/diagram-js/lib/util/Math.js
-function log10(x5) {
-  return Math.log(x5) / Math.log(10);
+function log10(x6) {
+  return Math.log(x6) / Math.log(10);
 }
 
 // node_modules/diagram-js/lib/navigation/zoomscroll/ZoomUtil.js
@@ -18597,40 +18770,40 @@ ZoomScroll.prototype.zoom = function zoom(delta2, position) {
     this._totalDelta = 0;
   }
 };
-ZoomScroll.prototype._handleWheel = function handleWheel(event2) {
-  if (closest(event2.target, ".djs-scrollable", true)) {
+ZoomScroll.prototype._handleWheel = function handleWheel(event3) {
+  if (closest(event3.target, ".djs-scrollable", true)) {
     return;
   }
   var element = this._container;
-  event2.preventDefault();
-  var isZoom = event2.ctrlKey || isMac() && event2.metaKey;
-  var isHorizontalScroll = event2.shiftKey;
+  event3.preventDefault();
+  var isZoom = event3.ctrlKey || isMac() && event3.metaKey;
+  var isHorizontalScroll = event3.shiftKey;
   var factor = -1 * this._scale, delta2;
   if (isZoom) {
-    factor *= event2.deltaMode === 0 ? 0.02 : 0.32;
+    factor *= event3.deltaMode === 0 ? 0.02 : 0.32;
   } else {
-    factor *= event2.deltaMode === 0 ? 1 : 16;
+    factor *= event3.deltaMode === 0 ? 1 : 16;
   }
   if (isZoom) {
     var elementRect = element.getBoundingClientRect();
     var offset = {
-      x: event2.clientX - elementRect.left,
-      y: event2.clientY - elementRect.top
+      x: event3.clientX - elementRect.left,
+      y: event3.clientY - elementRect.top
     };
     delta2 = Math.sqrt(
-      Math.pow(event2.deltaY, 2) + Math.pow(event2.deltaX, 2)
-    ) * sign(event2.deltaY) * factor;
+      Math.pow(event3.deltaY, 2) + Math.pow(event3.deltaX, 2)
+    ) * sign(event3.deltaY) * factor;
     this.zoom(delta2, offset);
   } else {
     if (isHorizontalScroll) {
       delta2 = {
-        dx: factor * event2.deltaY,
+        dx: factor * event3.deltaY,
         dy: 0
       };
     } else {
       delta2 = {
-        dx: factor * event2.deltaX,
-        dy: factor * event2.deltaY
+        dx: factor * event3.deltaX,
+        dy: factor * event3.deltaY
       };
     }
     this.scroll(delta2);
@@ -18690,9 +18863,9 @@ NavigatedViewer.prototype._modules = [].concat(
 // node_modules/bpmn-js/lib/BaseModeler.js
 function BaseModeler(options2) {
   BaseViewer.call(this, options2);
-  this.on("import.parse.complete", function(event2) {
-    if (!event2.error) {
-      this._collectIds(event2.definitions, event2.elementsById);
+  this.on("import.parse.complete", function(event3) {
+    if (!event3.error) {
+      this._collectIds(event3.definitions, event3.elementsById);
     }
   }, this);
   this.on("diagram.destroy", function() {
@@ -18830,7 +19003,7 @@ function ContextPad(canvas, config, eventBus, overlays) {
   this._overlays = overlays;
   var scale = isDefined(config && config.scale) ? config.scale : {
     min: 1,
-    max: 1.5
+    max: 1
   };
   this._overlaysConfig = {
     scale
@@ -18846,8 +19019,8 @@ ContextPad.$inject = [
 ];
 ContextPad.prototype._init = function() {
   var self2 = this;
-  this._eventBus.on("selection.changed", function(event2) {
-    var selection2 = event2.newSelection;
+  this._eventBus.on("selection.changed", function(event3) {
+    var selection2 = event3.newSelection;
     var target = selection2.length ? selection2.length === 1 ? selection2[0] : selection2 : null;
     if (target) {
       self2.open(target, true);
@@ -18855,8 +19028,8 @@ ContextPad.prototype._init = function() {
       self2.close();
     }
   });
-  this._eventBus.on("elements.changed", function(event2) {
-    var elements = event2.elements, current = self2._current;
+  this._eventBus.on("elements.changed", function(event3) {
+    var elements = event3.elements, current = self2._current;
     if (!current) {
       return;
     }
@@ -18877,8 +19050,8 @@ ContextPad.prototype.registerProvider = function(priority, provider) {
     provider = priority;
     priority = DEFAULT_PRIORITY5;
   }
-  this._eventBus.on("contextPad.getProviders", priority, function(event2) {
-    event2.providers.push(provider);
+  this._eventBus.on("contextPad.getProviders", priority, function(event3) {
+    event3.providers.push(provider);
   });
 };
 ContextPad.prototype.getEntries = function(target) {
@@ -18900,13 +19073,13 @@ ContextPad.prototype.getEntries = function(target) {
   });
   return entries;
 };
-ContextPad.prototype.trigger = function(action, event2, autoActivate) {
-  var entry, originalEvent, button = event2.delegateTarget || event2.target;
+ContextPad.prototype.trigger = function(action, event3, autoActivate) {
+  var entry, originalEvent, button = event3.delegateTarget || event3.target;
   if (!button) {
-    return event2.preventDefault();
+    return event3.preventDefault();
   }
   entry = attr2(button, "data-action");
-  originalEvent = event2.originalEvent || event2;
+  originalEvent = event3.originalEvent || event3;
   if (action === "mouseover") {
     this._timeout = setTimeout(() => {
       this._mouseout = this.triggerEntry(entry, "hover", originalEvent, autoActivate);
@@ -18920,7 +19093,7 @@ ContextPad.prototype.trigger = function(action, event2, autoActivate) {
   }
   return this.triggerEntry(entry, action, originalEvent, autoActivate);
 };
-ContextPad.prototype.triggerEntry = function(entryId, action, event2, autoActivate) {
+ContextPad.prototype.triggerEntry = function(entryId, action, event3, autoActivate) {
   if (!this.isShown()) {
     return;
   }
@@ -18930,19 +19103,19 @@ ContextPad.prototype.triggerEntry = function(entryId, action, event2, autoActiva
     return;
   }
   var handler = entry.action;
-  if (this._eventBus.fire("contextPad.trigger", { entry, event: event2 }) === false) {
+  if (this._eventBus.fire("contextPad.trigger", { entry, event: event3 }) === false) {
     return;
   }
   if (isFunction(handler)) {
     if (action === "click") {
-      return handler(event2, target, autoActivate);
+      return handler(event3, target, autoActivate);
     }
   } else {
     if (handler[action]) {
-      return handler[action](event2, target, autoActivate);
+      return handler[action](event3, target, autoActivate);
     }
   }
-  event2.preventDefault();
+  event3.preventDefault();
 };
 ContextPad.prototype.open = function(target, force) {
   if (!force && this.isOpen(target)) {
@@ -18952,12 +19125,12 @@ ContextPad.prototype.open = function(target, force) {
   this._updateAndOpen(target);
 };
 ContextPad.prototype._getProviders = function() {
-  var event2 = this._eventBus.createEvent({
+  var event3 = this._eventBus.createEvent({
     type: "contextPad.getProviders",
     providers: []
   });
-  this._eventBus.fire(event2);
-  return event2.providers;
+  this._eventBus.fire(event3);
+  return event3.providers;
 };
 ContextPad.prototype._updateAndOpen = function(target) {
   var entries = this.getEntries(target), pad = this.getPad(target), html = pad.html, image;
@@ -19004,20 +19177,20 @@ ContextPad.prototype.getPad = function(target) {
   var overlaysConfig = assign({
     html
   }, this._overlaysConfig, position);
-  delegate.bind(html, entrySelector, "click", function(event2) {
-    self2.trigger("click", event2);
+  delegate.bind(html, entrySelector, "click", function(event3) {
+    self2.trigger("click", event3);
   });
-  delegate.bind(html, entrySelector, "dragstart", function(event2) {
-    self2.trigger("dragstart", event2);
+  delegate.bind(html, entrySelector, "dragstart", function(event3) {
+    self2.trigger("dragstart", event3);
   });
-  delegate.bind(html, entrySelector, "mouseover", function(event2) {
-    self2.trigger("mouseover", event2);
+  delegate.bind(html, entrySelector, "mouseover", function(event3) {
+    self2.trigger("mouseover", event3);
   });
-  delegate.bind(html, entrySelector, "mouseout", function(event2) {
-    self2.trigger("mouseout", event2);
+  delegate.bind(html, entrySelector, "mouseout", function(event3) {
+    self2.trigger("mouseout", event3);
   });
-  event.bind(html, "mousedown", function(event2) {
-    event2.stopPropagation();
+  event.bind(html, "mousedown", function(event3) {
+    event3.stopPropagation();
   });
   var activeRootElement = this._canvas.getRootElement();
   this._overlayId = overlays.add(activeRootElement, "context-pad", overlaysConfig);
@@ -19073,10 +19246,10 @@ ContextPad.prototype._getPosition = function(target) {
   };
 };
 function addClasses(element, classNames) {
-  var classes3 = classes2(element);
+  var classes4 = classes2(element);
   classNames = isArray(classNames) ? classNames : classNames.split(/\s+/g);
   classNames.forEach(function(cls) {
-    classes3.add(cls);
+    classes4.add(cls);
   });
 }
 function includes(array, item) {
@@ -19105,47 +19278,50 @@ var o;
 var r;
 var f;
 var e2;
-var c = {};
-var s = [];
-var a = /acit|ex(?:s|g|n|p|$)|rph|grid|ows|mnc|ntw|ine[ch]|zoo|^ord|itera/i;
-var h = Array.isArray;
-function v(n4, l5) {
+var c;
+var s;
+var a;
+var h = {};
+var v = [];
+var p = /acit|ex(?:s|g|n|p|$)|rph|grid|ows|mnc|ntw|ine[ch]|zoo|^ord|itera/i;
+var y = Array.isArray;
+function d(n4, l5) {
   for (var u6 in l5)
     n4[u6] = l5[u6];
   return n4;
 }
-function p(n4) {
+function _(n4) {
   var l5 = n4.parentNode;
   l5 && l5.removeChild(n4);
 }
-function y(l5, u6, t7) {
+function g(l5, u6, t7) {
   var i7, o5, r7, f6 = {};
   for (r7 in u6)
     "key" == r7 ? i7 = u6[r7] : "ref" == r7 ? o5 = u6[r7] : f6[r7] = u6[r7];
   if (arguments.length > 2 && (f6.children = arguments.length > 3 ? n.call(arguments, 2) : t7), "function" == typeof l5 && null != l5.defaultProps)
     for (r7 in l5.defaultProps)
       void 0 === f6[r7] && (f6[r7] = l5.defaultProps[r7]);
-  return d(l5, f6, i7, o5, null);
+  return b(l5, f6, i7, o5, null);
 }
-function d(n4, t7, i7, o5, r7) {
-  var f6 = { type: n4, props: t7, key: i7, ref: o5, __k: null, __: null, __b: 0, __e: null, __d: void 0, __c: null, __h: null, constructor: void 0, __v: null == r7 ? ++u : r7 };
+function b(n4, t7, i7, o5, r7) {
+  var f6 = { type: n4, props: t7, key: i7, ref: o5, __k: null, __: null, __b: 0, __e: null, __d: void 0, __c: null, constructor: void 0, __v: null == r7 ? ++u : r7, __i: -1, __u: 0 };
   return null == r7 && null != l.vnode && l.vnode(f6), f6;
 }
-function k(n4) {
+function w(n4) {
   return n4.children;
 }
-function b(n4, l5) {
+function k(n4, l5) {
   this.props = n4, this.context = l5;
 }
-function g(n4, l5) {
+function x(n4, l5) {
   if (null == l5)
-    return n4.__ ? g(n4.__, n4.__.__k.indexOf(n4) + 1) : null;
+    return n4.__ ? x(n4.__, n4.__i + 1) : null;
   for (var u6; l5 < n4.__k.length; l5++)
     if (null != (u6 = n4.__k[l5]) && null != u6.__e)
       return u6.__e;
-  return "function" == typeof n4.type ? g(n4) : null;
+  return "function" == typeof n4.type ? x(n4) : null;
 }
-function m(n4) {
+function C(n4) {
   var l5, u6;
   if (null != (n4 = n4.__) && null != n4.__c) {
     for (n4.__e = n4.__c.base = null, l5 = 0; l5 < n4.__k.length; l5++)
@@ -19153,63 +19329,68 @@ function m(n4) {
         n4.__e = n4.__c.base = u6.__e;
         break;
       }
-    return m(n4);
+    return C(n4);
   }
 }
-function w(n4) {
-  (!n4.__d && (n4.__d = true) && i.push(n4) && !x.__r++ || o !== l.debounceRendering) && ((o = l.debounceRendering) || r)(x);
+function P(n4) {
+  (!n4.__d && (n4.__d = true) && i.push(n4) && !S.__r++ || o !== l.debounceRendering) && ((o = l.debounceRendering) || r)(S);
 }
-function x() {
-  var n4, l5, u6, t7, o5, r7, e7, c5, s5;
+function S() {
+  var n4, u6, t7, o5, r7, e7, c5, s5;
   for (i.sort(f); n4 = i.shift(); )
-    n4.__d && (l5 = i.length, t7 = void 0, o5 = void 0, r7 = void 0, c5 = (e7 = (u6 = n4).__v).__e, (s5 = u6.__P) && (t7 = [], o5 = [], (r7 = v({}, e7)).__v = e7.__v + 1, L(s5, e7, r7, u6.__n, void 0 !== s5.ownerSVGElement, null != e7.__h ? [c5] : null, t7, null == c5 ? g(e7) : c5, e7.__h, o5), M(t7, e7, o5), e7.__e != c5 && m(e7)), i.length > l5 && i.sort(f));
-  x.__r = 0;
+    n4.__d && (u6 = i.length, o5 = void 0, e7 = (r7 = (t7 = n4).__v).__e, c5 = [], s5 = [], t7.__P && ((o5 = d({}, r7)).__v = r7.__v + 1, l.vnode && l.vnode(o5), O(t7.__P, o5, r7, t7.__n, void 0 !== t7.__P.ownerSVGElement, 32 & r7.__u ? [e7] : null, c5, null == e7 ? x(r7) : e7, !!(32 & r7.__u), s5), o5.__v = r7.__v, o5.__.__k[o5.__i] = o5, j(c5, o5, s5), o5.__e != e7 && C(o5)), i.length > u6 && i.sort(f));
+  S.__r = 0;
 }
-function P(n4, l5, u6, t7, i7, o5, r7, f6, e7, a6, v5) {
-  var p5, y5, _4, b5, m6, w6, x5, P4, C3, H4 = 0, I4 = t7 && t7.__k || s, T6 = I4.length, j6 = T6, z6 = l5.length;
-  for (u6.__k = [], p5 = 0; p5 < z6; p5++)
-    null != (b5 = u6.__k[p5] = null == (b5 = l5[p5]) || "boolean" == typeof b5 || "function" == typeof b5 ? null : "string" == typeof b5 || "number" == typeof b5 || "bigint" == typeof b5 ? d(null, b5, null, null, b5) : h(b5) ? d(k, { children: b5 }, null, null, null) : b5.__b > 0 ? d(b5.type, b5.props, b5.key, b5.ref ? b5.ref : null, b5.__v) : b5) ? (b5.__ = u6, b5.__b = u6.__b + 1, -1 === (P4 = A(b5, I4, x5 = p5 + H4, j6)) ? _4 = c : (_4 = I4[P4] || c, I4[P4] = void 0, j6--), L(n4, b5, _4, i7, o5, r7, f6, e7, a6, v5), m6 = b5.__e, (y5 = b5.ref) && _4.ref != y5 && (_4.ref && O(_4.ref, null, b5), v5.push(y5, b5.__c || m6, b5)), null != m6 && (null == w6 && (w6 = m6), (C3 = _4 === c || null === _4.__v) ? -1 == P4 && H4-- : P4 !== x5 && (P4 === x5 + 1 ? H4++ : P4 > x5 ? j6 > z6 - x5 ? H4 += P4 - x5 : H4-- : H4 = P4 < x5 && P4 == x5 - 1 ? P4 - x5 : 0), x5 = p5 + H4, "function" != typeof b5.type || P4 === x5 && _4.__k !== b5.__k ? "function" == typeof b5.type || P4 === x5 && !C3 ? void 0 !== b5.__d ? (e7 = b5.__d, b5.__d = void 0) : e7 = m6.nextSibling : e7 = S(n4, m6, e7) : e7 = $(b5, e7, n4), "function" == typeof u6.type && (u6.__d = e7))) : (_4 = I4[p5]) && null == _4.key && _4.__e && (_4.__e == e7 && (e7 = g(_4)), q(_4, _4, false), I4[p5] = null);
-  for (u6.__e = w6, p5 = T6; p5--; )
-    null != I4[p5] && ("function" == typeof u6.type && null != I4[p5].__e && I4[p5].__e == u6.__d && (u6.__d = I4[p5].__e.nextSibling), q(I4[p5], I4[p5]));
+function $(n4, l5, u6, t7, i7, o5, r7, f6, e7, c5, s5) {
+  var a6, p5, y5, d5, _5, g6 = t7 && t7.__k || v, b5 = l5.length;
+  for (u6.__d = e7, I(u6, l5, g6), e7 = u6.__d, a6 = 0; a6 < b5; a6++)
+    null != (y5 = u6.__k[a6]) && "boolean" != typeof y5 && "function" != typeof y5 && (p5 = -1 === y5.__i ? h : g6[y5.__i] || h, y5.__i = a6, O(n4, y5, p5, i7, o5, r7, f6, e7, c5, s5), d5 = y5.__e, y5.ref && p5.ref != y5.ref && (p5.ref && N(p5.ref, null, y5), s5.push(y5.ref, y5.__c || d5, y5)), null == _5 && null != d5 && (_5 = d5), 65536 & y5.__u || p5.__k === y5.__k ? (e7 && !e7.isConnected && (e7 = x(p5)), e7 = H(y5, e7, n4)) : "function" == typeof y5.type && void 0 !== y5.__d ? e7 = y5.__d : d5 && (e7 = d5.nextSibling), y5.__d = void 0, y5.__u &= -196609);
+  u6.__d = e7, u6.__e = _5;
 }
-function $(n4, l5, u6) {
-  for (var t7, i7 = n4.__k, o5 = 0; i7 && o5 < i7.length; o5++)
-    (t7 = i7[o5]) && (t7.__ = n4, l5 = "function" == typeof t7.type ? $(t7, l5, u6) : S(u6, t7.__e, l5));
+function I(n4, l5, u6) {
+  var t7, i7, o5, r7, f6, e7 = l5.length, c5 = u6.length, s5 = c5, a6 = 0;
+  for (n4.__k = [], t7 = 0; t7 < e7; t7++)
+    r7 = t7 + a6, null != (i7 = n4.__k[t7] = null == (i7 = l5[t7]) || "boolean" == typeof i7 || "function" == typeof i7 ? null : "string" == typeof i7 || "number" == typeof i7 || "bigint" == typeof i7 || i7.constructor == String ? b(null, i7, null, null, null) : y(i7) ? b(w, { children: i7 }, null, null, null) : void 0 === i7.constructor && i7.__b > 0 ? b(i7.type, i7.props, i7.key, i7.ref ? i7.ref : null, i7.__v) : i7) ? (i7.__ = n4, i7.__b = n4.__b + 1, f6 = A(i7, u6, r7, s5), i7.__i = f6, o5 = null, -1 !== f6 && (s5--, (o5 = u6[f6]) && (o5.__u |= 131072)), null == o5 || null === o5.__v ? (-1 == f6 && a6--, "function" != typeof i7.type && (i7.__u |= 65536)) : f6 !== r7 && (f6 === r7 + 1 ? a6++ : f6 > r7 ? s5 > e7 - r7 ? a6 += f6 - r7 : a6-- : f6 < r7 ? f6 == r7 - 1 && (a6 = f6 - r7) : a6 = 0, f6 !== t7 + a6 && (i7.__u |= 65536))) : (o5 = u6[r7]) && null == o5.key && o5.__e && 0 == (131072 & o5.__u) && (o5.__e == n4.__d && (n4.__d = x(o5)), q(o5, o5, false), u6[r7] = null, s5--);
+  if (s5)
+    for (t7 = 0; t7 < c5; t7++)
+      null != (o5 = u6[t7]) && 0 == (131072 & o5.__u) && (o5.__e == n4.__d && (n4.__d = x(o5)), q(o5, o5));
+}
+function H(n4, l5, u6) {
+  var t7, i7;
+  if ("function" == typeof n4.type) {
+    for (t7 = n4.__k, i7 = 0; t7 && i7 < t7.length; i7++)
+      t7[i7] && (t7[i7].__ = n4, l5 = H(t7[i7], l5, u6));
+    return l5;
+  }
+  n4.__e != l5 && (u6.insertBefore(n4.__e, l5 || null), l5 = n4.__e);
+  do {
+    l5 = l5 && l5.nextSibling;
+  } while (null != l5 && 8 === l5.nodeType);
   return l5;
-}
-function S(n4, l5, u6) {
-  return null == u6 || u6.parentNode !== n4 ? n4.insertBefore(l5, null) : l5 == u6 && null != l5.parentNode || n4.insertBefore(l5, u6), l5.nextSibling;
 }
 function A(n4, l5, u6, t7) {
   var i7 = n4.key, o5 = n4.type, r7 = u6 - 1, f6 = u6 + 1, e7 = l5[u6];
-  if (null === e7 || e7 && i7 == e7.key && o5 === e7.type)
+  if (null === e7 || e7 && i7 == e7.key && o5 === e7.type && 0 == (131072 & e7.__u))
     return u6;
-  if (t7 > (null != e7 ? 1 : 0))
+  if (t7 > (null != e7 && 0 == (131072 & e7.__u) ? 1 : 0))
     for (; r7 >= 0 || f6 < l5.length; ) {
       if (r7 >= 0) {
-        if ((e7 = l5[r7]) && i7 == e7.key && o5 === e7.type)
+        if ((e7 = l5[r7]) && 0 == (131072 & e7.__u) && i7 == e7.key && o5 === e7.type)
           return r7;
         r7--;
       }
       if (f6 < l5.length) {
-        if ((e7 = l5[f6]) && i7 == e7.key && o5 === e7.type)
+        if ((e7 = l5[f6]) && 0 == (131072 & e7.__u) && i7 == e7.key && o5 === e7.type)
           return f6;
         f6++;
       }
     }
   return -1;
 }
-function H(n4, l5, u6, t7, i7) {
-  var o5;
-  for (o5 in u6)
-    "children" === o5 || "key" === o5 || o5 in l5 || T(n4, o5, null, u6[o5], t7);
-  for (o5 in l5)
-    i7 && "function" != typeof l5[o5] || "children" === o5 || "key" === o5 || "value" === o5 || "checked" === o5 || u6[o5] === l5[o5] || T(n4, o5, l5[o5], u6[o5], t7);
+function F(n4, l5, u6) {
+  "-" === l5[0] ? n4.setProperty(l5, null == u6 ? "" : u6) : n4[l5] = null == u6 ? "" : "number" != typeof u6 || p.test(l5) ? u6 : u6 + "px";
 }
-function I(n4, l5, u6) {
-  "-" === l5[0] ? n4.setProperty(l5, null == u6 ? "" : u6) : n4[l5] = null == u6 ? "" : "number" != typeof u6 || a.test(l5) ? u6 : u6 + "px";
-}
-function T(n4, l5, u6, t7, i7) {
+function L(n4, l5, u6, t7, i7) {
   var o5;
   n:
     if ("style" === l5)
@@ -19218,17 +19399,17 @@ function T(n4, l5, u6, t7, i7) {
       else {
         if ("string" == typeof t7 && (n4.style.cssText = t7 = ""), t7)
           for (l5 in t7)
-            u6 && l5 in u6 || I(n4.style, l5, "");
+            u6 && l5 in u6 || F(n4.style, l5, "");
         if (u6)
           for (l5 in u6)
-            t7 && u6[l5] === t7[l5] || I(n4.style, l5, u6[l5]);
+            t7 && u6[l5] === t7[l5] || F(n4.style, l5, u6[l5]);
       }
     else if ("o" === l5[0] && "n" === l5[1])
-      o5 = l5 !== (l5 = l5.replace(/(PointerCapture)$|Capture$/, "$1")), l5 = l5.toLowerCase() in n4 ? l5.toLowerCase().slice(2) : l5.slice(2), n4.l || (n4.l = {}), n4.l[l5 + o5] = u6, u6 ? t7 || n4.addEventListener(l5, o5 ? z : j, o5) : n4.removeEventListener(l5, o5 ? z : j, o5);
-    else if ("dangerouslySetInnerHTML" !== l5) {
+      o5 = l5 !== (l5 = l5.replace(/(PointerCapture)$|Capture$/i, "$1")), l5 = l5.toLowerCase() in n4 || "onFocusOut" === l5 || "onFocusIn" === l5 ? l5.toLowerCase().slice(2) : l5.slice(2), n4.l || (n4.l = {}), n4.l[l5 + o5] = u6, u6 ? t7 ? u6.u = t7.u : (u6.u = e2, n4.addEventListener(l5, o5 ? s : c, o5)) : n4.removeEventListener(l5, o5 ? s : c, o5);
+    else {
       if (i7)
         l5 = l5.replace(/xlink(H|:h)/, "h").replace(/sName$/, "s");
-      else if ("width" !== l5 && "height" !== l5 && "href" !== l5 && "list" !== l5 && "form" !== l5 && "tabIndex" !== l5 && "download" !== l5 && "rowSpan" !== l5 && "colSpan" !== l5 && l5 in n4)
+      else if ("width" != l5 && "height" != l5 && "href" != l5 && "list" != l5 && "form" != l5 && "tabIndex" != l5 && "download" != l5 && "rowSpan" != l5 && "colSpan" != l5 && "role" != l5 && l5 in n4)
         try {
           n4[l5] = null == u6 ? "" : u6;
           break n;
@@ -19237,54 +19418,61 @@ function T(n4, l5, u6, t7, i7) {
       "function" == typeof u6 || (null == u6 || false === u6 && "-" !== l5[4] ? n4.removeAttribute(l5) : n4.setAttribute(l5, u6));
     }
 }
-function j(n4) {
-  return this.l[n4.type + false](l.event ? l.event(n4) : n4);
+function M(n4) {
+  return function(u6) {
+    if (this.l) {
+      var t7 = this.l[u6.type + n4];
+      if (null == u6.t)
+        u6.t = e2++;
+      else if (u6.t < t7.u)
+        return;
+      return t7(l.event ? l.event(u6) : u6);
+    }
+  };
 }
-function z(n4) {
-  return this.l[n4.type + true](l.event ? l.event(n4) : n4);
-}
-function L(n4, u6, t7, i7, o5, r7, f6, e7, c5, s5) {
-  var a6, p5, y5, d5, _4, g6, m6, w6, x5, $4, C3, S3, A5, H4, I4, T6 = u6.type;
+function O(n4, u6, t7, i7, o5, r7, f6, e7, c5, s5) {
+  var a6, h5, v5, p5, _5, g6, b5, m5, x6, C5, P5, S3, I4, H4, T5, A6 = u6.type;
   if (void 0 !== u6.constructor)
     return null;
-  null != t7.__h && (c5 = t7.__h, e7 = u6.__e = t7.__e, u6.__h = null, r7 = [e7]), (a6 = l.__b) && a6(u6);
+  128 & t7.__u && (c5 = !!(32 & t7.__u), r7 = [e7 = u6.__e = t7.__e]), (a6 = l.__b) && a6(u6);
   n:
-    if ("function" == typeof T6)
+    if ("function" == typeof A6)
       try {
-        if (w6 = u6.props, x5 = (a6 = T6.contextType) && i7[a6.__c], $4 = a6 ? x5 ? x5.props.value : a6.__ : i7, t7.__c ? m6 = (p5 = u6.__c = t7.__c).__ = p5.__E : ("prototype" in T6 && T6.prototype.render ? u6.__c = p5 = new T6(w6, $4) : (u6.__c = p5 = new b(w6, $4), p5.constructor = T6, p5.render = B), x5 && x5.sub(p5), p5.props = w6, p5.state || (p5.state = {}), p5.context = $4, p5.__n = i7, y5 = p5.__d = true, p5.__h = [], p5._sb = []), null == p5.__s && (p5.__s = p5.state), null != T6.getDerivedStateFromProps && (p5.__s == p5.state && (p5.__s = v({}, p5.__s)), v(p5.__s, T6.getDerivedStateFromProps(w6, p5.__s))), d5 = p5.props, _4 = p5.state, p5.__v = u6, y5)
-          null == T6.getDerivedStateFromProps && null != p5.componentWillMount && p5.componentWillMount(), null != p5.componentDidMount && p5.__h.push(p5.componentDidMount);
+        if (m5 = u6.props, x6 = (a6 = A6.contextType) && i7[a6.__c], C5 = a6 ? x6 ? x6.props.value : a6.__ : i7, t7.__c ? b5 = (h5 = u6.__c = t7.__c).__ = h5.__E : ("prototype" in A6 && A6.prototype.render ? u6.__c = h5 = new A6(m5, C5) : (u6.__c = h5 = new k(m5, C5), h5.constructor = A6, h5.render = B), x6 && x6.sub(h5), h5.props = m5, h5.state || (h5.state = {}), h5.context = C5, h5.__n = i7, v5 = h5.__d = true, h5.__h = [], h5._sb = []), null == h5.__s && (h5.__s = h5.state), null != A6.getDerivedStateFromProps && (h5.__s == h5.state && (h5.__s = d({}, h5.__s)), d(h5.__s, A6.getDerivedStateFromProps(m5, h5.__s))), p5 = h5.props, _5 = h5.state, h5.__v = u6, v5)
+          null == A6.getDerivedStateFromProps && null != h5.componentWillMount && h5.componentWillMount(), null != h5.componentDidMount && h5.__h.push(h5.componentDidMount);
         else {
-          if (null == T6.getDerivedStateFromProps && w6 !== d5 && null != p5.componentWillReceiveProps && p5.componentWillReceiveProps(w6, $4), !p5.__e && (null != p5.shouldComponentUpdate && false === p5.shouldComponentUpdate(w6, p5.__s, $4) || u6.__v === t7.__v)) {
-            for (u6.__v !== t7.__v && (p5.props = w6, p5.state = p5.__s, p5.__d = false), u6.__e = t7.__e, u6.__k = t7.__k, u6.__k.forEach(function(n5) {
+          if (null == A6.getDerivedStateFromProps && m5 !== p5 && null != h5.componentWillReceiveProps && h5.componentWillReceiveProps(m5, C5), !h5.__e && (null != h5.shouldComponentUpdate && false === h5.shouldComponentUpdate(m5, h5.__s, C5) || u6.__v === t7.__v)) {
+            for (u6.__v !== t7.__v && (h5.props = m5, h5.state = h5.__s, h5.__d = false), u6.__e = t7.__e, u6.__k = t7.__k, u6.__k.forEach(function(n5) {
               n5 && (n5.__ = u6);
-            }), C3 = 0; C3 < p5._sb.length; C3++)
-              p5.__h.push(p5._sb[C3]);
-            p5._sb = [], p5.__h.length && f6.push(p5);
+            }), P5 = 0; P5 < h5._sb.length; P5++)
+              h5.__h.push(h5._sb[P5]);
+            h5._sb = [], h5.__h.length && f6.push(h5);
             break n;
           }
-          null != p5.componentWillUpdate && p5.componentWillUpdate(w6, p5.__s, $4), null != p5.componentDidUpdate && p5.__h.push(function() {
-            p5.componentDidUpdate(d5, _4, g6);
+          null != h5.componentWillUpdate && h5.componentWillUpdate(m5, h5.__s, C5), null != h5.componentDidUpdate && h5.__h.push(function() {
+            h5.componentDidUpdate(p5, _5, g6);
           });
         }
-        if (p5.context = $4, p5.props = w6, p5.__P = n4, p5.__e = false, S3 = l.__r, A5 = 0, "prototype" in T6 && T6.prototype.render) {
-          for (p5.state = p5.__s, p5.__d = false, S3 && S3(u6), a6 = p5.render(p5.props, p5.state, p5.context), H4 = 0; H4 < p5._sb.length; H4++)
-            p5.__h.push(p5._sb[H4]);
-          p5._sb = [];
+        if (h5.context = C5, h5.props = m5, h5.__P = n4, h5.__e = false, S3 = l.__r, I4 = 0, "prototype" in A6 && A6.prototype.render) {
+          for (h5.state = h5.__s, h5.__d = false, S3 && S3(u6), a6 = h5.render(h5.props, h5.state, h5.context), H4 = 0; H4 < h5._sb.length; H4++)
+            h5.__h.push(h5._sb[H4]);
+          h5._sb = [];
         } else
           do {
-            p5.__d = false, S3 && S3(u6), a6 = p5.render(p5.props, p5.state, p5.context), p5.state = p5.__s;
-          } while (p5.__d && ++A5 < 25);
-        p5.state = p5.__s, null != p5.getChildContext && (i7 = v(v({}, i7), p5.getChildContext())), y5 || null == p5.getSnapshotBeforeUpdate || (g6 = p5.getSnapshotBeforeUpdate(d5, _4)), P(n4, h(I4 = null != a6 && a6.type === k && null == a6.key ? a6.props.children : a6) ? I4 : [I4], u6, t7, i7, o5, r7, f6, e7, c5, s5), p5.base = u6.__e, u6.__h = null, p5.__h.length && f6.push(p5), m6 && (p5.__E = p5.__ = null);
+            h5.__d = false, S3 && S3(u6), a6 = h5.render(h5.props, h5.state, h5.context), h5.state = h5.__s;
+          } while (h5.__d && ++I4 < 25);
+        h5.state = h5.__s, null != h5.getChildContext && (i7 = d(d({}, i7), h5.getChildContext())), v5 || null == h5.getSnapshotBeforeUpdate || (g6 = h5.getSnapshotBeforeUpdate(p5, _5)), $(n4, y(T5 = null != a6 && a6.type === w && null == a6.key ? a6.props.children : a6) ? T5 : [T5], u6, t7, i7, o5, r7, f6, e7, c5, s5), h5.base = u6.__e, u6.__u &= -161, h5.__h.length && f6.push(h5), b5 && (h5.__E = h5.__ = null);
       } catch (n5) {
-        u6.__v = null, (c5 || null != r7) && (u6.__e = e7, u6.__h = !!c5, r7[r7.indexOf(e7)] = null), l.__e(n5, u6, t7);
+        u6.__v = null, c5 || null != r7 ? (u6.__e = e7, u6.__u |= c5 ? 160 : 32, r7[r7.indexOf(e7)] = null) : (u6.__e = t7.__e, u6.__k = t7.__k), l.__e(n5, u6, t7);
       }
     else
-      null == r7 && u6.__v === t7.__v ? (u6.__k = t7.__k, u6.__e = t7.__e) : u6.__e = N(t7.__e, u6, t7, i7, o5, r7, f6, c5, s5);
+      null == r7 && u6.__v === t7.__v ? (u6.__k = t7.__k, u6.__e = t7.__e) : u6.__e = z(t7.__e, u6, t7, i7, o5, r7, f6, c5, s5);
   (a6 = l.diffed) && a6(u6);
 }
-function M(n4, u6, t7) {
+function j(n4, u6, t7) {
+  u6.__d = void 0;
   for (var i7 = 0; i7 < t7.length; i7++)
-    O(t7[i7], t7[++i7], t7[++i7]);
+    N(t7[i7], t7[++i7], t7[++i7]);
   l.__c && l.__c(u6, n4), n4.some(function(u7) {
     try {
       n4 = u7.__h, u7.__h = [], n4.some(function(n5) {
@@ -19295,39 +19483,40 @@ function M(n4, u6, t7) {
     }
   });
 }
-function N(l5, u6, t7, i7, o5, r7, f6, e7, s5) {
-  var a6, v5, y5, d5 = t7.props, _4 = u6.props, k6 = u6.type, b5 = 0;
+function z(l5, u6, t7, i7, o5, r7, f6, e7, c5) {
+  var s5, a6, v5, p5, d5, g6, b5, m5 = t7.props, w6 = u6.props, k6 = u6.type;
   if ("svg" === k6 && (o5 = true), null != r7) {
-    for (; b5 < r7.length; b5++)
-      if ((a6 = r7[b5]) && "setAttribute" in a6 == !!k6 && (k6 ? a6.localName === k6 : 3 === a6.nodeType)) {
-        l5 = a6, r7[b5] = null;
+    for (s5 = 0; s5 < r7.length; s5++)
+      if ((d5 = r7[s5]) && "setAttribute" in d5 == !!k6 && (k6 ? d5.localName === k6 : 3 === d5.nodeType)) {
+        l5 = d5, r7[s5] = null;
         break;
       }
   }
   if (null == l5) {
     if (null === k6)
-      return document.createTextNode(_4);
-    l5 = o5 ? document.createElementNS("http://www.w3.org/2000/svg", k6) : document.createElement(k6, _4.is && _4), r7 = null, e7 = false;
+      return document.createTextNode(w6);
+    l5 = o5 ? document.createElementNS("http://www.w3.org/2000/svg", k6) : document.createElement(k6, w6.is && w6), r7 = null, e7 = false;
   }
   if (null === k6)
-    d5 === _4 || e7 && l5.data === _4 || (l5.data = _4);
+    m5 === w6 || e7 && l5.data === w6 || (l5.data = w6);
   else {
-    if (r7 = r7 && n.call(l5.childNodes), v5 = (d5 = t7.props || c).dangerouslySetInnerHTML, y5 = _4.dangerouslySetInnerHTML, !e7) {
-      if (null != r7)
-        for (d5 = {}, b5 = 0; b5 < l5.attributes.length; b5++)
-          d5[l5.attributes[b5].name] = l5.attributes[b5].value;
-      (y5 || v5) && (y5 && (v5 && y5.__html == v5.__html || y5.__html === l5.innerHTML) || (l5.innerHTML = y5 && y5.__html || ""));
-    }
-    if (H(l5, _4, d5, o5, e7), y5)
-      u6.__k = [];
-    else if (P(l5, h(b5 = u6.props.children) ? b5 : [b5], u6, t7, i7, o5 && "foreignObject" !== k6, r7, f6, r7 ? r7[0] : t7.__k && g(t7, 0), e7, s5), null != r7)
-      for (b5 = r7.length; b5--; )
-        null != r7[b5] && p(r7[b5]);
-    e7 || ("value" in _4 && void 0 !== (b5 = _4.value) && (b5 !== l5.value || "progress" === k6 && !b5 || "option" === k6 && b5 !== d5.value) && T(l5, "value", b5, d5.value, false), "checked" in _4 && void 0 !== (b5 = _4.checked) && b5 !== l5.checked && T(l5, "checked", b5, d5.checked, false));
+    if (r7 = r7 && n.call(l5.childNodes), m5 = t7.props || h, !e7 && null != r7)
+      for (m5 = {}, s5 = 0; s5 < l5.attributes.length; s5++)
+        m5[(d5 = l5.attributes[s5]).name] = d5.value;
+    for (s5 in m5)
+      d5 = m5[s5], "children" == s5 || ("dangerouslySetInnerHTML" == s5 ? v5 = d5 : "key" === s5 || s5 in w6 || L(l5, s5, null, d5, o5));
+    for (s5 in w6)
+      d5 = w6[s5], "children" == s5 ? p5 = d5 : "dangerouslySetInnerHTML" == s5 ? a6 = d5 : "value" == s5 ? g6 = d5 : "checked" == s5 ? b5 = d5 : "key" === s5 || e7 && "function" != typeof d5 || m5[s5] === d5 || L(l5, s5, d5, m5[s5], o5);
+    if (a6)
+      e7 || v5 && (a6.__html === v5.__html || a6.__html === l5.innerHTML) || (l5.innerHTML = a6.__html), u6.__k = [];
+    else if (v5 && (l5.innerHTML = ""), $(l5, y(p5) ? p5 : [p5], u6, t7, i7, o5 && "foreignObject" !== k6, r7, f6, r7 ? r7[0] : t7.__k && x(t7, 0), e7, c5), null != r7)
+      for (s5 = r7.length; s5--; )
+        null != r7[s5] && _(r7[s5]);
+    e7 || (s5 = "value", void 0 !== g6 && (g6 !== l5[s5] || "progress" === k6 && !g6 || "option" === k6 && g6 !== m5[s5]) && L(l5, s5, g6, m5[s5], false), s5 = "checked", void 0 !== b5 && b5 !== l5[s5] && L(l5, s5, b5, m5[s5], false));
   }
   return l5;
 }
-function O(n4, u6, t7) {
+function N(n4, u6, t7) {
   try {
     "function" == typeof n4 ? n4(u6) : n4.current = u6;
   } catch (n5) {
@@ -19336,28 +19525,28 @@ function O(n4, u6, t7) {
 }
 function q(n4, u6, t7) {
   var i7, o5;
-  if (l.unmount && l.unmount(n4), (i7 = n4.ref) && (i7.current && i7.current !== n4.__e || O(i7, null, u6)), null != (i7 = n4.__c)) {
+  if (l.unmount && l.unmount(n4), (i7 = n4.ref) && (i7.current && i7.current !== n4.__e || N(i7, null, u6)), null != (i7 = n4.__c)) {
     if (i7.componentWillUnmount)
       try {
         i7.componentWillUnmount();
       } catch (n5) {
         l.__e(n5, u6);
       }
-    i7.base = i7.__P = null, n4.__c = void 0;
+    i7.base = i7.__P = null;
   }
   if (i7 = n4.__k)
     for (o5 = 0; o5 < i7.length; o5++)
       i7[o5] && q(i7[o5], u6, t7 || "function" != typeof n4.type);
-  t7 || null == n4.__e || p(n4.__e), n4.__ = n4.__e = n4.__d = void 0;
+  t7 || null == n4.__e || _(n4.__e), n4.__c = n4.__ = n4.__e = n4.__d = void 0;
 }
 function B(n4, l5, u6) {
   return this.constructor(n4, u6);
 }
 function D(u6, t7, i7) {
   var o5, r7, f6, e7;
-  l.__ && l.__(u6, t7), r7 = (o5 = "function" == typeof i7) ? null : i7 && i7.__k || t7.__k, f6 = [], e7 = [], L(t7, u6 = (!o5 && i7 || t7).__k = y(k, null, [u6]), r7 || c, c, void 0 !== t7.ownerSVGElement, !o5 && i7 ? [i7] : r7 ? null : t7.firstChild ? n.call(t7.childNodes) : null, f6, !o5 && i7 ? i7 : r7 ? r7.__e : t7.firstChild, o5, e7), M(f6, u6, e7);
+  l.__ && l.__(u6, t7), r7 = (o5 = "function" == typeof i7) ? null : i7 && i7.__k || t7.__k, f6 = [], e7 = [], O(t7, u6 = (!o5 && i7 || t7).__k = g(w, null, [u6]), r7 || h, h, void 0 !== t7.ownerSVGElement, !o5 && i7 ? [i7] : r7 ? null : t7.firstChild ? n.call(t7.childNodes) : null, f6, !o5 && i7 ? i7 : r7 ? r7.__e : t7.firstChild, o5, e7), j(f6, u6, e7);
 }
-n = s.slice, l = { __e: function(n4, l5, u6, t7) {
+n = v.slice, l = { __e: function(n4, l5, u6, t7) {
   for (var i7, o5, r7; l5 = l5.__; )
     if ((i7 = l5.__c) && !i7.__)
       try {
@@ -19368,15 +19557,15 @@ n = s.slice, l = { __e: function(n4, l5, u6, t7) {
       }
   throw n4;
 } }, u = 0, t = function(n4) {
-  return null != n4 && void 0 === n4.constructor;
-}, b.prototype.setState = function(n4, l5) {
+  return null != n4 && null == n4.constructor;
+}, k.prototype.setState = function(n4, l5) {
   var u6;
-  u6 = null != this.__s && this.__s !== this.state ? this.__s : this.__s = v({}, this.state), "function" == typeof n4 && (n4 = n4(v({}, u6), this.props)), n4 && v(u6, n4), null != n4 && this.__v && (l5 && this._sb.push(l5), w(this));
-}, b.prototype.forceUpdate = function(n4) {
-  this.__v && (this.__e = true, n4 && this.__h.push(n4), w(this));
-}, b.prototype.render = k, i = [], r = "function" == typeof Promise ? Promise.prototype.then.bind(Promise.resolve()) : setTimeout, f = function(n4, l5) {
+  u6 = null != this.__s && this.__s !== this.state ? this.__s : this.__s = d({}, this.state), "function" == typeof n4 && (n4 = n4(d({}, u6), this.props)), n4 && d(u6, n4), null != n4 && this.__v && (l5 && this._sb.push(l5), P(this));
+}, k.prototype.forceUpdate = function(n4) {
+  this.__v && (this.__e = true, n4 && this.__h.push(n4), P(this));
+}, k.prototype.render = w, i = [], r = "function" == typeof Promise ? Promise.prototype.then.bind(Promise.resolve()) : setTimeout, f = function(n4, l5) {
   return n4.__v.__b - l5.__v.__b;
-}, x.__r = 0, e2 = 0;
+}, S.__r = 0, e2 = 0, c = M(false), s = M(true), a = 0;
 
 // node_modules/htm/dist/htm.module.js
 var n2 = function(t7, s5, r7, e7) {
@@ -19404,7 +19593,7 @@ function htm_module_default(s5) {
 }
 
 // node_modules/htm/preact/index.module.js
-var m2 = htm_module_default.bind(y);
+var m = htm_module_default.bind(g);
 
 // node_modules/preact/hooks/dist/hooks.module.js
 var t3;
@@ -19414,22 +19603,24 @@ var i2;
 var o2 = 0;
 var f2 = [];
 var c2 = [];
-var e3 = l.__b;
-var a2 = l.__r;
-var v2 = l.diffed;
-var l2 = l.__c;
-var m3 = l.unmount;
-function d2(t7, u6) {
-  l.__h && l.__h(r2, t7, o2 || u6), o2 = 0;
-  var i7 = r2.__H || (r2.__H = { __: [], __h: [] });
-  return t7 >= i7.__.length && i7.__.push({ __V: c2 }), i7.__[t7];
+var e3 = l;
+var a2 = e3.__b;
+var v2 = e3.__r;
+var l2 = e3.diffed;
+var m2 = e3.__c;
+var s2 = e3.unmount;
+var d2 = e3.__;
+function h2(n4, t7) {
+  e3.__h && e3.__h(r2, n4, o2 || t7), o2 = 0;
+  var u6 = r2.__H || (r2.__H = { __: [], __h: [] });
+  return n4 >= u6.__.length && u6.__.push({ __V: c2 }), u6.__[n4];
 }
-function h2(n4) {
-  return o2 = 1, s2(B2, n4);
+function p2(n4) {
+  return o2 = 1, y2(D2, n4);
 }
-function s2(n4, u6, i7) {
-  var o5 = d2(t3++, 2);
-  if (o5.t = n4, !o5.__c && (o5.__ = [i7 ? i7(u6) : B2(void 0, u6), function(n5) {
+function y2(n4, u6, i7) {
+  var o5 = h2(t3++, 2);
+  if (o5.t = n4, !o5.__c && (o5.__ = [i7 ? i7(u6) : D2(void 0, u6), function(n5) {
     var t7 = o5.__N ? o5.__N[0] : o5.__[0], r7 = o5.t(t7, n5);
     t7 !== r7 && (o5.__N = [r7, o5.__[1]], o5.__c.setState({}));
   }], o5.__c = r2, !r2.u)) {
@@ -19437,7 +19628,7 @@ function s2(n4, u6, i7) {
       if (!o5.__c.__H)
         return true;
       var u7 = o5.__c.__H.__.filter(function(n6) {
-        return n6.__c;
+        return !!n6.__c;
       });
       if (u7.every(function(n6) {
         return !n6.__N;
@@ -19463,95 +19654,97 @@ function s2(n4, u6, i7) {
   }
   return o5.__N || o5.__;
 }
-function p2(u6, i7) {
-  var o5 = d2(t3++, 3);
-  !l.__s && z2(o5.__H, i7) && (o5.__ = u6, o5.i = i7, r2.__H.__h.push(o5));
+function _2(n4, u6) {
+  var i7 = h2(t3++, 3);
+  !e3.__s && C2(i7.__H, u6) && (i7.__ = n4, i7.i = u6, r2.__H.__h.push(i7));
 }
-function y2(u6, i7) {
-  var o5 = d2(t3++, 4);
-  !l.__s && z2(o5.__H, i7) && (o5.__ = u6, o5.i = i7, r2.__h.push(o5));
+function A2(n4, u6) {
+  var i7 = h2(t3++, 4);
+  !e3.__s && C2(i7.__H, u6) && (i7.__ = n4, i7.i = u6, r2.__h.push(i7));
 }
-function _(n4) {
-  return o2 = 5, F(function() {
+function F2(n4) {
+  return o2 = 5, q2(function() {
     return { current: n4 };
   }, []);
 }
-function F(n4, r7) {
-  var u6 = d2(t3++, 7);
-  return z2(u6.__H, r7) ? (u6.__V = n4(), u6.i = r7, u6.__h = n4, u6.__V) : u6.__;
+function q2(n4, r7) {
+  var u6 = h2(t3++, 7);
+  return C2(u6.__H, r7) ? (u6.__V = n4(), u6.i = r7, u6.__h = n4, u6.__V) : u6.__;
 }
-function T2(n4, t7) {
-  return o2 = 8, F(function() {
+function x2(n4, t7) {
+  return o2 = 8, q2(function() {
     return n4;
   }, t7);
 }
-function b2() {
-  for (var t7; t7 = f2.shift(); )
-    if (t7.__P && t7.__H)
+function j2() {
+  for (var n4; n4 = f2.shift(); )
+    if (n4.__P && n4.__H)
       try {
-        t7.__H.__h.forEach(k2), t7.__H.__h.forEach(w2), t7.__H.__h = [];
-      } catch (r7) {
-        t7.__H.__h = [], l.__e(r7, t7.__v);
+        n4.__H.__h.forEach(z2), n4.__H.__h.forEach(B2), n4.__H.__h = [];
+      } catch (t7) {
+        n4.__H.__h = [], e3.__e(t7, n4.__v);
       }
 }
-l.__b = function(n4) {
-  r2 = null, e3 && e3(n4);
-}, l.__r = function(n4) {
-  a2 && a2(n4), t3 = 0;
+e3.__b = function(n4) {
+  r2 = null, a2 && a2(n4);
+}, e3.__ = function(n4, t7) {
+  n4 && t7.__k && t7.__k.__m && (n4.__m = t7.__k.__m), d2 && d2(n4, t7);
+}, e3.__r = function(n4) {
+  v2 && v2(n4), t3 = 0;
   var i7 = (r2 = n4.__c).__H;
   i7 && (u2 === r2 ? (i7.__h = [], r2.__h = [], i7.__.forEach(function(n5) {
     n5.__N && (n5.__ = n5.__N), n5.__V = c2, n5.__N = n5.i = void 0;
-  })) : (i7.__h.forEach(k2), i7.__h.forEach(w2), i7.__h = [], t3 = 0)), u2 = r2;
-}, l.diffed = function(t7) {
-  v2 && v2(t7);
-  var o5 = t7.__c;
-  o5 && o5.__H && (o5.__H.__h.length && (1 !== f2.push(o5) && i2 === l.requestAnimationFrame || ((i2 = l.requestAnimationFrame) || j2)(b2)), o5.__H.__.forEach(function(n4) {
-    n4.i && (n4.__H = n4.i), n4.__V !== c2 && (n4.__ = n4.__V), n4.i = void 0, n4.__V = c2;
+  })) : (i7.__h.forEach(z2), i7.__h.forEach(B2), i7.__h = [], t3 = 0)), u2 = r2;
+}, e3.diffed = function(n4) {
+  l2 && l2(n4);
+  var t7 = n4.__c;
+  t7 && t7.__H && (t7.__H.__h.length && (1 !== f2.push(t7) && i2 === e3.requestAnimationFrame || ((i2 = e3.requestAnimationFrame) || w2)(j2)), t7.__H.__.forEach(function(n5) {
+    n5.i && (n5.__H = n5.i), n5.__V !== c2 && (n5.__ = n5.__V), n5.i = void 0, n5.__V = c2;
   })), u2 = r2 = null;
-}, l.__c = function(t7, r7) {
-  r7.some(function(t8) {
+}, e3.__c = function(n4, t7) {
+  t7.some(function(n5) {
     try {
-      t8.__h.forEach(k2), t8.__h = t8.__h.filter(function(n4) {
-        return !n4.__ || w2(n4);
+      n5.__h.forEach(z2), n5.__h = n5.__h.filter(function(n6) {
+        return !n6.__ || B2(n6);
       });
-    } catch (u6) {
-      r7.some(function(n4) {
-        n4.__h && (n4.__h = []);
-      }), r7 = [], l.__e(u6, t8.__v);
+    } catch (r7) {
+      t7.some(function(n6) {
+        n6.__h && (n6.__h = []);
+      }), t7 = [], e3.__e(r7, n5.__v);
     }
-  }), l2 && l2(t7, r7);
-}, l.unmount = function(t7) {
-  m3 && m3(t7);
-  var r7, u6 = t7.__c;
-  u6 && u6.__H && (u6.__H.__.forEach(function(n4) {
+  }), m2 && m2(n4, t7);
+}, e3.unmount = function(n4) {
+  s2 && s2(n4);
+  var t7, r7 = n4.__c;
+  r7 && r7.__H && (r7.__H.__.forEach(function(n5) {
     try {
-      k2(n4);
-    } catch (n5) {
-      r7 = n5;
+      z2(n5);
+    } catch (n6) {
+      t7 = n6;
     }
-  }), u6.__H = void 0, r7 && l.__e(r7, u6.__v));
+  }), r7.__H = void 0, t7 && e3.__e(t7, r7.__v));
 };
-var g2 = "function" == typeof requestAnimationFrame;
-function j2(n4) {
+var k2 = "function" == typeof requestAnimationFrame;
+function w2(n4) {
   var t7, r7 = function() {
-    clearTimeout(u6), g2 && cancelAnimationFrame(t7), setTimeout(n4);
+    clearTimeout(u6), k2 && cancelAnimationFrame(t7), setTimeout(n4);
   }, u6 = setTimeout(r7, 100);
-  g2 && (t7 = requestAnimationFrame(r7));
+  k2 && (t7 = requestAnimationFrame(r7));
 }
-function k2(n4) {
+function z2(n4) {
   var t7 = r2, u6 = n4.__c;
   "function" == typeof u6 && (n4.__c = void 0, u6()), r2 = t7;
 }
-function w2(n4) {
+function B2(n4) {
   var t7 = r2;
   n4.__c = n4.__(), r2 = t7;
 }
-function z2(n4, t7) {
+function C2(n4, t7) {
   return !n4 || n4.length !== t7.length || t7.some(function(t8, r7) {
     return t8 !== n4[r7];
   });
 }
-function B2(n4, t7) {
+function D2(n4, t7) {
   return "function" == typeof t7 ? t7(n4) : t7;
 }
 
@@ -19586,30 +19779,34 @@ function PopupMenuItem(props) {
     onMouseLeave,
     onAction
   } = props;
-  return m2`
+  return m`
     <li
       class=${clsx_default("entry", { selected })}
       data-id=${entry.id}
       title=${entry.title || entry.label}
+      tabIndex="0"
       onClick=${onAction}
+      onFocus=${onMouseEnter}
+      onBlur=${onMouseLeave}
       onMouseEnter=${onMouseEnter}
       onMouseLeave=${onMouseLeave}
-      onDragStart=${(event2) => onAction(event2, entry, "dragstart")}
+      onDragStart=${(event3) => onAction(event3, entry, "dragstart")}
+      aria-role="button"
       draggable=${true}
     >
       <div class="djs-popup-entry-content">
         <span
           class=${clsx_default("djs-popup-entry-name", entry.className)}
         >
-          ${entry.imageUrl && m2`<img class="djs-popup-entry-icon" src=${entry.imageUrl} alt="" />` || entry.imageHtml && m2`<div class="djs-popup-entry-icon" dangerouslySetInnerHTML=${{ __html: entry.imageHtml }} />`}
+          ${entry.imageUrl && m`<img class="djs-popup-entry-icon" src=${entry.imageUrl} alt="" />` || entry.imageHtml && m`<div class="djs-popup-entry-icon" dangerouslySetInnerHTML=${{ __html: entry.imageHtml }} />`}
 
-          ${entry.label ? m2`
+          ${entry.label ? m`
             <span class="djs-popup-label">
               ${entry.label}
             </span>
           ` : null}
         </span>
-        ${entry.description && m2`
+        ${entry.description && m`
           <span
             class="djs-popup-entry-description"
             title=${entry.description}
@@ -19618,11 +19815,11 @@ function PopupMenuItem(props) {
           </span>
         `}
       </div>
-      ${entry.documentationRef && m2`
+      ${entry.documentationRef && m`
         <div class="djs-popup-entry-docs">
           <a
             href="${entry.documentationRef}"
-            onClick=${(event2) => event2.stopPropagation()}
+            onClick=${(event3) => event3.stopPropagation()}
             title="Open element documentation"
             target="_blank"
             rel="noopener"
@@ -19645,9 +19842,9 @@ function PopupMenuList(props) {
     entries,
     ...restProps
   } = props;
-  const resultsRef = _();
-  const groups = F(() => groupEntries(entries), [entries]);
-  y2(() => {
+  const resultsRef = F2();
+  const groups = q2(() => groupEntries(entries), [entries]);
+  A2(() => {
     const containerEl = resultsRef.current;
     if (!containerEl)
       return;
@@ -19656,16 +19853,16 @@ function PopupMenuList(props) {
       scrollIntoView(selectedEl);
     }
   }, [selectedEntry]);
-  return m2`
+  return m`
     <div class="djs-popup-results" ref=${resultsRef}>
-      ${groups.map((group) => m2`
-        ${group.name && m2`
+      ${groups.map((group) => m`
+        ${group.name && m`
           <div key=${group.id} class="entry-header" title=${group.name}>
             ${group.name}
           </div>
         `}
         <ul class="djs-popup-group" data-group=${group.id}>
-          ${group.entries.map((entry) => m2`
+          ${group.entries.map((entry) => m`
             <${PopupMenuItem}
               key=${entry.id}
               entry=${entry}
@@ -19723,15 +19920,14 @@ function PopupMenuComponent(props) {
     onOpened,
     onClosed
   } = props;
-  const searchable = F(() => {
+  const searchable = q2(() => {
     if (!isDefined(search)) {
       return false;
     }
     return originalEntries.length > 5;
   }, [search, originalEntries]);
-  const inputRef = _();
-  const [value, setValue] = h2("");
-  const filterEntries = T2((originalEntries2, value2) => {
+  const [value, setValue] = p2("");
+  const filterEntries = x2((originalEntries2, value2) => {
     if (!searchable) {
       return originalEntries2;
     }
@@ -19751,33 +19947,18 @@ function PopupMenuComponent(props) {
     };
     return originalEntries2.filter(filter2);
   }, [searchable]);
-  const [entries, setEntries] = h2(filterEntries(originalEntries, value));
-  const [selectedEntry, setSelectedEntry] = h2(entries[0]);
-  const updateEntries = T2((newEntries) => {
+  const [entries, setEntries] = p2(filterEntries(originalEntries, value));
+  const [selectedEntry, setSelectedEntry] = p2(entries[0]);
+  const updateEntries = x2((newEntries) => {
     if (!selectedEntry || !newEntries.includes(selectedEntry)) {
       setSelectedEntry(newEntries[0]);
     }
     setEntries(newEntries);
   }, [selectedEntry, setEntries, setSelectedEntry]);
-  p2(() => {
+  _2(() => {
     updateEntries(filterEntries(originalEntries, value));
   }, [value, originalEntries]);
-  p2(() => {
-    const handleKeyDown2 = (event2) => {
-      if (event2.key === "Escape") {
-        event2.preventDefault();
-        return onClose();
-      }
-    };
-    document.documentElement.addEventListener("keydown", handleKeyDown2);
-    return () => {
-      document.documentElement.removeEventListener("keydown", handleKeyDown2);
-    };
-  }, []);
-  y2(() => {
-    inputRef.current && inputRef.current.focus();
-  }, []);
-  const keyboardSelect = T2((direction) => {
+  const keyboardSelect = x2((direction) => {
     const idx = entries.indexOf(selectedEntry);
     let nextIdx = idx + direction;
     if (nextIdx < 0) {
@@ -19788,32 +19969,32 @@ function PopupMenuComponent(props) {
     }
     setSelectedEntry(entries[nextIdx]);
   }, [entries, selectedEntry, setSelectedEntry]);
-  const handleKeyDown = T2((event2) => {
-    if (event2.key === "Enter" && selectedEntry) {
-      return onSelect(event2, selectedEntry);
+  const handleKeyDown = x2((event3) => {
+    if (event3.key === "Enter" && selectedEntry) {
+      return onSelect(event3, selectedEntry);
     }
-    if (event2.key === "ArrowUp" || event2.key === "Tab" && event2.shiftKey) {
+    if (event3.key === "ArrowUp") {
       keyboardSelect(-1);
-      return event2.preventDefault();
+      return event3.preventDefault();
     }
-    if (event2.key === "ArrowDown" || event2.key === "Tab") {
+    if (event3.key === "ArrowDown") {
       keyboardSelect(1);
-      return event2.preventDefault();
+      return event3.preventDefault();
     }
-  }, [onSelect, onClose, selectedEntry, keyboardSelect]);
-  const handleKey = T2((event2) => {
-    if (matches(event2.target, "input")) {
-      setValue(() => event2.target.value);
+  }, [onSelect, selectedEntry, keyboardSelect]);
+  const handleKey = x2((event3) => {
+    if (matches(event3.target, "input")) {
+      setValue(() => event3.target.value);
     }
   }, [setValue]);
-  p2(() => {
+  _2(() => {
     onOpened();
     return () => {
       onClosed();
     };
   }, []);
-  const displayHeader = F(() => title || headerEntries.length > 0, [title, headerEntries]);
-  return m2`
+  const displayHeader = q2(() => title || headerEntries.length > 0, [title, headerEntries]);
+  return m`
     <${PopupMenuWrapper}
       onClose=${onClose}
       onKeyup=${handleKey}
@@ -19823,39 +20004,38 @@ function PopupMenuComponent(props) {
       width=${width}
       scale=${scale}
     >
-      ${displayHeader && m2`
+      ${displayHeader && m`
         <div class="djs-popup-header">
           <h3 class="djs-popup-title" title=${title}>${title}</h3>
-          ${headerEntries.map((entry) => m2`
-            <span
+          ${headerEntries.map((entry) => m`
+            <${entry.action ? "button" : "span"}
               class=${getHeaderClasses(entry, entry === selectedEntry)}
-              onClick=${(event2) => onSelect(event2, entry)}
+              onClick=${(event3) => onSelect(event3, entry)}
               title=${entry.title || entry.label}
               data-id=${entry.id}
               onMouseEnter=${() => setSelectedEntry(entry)}
               onMouseLeave=${() => setSelectedEntry(null)}
+              onFocus=${() => setSelectedEntry(entry)}
+              onBlur=${() => setSelectedEntry(null)}
             >
-            ${entry.imageUrl && m2`<img class="djs-popup-entry-icon" src=${entry.imageUrl} alt="" />` || entry.imageHtml && m2`<div class="djs-popup-entry-icon" dangerouslySetInnerHTML=${{ __html: entry.imageHtml }} />`}
+            ${entry.imageUrl && m`<img class="djs-popup-entry-icon" src=${entry.imageUrl} alt="" />` || entry.imageHtml && m`<div class="djs-popup-entry-icon" dangerouslySetInnerHTML=${{ __html: entry.imageHtml }} />`}
 
-              ${entry.label ? m2`
+              ${entry.label ? m`
                 <span class="djs-popup-label">${entry.label}</span>
               ` : null}
-            </span>
+            </${entry.action ? "button" : "span"}>
           `)}
         </div>
       `}
-      ${originalEntries.length > 0 && m2`
+      ${originalEntries.length > 0 && m`
         <div class="djs-popup-body">
 
-          ${searchable && m2`
+          ${searchable && m`
           <div class="djs-popup-search">
             <svg class="djs-popup-search-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" clip-rule="evenodd" d="M9.0325 8.5H9.625L13.3675 12.25L12.25 13.3675L8.5 9.625V9.0325L8.2975 8.8225C7.4425 9.5575 6.3325 10 5.125 10C2.4325 10 0.25 7.8175 0.25 5.125C0.25 2.4325 2.4325 0.25 5.125 0.25C7.8175 0.25 10 2.4325 10 5.125C10 6.3325 9.5575 7.4425 8.8225 8.2975L9.0325 8.5ZM1.75 5.125C1.75 6.9925 3.2575 8.5 5.125 8.5C6.9925 8.5 8.5 6.9925 8.5 5.125C8.5 3.2575 6.9925 1.75 5.125 1.75C3.2575 1.75 1.75 3.2575 1.75 5.125Z" fill="#22242A"/>
             </svg>
-            <input
-                ref=${inputRef}
-                type="text"
-              />
+            <input type="text" aria-label="${title}" />
           </div>
           `}
 
@@ -19866,10 +20046,10 @@ function PopupMenuComponent(props) {
             onAction=${onSelect}
           />
         </div>
-        ${emptyPlaceholder && entries.length === 0 && m2`
-          <div class="djs-popup-no-results">${isFunction(emptyPlaceholder) ? emptyPlaceholder(value) : emptyPlaceholder}</div>
-        `}
       `}
+    ${emptyPlaceholder && entries.length === 0 && m`
+      <div class="djs-popup-no-results">${isFunction(emptyPlaceholder) ? emptyPlaceholder(value) : emptyPlaceholder}</div>
+    `}
     </${PopupMenuWrapper}>
   `;
 }
@@ -19882,15 +20062,8 @@ function PopupMenuWrapper(props) {
     children,
     position: positionGetter
   } = props;
-  const popupRef = _();
-  const checkClose = T2((event2) => {
-    const popup = closest(event2.target, ".djs-popup", true);
-    if (popup) {
-      return;
-    }
-    onClose();
-  }, [onClose]);
-  y2(() => {
+  const popupRef = F2();
+  A2(() => {
     if (typeof positionGetter !== "function") {
       return;
     }
@@ -19899,31 +20072,53 @@ function PopupMenuWrapper(props) {
     popupEl.style.left = `${position.x}px`;
     popupEl.style.top = `${position.y}px`;
   }, [popupRef.current, positionGetter]);
-  y2(() => {
-    popupRef.current && popupRef.current.focus();
+  A2(() => {
+    const popupEl = popupRef.current;
+    if (!popupEl) {
+      return;
+    }
+    const inputEl = popupEl.querySelector("input");
+    (inputEl || popupEl).focus();
   }, []);
-  return m2`
+  _2(() => {
+    const handleKeyDown = (event3) => {
+      if (event3.key === "Escape") {
+        event3.preventDefault();
+        return onClose();
+      }
+    };
+    const handleClick = (event3) => {
+      const popup = closest(event3.target, ".djs-popup", true);
+      if (popup) {
+        return;
+      }
+      return onClose();
+    };
+    document.documentElement.addEventListener("keydown", handleKeyDown);
+    document.body.addEventListener("click", handleClick);
+    return () => {
+      document.documentElement.removeEventListener("keydown", handleKeyDown);
+      document.body.removeEventListener("click", handleClick);
+    };
+  }, []);
+  return m`
     <div
-      class="djs-popup-backdrop"
-      onClick=${checkClose}
+      class=${clsx_default("djs-popup", className)}
+      style=${getPopupStyle(props)}
+      onKeydown=${onKeydown}
+      onKeyup=${onKeyup}
+      ref=${popupRef}
+      tabIndex="-1"
     >
-      <div
-        class=${clsx_default("djs-popup", className)}
-        style=${getPopupStyle(props)}
-        onKeydown=${onKeydown}
-        onKeyup=${onKeyup}
-        ref=${popupRef}
-        tabIndex="-1"
-      >
-        ${children}
-      </div>
+      ${children}
     </div>
   `;
 }
 function getPopupStyle(props) {
   return {
     transform: `scale(${props.scale})`,
-    width: `${props.width}px`
+    width: `${props.width}px`,
+    "transform-origin": "top left"
   };
 }
 function getHeaderClasses(entry, selected) {
@@ -19950,7 +20145,7 @@ function PopupMenu(config, eventBus, canvas) {
   this._current = null;
   var scale = isDefined(config && config.scale) ? config.scale : {
     min: 1,
-    max: 1.5
+    max: 1
   };
   this._config = {
     scale
@@ -19958,9 +20153,9 @@ function PopupMenu(config, eventBus, canvas) {
   eventBus.on("diagram.destroy", () => {
     this.close();
   });
-  eventBus.on("element.changed", (event2) => {
+  eventBus.on("element.changed", (event3) => {
     const element = this.isOpen() && this._current.target;
-    if (event2.element === element) {
+    if (event3.element === element) {
       this.refresh();
     }
   });
@@ -19988,9 +20183,9 @@ PopupMenu.prototype._render = function() {
   const position = _position && ((container) => this._ensureVisible(container, _position));
   const scale = this._updateScale(this._current.container);
   const onClose = (result) => this.close(result);
-  const onSelect = (event2, entry, action) => this.trigger(event2, entry, action);
+  const onSelect = (event3, entry, action) => this.trigger(event3, entry, action);
   D(
-    m2`
+    m`
       <${PopupMenuComponent}
         onClose=${onClose}
         onSelect=${onSelect}
@@ -20090,8 +20285,8 @@ PopupMenu.prototype.reset = function() {
   D(null, container);
   remove2(container);
 };
-PopupMenu.prototype._emit = function(event2, payload) {
-  this._eventBus.fire(`popupMenu.${event2}`, payload);
+PopupMenu.prototype._emit = function(event3, payload) {
+  this._eventBus.fire(`popupMenu.${event3}`, payload);
 };
 PopupMenu.prototype._onOpened = function() {
   this._emit("opened");
@@ -20180,17 +20375,17 @@ PopupMenu.prototype.registerProvider = function(id, priority, provider) {
     provider = priority;
     priority = DEFAULT_PRIORITY6;
   }
-  this._eventBus.on("popupMenu.getProviders." + id, priority, function(event2) {
-    event2.providers.push(provider);
+  this._eventBus.on("popupMenu.getProviders." + id, priority, function(event3) {
+    event3.providers.push(provider);
   });
 };
 PopupMenu.prototype._getProviders = function(id) {
-  var event2 = this._eventBus.createEvent({
+  var event3 = this._eventBus.createEvent({
     type: "popupMenu.getProviders." + id,
     providers: []
   });
-  this._eventBus.fire(event2);
-  return event2.providers;
+  this._eventBus.fire(event3);
+  return event3.providers;
 };
 PopupMenu.prototype._getEntries = function(target, providers) {
   var entries = {};
@@ -20252,24 +20447,24 @@ PopupMenu.prototype._getEmptyPlaceholder = function(providers) {
 PopupMenu.prototype.isOpen = function() {
   return !!this._current;
 };
-PopupMenu.prototype.trigger = function(event2, entry, action = "click") {
-  event2.preventDefault();
+PopupMenu.prototype.trigger = function(event3, entry, action = "click") {
+  event3.preventDefault();
   if (!entry) {
-    let element = closest(event2.delegateTarget || event2.target, ".entry", true);
+    let element = closest(event3.delegateTarget || event3.target, ".entry", true);
     let entryId = attr2(element, DATA_REF);
     entry = { id: entryId, ...this._getEntry(entryId) };
   }
   const handler = entry.action;
-  if (this._emit("trigger", { entry, event: event2 }) === false) {
+  if (this._emit("trigger", { entry, event: event3 }) === false) {
     return;
   }
   if (isFunction(handler)) {
     if (action === "click") {
-      return handler(event2, entry);
+      return handler(event3, entry);
     }
   } else {
     if (handler[action]) {
-      return handler[action](event2, entry);
+      return handler[action](event3, entry);
     }
   }
 };
@@ -20360,12 +20555,12 @@ AlignElementsContextPadProvider.prototype._getEntries = function() {
       title: self2._translate("Align elements"),
       html: `<div class="entry">${AlignElementsIcons_default["align"]}</div>`,
       action: {
-        click: function(event2, target) {
+        click: function(event3, target) {
           var position = self2._getMenuPosition(target);
           assign(position, {
             cursor: {
-              x: event2.x,
-              y: event2.y
+              x: event3.x,
+              y: event3.y
             }
           });
           self2._popupMenu.open(target, "align-elements", position);
@@ -20448,7 +20643,7 @@ RuleProvider.prototype.addRule = function(actions, priority, fn2) {
     actions = [actions];
   }
   actions.forEach(function(action) {
-    self2.canExecute(action, priority, function(context, action2, event2) {
+    self2.canExecute(action, priority, function(context, action2, event3) {
       return fn2(context);
     }, true);
   });
@@ -20559,7 +20754,7 @@ function getConnectedDistance(source, hints) {
   if (!filter2) {
     filter2 = noneFilter;
   }
-  function getDistance3(a6, b5) {
+  function getDistance4(a6, b5) {
     if (direction === "n") {
       if (reference === "start") {
         return asTRBL(a6).top - asTRBL(b5).bottom;
@@ -20596,7 +20791,7 @@ function getConnectedDistance(source, hints) {
   }
   var sourcesDistances = source.incoming.filter(filter2).map(function(connection) {
     var weight = getWeight(connection);
-    var distance3 = weight < 0 ? getDistance3(connection.source, source) : getDistance3(source, connection.source);
+    var distance3 = weight < 0 ? getDistance4(connection.source, source) : getDistance4(source, connection.source);
     return {
       id: connection.source.id,
       distance: distance3,
@@ -20605,7 +20800,7 @@ function getConnectedDistance(source, hints) {
   });
   var targetsDistances = source.outgoing.filter(filter2).map(function(connection) {
     var weight = getWeight(connection);
-    var distance3 = weight > 0 ? getDistance3(source, connection.target) : getDistance3(connection.target, source);
+    var distance3 = weight > 0 ? getDistance4(source, connection.target) : getDistance4(connection.target, source);
     return {
       id: connection.target.id,
       distance: distance3,
@@ -20668,8 +20863,8 @@ function AutoPlace(eventBus, modeling, canvas) {
     var shape = context.shape, source = context.source;
     return getNewShapePosition(source, shape);
   });
-  eventBus.on("autoPlace.end", function(event2) {
-    canvas.scrollToElement(event2.shape);
+  eventBus.on("autoPlace.end", function(event3) {
+    canvas.scrollToElement(event3.shape);
   });
   this.append = function(source, shape, hints) {
     eventBus.fire("autoPlace.start", {
@@ -20735,6 +20930,16 @@ function getParent2(element, anyType) {
   }
   return null;
 }
+function isDirectionHorizontal(element) {
+  var types3 = ["bpmn:Participant", "bpmn:Lane"];
+  var parent = getParent2(element, types3);
+  if (parent) {
+    return isHorizontal(parent);
+  } else if (isAny(element, types3)) {
+    return isHorizontal(element);
+  }
+  return true;
+}
 
 // node_modules/bpmn-js/lib/features/auto-place/BpmnAutoPlaceUtil.js
 function getNewShapePosition2(source, element) {
@@ -20751,34 +20956,57 @@ function getNewShapePosition2(source, element) {
 function getFlowNodePosition(source, element) {
   var sourceTrbl = asTRBL(source);
   var sourceMid = getMid(source);
-  var horizontalDistance = getConnectedDistance(source, {
+  var placeHorizontally = isDirectionHorizontal(source);
+  var placement = placeHorizontally ? {
+    directionHint: "e",
+    minDistance: 80,
+    baseOrientation: "left",
+    boundaryOrientation: "top",
+    start: "top",
+    end: "bottom"
+  } : {
+    directionHint: "s",
+    minDistance: 90,
+    baseOrientation: "top",
+    boundaryOrientation: "left",
+    start: "left",
+    end: "right"
+  };
+  var connectedDistance = getConnectedDistance(source, {
     filter: function(connection) {
       return is(connection, "bpmn:SequenceFlow");
-    }
+    },
+    direction: placement.directionHint
   });
-  var margin = 30, minDistance = 80, orientation = "left";
+  var margin = 30, minDistance = placement.minDistance, orientation = placement.baseOrientation;
   if (is(source, "bpmn:BoundaryEvent")) {
     orientation = getOrientation(source, source.host, -25);
-    if (orientation.indexOf("top") !== -1) {
+    if (orientation.indexOf(placement.boundaryOrientation) !== -1) {
       margin *= -1;
     }
   }
-  var position = {
-    x: sourceTrbl.right + horizontalDistance + element.width / 2,
-    y: sourceMid.y + getVerticalDistance(orientation, minDistance)
+  var position = placeHorizontally ? {
+    x: sourceTrbl.right + connectedDistance + element.width / 2,
+    y: sourceMid.y + getDistance(orientation, minDistance, placement)
+  } : {
+    x: sourceMid.x + getDistance(orientation, minDistance, placement),
+    y: sourceTrbl.bottom + connectedDistance + element.height / 2
   };
-  var nextPositionDirection = {
-    y: {
-      margin,
-      minDistance
-    }
+  var nextPosition = {
+    margin,
+    minDistance
+  };
+  var nextPositionDirection = placeHorizontally ? {
+    y: nextPosition
+  } : {
+    x: nextPosition
   };
   return findFreePosition(source, element, position, generateGetNextPosition(nextPositionDirection));
 }
-function getVerticalDistance(orientation, minDistance) {
-  if (orientation.includes("top")) {
+function getDistance(orientation, minDistance, placement) {
+  if (orientation.includes(placement.start)) {
     return -1 * minDistance;
-  } else if (orientation.includes("bottom")) {
+  } else if (orientation.includes(placement.end)) {
     return minDistance;
   } else {
     return 0;
@@ -20786,34 +21014,53 @@ function getVerticalDistance(orientation, minDistance) {
 }
 function getTextAnnotationPosition(source, element) {
   var sourceTrbl = asTRBL(source);
-  var position = {
+  var placeHorizontally = isDirectionHorizontal(source);
+  var position = placeHorizontally ? {
     x: sourceTrbl.right + element.width / 2,
     y: sourceTrbl.top - 50 - element.height / 2
+  } : {
+    x: sourceTrbl.right + 50 + element.width / 2,
+    y: sourceTrbl.bottom + element.height / 2
   };
   if (isConnection(source)) {
     position = getMid(source);
-    position.x += 100;
-    position.y -= 50;
-  }
-  var nextPositionDirection = {
-    y: {
-      margin: -30,
-      minDistance: 20
+    if (placeHorizontally) {
+      position.x += 100;
+      position.y -= 50;
+    } else {
+      position.x += 100;
+      position.y += 50;
     }
+  }
+  var nextPosition = {
+    margin: placeHorizontally ? -30 : 30,
+    minDistance: 20
+  };
+  var nextPositionDirection = placeHorizontally ? {
+    y: nextPosition
+  } : {
+    x: nextPosition
   };
   return findFreePosition(source, element, position, generateGetNextPosition(nextPositionDirection));
 }
 function getDataElementPosition(source, element) {
   var sourceTrbl = asTRBL(source);
-  var position = {
+  var placeHorizontally = isDirectionHorizontal(source);
+  var position = placeHorizontally ? {
     x: sourceTrbl.right - 10 + element.width / 2,
     y: sourceTrbl.bottom + 40 + element.width / 2
+  } : {
+    x: sourceTrbl.left - 40 - element.width / 2,
+    y: sourceTrbl.bottom - 10 + element.height / 2
   };
-  var nextPositionDirection = {
-    x: {
-      margin: 30,
-      minDistance: 30
-    }
+  var nextPosition = {
+    margin: 30,
+    minDistance: 30
+  };
+  var nextPositionDirection = placeHorizontally ? {
+    x: nextPosition
+  } : {
+    y: nextPosition
   };
   return findFreePosition(source, element, position, generateGetNextPosition(nextPositionDirection));
 }
@@ -20841,15 +21088,15 @@ function AutoResize(eventBus, elementRegistry, modeling, rules) {
   this._modeling = modeling;
   this._rules = rules;
   var self2 = this;
-  this.postExecuted(["shape.create"], function(event2) {
-    var context = event2.context, hints = context.hints || {}, shape = context.shape, parent = context.parent || context.newParent;
+  this.postExecuted(["shape.create"], function(event3) {
+    var context = event3.context, hints = context.hints || {}, shape = context.shape, parent = context.parent || context.newParent;
     if (hints.autoResize === false) {
       return;
     }
     self2._expand([shape], parent);
   });
-  this.postExecuted(["elements.move"], function(event2) {
-    var context = event2.context, elements = flatten(values(context.closure.topLevel)), hints = context.hints;
+  this.postExecuted(["elements.move"], function(event3) {
+    var context = event3.context, elements = flatten(values(context.closure.topLevel)), hints = context.hints;
     var autoResize = hints ? hints.autoResize : true;
     if (autoResize === false) {
       return;
@@ -20866,8 +21113,8 @@ function AutoResize(eventBus, elementRegistry, modeling, rules) {
       self2._expand(elements2, parentId);
     });
   });
-  this.postExecuted(["shape.toggleCollapse"], function(event2) {
-    var context = event2.context, hints = context.hints, shape = context.shape;
+  this.postExecuted(["shape.toggleCollapse"], function(event3) {
+    var context = event3.context, hints = context.hints, shape = context.shape;
     if (hints && hints.autoResize === false) {
       return;
     }
@@ -20876,8 +21123,8 @@ function AutoResize(eventBus, elementRegistry, modeling, rules) {
     }
     self2._expand(shape.children || [], shape);
   });
-  this.postExecuted(["shape.resize"], function(event2) {
-    var context = event2.context, hints = context.hints, shape = context.shape, parent = shape.parent;
+  this.postExecuted(["shape.resize"], function(event3) {
+    var context = event3.context, hints = context.hints, shape = context.shape, parent = shape.parent;
     if (hints && hints.autoResize === false) {
       return;
     }
@@ -21038,34 +21285,34 @@ var HIGH_PRIORITY = 1500;
 function HoverFix(elementRegistry, eventBus, injector) {
   var self2 = this;
   var dragging = injector.get("dragging", false);
-  function ensureHover(event2) {
-    if (event2.hover) {
+  function ensureHover(event3) {
+    if (event3.hover) {
       return;
     }
-    var originalEvent = event2.originalEvent;
+    var originalEvent = event3.originalEvent;
     var gfx = self2._findTargetGfx(originalEvent);
     var element = gfx && elementRegistry.get(gfx);
     if (gfx && element) {
-      event2.stopPropagation();
+      event3.stopPropagation();
       dragging.hover({ element, gfx });
       dragging.move(originalEvent);
     }
   }
   if (dragging) {
-    eventBus.on("drag.start", function(event2) {
-      eventBus.once("drag.move", HIGH_PRIORITY, function(event3) {
-        ensureHover(event3);
+    eventBus.on("drag.start", function(event3) {
+      eventBus.once("drag.move", HIGH_PRIORITY, function(event4) {
+        ensureHover(event4);
       });
     });
   }
   (function() {
     var hoverGfx;
     var hover;
-    eventBus.on("element.hover", function(event2) {
-      hoverGfx = event2.gfx;
-      hover = event2.element;
+    eventBus.on("element.hover", function(event3) {
+      hoverGfx = event3.gfx;
+      hover = event3.element;
     });
-    eventBus.on("element.hover", HIGH_PRIORITY, function(event2) {
+    eventBus.on("element.hover", HIGH_PRIORITY, function(event3) {
       if (hover) {
         eventBus.fire("element.out", {
           element: hover,
@@ -21078,12 +21325,12 @@ function HoverFix(elementRegistry, eventBus, injector) {
       hover = null;
     });
   })();
-  this._findTargetGfx = function(event2) {
+  this._findTargetGfx = function(event3) {
     var position, target;
-    if (!(event2 instanceof MouseEvent)) {
+    if (!(event3 instanceof MouseEvent)) {
       return;
     }
-    position = toPoint(event2);
+    position = toPoint(event3);
     target = document.elementFromPoint(position.x, position.y);
     return getGfx(target);
   };
@@ -21108,11 +21355,11 @@ var hover_fix_default = {
 // node_modules/diagram-js/lib/features/dragging/Dragging.js
 var round2 = Math.round;
 var DRAG_ACTIVE_CLS = "djs-drag-active";
-function preventDefault(event2) {
-  event2.preventDefault();
+function preventDefault(event3) {
+  event3.preventDefault();
 }
-function isTouchEvent(event2) {
-  return typeof TouchEvent !== "undefined" && event2 instanceof TouchEvent;
+function isTouchEvent(event3) {
+  return typeof TouchEvent !== "undefined" && event3 instanceof TouchEvent;
 }
 function getLength(point) {
   return Math.sqrt(Math.pow(point.x, 2) + Math.pow(point.y, 2));
@@ -21133,7 +21380,7 @@ function Dragging(eventBus, canvas, selection2, elementRegistry) {
   }
   function fire(type, dragContext) {
     dragContext = dragContext || context;
-    var event2 = eventBus.createEvent(
+    var event3 = eventBus.createEvent(
       assign(
         {},
         dragContext.payload,
@@ -21141,10 +21388,10 @@ function Dragging(eventBus, canvas, selection2, elementRegistry) {
         { isTouch: dragContext.isTouch }
       )
     );
-    if (eventBus.fire("drag." + type, event2) === false) {
+    if (eventBus.fire("drag." + type, event3) === false) {
       return false;
     }
-    return eventBus.fire(dragContext.prefix + "." + type, event2);
+    return eventBus.fire(dragContext.prefix + "." + type, event3);
   }
   function restoreSelection(previousSelection) {
     var existingSelection = previousSelection.filter(function(element) {
@@ -21152,9 +21399,9 @@ function Dragging(eventBus, canvas, selection2, elementRegistry) {
     });
     existingSelection.length && selection2.select(existingSelection);
   }
-  function move2(event2, activate) {
+  function move2(event3, activate) {
     var payload = context.payload, displacement = context.displacement;
-    var globalStart = context.globalStart, globalCurrent = toPoint(event2), globalDelta = delta(globalCurrent, globalStart);
+    var globalStart = context.globalStart, globalCurrent = toPoint(event3), globalDelta = delta(globalCurrent, globalStart);
     var localStart = context.localStart, localCurrent = toLocalPoint(globalCurrent), localDelta = delta(localCurrent, localStart);
     if (!context.active && (activate || getLength(globalDelta) > context.threshold)) {
       assign(payload, {
@@ -21162,7 +21409,7 @@ function Dragging(eventBus, canvas, selection2, elementRegistry) {
         y: round2(localStart.y + displacement.y),
         dx: 0,
         dy: 0
-      }, { originalEvent: event2 });
+      }, { originalEvent: event3 });
       if (false === fire("start")) {
         return cancel2();
       }
@@ -21176,23 +21423,23 @@ function Dragging(eventBus, canvas, selection2, elementRegistry) {
       }
       canvas.addMarker(canvas.getRootElement(), DRAG_ACTIVE_CLS);
     }
-    stopPropagation(event2);
+    stopPropagation(event3);
     if (context.active) {
       assign(payload, {
         x: round2(localCurrent.x + displacement.x),
         y: round2(localCurrent.y + displacement.y),
         dx: round2(localDelta.x),
         dy: round2(localDelta.y)
-      }, { originalEvent: event2 });
+      }, { originalEvent: event3 });
       fire("move");
     }
   }
-  function end(event2) {
+  function end(event3) {
     var previousContext, returnValue = true;
     if (context.active) {
-      if (event2) {
-        context.payload.originalEvent = event2;
-        stopPropagation(event2);
+      if (event3) {
+        context.payload.originalEvent = event3;
+        stopPropagation(event3);
       }
       returnValue = fire("end");
     }
@@ -21202,31 +21449,31 @@ function Dragging(eventBus, canvas, selection2, elementRegistry) {
     previousContext = cleanup(returnValue !== true);
     fire("ended", previousContext);
   }
-  function checkCancel(event2) {
-    if (isKey("Escape", event2)) {
-      preventDefault(event2);
+  function checkCancel(event3) {
+    if (isKey("Escape", event3)) {
+      preventDefault(event3);
       cancel2();
     }
   }
-  function trapClickAndEnd(event2) {
+  function trapClickAndEnd(event3) {
     var untrap;
     if (context.active) {
       untrap = install(eventBus);
       setTimeout(untrap, 400);
-      preventDefault(event2);
+      preventDefault(event3);
     }
-    end(event2);
+    end(event3);
   }
-  function trapTouch(event2) {
-    move2(event2);
+  function trapTouch(event3) {
+    move2(event3);
   }
-  function hover(event2) {
+  function hover(event3) {
     var payload = context.payload;
-    payload.hoverGfx = event2.gfx;
-    payload.hover = event2.element;
+    payload.hoverGfx = event3.gfx;
+    payload.hover = event3.element;
     fire("hover");
   }
-  function out(event2) {
+  function out(event3) {
     fire("out");
     var payload = context.payload;
     payload.hoverGfx = null;
@@ -21276,13 +21523,13 @@ function Dragging(eventBus, canvas, selection2, elementRegistry) {
     context = null;
     return previousContext;
   }
-  function init(event2, relativeTo, prefix3, options2) {
+  function init(event3, relativeTo, prefix4, options2) {
     if (context) {
       cancel2(false);
     }
     if (typeof relativeTo === "string") {
-      options2 = prefix3;
-      prefix3 = relativeTo;
+      options2 = prefix4;
+      prefix4 = relativeTo;
       relativeTo = null;
     }
     options2 = assign({}, defaultOptions, options2 || {});
@@ -21292,10 +21539,10 @@ function Dragging(eventBus, canvas, selection2, elementRegistry) {
     } else {
       endDrag = end;
     }
-    if (event2) {
-      originalEvent = getOriginal(event2) || event2;
-      globalStart = toPoint(event2);
-      stopPropagation(event2);
+    if (event3) {
+      originalEvent = getOriginal(event3) || event3;
+      globalStart = toPoint(event3);
+      stopPropagation(event3);
       if (originalEvent.type === "dragstart") {
         preventDefault(originalEvent);
       }
@@ -21309,7 +21556,7 @@ function Dragging(eventBus, canvas, selection2, elementRegistry) {
     }
     isTouch = isTouchEvent(originalEvent);
     context = assign({
-      prefix: prefix3,
+      prefix: prefix4,
       data,
       payload: {},
       globalStart,
@@ -21336,7 +21583,7 @@ function Dragging(eventBus, canvas, selection2, elementRegistry) {
     }
     fire("init");
     if (options2.autoActivate) {
-      move2(event2, true);
+      move2(event3, true);
     }
   }
   eventBus.on("diagram.destroy", cancel2);
@@ -21437,9 +21684,9 @@ AutoScroll.prototype.stopScroll = function() {
 AutoScroll.prototype.setOptions = function(options2) {
   this._opts = assign({}, this._opts, options2);
 };
-AutoScroll.prototype._toBorderPoint = function(event2) {
+AutoScroll.prototype._toBorderPoint = function(event3) {
   var clientRect = this._canvas._container.getBoundingClientRect();
-  var globalPosition = toPoint(event2.originalEvent);
+  var globalPosition = toPoint(event3.originalEvent);
   return {
     x: globalPosition.x - clientRect.left,
     y: globalPosition.y - clientRect.top
@@ -21479,9 +21726,9 @@ var rules_default = {
 var round3 = Math.round;
 var max = Math.max;
 function circlePath(center2, r7) {
-  var x5 = center2.x, y5 = center2.y;
+  var x6 = center2.x, y5 = center2.y;
   return [
-    ["M", x5, y5],
+    ["M", x6, y5],
     ["m", 0, -r7],
     ["a", r7, r7, 0, 1, 1, 0, 2 * r7],
     ["a", r7, r7, 0, 1, 1, 0, -2 * r7],
@@ -21589,8 +21836,8 @@ function getDistancePointPoint(point1, point2) {
 // node_modules/diagram-js/lib/features/bendpoints/BendpointUtil.js
 var BENDPOINT_CLS = "djs-bendpoint";
 var SEGMENT_DRAGGER_CLS = "djs-segment-dragger";
-function toCanvasCoordinates(canvas, event2) {
-  var position = toPoint(event2), clientRect = canvas._container.getBoundingClientRect(), offset;
+function toCanvasCoordinates(canvas, event3) {
+  var position = toPoint(event3), clientRect = canvas._container.getBoundingClientRect(), offset;
   offset = {
     x: clientRect.left,
     y: clientRect.top
@@ -21601,8 +21848,8 @@ function toCanvasCoordinates(canvas, event2) {
     y: viewbox.y + (position.y - offset.y) / viewbox.scale
   };
 }
-function getConnectionIntersection(canvas, waypoints, event2) {
-  var localPosition = toCanvasCoordinates(canvas, event2), intersection2 = getApproxIntersection(waypoints, localPosition);
+function getConnectionIntersection(canvas, waypoints, event3) {
+  var localPosition = toCanvasCoordinates(canvas, event3), intersection2 = getApproxIntersection(waypoints, localPosition);
   return intersection2;
 }
 function addBendpoint(parentGfx, cls) {
@@ -21723,23 +21970,23 @@ function Bendpoints(eventBus, canvas, interactionEvents, bendpointMove, connecti
     threshold = calculateSegmentMoveRegion(segmentLength) / 2;
     return threshold;
   }
-  function activateBendpointMove(event2, connection) {
-    var waypoints = connection.waypoints, intersection2 = getConnectionIntersection(canvas, waypoints, event2), threshold;
+  function activateBendpointMove(event3, connection) {
+    var waypoints = connection.waypoints, intersection2 = getConnectionIntersection(canvas, waypoints, event3), threshold;
     if (!intersection2) {
       return;
     }
     threshold = calculateIntersectionThreshold(connection, intersection2);
     if (isIntersectionMiddle(intersection2, waypoints, threshold)) {
-      connectionSegmentMove.start(event2, connection, intersection2.index);
+      connectionSegmentMove.start(event3, connection, intersection2.index);
     } else {
-      bendpointMove.start(event2, connection, intersection2.index, !intersection2.bendpoint);
+      bendpointMove.start(event3, connection, intersection2.index, !intersection2.bendpoint);
     }
     return true;
   }
   function bindInteractionEvents(node2, eventName, element) {
-    event.bind(node2, eventName, function(event2) {
-      interactionEvents.triggerMouseEvent(eventName, event2, element);
-      event2.stopPropagation();
+    event.bind(node2, eventName, function(event3) {
+      interactionEvents.triggerMouseEvent(eventName, event3, element);
+      event3.stopPropagation();
     });
   }
   function getBendpointsContainer(element, create3) {
@@ -21835,32 +22082,32 @@ function Bendpoints(eventBus, canvas, interactionEvents, bendpointMove, connecti
     }
     translate(draggerVisual, relativePosition.x, relativePosition.y);
   }
-  eventBus.on("connection.changed", function(event2) {
-    updateHandles(event2.element);
+  eventBus.on("connection.changed", function(event3) {
+    updateHandles(event3.element);
   });
-  eventBus.on("connection.remove", function(event2) {
-    var gfx = getBendpointsContainer(event2.element);
+  eventBus.on("connection.remove", function(event3) {
+    var gfx = getBendpointsContainer(event3.element);
     if (gfx) {
       remove(gfx);
     }
   });
-  eventBus.on("element.marker.update", function(event2) {
-    var element = event2.element, bendpointsGfx;
+  eventBus.on("element.marker.update", function(event3) {
+    var element = event3.element, bendpointsGfx;
     if (!element.waypoints) {
       return;
     }
     bendpointsGfx = addHandles(element);
-    if (event2.add) {
-      classes(bendpointsGfx).add(event2.marker);
+    if (event3.add) {
+      classes(bendpointsGfx).add(event3.marker);
     } else {
-      classes(bendpointsGfx).remove(event2.marker);
+      classes(bendpointsGfx).remove(event3.marker);
     }
   });
-  eventBus.on("element.mousemove", function(event2) {
-    var element = event2.element, waypoints = element.waypoints, bendpointsGfx, intersection2;
+  eventBus.on("element.mousemove", function(event3) {
+    var element = event3.element, waypoints = element.waypoints, bendpointsGfx, intersection2;
     if (waypoints) {
       bendpointsGfx = getBendpointsContainer(element, true);
-      intersection2 = getConnectionIntersection(canvas, waypoints, event2.originalEvent);
+      intersection2 = getConnectionIntersection(canvas, waypoints, event3.originalEvent);
       if (!intersection2) {
         return;
       }
@@ -21870,31 +22117,31 @@ function Bendpoints(eventBus, canvas, interactionEvents, bendpointMove, connecti
       }
     }
   });
-  eventBus.on("element.mousedown", function(event2) {
-    if (!isPrimaryButton(event2)) {
+  eventBus.on("element.mousedown", function(event3) {
+    if (!isPrimaryButton(event3)) {
       return;
     }
-    var originalEvent = event2.originalEvent, element = event2.element;
+    var originalEvent = event3.originalEvent, element = event3.element;
     if (!element.waypoints) {
       return;
     }
     return activateBendpointMove(originalEvent, element);
   });
-  eventBus.on("selection.changed", function(event2) {
-    var newSelection = event2.newSelection, primary = newSelection[0];
+  eventBus.on("selection.changed", function(event3) {
+    var newSelection = event3.newSelection, primary = newSelection[0];
     if (primary && primary.waypoints) {
       addHandles(primary);
     }
   });
-  eventBus.on("element.hover", function(event2) {
-    var element = event2.element;
+  eventBus.on("element.hover", function(event3) {
+    var element = event3.element;
     if (element.waypoints) {
       addHandles(element);
-      interactionEvents.registerEvent(event2.gfx, "mousemove", "element.mousemove");
+      interactionEvents.registerEvent(event3.gfx, "mousemove", "element.mousemove");
     }
   });
-  eventBus.on("element.out", function(event2) {
-    interactionEvents.unregisterEvent(event2.gfx, "mousemove", "element.mousemove");
+  eventBus.on("element.out", function(event3) {
+    interactionEvents.unregisterEvent(event3.gfx, "mousemove", "element.mousemove");
   });
   eventBus.on("element.updateId", function(context) {
     var element = context.element, newId = context.newId;
@@ -21928,7 +22175,7 @@ var RECONNECT_END = "reconnectEnd";
 var UPDATE_WAYPOINTS = "updateWaypoints";
 function BendpointMove(injector, eventBus, canvas, dragging, rules, modeling) {
   this._injector = injector;
-  this.start = function(event2, connection, bendpointIndex, insert) {
+  this.start = function(event3, connection, bendpointIndex, insert) {
     var gfx = canvas.getGraphics(connection), source = connection.source, target = connection.target, waypoints = connection.waypoints, type;
     if (!insert && bendpointIndex === 0) {
       type = RECONNECT_START;
@@ -21953,7 +22200,7 @@ function BendpointMove(injector, eventBus, canvas, dragging, rules, modeling) {
     if (allowed === false) {
       return;
     }
-    dragging.init(event2, "bendpoint.move", {
+    dragging.init(event3, "bendpoint.move", {
       data: {
         connection,
         connectionGfx: gfx,
@@ -21969,8 +22216,8 @@ function BendpointMove(injector, eventBus, canvas, dragging, rules, modeling) {
       }
     });
   };
-  eventBus.on("bendpoint.move.hover", function(event2) {
-    var context = event2.context, connection = context.connection, source = connection.source, target = connection.target, hover = event2.hover, type = context.type;
+  eventBus.on("bendpoint.move.hover", function(event3) {
+    var context = event3.context, connection = context.connection, source = connection.source, target = connection.target, hover = event3.hover, type = context.type;
     context.hover = hover;
     var allowed;
     if (!hover) {
@@ -21999,8 +22246,8 @@ function BendpointMove(injector, eventBus, canvas, dragging, rules, modeling) {
       context.target = type === RECONNECT_START ? hover : source;
     }
   });
-  eventBus.on(["bendpoint.move.out", "bendpoint.move.cleanup"], function(event2) {
-    var context = event2.context, type = context.type;
+  eventBus.on(["bendpoint.move.out", "bendpoint.move.cleanup"], function(event3) {
+    var context = event3.context, type = context.type;
     context.hover = null;
     context.source = null;
     context.target = null;
@@ -22008,11 +22255,11 @@ function BendpointMove(injector, eventBus, canvas, dragging, rules, modeling) {
       context.allowed = false;
     }
   });
-  eventBus.on("bendpoint.move.end", function(event2) {
-    var context = event2.context, allowed = context.allowed, bendpointIndex = context.bendpointIndex, connection = context.connection, insert = context.insert, newWaypoints = connection.waypoints.slice(), source = context.source, target = context.target, type = context.type, hints = context.hints || {};
+  eventBus.on("bendpoint.move.end", function(event3) {
+    var context = event3.context, allowed = context.allowed, bendpointIndex = context.bendpointIndex, connection = context.connection, insert = context.insert, newWaypoints = connection.waypoints.slice(), source = context.source, target = context.target, type = context.type, hints = context.hints || {};
     var docking = {
-      x: round4(event2.x),
-      y: round4(event2.y)
+      x: round4(event3.x),
+      y: round4(event3.y)
     };
     if (!allowed) {
       return false;
@@ -22090,11 +22337,11 @@ var HIGH_PRIORITY2 = 1100;
 function BendpointMovePreview(bendpointMove, injector, eventBus, canvas) {
   this._injector = injector;
   var connectionPreview = injector.get("connectionPreview", false);
-  eventBus.on("bendpoint.move.start", function(event2) {
-    var context = event2.context, bendpointIndex = context.bendpointIndex, connection = context.connection, insert = context.insert, waypoints = connection.waypoints, newWaypoints = waypoints.slice();
+  eventBus.on("bendpoint.move.start", function(event3) {
+    var context = event3.context, bendpointIndex = context.bendpointIndex, connection = context.connection, insert = context.insert, waypoints = connection.waypoints, newWaypoints = waypoints.slice();
     context.waypoints = waypoints;
     if (insert) {
-      newWaypoints.splice(bendpointIndex, 0, { x: event2.x, y: event2.y });
+      newWaypoints.splice(bendpointIndex, 0, { x: event3.x, y: event3.y });
     }
     connection.waypoints = newWaypoints;
     var draggerGfx = context.draggerGfx = addBendpoint(canvas.getLayer("overlays"));
@@ -22102,8 +22349,8 @@ function BendpointMovePreview(bendpointMove, injector, eventBus, canvas) {
     canvas.addMarker(connection, MARKER_DRAGGER);
     canvas.addMarker(connection, MARKER_CONNECT_UPDATING);
   });
-  eventBus.on("bendpoint.move.hover", function(event2) {
-    var context = event2.context, allowed = context.allowed, hover = context.hover, type = context.type;
+  eventBus.on("bendpoint.move.hover", function(event3) {
+    var context = event3.context, allowed = context.allowed, hover = context.hover, type = context.type;
     if (hover) {
       canvas.addMarker(hover, MARKER_CONNECT_HOVER);
       if (type === UPDATE_WAYPOINTS2) {
@@ -22121,15 +22368,15 @@ function BendpointMovePreview(bendpointMove, injector, eventBus, canvas) {
   eventBus.on([
     "bendpoint.move.out",
     "bendpoint.move.cleanup"
-  ], HIGH_PRIORITY2, function(event2) {
-    var context = event2.context, hover = context.hover, target = context.target;
+  ], HIGH_PRIORITY2, function(event3) {
+    var context = event3.context, hover = context.hover, target = context.target;
     if (hover) {
       canvas.removeMarker(hover, MARKER_CONNECT_HOVER);
       canvas.removeMarker(hover, target ? MARKER_OK : MARKER_NOT_OK);
     }
   });
-  eventBus.on("bendpoint.move.move", function(event2) {
-    var context = event2.context, allowed = context.allowed, bendpointIndex = context.bendpointIndex, draggerGfx = context.draggerGfx, hover = context.hover, type = context.type, connection = context.connection, source = connection.source, target = connection.target, newWaypoints = connection.waypoints.slice(), bendpoint = { x: event2.x, y: event2.y }, hints = context.hints || {}, drawPreviewHints = {};
+  eventBus.on("bendpoint.move.move", function(event3) {
+    var context = event3.context, allowed = context.allowed, bendpointIndex = context.bendpointIndex, draggerGfx = context.draggerGfx, hover = context.hover, type = context.type, connection = context.connection, source = connection.source, target = connection.target, newWaypoints = connection.waypoints.slice(), bendpoint = { x: event3.x, y: event3.y }, hints = context.hints || {}, drawPreviewHints = {};
     if (connectionPreview) {
       if (hints.connectionStart) {
         drawPreviewHints.connectionStart = hints.connectionStart;
@@ -22170,13 +22417,13 @@ function BendpointMovePreview(bendpointMove, injector, eventBus, canvas) {
       drawPreviewHints.waypoints = newWaypoints;
       connectionPreview.drawPreview(context, allowed, drawPreviewHints);
     }
-    translate(draggerGfx, event2.x, event2.y);
+    translate(draggerGfx, event3.x, event3.y);
   }, this);
   eventBus.on([
     "bendpoint.move.end",
     "bendpoint.move.cancel"
-  ], HIGH_PRIORITY2, function(event2) {
-    var context = event2.context, connection = context.connection, draggerGfx = context.draggerGfx, hover = context.hover, target = context.target, waypoints = context.waypoints;
+  ], HIGH_PRIORITY2, function(event3) {
+    var context = event3.context, connection = context.connection, draggerGfx = context.draggerGfx, hover = context.hover, target = context.target, waypoints = context.waypoints;
     connection.waypoints = waypoints;
     remove(draggerGfx);
     canvas.removeMarker(connection, MARKER_CONNECT_UPDATING);
@@ -22230,8 +22477,8 @@ function getDocking(point, referenceElement, moveAxis) {
 }
 function ConnectionSegmentMove(injector, eventBus, canvas, dragging, graphicsFactory, modeling) {
   var connectionDocking = injector.get("connectionDocking", false);
-  this.start = function(event2, connection, idx) {
-    var context, gfx = canvas.getGraphics(connection), segmentStartIndex = idx - 1, segmentEndIndex = idx, waypoints = connection.waypoints, segmentStart = waypoints[segmentStartIndex], segmentEnd = waypoints[segmentEndIndex], intersection2 = getConnectionIntersection(canvas, waypoints, event2), direction, axis, dragPosition;
+  this.start = function(event3, connection, idx) {
+    var context, gfx = canvas.getGraphics(connection), segmentStartIndex = idx - 1, segmentEndIndex = idx, waypoints = connection.waypoints, segmentStart = waypoints[segmentStartIndex], segmentEnd = waypoints[segmentEndIndex], intersection2 = getConnectionIntersection(canvas, waypoints, event3), direction, axis, dragPosition;
     direction = pointsAligned(segmentStart, segmentEnd);
     if (!direction) {
       return;
@@ -22260,7 +22507,7 @@ function ConnectionSegmentMove(injector, eventBus, canvas, dragging, graphicsFac
       axis,
       dragPosition
     };
-    dragging.init(event2, dragPosition, "connectionSegment.move", {
+    dragging.init(event3, dragPosition, "connectionSegment.move", {
       cursor: axis === "x" ? "resize-ew" : "resize-ns",
       data: {
         connection,
@@ -22282,9 +22529,9 @@ function ConnectionSegmentMove(injector, eventBus, canvas, dragging, graphicsFac
   function redrawConnection(data) {
     graphicsFactory.update("connection", data.connection, data.connectionGfx);
   }
-  function updateDragger(context, segmentOffset, event2) {
+  function updateDragger(context, segmentOffset, event3) {
     var newWaypoints = context.newWaypoints, segmentStartIndex = context.segmentStartIndex + segmentOffset, segmentStart = newWaypoints[segmentStartIndex], segmentEndIndex = context.segmentEndIndex + segmentOffset, segmentEnd = newWaypoints[segmentEndIndex], axis = flipAxis(context.axis);
-    var draggerPosition = axisFenced(event2, segmentStart, segmentEnd, axis);
+    var draggerPosition = axisFenced(event3, segmentStart, segmentEnd, axis);
     translate(context.draggerGfx, draggerPosition.x, draggerPosition.y);
   }
   function filterRedundantWaypoints2(waypoints, segmentStartIndex) {
@@ -22301,16 +22548,16 @@ function ConnectionSegmentMove(injector, eventBus, canvas, dragging, graphicsFac
       segmentOffset
     };
   }
-  eventBus.on("connectionSegment.move.start", function(event2) {
-    var context = event2.context, connection = event2.connection, layer = canvas.getLayer("overlays");
+  eventBus.on("connectionSegment.move.start", function(event3) {
+    var context = event3.context, connection = event3.connection, layer = canvas.getLayer("overlays");
     context.originalWaypoints = connection.waypoints.slice();
     context.draggerGfx = addSegmentDragger(layer, context.segmentStart, context.segmentEnd);
     classes(context.draggerGfx).add("djs-dragging");
     canvas.addMarker(connection, MARKER_CONNECT_UPDATING2);
   });
-  eventBus.on("connectionSegment.move.move", function(event2) {
-    var context = event2.context, connection = context.connection, segmentStartIndex = context.segmentStartIndex, segmentEndIndex = context.segmentEndIndex, segmentStart = context.segmentStart, segmentEnd = context.segmentEnd, axis = context.axis;
-    var newWaypoints = context.originalWaypoints.slice(), newSegmentStart = axisAdd(segmentStart, axis, event2["d" + axis]), newSegmentEnd = axisAdd(segmentEnd, axis, event2["d" + axis]);
+  eventBus.on("connectionSegment.move.move", function(event3) {
+    var context = event3.context, connection = context.connection, segmentStartIndex = context.segmentStartIndex, segmentEndIndex = context.segmentEndIndex, segmentStart = context.segmentStart, segmentEnd = context.segmentEnd, axis = context.axis;
+    var newWaypoints = context.originalWaypoints.slice(), newSegmentStart = axisAdd(segmentStart, axis, event3["d" + axis]), newSegmentEnd = axisAdd(segmentEnd, axis, event3["d" + axis]);
     var waypointCount = newWaypoints.length, segmentOffset = 0;
     newWaypoints[segmentStartIndex] = newSegmentStart;
     newWaypoints[segmentEndIndex] = newSegmentEnd;
@@ -22344,25 +22591,25 @@ function ConnectionSegmentMove(injector, eventBus, canvas, dragging, graphicsFac
       }
     }
     context.newWaypoints = connection.waypoints = cropConnection(connection, newWaypoints);
-    updateDragger(context, segmentOffset, event2);
+    updateDragger(context, segmentOffset, event3);
     context.newSegmentStartIndex = segmentStartIndex + segmentOffset;
-    redrawConnection(event2);
+    redrawConnection(event3);
   });
-  eventBus.on("connectionSegment.move.hover", function(event2) {
-    event2.context.hover = event2.hover;
-    canvas.addMarker(event2.hover, MARKER_CONNECT_HOVER2);
+  eventBus.on("connectionSegment.move.hover", function(event3) {
+    event3.context.hover = event3.hover;
+    canvas.addMarker(event3.hover, MARKER_CONNECT_HOVER2);
   });
   eventBus.on([
     "connectionSegment.move.out",
     "connectionSegment.move.cleanup"
-  ], function(event2) {
-    var hover = event2.context.hover;
+  ], function(event3) {
+    var hover = event3.context.hover;
     if (hover) {
       canvas.removeMarker(hover, MARKER_CONNECT_HOVER2);
     }
   });
-  eventBus.on("connectionSegment.move.cleanup", function(event2) {
-    var context = event2.context, connection = context.connection;
+  eventBus.on("connectionSegment.move.cleanup", function(event3) {
+    var context = event3.context, connection = context.connection;
     if (context.draggerGfx) {
       remove(context.draggerGfx);
     }
@@ -22371,13 +22618,13 @@ function ConnectionSegmentMove(injector, eventBus, canvas, dragging, graphicsFac
   eventBus.on([
     "connectionSegment.move.cancel",
     "connectionSegment.move.end"
-  ], function(event2) {
-    var context = event2.context, connection = context.connection;
+  ], function(event3) {
+    var context = event3.context, connection = context.connection;
     connection.waypoints = context.originalWaypoints;
-    redrawConnection(event2);
+    redrawConnection(event3);
   });
-  eventBus.on("connectionSegment.move.end", function(event2) {
-    var context = event2.context, connection = context.connection, newWaypoints = context.newWaypoints, newSegmentStartIndex = context.newSegmentStartIndex;
+  eventBus.on("connectionSegment.move.end", function(event3) {
+    var context = event3.context, connection = context.connection, newWaypoints = context.newWaypoints, newSegmentStartIndex = context.newSegmentStartIndex;
     newWaypoints = newWaypoints.map(function(p5) {
       return {
         original: p5.original,
@@ -22439,8 +22686,8 @@ function mid(bounds, defaultValue) {
     y: round5(bounds.y + bounds.height / 2)
   };
 }
-function isSnapped(event2, axis) {
-  var snapped = event2.snapped;
+function isSnapped(event3, axis) {
+  var snapped = event3.snapped;
   if (!snapped) {
     return false;
   }
@@ -22449,22 +22696,22 @@ function isSnapped(event2, axis) {
   }
   return snapped.x && snapped.y;
 }
-function setSnapped(event2, axis, value) {
+function setSnapped(event3, axis, value) {
   if (typeof axis !== "string") {
     throw new Error("axis must be in [x, y]");
   }
   if (typeof value !== "number" && value !== false) {
     throw new Error("value must be Number or false");
   }
-  var delta2, previousValue = event2[axis];
-  var snapped = event2.snapped = event2.snapped || {};
+  var delta2, previousValue = event3[axis];
+  var snapped = event3.snapped = event3.snapped || {};
   if (value === false) {
     snapped[axis] = false;
   } else {
     snapped[axis] = true;
     delta2 = value - previousValue;
-    event2[axis] += delta2;
-    event2["d" + axis] += delta2;
+    event3[axis] += delta2;
+    event3["d" + axis] += delta2;
   }
   return previousValue;
 }
@@ -22496,9 +22743,9 @@ function BendpointSnapping(eventBus) {
     }
     return value;
   }
-  function getSnapPoint(element, event2) {
+  function getSnapPoint(element, event3) {
     if (element.waypoints) {
-      return getClosestPointOnConnection(event2, element);
+      return getClosestPointOnConnection(event3, element);
     }
     if (element.width) {
       return {
@@ -22507,8 +22754,8 @@ function BendpointSnapping(eventBus) {
       };
     }
   }
-  function getConnectionSegmentSnaps(event2) {
-    var context = event2.context, snapPoints = context.snapPoints, connection = context.connection, waypoints = connection.waypoints, segmentStart = context.segmentStart, segmentStartIndex = context.segmentStartIndex, segmentEnd = context.segmentEnd, segmentEndIndex = context.segmentEndIndex, axis = context.axis;
+  function getConnectionSegmentSnaps(event3) {
+    var context = event3.context, snapPoints = context.snapPoints, connection = context.connection, waypoints = connection.waypoints, segmentStart = context.segmentStart, segmentStartIndex = context.segmentStartIndex, segmentEnd = context.segmentEnd, segmentEndIndex = context.segmentEndIndex, axis = context.axis;
     if (snapPoints) {
       return snapPoints;
     }
@@ -22519,10 +22766,10 @@ function BendpointSnapping(eventBus) {
       waypoints[segmentEndIndex + 1]
     ];
     if (segmentStartIndex < 2) {
-      referenceWaypoints.unshift(getSnapPoint(connection.source, event2));
+      referenceWaypoints.unshift(getSnapPoint(connection.source, event3));
     }
     if (segmentEndIndex > waypoints.length - 3) {
-      referenceWaypoints.unshift(getSnapPoint(connection.target, event2));
+      referenceWaypoints.unshift(getSnapPoint(connection.target, event3));
     }
     context.snapPoints = snapPoints = { horizontal: [], vertical: [] };
     forEach(referenceWaypoints, function(p5) {
@@ -22538,25 +22785,25 @@ function BendpointSnapping(eventBus) {
     });
     return snapPoints;
   }
-  eventBus.on("connectionSegment.move.move", 1500, function(event2) {
-    var snapPoints = getConnectionSegmentSnaps(event2), x5 = event2.x, y5 = event2.y, sx, sy;
+  eventBus.on("connectionSegment.move.move", 1500, function(event3) {
+    var snapPoints = getConnectionSegmentSnaps(event3), x6 = event3.x, y5 = event3.y, sx, sy;
     if (!snapPoints) {
       return;
     }
-    sx = snapTo2(snapPoints.vertical, x5);
+    sx = snapTo2(snapPoints.vertical, x6);
     sy = snapTo2(snapPoints.horizontal, y5);
-    var cx = x5 - sx, cy = y5 - sy;
-    assign(event2, {
-      dx: event2.dx - cx,
-      dy: event2.dy - cy,
+    var cx = x6 - sx, cy = y5 - sy;
+    assign(event3, {
+      dx: event3.dx - cx,
+      dy: event3.dy - cy,
       x: sx,
       y: sy
     });
-    if (cx || snapPoints.vertical.indexOf(x5) !== -1) {
-      setSnapped(event2, "x", sx);
+    if (cx || snapPoints.vertical.indexOf(x6) !== -1) {
+      setSnapped(event3, "x", sx);
     }
     if (cy || snapPoints.horizontal.indexOf(y5) !== -1) {
-      setSnapped(event2, "y", sy);
+      setSnapped(event3, "y", sy);
     }
   });
   function getBendpointSnaps(context) {
@@ -22579,33 +22826,33 @@ function BendpointSnapping(eventBus) {
     "connect.hover",
     "connect.move",
     "connect.end"
-  ], 1500, function(event2) {
-    var context = event2.context, hover = context.hover, hoverMid = hover && getSnapPoint(hover, event2);
+  ], 1500, function(event3) {
+    var context = event3.context, hover = context.hover, hoverMid = hover && getSnapPoint(hover, event3);
     if (!isConnection(hover) || !hoverMid || !hoverMid.x || !hoverMid.y) {
       return;
     }
-    setSnapped(event2, "x", hoverMid.x);
-    setSnapped(event2, "y", hoverMid.y);
+    setSnapped(event3, "x", hoverMid.x);
+    setSnapped(event3, "y", hoverMid.y);
   });
-  eventBus.on(["bendpoint.move.move", "bendpoint.move.end"], 1500, function(event2) {
-    var context = event2.context, snapPoints = getBendpointSnaps(context), hover = context.hover, hoverMid = hover && getSnapPoint(hover, event2), x5 = event2.x, y5 = event2.y, sx, sy;
+  eventBus.on(["bendpoint.move.move", "bendpoint.move.end"], 1500, function(event3) {
+    var context = event3.context, snapPoints = getBendpointSnaps(context), hover = context.hover, hoverMid = hover && getSnapPoint(hover, event3), x6 = event3.x, y5 = event3.y, sx, sy;
     if (!snapPoints) {
       return;
     }
-    sx = snapTo2(hoverMid ? snapPoints.vertical.concat([hoverMid.x]) : snapPoints.vertical, x5);
+    sx = snapTo2(hoverMid ? snapPoints.vertical.concat([hoverMid.x]) : snapPoints.vertical, x6);
     sy = snapTo2(hoverMid ? snapPoints.horizontal.concat([hoverMid.y]) : snapPoints.horizontal, y5);
-    var cx = x5 - sx, cy = y5 - sy;
-    assign(event2, {
-      dx: event2.dx - cx,
-      dy: event2.dy - cy,
-      x: event2.x - cx,
-      y: event2.y - cy
+    var cx = x6 - sx, cy = y5 - sy;
+    assign(event3, {
+      dx: event3.dx - cx,
+      dy: event3.dy - cy,
+      x: event3.x - cx,
+      y: event3.y - cy
     });
-    if (cx || snapPoints.vertical.indexOf(x5) !== -1) {
-      setSnapped(event2, "x", sx);
+    if (cx || snapPoints.vertical.indexOf(x6) !== -1) {
+      setSnapped(event3, "x", sx);
     }
     if (cy || snapPoints.horizontal.indexOf(y5) !== -1) {
-      setSnapped(event2, "y", sy);
+      setSnapped(event3, "y", sy);
     }
   });
 }
@@ -22636,8 +22883,8 @@ function Connect(eventBus, dragging, modeling, rules) {
   function canConnectReverse(source, target) {
     return canConnect2(target, source);
   }
-  eventBus.on("connect.hover", function(event2) {
-    var context = event2.context, start = context.start, hover = event2.hover, canExecute;
+  eventBus.on("connect.hover", function(event3) {
+    var context = event3.context, start = context.start, hover = event3.hover, canExecute;
     context.hover = hover;
     canExecute = context.canExecute = canConnect2(start, hover);
     if (isNil(canExecute)) {
@@ -22657,17 +22904,17 @@ function Connect(eventBus, dragging, modeling, rules) {
       context.target = start;
     }
   });
-  eventBus.on(["connect.out", "connect.cleanup"], function(event2) {
-    var context = event2.context;
+  eventBus.on(["connect.out", "connect.cleanup"], function(event3) {
+    var context = event3.context;
     context.hover = null;
     context.source = null;
     context.target = null;
     context.canExecute = false;
   });
-  eventBus.on("connect.end", function(event2) {
-    var context = event2.context, canExecute = context.canExecute, connectionStart = context.connectionStart, connectionEnd = {
-      x: event2.x,
-      y: event2.y
+  eventBus.on("connect.end", function(event3) {
+    var context = event3.context, canExecute = context.canExecute, connectionStart = context.connectionStart, connectionEnd = {
+      x: event3.x,
+      y: event3.y
     }, source = context.source, target = context.target;
     if (!canExecute) {
       return false;
@@ -22681,12 +22928,12 @@ function Connect(eventBus, dragging, modeling, rules) {
     }
     context.connection = modeling.connect(source, target, attrs, hints);
   });
-  this.start = function(event2, start, connectionStart, autoActivate) {
+  this.start = function(event3, start, connectionStart, autoActivate) {
     if (!isObject(connectionStart)) {
       autoActivate = connectionStart;
       connectionStart = getMid(start);
     }
-    dragging.init(event2, "connect", {
+    dragging.init(event3, "connect", {
       autoActivate,
       data: {
         shape: start,
@@ -22716,10 +22963,10 @@ var MARKER_OK2 = "connect-ok";
 var MARKER_NOT_OK2 = "connect-not-ok";
 function ConnectPreview(injector, eventBus, canvas) {
   var connectionPreview = injector.get("connectionPreview", false);
-  connectionPreview && eventBus.on("connect.move", function(event2) {
-    var context = event2.context, canConnect2 = context.canExecute, hover = context.hover, source = context.source, start = context.start, startPosition = context.startPosition, target = context.target, connectionStart = context.connectionStart || startPosition, connectionEnd = context.connectionEnd || {
-      x: event2.x,
-      y: event2.y
+  connectionPreview && eventBus.on("connect.move", function(event3) {
+    var context = event3.context, canConnect2 = context.canExecute, hover = context.hover, source = context.source, start = context.start, startPosition = context.startPosition, target = context.target, connectionStart = context.connectionStart || startPosition, connectionEnd = context.connectionEnd || {
+      x: event3.x,
+      y: event3.y
     }, previewStart = connectionStart, previewEnd = connectionEnd;
     if (isReverse2(context)) {
       previewStart = connectionEnd;
@@ -22732,8 +22979,8 @@ function ConnectPreview(injector, eventBus, canvas) {
       connectionEnd: previewEnd
     });
   });
-  eventBus.on("connect.hover", LOW_PRIORITY8, function(event2) {
-    var context = event2.context, hover = event2.hover, canExecute = context.canExecute;
+  eventBus.on("connect.hover", LOW_PRIORITY8, function(event3) {
+    var context = event3.context, hover = event3.hover, canExecute = context.canExecute;
     if (canExecute === null) {
       return;
     }
@@ -22742,15 +22989,15 @@ function ConnectPreview(injector, eventBus, canvas) {
   eventBus.on([
     "connect.out",
     "connect.cleanup"
-  ], HIGH_PRIORITY3, function(event2) {
-    var hover = event2.hover;
+  ], HIGH_PRIORITY3, function(event3) {
+    var hover = event3.hover;
     if (hover) {
       canvas.removeMarker(hover, MARKER_OK2);
       canvas.removeMarker(hover, MARKER_NOT_OK2);
     }
   });
-  connectionPreview && eventBus.on("connect.cleanup", function(event2) {
-    connectionPreview.cleanUp(event2.context);
+  connectionPreview && eventBus.on("connect.cleanup", function(event3) {
+    connectionPreview.cleanUp(event3.context);
   });
 }
 ConnectPreview.$inject = [
@@ -23124,8 +23371,8 @@ function AdaptiveLabelPositioningBehavior(eventBus, modeling) {
     "connection.create",
     "connection.layout",
     "connection.updateWaypoints"
-  ], function(event2) {
-    var context = event2.context, connection = context.connection, source = connection.source, target = connection.target, hints = context.hints || {};
+  ], function(event3) {
+    var context = event3.context, connection = context.connection, source = connection.source, target = connection.target, hints = context.hints || {};
     if (hints.createElementsBehavior !== false) {
       checkLabelAdjustment(source);
       checkLabelAdjustment(target);
@@ -23133,16 +23380,16 @@ function AdaptiveLabelPositioningBehavior(eventBus, modeling) {
   });
   this.postExecuted([
     "label.create"
-  ], function(event2) {
-    var context = event2.context, shape = context.shape, hints = context.hints || {};
+  ], function(event3) {
+    var context = event3.context, shape = context.shape, hints = context.hints || {};
     if (hints.createElementsBehavior !== false) {
       checkLabelAdjustment(shape.labelTarget);
     }
   });
   this.postExecuted([
     "elements.create"
-  ], function(event2) {
-    var context = event2.context, elements = context.elements, hints = context.hints || {};
+  ], function(event3) {
+    var context = event3.context, elements = context.elements, hints = context.hints || {};
     if (hints.createElementsBehavior !== false) {
       elements.forEach(function(element) {
         checkLabelAdjustment(element);
@@ -23364,14 +23611,14 @@ function BoundaryEventBehavior(eventBus, modeling) {
       return is(attacher, "bpmn:BoundaryEvent");
     });
   }
-  this.postExecute("connection.create", function(event2) {
-    var source = event2.context.source, target = event2.context.target, boundaryEvents = getBoundaryEvents(target);
+  this.postExecute("connection.create", function(event3) {
+    var source = event3.context.source, target = event3.context.target, boundaryEvents = getBoundaryEvents(target);
     if (is(source, "bpmn:EventBasedGateway") && is(target, "bpmn:ReceiveTask") && boundaryEvents.length > 0) {
       modeling.removeElements(boundaryEvents);
     }
   });
-  this.postExecute("connection.reconnect", function(event2) {
-    var oldSource = event2.context.oldSource, newSource = event2.context.newSource;
+  this.postExecute("connection.reconnect", function(event3) {
+    var oldSource = event3.context.oldSource, newSource = event3.context.newSource;
     if (is(oldSource, "bpmn:Gateway") && is(newSource, "bpmn:EventBasedGateway")) {
       forEach(newSource.outgoing, function(connection) {
         var target = connection.target, attachedboundaryEvents = getBoundaryEvents(target);
@@ -23524,8 +23771,8 @@ function isForCompensationAllowed(element) {
 // node_modules/bpmn-js/lib/features/modeling/behavior/CreateBehavior.js
 function CreateBehavior(injector) {
   injector.invoke(CommandInterceptor, this);
-  this.preExecute("shape.create", 1500, function(event2) {
-    var context = event2.context, parent = context.parent, shape = context.shape;
+  this.preExecute("shape.create", 1500, function(event3) {
+    var context = event3.context, parent = context.parent, shape = context.shape;
     if (is(parent, "bpmn:Lane") && !is(shape, "bpmn:Lane")) {
       context.parent = getParent2(parent, "bpmn:Participant");
     }
@@ -23537,8 +23784,8 @@ e(CreateBehavior, CommandInterceptor);
 // node_modules/bpmn-js/lib/features/modeling/behavior/CreateDataObjectBehavior.js
 function CreateDataObjectBehavior(eventBus, bpmnFactory) {
   CommandInterceptor.call(this, eventBus);
-  this.preExecute("shape.create", function(event2) {
-    var context = event2.context, shape = context.shape;
+  this.preExecute("shape.create", function(event3) {
+    var context = event3.context, shape = context.shape;
     if (is(shape, "bpmn:DataObjectReference") && shape.type !== "label") {
       var dataObject = bpmnFactory.create("bpmn:DataObject");
       shape.businessObject.dataObjectRef = dataObject;
@@ -23561,8 +23808,8 @@ function CreateParticipantBehavior(canvas, eventBus, modeling) {
   eventBus.on([
     "create.start",
     "shape.move.start"
-  ], HIGH_PRIORITY4, function(event2) {
-    var context = event2.context, shape = context.shape, rootElement = canvas.getRootElement();
+  ], HIGH_PRIORITY4, function(event3) {
+    var context = event3.context, shape = context.shape, rootElement = canvas.getRootElement();
     if (!is(shape, "bpmn:Participant") || !is(rootElement, "bpmn:Process") || !rootElement.children.length) {
       return;
     }
@@ -23577,11 +23824,11 @@ function CreateParticipantBehavior(canvas, eventBus, modeling) {
     assign(shape, participantBounds);
     context.createConstraints = getParticipantCreateConstraints(shape, childrenBBox);
   });
-  eventBus.on("create.start", HIGH_PRIORITY4, function(event2) {
-    var context = event2.context, shape = context.shape, rootElement = canvas.getRootElement(), rootElementGfx = canvas.getGraphics(rootElement);
-    function ensureHoveringProcess(event3) {
-      event3.element = rootElement;
-      event3.gfx = rootElementGfx;
+  eventBus.on("create.start", HIGH_PRIORITY4, function(event3) {
+    var context = event3.context, shape = context.shape, rootElement = canvas.getRootElement(), rootElementGfx = canvas.getGraphics(rootElement);
+    function ensureHoveringProcess(event4) {
+      event4.element = rootElement;
+      event4.gfx = rootElementGfx;
     }
     if (is(shape, "bpmn:Participant") && is(rootElement, "bpmn:Process")) {
       eventBus.on("element.hover", HIGH_PRIORITY4, ensureHoveringProcess);
@@ -23717,8 +23964,8 @@ function DataInputAssociationBehavior(eventBus, bpmnFactory) {
       remove3(element.get("properties"), targetRefProp);
     }
   }
-  function fixTargetRef(event2) {
-    var context = event2.context, connection = context.connection, connectionBo = connection.businessObject, target = connection.target, targetBo = target && target.businessObject, newTarget = context.newTarget, newTargetBo = newTarget && newTarget.businessObject, oldTarget = context.oldTarget || context.target, oldTargetBo = oldTarget && oldTarget.businessObject;
+  function fixTargetRef(event3) {
+    var context = event3.context, connection = context.connection, connectionBo = connection.businessObject, target = connection.target, targetBo = target && target.businessObject, newTarget = context.newTarget, newTargetBo = newTarget && newTarget.businessObject, oldTarget = context.oldTarget || context.target, oldTargetBo = oldTarget && oldTarget.businessObject;
     var dataAssociation = connection.businessObject, targetRefProp;
     if (oldTargetBo && oldTargetBo !== targetBo) {
       cleanupTargetRef(oldTargetBo, connectionBo);
@@ -23740,10 +23987,10 @@ DataInputAssociationBehavior.$inject = [
 ];
 e(DataInputAssociationBehavior, CommandInterceptor);
 function ifDataInputAssociation(fn2) {
-  return function(event2) {
-    var context = event2.context, connection = context.connection;
+  return function(event3) {
+    var context = event3.context, connection = context.connection;
     if (is(connection, "bpmn:DataInputAssociation")) {
-      return fn2(event2);
+      return fn2(event3);
     }
   };
 }
@@ -23795,8 +24042,8 @@ function DataStoreBehavior(canvas, commandStack, elementRegistry, eventBus) {
       });
     }
   }
-  this.preExecute("shape.create", function(event2) {
-    var context = event2.context, shape = context.shape;
+  this.preExecute("shape.create", function(event3) {
+    var context = event3.context, shape = context.shape;
     if (is(shape, "bpmn:DataStoreReference") && shape.type !== "label") {
       if (!context.hints) {
         context.hints = {};
@@ -23804,8 +24051,8 @@ function DataStoreBehavior(canvas, commandStack, elementRegistry, eventBus) {
       context.hints.autoResize = false;
     }
   });
-  this.preExecute("elements.move", function(event2) {
-    var context = event2.context, shapes = context.shapes;
+  this.preExecute("elements.move", function(event3) {
+    var context = event3.context, shapes = context.shapes;
     var dataStoreReferences = shapes.filter(function(shape) {
       return is(shape, "bpmn:DataStoreReference");
     });
@@ -23818,14 +24065,14 @@ function DataStoreBehavior(canvas, commandStack, elementRegistry, eventBus) {
       });
     }
   });
-  this.postExecute("shape.create", function(event2) {
-    var context = event2.context, shape = context.shape, parent = shape.parent;
+  this.postExecute("shape.create", function(event3) {
+    var context = event3.context, shape = context.shape, parent = shape.parent;
     if (is(shape, "bpmn:DataStoreReference") && shape.type !== "label" && is(parent, "bpmn:Collaboration")) {
       updateDataStoreParent(shape);
     }
   });
-  this.postExecute("shape.move", function(event2) {
-    var context = event2.context, shape = context.shape, oldParent = context.oldParent, parent = shape.parent;
+  this.postExecute("shape.move", function(event3) {
+    var context = event3.context, shape = context.shape, oldParent = context.oldParent, parent = shape.parent;
     if (is(oldParent, "bpmn:Collaboration")) {
       return;
     }
@@ -23834,8 +24081,8 @@ function DataStoreBehavior(canvas, commandStack, elementRegistry, eventBus) {
       updateDataStoreParent(shape, participant);
     }
   });
-  this.postExecute("shape.delete", function(event2) {
-    var context = event2.context, shape = context.shape, rootElement = canvas.getRootElement();
+  this.postExecute("shape.delete", function(event3) {
+    var context = event3.context, shape = context.shape, rootElement = canvas.getRootElement();
     if (isAny(shape, ["bpmn:Participant", "bpmn:SubProcess"]) && is(rootElement, "bpmn:Collaboration")) {
       getDataStores(rootElement).filter(function(dataStore) {
         return isDescendant(dataStore, shape);
@@ -23844,8 +24091,8 @@ function DataStoreBehavior(canvas, commandStack, elementRegistry, eventBus) {
       });
     }
   });
-  this.postExecute("canvas.updateRoot", function(event2) {
-    var context = event2.context, oldRoot = context.oldRoot, newRoot = context.newRoot;
+  this.postExecute("canvas.updateRoot", function(event3) {
+    var context = event3.context, oldRoot = context.oldRoot, newRoot = context.newRoot;
     var dataStores = getDataStores(oldRoot);
     dataStores.forEach(function(dataStore) {
       if (is(newRoot, "bpmn:Process")) {
@@ -24195,8 +24442,8 @@ function DeleteLaneBehavior(eventBus, spaceTool) {
       );
     }
   }
-  this.postExecuted("shape.delete", LOW_PRIORITY10, function(event2) {
-    var context = event2.context, hints = context.hints, shape = context.shape, oldParent = context.oldParent;
+  this.postExecuted("shape.delete", LOW_PRIORITY10, function(event3) {
+    var context = event3.context, hints = context.hints, shape = context.shape, oldParent = context.oldParent;
     if (!is(shape, "bpmn:Lane")) {
       return;
     }
@@ -24374,8 +24621,8 @@ DropOnFlowBehavior.$inject = [
   "modeling"
 ];
 function isPointInsideBBox3(bbox, point) {
-  var x5 = point.x, y5 = point.y;
-  return x5 >= bbox.x && x5 <= bbox.x + bbox.width && y5 >= bbox.y && y5 <= bbox.y + bbox.height;
+  var x6 = point.x, y5 = point.y;
+  return x6 >= bbox.x && x6 <= bbox.x + bbox.width && y5 >= bbox.y && y5 <= bbox.y + bbox.height;
 }
 function copy(obj) {
   return assign({}, obj);
@@ -24384,8 +24631,8 @@ function copy(obj) {
 // node_modules/bpmn-js/lib/features/modeling/behavior/EventBasedGatewayBehavior.js
 function EventBasedGatewayBehavior(eventBus, modeling) {
   CommandInterceptor.call(this, eventBus);
-  this.preExecuted("connection.create", function(event2) {
-    var context = event2.context, connection = context.connection, source = context.source, target = context.target, hints = context.hints;
+  this.preExecuted("connection.create", function(event3) {
+    var context = event3.context, connection = context.connection, source = context.source, target = context.target, hints = context.hints;
     if (hints && hints.createElementsBehavior === false) {
       return;
     }
@@ -24406,8 +24653,8 @@ function EventBasedGatewayBehavior(eventBus, modeling) {
       modeling.removeConnection(sequenceFlow);
     });
   });
-  this.preExecuted("shape.replace", function(event2) {
-    var context = event2.context, newShape = context.newShape;
+  this.preExecuted("shape.replace", function(event3) {
+    var context = event3.context, newShape = context.newShape;
     if (!is(newShape, "bpmn:EventBasedGateway")) {
       return;
     }
@@ -24451,16 +24698,16 @@ function FixHoverBehavior(elementRegistry, eventBus, canvas) {
     "shape.move.move",
     "shape.move.out",
     "shape.move.end"
-  ], HIGH_PRIORITY5, function(event2) {
-    var context = event2.context, shape = context.shape || event2.shape, hover = event2.hover;
+  ], HIGH_PRIORITY5, function(event3) {
+    var context = event3.context, shape = context.shape || event3.shape, hover = event3.hover;
     if (is(hover, "bpmn:Lane") && !isAny(shape, ["bpmn:Lane", "bpmn:Participant"])) {
-      event2.hover = getLanesRoot(hover);
-      event2.hoverGfx = elementRegistry.getGraphics(event2.hover);
+      event3.hover = getLanesRoot(hover);
+      event3.hoverGfx = elementRegistry.getGraphics(event3.hover);
     }
     var rootElement = canvas.getRootElement();
     if (hover !== rootElement && (shape.labelTarget || isAny(shape, ["bpmn:Group", "bpmn:TextAnnotation"]))) {
-      event2.hover = rootElement;
-      event2.hoverGfx = elementRegistry.getGraphics(event2.hover);
+      event3.hover = rootElement;
+      event3.hoverGfx = elementRegistry.getGraphics(event3.hover);
     }
   });
   eventBus.on([
@@ -24472,40 +24719,40 @@ function FixHoverBehavior(elementRegistry, eventBus, canvas) {
     "global-connect.out",
     "global-connect.end",
     "global-connect.cleanup"
-  ], HIGH_PRIORITY5, function(event2) {
-    var hover = event2.hover;
+  ], HIGH_PRIORITY5, function(event3) {
+    var hover = event3.hover;
     if (is(hover, "bpmn:Lane")) {
-      event2.hover = getLanesRoot(hover) || hover;
-      event2.hoverGfx = elementRegistry.getGraphics(event2.hover);
+      event3.hover = getLanesRoot(hover) || hover;
+      event3.hoverGfx = elementRegistry.getGraphics(event3.hover);
     }
   });
   eventBus.on([
     "bendpoint.move.hover"
-  ], HIGH_PRIORITY5, function(event2) {
-    var context = event2.context, hover = event2.hover, type = context.type;
+  ], HIGH_PRIORITY5, function(event3) {
+    var context = event3.context, hover = event3.hover, type = context.type;
     if (is(hover, "bpmn:Lane") && /reconnect/.test(type)) {
-      event2.hover = getLanesRoot(hover) || hover;
-      event2.hoverGfx = elementRegistry.getGraphics(event2.hover);
+      event3.hover = getLanesRoot(hover) || hover;
+      event3.hoverGfx = elementRegistry.getGraphics(event3.hover);
     }
   });
   eventBus.on([
     "connect.start"
-  ], HIGH_PRIORITY5, function(event2) {
-    var context = event2.context, start = context.start;
+  ], HIGH_PRIORITY5, function(event3) {
+    var context = event3.context, start = context.start;
     if (is(start, "bpmn:Lane")) {
       context.start = getLanesRoot(start) || start;
     }
   });
-  eventBus.on("shape.move.start", HIGHEST_PRIORITY, function(event2) {
-    var shape = event2.shape;
+  eventBus.on("shape.move.start", HIGHEST_PRIORITY, function(event3) {
+    var shape = event3.shape;
     if (is(shape, "bpmn:Lane")) {
-      event2.shape = getLanesRoot(shape) || shape;
+      event3.shape = getLanesRoot(shape) || shape;
     }
   });
-  eventBus.on("spaceTool.move", HIGHEST_PRIORITY, function(event2) {
-    var hover = event2.hover;
+  eventBus.on("spaceTool.move", HIGHEST_PRIORITY, function(event3) {
+    var hover = event3.hover;
     if (hover && is(hover, "bpmn:Lane")) {
-      event2.hover = getLanesRoot(hover);
+      event3.hover = getLanesRoot(hover);
     }
   });
 }
@@ -24602,22 +24849,22 @@ function GroupBehavior(bpmnFactory, bpmnjs, elementRegistry, eventBus, injector,
       removeCategoryValue(null, businessObject.categoryValueRef.$parent, businessObject);
     }
   }
-  this.execute("label.create", function(event2) {
-    var context = event2.context, labelTarget = context.labelTarget;
+  this.execute("label.create", function(event3) {
+    var context = event3.context, labelTarget = context.labelTarget;
     if (!is(labelTarget, "bpmn:Group")) {
       return;
     }
     setCategoryValue(labelTarget, context);
   });
-  this.revert("label.create", function(event2) {
-    var context = event2.context, labelTarget = context.labelTarget;
+  this.revert("label.create", function(event3) {
+    var context = event3.context, labelTarget = context.labelTarget;
     if (!is(labelTarget, "bpmn:Group")) {
       return;
     }
     unsetCategoryValue(labelTarget, context);
   });
-  this.execute("shape.delete", function(event2) {
-    var context = event2.context, shape = context.shape, businessObject = getBusinessObject(shape);
+  this.execute("shape.delete", function(event3) {
+    var context = event3.context, shape = context.shape, businessObject = getBusinessObject(shape);
     if (!is(shape, "bpmn:Group") || shape.labelTarget) {
       return;
     }
@@ -24628,8 +24875,8 @@ function GroupBehavior(bpmnFactory, bpmnjs, elementRegistry, eventBus, injector,
       businessObject.categoryValueRef = null;
     }
   });
-  this.reverted("shape.delete", function(event2) {
-    var context = event2.context, shape = context.shape;
+  this.reverted("shape.delete", function(event3) {
+    var context = event3.context, shape = context.shape;
     if (!is(shape, "bpmn:Group") || shape.labelTarget) {
       return;
     }
@@ -24639,8 +24886,8 @@ function GroupBehavior(bpmnFactory, bpmnjs, elementRegistry, eventBus, injector,
       addCategoryValue(categoryValue, category);
     }
   });
-  this.execute("shape.create", function(event2) {
-    var context = event2.context, shape = context.shape;
+  this.execute("shape.create", function(event3) {
+    var context = event3.context, shape = context.shape;
     if (!is(shape, "bpmn:Group") || shape.labelTarget) {
       return;
     }
@@ -24648,8 +24895,8 @@ function GroupBehavior(bpmnFactory, bpmnjs, elementRegistry, eventBus, injector,
       setCategoryValue(shape, context);
     }
   });
-  this.reverted("shape.create", function(event2) {
-    var context = event2.context, shape = context.shape;
+  this.reverted("shape.create", function(event3) {
+    var context = event3.context, shape = context.shape;
     if (!is(shape, "bpmn:Group") || shape.labelTarget) {
       return;
     }
@@ -24728,7 +24975,7 @@ function ImportDockingFix(eventBus) {
     var verticalIntersect = lineIntersect(startPoint, nextPoint, elementMid, elementTop), horizontalIntersect = lineIntersect(startPoint, nextPoint, elementMid, elementLeft);
     var centerIntersect;
     if (verticalIntersect && horizontalIntersect) {
-      if (getDistance(verticalIntersect, elementMid) > getDistance(horizontalIntersect, elementMid)) {
+      if (getDistance2(verticalIntersect, elementMid) > getDistance2(horizontalIntersect, elementMid)) {
         centerIntersect = horizontalIntersect;
       } else {
         centerIntersect = verticalIntersect;
@@ -24761,7 +25008,7 @@ function ImportDockingFix(eventBus) {
 ImportDockingFix.$inject = [
   "eventBus"
 ];
-function getDistance(p1, p22) {
+function getDistance2(p1, p22) {
   return Math.sqrt(Math.pow(p1.x - p22.x, 2) + Math.pow(p1.y - p22.y, 2));
 }
 
@@ -24772,8 +25019,8 @@ function IsHorizontalFix(eventBus) {
     "bpmn:Participant",
     "bpmn:Lane"
   ];
-  this.executed(["shape.move", "shape.create", "shape.resize"], function(event2) {
-    var shape = event2.context.shape, bo = getBusinessObject(shape), di = getDi(shape);
+  this.executed(["shape.move", "shape.create", "shape.resize"], function(event3) {
+    var shape = event3.context.shape, bo = getBusinessObject(shape), di = getDi(shape);
     if (isAny(bo, elementTypesToUpdate)) {
       var isHorizontal5 = di.get("isHorizontal");
       if (isHorizontal5 === void 0) {
@@ -24794,7 +25041,7 @@ var abs5 = Math.abs;
 function sq(n4) {
   return Math.pow(n4, 2);
 }
-function getDistance2(p1, p22) {
+function getDistance3(p1, p22) {
   return sqrt(sq(p1.x - p22.x) + sq(p1.y - p22.y));
 }
 function getAttachment(point, line) {
@@ -24805,8 +25052,8 @@ function getAttachment(point, line) {
     if (pointsEqual(segmentStart, segmentEnd)) {
       intersections = [segmentStart];
     } else {
-      segmentStartDistance = getDistance2(point, segmentStart);
-      segmentEndDistance = getDistance2(point, segmentEnd);
+      segmentStartDistance = getDistance3(point, segmentStart);
+      segmentEndDistance = getDistance3(point, segmentEnd);
       minDistance = min2(segmentStartDistance, segmentEndDistance);
       intersections = getCircleSegmentIntersections(segmentStart, segmentEnd, point, minDistance);
     }
@@ -24827,10 +25074,10 @@ function getAttachment(point, line) {
         type: "segment",
         position: attachmentPosition,
         segmentIndex: idx,
-        relativeLocation: getDistance2(segmentStart, attachmentPosition) / getDistance2(segmentStart, segmentEnd)
+        relativeLocation: getDistance3(segmentStart, attachmentPosition) / getDistance3(segmentStart, segmentEnd)
       };
     }
-    attachmentDistance = getDistance2(attachment.position, point);
+    attachmentDistance = getDistance3(attachment.position, point);
     if (!closestAttachment || closestAttachmentDistance > attachmentDistance) {
       closestAttachment = attachment;
       closestAttachmentDistance = attachmentDistance;
@@ -24847,8 +25094,8 @@ function getCircleSegmentIntersections(s1, s22, cc, cr) {
   var bBy2 = baX * caX + baY * caY;
   var c5 = caX * caX + caY * caY - cr * cr;
   var pBy2 = bBy2 / a6;
-  var q5 = c5 / a6;
-  var disc = pBy2 * pBy2 - q5;
+  var q6 = c5 / a6;
+  var disc = pBy2 * pBy2 - q6;
   if (disc < 0 && disc > -1e-6) {
     disc = 0;
   }
@@ -25133,14 +25380,14 @@ function LabelBehavior(eventBus, modeling, bpmnFactory, textRenderer) {
     }
     modeling.updateLabel(element, getLabel(element));
   });
-  this.postExecute("shape.delete", function(event2) {
-    var context = event2.context, labelTarget = context.labelTarget, hints = context.hints || {};
+  this.postExecute("shape.delete", function(event3) {
+    var context = event3.context, labelTarget = context.labelTarget, hints = context.hints || {};
     if (labelTarget && hints.unsetLabel !== false) {
       modeling.updateLabel(labelTarget, null, null, { removeShape: false });
     }
   });
-  function getVisibleLabelAdjustment(event2) {
-    var context = event2.context, connection = context.connection, label = connection.label, hints = assign({}, context.hints), newWaypoints = context.newWaypoints || connection.waypoints, oldWaypoints = context.oldWaypoints;
+  function getVisibleLabelAdjustment(event3) {
+    var context = event3.context, connection = context.connection, label = connection.label, hints = assign({}, context.hints), newWaypoints = context.newWaypoints || connection.waypoints, oldWaypoints = context.oldWaypoints;
     if (typeof hints.startChanged === "undefined") {
       hints.startChanged = !!hints.connectionStart;
     }
@@ -25152,8 +25399,8 @@ function LabelBehavior(eventBus, modeling, bpmnFactory, textRenderer) {
   this.postExecute([
     "connection.layout",
     "connection.updateWaypoints"
-  ], function(event2) {
-    var context = event2.context, hints = context.hints || {};
+  ], function(event3) {
+    var context = event3.context, hints = context.hints || {};
     if (hints.labelBehavior === false) {
       return;
     }
@@ -25161,19 +25408,19 @@ function LabelBehavior(eventBus, modeling, bpmnFactory, textRenderer) {
     if (!label || !label.parent) {
       return;
     }
-    labelAdjustment = getVisibleLabelAdjustment(event2);
+    labelAdjustment = getVisibleLabelAdjustment(event3);
     modeling.moveShape(label, labelAdjustment);
   });
-  this.postExecute(["shape.replace"], function(event2) {
-    var context = event2.context, newShape = context.newShape, oldShape = context.oldShape;
+  this.postExecute(["shape.replace"], function(event3) {
+    var context = event3.context, newShape = context.newShape, oldShape = context.oldShape;
     var businessObject = getBusinessObject(newShape);
     if (businessObject && isLabelExternal(businessObject) && oldShape.label && newShape.label) {
       newShape.label.x = oldShape.label.x;
       newShape.label.y = oldShape.label.y;
     }
   });
-  this.postExecute("shape.resize", function(event2) {
-    var context = event2.context, shape = context.shape, newBounds = context.newBounds, oldBounds = context.oldBounds;
+  this.postExecute("shape.resize", function(event3) {
+    var context = event3.context, shape = context.shape, newBounds = context.newBounds, oldBounds = context.oldBounds;
     if (hasExternalLabel(shape)) {
       var label = shape.label, labelMid = getMid(label), edges = asEdges(oldBounds);
       var referencePoint = getReferencePoint(labelMid, edges);
@@ -25267,8 +25514,8 @@ function getConnectionAdjustment(position, newWaypoints, oldWaypoints, hints) {
 // node_modules/bpmn-js/lib/features/modeling/behavior/LayoutConnectionBehavior.js
 function LayoutConnectionBehavior(eventBus, modeling) {
   CommandInterceptor.call(this, eventBus);
-  function getnewAnchorPoint(event2, point) {
-    var context = event2.context, connection = context.connection, hints = assign({}, context.hints), newWaypoints = context.newWaypoints || connection.waypoints, oldWaypoints = context.oldWaypoints;
+  function getnewAnchorPoint(event3, point) {
+    var context = event3.context, connection = context.connection, hints = assign({}, context.hints), newWaypoints = context.newWaypoints || connection.waypoints, oldWaypoints = context.oldWaypoints;
     if (typeof hints.startChanged === "undefined") {
       hints.startChanged = !!hints.connectionStart;
     }
@@ -25280,26 +25527,26 @@ function LayoutConnectionBehavior(eventBus, modeling) {
   this.postExecute([
     "connection.layout",
     "connection.updateWaypoints"
-  ], function(event2) {
-    var context = event2.context;
+  ], function(event3) {
+    var context = event3.context;
     var connection = context.connection, outgoing = connection.outgoing, incoming = connection.incoming;
     incoming.forEach(function(connection2) {
       var endPoint = connection2.waypoints[connection2.waypoints.length - 1];
-      var newEndpoint = getnewAnchorPoint(event2, endPoint);
+      var newEndpoint = getnewAnchorPoint(event3, endPoint);
       var newWaypoints = [].concat(connection2.waypoints.slice(0, -1), [newEndpoint]);
       modeling.updateWaypoints(connection2, newWaypoints);
     });
     outgoing.forEach(function(connection2) {
       var startpoint = connection2.waypoints[0];
-      var newStartpoint = getnewAnchorPoint(event2, startpoint);
+      var newStartpoint = getnewAnchorPoint(event3, startpoint);
       var newWaypoints = [].concat([newStartpoint], connection2.waypoints.slice(1));
       modeling.updateWaypoints(connection2, newWaypoints);
     });
   });
   this.postExecute([
     "connection.move"
-  ], function(event2) {
-    var context = event2.context;
+  ], function(event3) {
+    var context = event3.context;
     var connection = context.connection, outgoing = connection.outgoing, incoming = connection.incoming, delta2 = context.delta;
     incoming.forEach(function(connection2) {
       var endPoint = connection2.waypoints[connection2.waypoints.length - 1];
@@ -25443,7 +25690,7 @@ function canBeNonInterrupting(shape) {
   if (!eventDefinitions || !eventDefinitions.length) {
     return false;
   }
-  return NON_INTERRUPTING_EVENT_TYPES.some((event2) => is(eventDefinitions[0], event2));
+  return NON_INTERRUPTING_EVENT_TYPES.some((event3) => is(eventDefinitions[0], event3));
 }
 function getInterruptingProperty(shape) {
   return is(shape, "bpmn:BoundaryEvent") ? "cancelActivity" : "isInterrupting";
@@ -25452,10 +25699,10 @@ function getInterruptingProperty(shape) {
 // node_modules/bpmn-js/lib/features/modeling/behavior/NonInterruptingBehavior.js
 function NonInterruptingBehavior(injector, modeling) {
   injector.invoke(CommandInterceptor, this);
-  this.postExecuted("shape.replace", function(event2) {
-    const oldShape = event2.context.oldShape;
-    const newShape = event2.context.newShape;
-    const hints = event2.context.hints;
+  this.postExecuted("shape.replace", function(event3) {
+    const oldShape = event3.context.oldShape;
+    const newShape = event3.context.newShape;
+    const hints = event3.context.hints;
     if (!canBeNonInterrupting(newShape)) {
       return;
     }
@@ -25599,8 +25846,8 @@ function ReplaceConnectionBehavior(eventBus, modeling, bpmnRules, injector) {
       });
     }
   }
-  function replaceReconnectedConnection(event2) {
-    var context = event2.context, connection = context.connection, source = context.newSource || connection.source, target = context.newTarget || connection.target, allowed, replacement;
+  function replaceReconnectedConnection(event3) {
+    var context = event3.context, connection = context.connection, source = context.newSource || connection.source, target = context.newTarget || connection.target, allowed, replacement;
     allowed = bpmnRules.canConnect(source, target);
     if (!allowed || allowed.type === connection.type) {
       return;
@@ -25634,8 +25881,8 @@ function ReplaceConnectionBehavior(eventBus, modeling, bpmnRules, injector) {
     forEach(allConnections, fixConnection);
   }, true);
   this.preExecute("connection.reconnect", replaceReconnectedConnection);
-  this.postExecuted("element.updateProperties", function(event2) {
-    var context = event2.context, properties = context.properties, element = context.element, businessObject = element.businessObject, connection;
+  this.postExecuted("element.updateProperties", function(event3) {
+    var context = event3.context, properties = context.properties, element = context.element, businessObject = element.businessObject, connection;
     if (properties.default) {
       connection = find(
         element.outgoing,
@@ -25664,8 +25911,8 @@ function ReplaceElementBehaviour(bpmnReplace, bpmnRules, elementRegistry, inject
   this._bpmnReplace = bpmnReplace;
   this._elementRegistry = elementRegistry;
   this._selection = selection2;
-  this.postExecuted(["elements.create"], 500, function(event2) {
-    var context = event2.context, target = context.parent, elements = context.elements;
+  this.postExecuted(["elements.create"], 500, function(event3) {
+    var context = event3.context, target = context.parent, elements = context.elements;
     var elementReplacements = reduce(elements, function(replacements, element) {
       var canReplace2 = bpmnRules.canReplace([element], element.host || element.parent || target);
       return canReplace2 ? replacements.concat(canReplace2.replacements) : replacements;
@@ -25674,8 +25921,8 @@ function ReplaceElementBehaviour(bpmnReplace, bpmnRules, elementRegistry, inject
       this._replaceElements(elements, elementReplacements);
     }
   }, this);
-  this.postExecuted(["elements.move"], 500, function(event2) {
-    var context = event2.context, target = context.newParent, newHost = context.newHost, elements = [];
+  this.postExecuted(["elements.move"], 500, function(event3) {
+    var context = event3.context, target = context.newParent, newHost = context.newHost, elements = [];
     forEach(context.closure.topLevel, function(topLevelElements) {
       if (isEventSubProcess(topLevelElements)) {
         elements = elements.concat(topLevelElements.children);
@@ -25738,8 +25985,8 @@ var VERTICAL_PARTICIPANT_MIN_DIMENSIONS = { width: 150, height: 300 };
 var SUB_PROCESS_MIN_DIMENSIONS = { width: 140, height: 120 };
 var TEXT_ANNOTATION_MIN_DIMENSIONS = { width: 50, height: 30 };
 function ResizeBehavior(eventBus) {
-  eventBus.on("resize.start", HIGH_PRIORITY6, function(event2) {
-    var context = event2.context, shape = context.shape, direction = context.direction, balanced = context.balanced;
+  eventBus.on("resize.start", HIGH_PRIORITY6, function(event3) {
+    var context = event3.context, shape = context.shape, direction = context.direction, balanced = context.balanced;
     if (is(shape, "bpmn:Lane") || is(shape, "bpmn:Participant")) {
       context.resizeConstraints = getParticipantResizeConstraints(shape, direction, balanced);
     }
@@ -25859,14 +26106,14 @@ function getParticipantResizeConstraints(laneShape, resizeDirection, balanced) {
 // node_modules/bpmn-js/lib/features/modeling/behavior/ResizeLaneBehavior.js
 var SLIGHTLY_HIGHER_PRIORITY = 1001;
 function ResizeLaneBehavior(eventBus, modeling) {
-  eventBus.on("resize.start", SLIGHTLY_HIGHER_PRIORITY + 500, function(event2) {
-    var context = event2.context, shape = context.shape;
+  eventBus.on("resize.start", SLIGHTLY_HIGHER_PRIORITY + 500, function(event3) {
+    var context = event3.context, shape = context.shape;
     if (is(shape, "bpmn:Lane") || is(shape, "bpmn:Participant")) {
-      context.balanced = !hasPrimaryModifier(event2);
+      context.balanced = !hasPrimaryModifier(event3);
     }
   });
-  eventBus.on("resize.end", SLIGHTLY_HIGHER_PRIORITY, function(event2) {
-    var context = event2.context, shape = context.shape, canExecute = context.canExecute, newBounds = context.newBounds;
+  eventBus.on("resize.end", SLIGHTLY_HIGHER_PRIORITY, function(event3) {
+    var context = event3.context, shape = context.shape, canExecute = context.canExecute, newBounds = context.newBounds;
     if (is(shape, "bpmn:Lane") || is(shape, "bpmn:Participant")) {
       if (canExecute) {
         newBounds = roundBounds(newBounds);
@@ -26415,8 +26662,8 @@ SubProcessPlaneBehavior.$inject = [
 // node_modules/bpmn-js/lib/features/modeling/behavior/SubProcessStartEventBehavior.js
 function SubProcessStartEventBehavior(injector, modeling) {
   injector.invoke(CommandInterceptor, this);
-  this.postExecuted("shape.replace", function(event2) {
-    var oldShape = event2.context.oldShape, newShape = event2.context.newShape;
+  this.postExecuted("shape.replace", function(event3) {
+    var oldShape = event3.context.oldShape, newShape = event3.context.newShape;
     if (!is(newShape, "bpmn:SubProcess") || !(is(oldShape, "bpmn:Task") || is(oldShape, "bpmn:CallActivity")) || !isExpanded(newShape)) {
       return;
     }
@@ -26579,8 +26826,8 @@ function filterVisible(elements) {
 // node_modules/bpmn-js/lib/features/modeling/behavior/UnclaimIdBehavior.js
 function UnclaimIdBehavior(canvas, injector, moddle, modeling) {
   injector.invoke(CommandInterceptor, this);
-  this.preExecute("shape.delete", function(event2) {
-    var context = event2.context, shape = context.shape, shapeBo = shape.businessObject;
+  this.preExecute("shape.delete", function(event3) {
+    var context = event3.context, shape = context.shape, shapeBo = shape.businessObject;
     if (isLabel(shape)) {
       return;
     }
@@ -26589,8 +26836,8 @@ function UnclaimIdBehavior(canvas, injector, moddle, modeling) {
     }
     modeling.unclaimId(shapeBo.id, shapeBo);
   });
-  this.preExecute("connection.delete", function(event2) {
-    var context = event2.context, connection = context.connection, connectionBo = connection.businessObject;
+  this.preExecute("connection.delete", function(event3) {
+    var context = event3.context, connection = context.connection, connectionBo = connection.businessObject;
     modeling.unclaimId(connectionBo.id, connectionBo);
   });
   this.preExecute("canvas.updateRoot", function() {
@@ -26606,8 +26853,8 @@ UnclaimIdBehavior.$inject = ["canvas", "injector", "moddle", "modeling"];
 // node_modules/bpmn-js/lib/features/modeling/behavior/UnsetDefaultFlowBehavior.js
 function DeleteSequenceFlowBehavior(eventBus, modeling) {
   CommandInterceptor.call(this, eventBus);
-  this.preExecute("connection.delete", function(event2) {
-    var context = event2.context, connection = context.connection, source = connection.source;
+  this.preExecute("connection.delete", function(event3) {
+    var context = event3.context, connection = context.connection, source = connection.source;
     if (isDefaultFlow(connection, source)) {
       modeling.updateProperties(source, {
         "default": null
@@ -26631,7 +26878,7 @@ function isDefaultFlow(connection, source) {
 // node_modules/bpmn-js/lib/features/modeling/behavior/UpdateFlowNodeRefsBehavior.js
 var LOW_PRIORITY15 = 500;
 var HIGH_PRIORITY8 = 5e3;
-function UpdateFlowNodeRefsBehavior(eventBus, modeling, translate3) {
+function UpdateFlowNodeRefsBehavior(eventBus, modeling) {
   CommandInterceptor.call(this, eventBus);
   var context;
   function initContext() {
@@ -26641,13 +26888,13 @@ function UpdateFlowNodeRefsBehavior(eventBus, modeling, translate3) {
   }
   function getContext() {
     if (!context) {
-      throw new Error(translate3("out of bounds release"));
+      throw new Error("out of bounds release");
     }
     return context;
   }
   function releaseContext() {
     if (!context) {
-      throw new Error(translate3("out of bounds release"));
+      throw new Error("out of bounds release");
     }
     var triggerUpdate = context.leave();
     if (triggerUpdate) {
@@ -26669,10 +26916,10 @@ function UpdateFlowNodeRefsBehavior(eventBus, modeling, translate3) {
     "shape.move",
     "shape.resize"
   ];
-  this.preExecute(laneRefUpdateEvents, HIGH_PRIORITY8, function(event2) {
+  this.preExecute(laneRefUpdateEvents, HIGH_PRIORITY8, function(event3) {
     initContext();
   });
-  this.postExecuted(laneRefUpdateEvents, LOW_PRIORITY15, function(event2) {
+  this.postExecuted(laneRefUpdateEvents, LOW_PRIORITY15, function(event3) {
     releaseContext();
   });
   this.preExecute([
@@ -26680,8 +26927,8 @@ function UpdateFlowNodeRefsBehavior(eventBus, modeling, translate3) {
     "shape.move",
     "shape.delete",
     "shape.resize"
-  ], function(event2) {
-    var context2 = event2.context, shape = context2.shape;
+  ], function(event3) {
+    var context2 = event3.context, shape = context2.shape;
     var updateContext = getContext();
     if (shape.labelTarget) {
       return;
@@ -26696,8 +26943,7 @@ function UpdateFlowNodeRefsBehavior(eventBus, modeling, translate3) {
 }
 UpdateFlowNodeRefsBehavior.$inject = [
   "eventBus",
-  "modeling",
-  "translate"
+  "modeling"
 ];
 e(UpdateFlowNodeRefsBehavior, CommandInterceptor);
 function UpdateContext() {
@@ -27087,8 +27333,8 @@ function canDrop(element, target) {
   }
   return false;
 }
-function isDroppableBoundaryEvent(event2) {
-  return getBusinessObject(event2).cancelActivity && (hasNoEventDefinition(event2) || hasCommonBoundaryIntermediateEventDefinition(event2));
+function isDroppableBoundaryEvent(event3) {
+  return getBusinessObject(event3).cancelActivity && (hasNoEventDefinition(event3) || hasCommonBoundaryIntermediateEventDefinition(event3));
 }
 function isBoundaryEvent(element) {
   return !isLabel(element) && is(element, "bpmn:BoundaryEvent");
@@ -27364,8 +27610,8 @@ var di_ordering_default = {
 function OrderingProvider(eventBus) {
   CommandInterceptor.call(this, eventBus);
   var self2 = this;
-  this.preExecute(["shape.create", "connection.create"], function(event2) {
-    var context = event2.context, element = context.shape || context.connection, parent = context.parent;
+  this.preExecute(["shape.create", "connection.create"], function(event3) {
+    var context = event3.context, element = context.shape || context.connection, parent = context.parent;
     var ordering = self2.getOrdering(element, parent);
     if (ordering) {
       if (ordering.parent !== void 0) {
@@ -27374,8 +27620,8 @@ function OrderingProvider(eventBus) {
       context.parentIndex = ordering.index;
     }
   });
-  this.preExecute(["shape.move", "connection.move"], function(event2) {
-    var context = event2.context, element = context.shape || context.connection, parent = context.newParent || element.parent;
+  this.preExecute(["shape.move", "connection.move"], function(event3) {
+    var context = event3.context, element = context.shape || context.connection, parent = context.newParent || element.parent;
     var ordering = self2.getOrdering(element, parent);
     if (ordering) {
       if (ordering.parent !== void 0) {
@@ -27391,7 +27637,7 @@ OrderingProvider.prototype.getOrdering = function(element, newParent) {
 e(OrderingProvider, CommandInterceptor);
 
 // node_modules/bpmn-js/lib/features/ordering/BpmnOrderingProvider.js
-function BpmnOrderingProvider(eventBus, canvas, translate3) {
+function BpmnOrderingProvider(eventBus, canvas) {
   OrderingProvider.call(this, eventBus);
   var orders = [
     { type: "bpmn:SubProcess", order: { level: 6 } },
@@ -27517,14 +27763,11 @@ function BpmnOrderingProvider(eventBus, canvas, translate3) {
     };
   };
 }
-BpmnOrderingProvider.$inject = ["eventBus", "canvas", "translate"];
+BpmnOrderingProvider.$inject = ["eventBus", "canvas"];
 e(BpmnOrderingProvider, OrderingProvider);
 
 // node_modules/bpmn-js/lib/features/ordering/index.js
 var ordering_default = {
-  __depends__: [
-    translate_default
-  ],
   __init__: ["bpmnOrderingProvider"],
   bpmnOrderingProvider: ["type", BpmnOrderingProvider]
 };
@@ -27618,25 +27861,25 @@ function Create(canvas, dragging, eventBus, modeling, rules) {
     return false;
   }
   function setMarker(element, marker) {
-    [MARKER_ATTACH, MARKER_OK3, MARKER_NOT_OK3, MARKER_NEW_PARENT].forEach(function(m6) {
-      if (m6 === marker) {
-        canvas.addMarker(element, m6);
+    [MARKER_ATTACH, MARKER_OK3, MARKER_NOT_OK3, MARKER_NEW_PARENT].forEach(function(m5) {
+      if (m5 === marker) {
+        canvas.addMarker(element, m5);
       } else {
-        canvas.removeMarker(element, m6);
+        canvas.removeMarker(element, m5);
       }
     });
   }
-  eventBus.on(["create.move", "create.hover"], function(event2) {
-    var context = event2.context, elements = context.elements, hover = event2.hover, source = context.source, hints = context.hints || {};
+  eventBus.on(["create.move", "create.hover"], function(event3) {
+    var context = event3.context, elements = context.elements, hover = event3.hover, source = context.source, hints = context.hints || {};
     if (!hover) {
       context.canExecute = false;
       context.target = null;
       return;
     }
-    ensureConstraints2(event2);
+    ensureConstraints2(event3);
     var position = {
-      x: event2.x,
-      y: event2.y
+      x: event3.x,
+      y: event3.y
     };
     var canExecute = context.canExecute = hover && canCreate2(elements, hover, position, source, hints);
     if (hover && canExecute !== null) {
@@ -27648,21 +27891,21 @@ function Create(canvas, dragging, eventBus, modeling, rules) {
       }
     }
   });
-  eventBus.on(["create.end", "create.out", "create.cleanup"], function(event2) {
-    var hover = event2.hover;
+  eventBus.on(["create.end", "create.out", "create.cleanup"], function(event3) {
+    var hover = event3.hover;
     if (hover) {
       setMarker(hover, null);
     }
   });
-  eventBus.on("create.end", function(event2) {
-    var context = event2.context, source = context.source, shape = context.shape, elements = context.elements, target = context.target, canExecute = context.canExecute, attach = canExecute && canExecute.attach, connect = canExecute && canExecute.connect, hints = context.hints || {};
+  eventBus.on("create.end", function(event3) {
+    var context = event3.context, source = context.source, shape = context.shape, elements = context.elements, target = context.target, canExecute = context.canExecute, attach = canExecute && canExecute.attach, connect = canExecute && canExecute.connect, hints = context.hints || {};
     if (canExecute === false || !target) {
       return false;
     }
-    ensureConstraints2(event2);
+    ensureConstraints2(event3);
     var position = {
-      x: event2.x,
-      y: event2.y
+      x: event3.x,
+      y: event3.y
     };
     if (connect) {
       shape = modeling.appendShape(source, shape, position, target, {
@@ -27682,7 +27925,7 @@ function Create(canvas, dragging, eventBus, modeling, rules) {
       elements,
       shape
     });
-    assign(event2, {
+    assign(event3, {
       elements,
       shape
     });
@@ -27699,7 +27942,7 @@ function Create(canvas, dragging, eventBus, modeling, rules) {
       eventBus.off("elements.changed", cancel2);
     });
   });
-  this.start = function(event2, elements, context) {
+  this.start = function(event3, elements, context) {
     if (!isArray(elements)) {
       elements = [elements];
     }
@@ -27740,7 +27983,7 @@ function Create(canvas, dragging, eventBus, modeling, rules) {
         y: element.y - bbox.y - bbox.height / 2
       });
     });
-    dragging.init(event2, PREFIX, {
+    dragging.init(event3, PREFIX, {
       cursor: "grabbing",
       autoActivate: true,
       data: {
@@ -27758,22 +28001,22 @@ Create.$inject = [
   "modeling",
   "rules"
 ];
-function ensureConstraints2(event2) {
-  var context = event2.context, createConstraints = context.createConstraints;
+function ensureConstraints2(event3) {
+  var context = event3.context, createConstraints = context.createConstraints;
   if (!createConstraints) {
     return;
   }
   if (createConstraints.left) {
-    event2.x = Math.max(event2.x, createConstraints.left);
+    event3.x = Math.max(event3.x, createConstraints.left);
   }
   if (createConstraints.right) {
-    event2.x = Math.min(event2.x, createConstraints.right);
+    event3.x = Math.min(event3.x, createConstraints.right);
   }
   if (createConstraints.top) {
-    event2.y = Math.max(event2.y, createConstraints.top);
+    event3.y = Math.max(event3.y, createConstraints.top);
   }
   if (createConstraints.bottom) {
-    event2.y = Math.min(event2.y, createConstraints.bottom);
+    event3.y = Math.min(event3.y, createConstraints.bottom);
   }
 }
 function isSingleShape(elements) {
@@ -27804,8 +28047,8 @@ function CreatePreview(canvas, eventBus, graphicsFactory, previewSupport, styles
     });
     return dragGroup;
   }
-  eventBus.on("create.move", LOW_PRIORITY16, function(event2) {
-    var hover = event2.hover, context = event2.context, elements = context.elements, dragGroup = context.dragGroup;
+  eventBus.on("create.move", LOW_PRIORITY16, function(event3) {
+    var hover = event3.hover, context = event3.context, elements = context.elements, dragGroup = context.dragGroup;
     if (!dragGroup) {
       dragGroup = context.dragGroup = createDragGroup(elements);
     }
@@ -27815,13 +28058,13 @@ function CreatePreview(canvas, eventBus, graphicsFactory, previewSupport, styles
         activeLayer = canvas.getActiveLayer();
         append(activeLayer, dragGroup);
       }
-      translate(dragGroup, event2.x, event2.y);
+      translate(dragGroup, event3.x, event3.y);
     } else {
       remove(dragGroup);
     }
   });
-  eventBus.on("create.cleanup", function(event2) {
-    var context = event2.context, dragGroup = context.dragGroup;
+  eventBus.on("create.cleanup", function(event3) {
+    var context = event3.context, dragGroup = context.dragGroup;
     if (dragGroup) {
       remove(dragGroup);
     }
@@ -27871,11 +28114,11 @@ Mouse.$inject = ["eventBus"];
 Mouse.prototype.getLastMoveEvent = function() {
   return this._lastMoveEvent || createMoveEvent(0, 0);
 };
-function createMoveEvent(x5, y5) {
-  var event2 = document.createEvent("MouseEvent");
-  var screenX = x5, screenY = y5, clientX = x5, clientY = y5;
-  if (event2.initMouseEvent) {
-    event2.initMouseEvent(
+function createMoveEvent(x6, y5) {
+  var event3 = document.createEvent("MouseEvent");
+  var screenX = x6, screenY = y5, clientX = x6, clientY = y5;
+  if (event3.initMouseEvent) {
+    event3.initMouseEvent(
       "mousemove",
       true,
       true,
@@ -27893,7 +28136,7 @@ function createMoveEvent(x5, y5) {
       null
     );
   }
-  return event2;
+  return event3;
 }
 
 // node_modules/diagram-js/lib/features/mouse/index.js
@@ -28512,7 +28755,7 @@ Replace.prototype.replaceElement = function(oldElement, attrs, hints) {
     attrs,
     hints
   });
-  var width = attrs.width || oldElement.width, height = attrs.height || oldElement.height, x5 = attrs.x || oldElement.x, y5 = attrs.y || oldElement.y, centerX = round7(x5 + width / 2), centerY = round7(y5 + height / 2);
+  var width = attrs.width || oldElement.width, height = attrs.height || oldElement.height, x6 = attrs.x || oldElement.x, y5 = attrs.y || oldElement.y, centerX = round7(x6 + width / 2), centerY = round7(y5 + height / 2);
   var newElement = modeling.replaceShape(
     oldElement,
     assign(
@@ -28537,11 +28780,11 @@ Replace.prototype.replaceElement = function(oldElement, attrs, hints) {
 
 // node_modules/diagram-js/lib/features/replace/ReplaceSelectionBehavior.js
 function ReplaceSelectionBehavior(selection2, eventBus) {
-  eventBus.on("replace.end", 500, function(event2) {
+  eventBus.on("replace.end", 500, function(event3) {
     const {
       newElement,
       hints = {}
-    } = event2;
+    } = event3;
     if (hints.select === false) {
       return;
     }
@@ -28739,13 +28982,12 @@ var replace_default2 = {
 
 // node_modules/diagram-js/lib/features/tool-manager/ToolManager.js
 var LOW_PRIORITY18 = 250;
-function ToolManager(eventBus, dragging) {
+function ToolManager(eventBus) {
   this._eventBus = eventBus;
-  this._dragging = dragging;
   this._tools = [];
   this._active = null;
 }
-ToolManager.$inject = ["eventBus", "dragging"];
+ToolManager.$inject = ["eventBus"];
 ToolManager.prototype.registerTool = function(name2, events) {
   var tools = this._tools;
   if (!events) {
@@ -28768,33 +29010,32 @@ ToolManager.prototype.setActive = function(tool) {
   }
 };
 ToolManager.prototype.bindEvents = function(name2, events) {
-  var eventBus = this._eventBus, dragging = this._dragging;
+  var eventBus = this._eventBus;
   var eventsToRegister = [];
-  eventBus.on(events.tool + ".init", function(event2) {
-    var context = event2.context;
+  eventBus.on(events.tool + ".init", function(event3) {
+    var context = event3.context;
     if (!context.reactivate && this.isActive(name2)) {
       this.setActive(null);
-      dragging.cancel();
       return;
     }
     this.setActive(name2);
   }, this);
-  forEach(events, function(event2) {
-    eventsToRegister.push(event2 + ".ended");
-    eventsToRegister.push(event2 + ".canceled");
+  forEach(events, function(event3) {
+    eventsToRegister.push(event3 + ".ended");
+    eventsToRegister.push(event3 + ".canceled");
   });
-  eventBus.on(eventsToRegister, LOW_PRIORITY18, function(event2) {
+  eventBus.on(eventsToRegister, LOW_PRIORITY18, function(event3) {
     if (!this._active) {
       return;
     }
-    if (isPaletteClick(event2)) {
+    if (isPaletteClick(event3)) {
       return;
     }
     this.setActive(null);
   }, this);
 };
-function isPaletteClick(event2) {
-  var target = event2.originalEvent && event2.originalEvent.target;
+function isPaletteClick(event3) {
+  var target = event3.originalEvent && event3.originalEvent.target;
   return target && closest(target, '.group[data-group="tools"]');
 }
 
@@ -28846,32 +29087,32 @@ function includes4(array, item) {
   return array.indexOf(item) !== -1;
 }
 function resizeBounds2(bounds, direction, delta2) {
-  var x5 = bounds.x, y5 = bounds.y, width = bounds.width, height = bounds.height, dx = delta2.x, dy = delta2.y;
+  var x6 = bounds.x, y5 = bounds.y, width = bounds.width, height = bounds.height, dx = delta2.x, dy = delta2.y;
   switch (direction) {
     case "n":
       return {
-        x: x5,
+        x: x6,
         y: y5 + dy,
         width,
         height: height - dy
       };
     case "s":
       return {
-        x: x5,
+        x: x6,
         y: y5,
         width,
         height: height + dy
       };
     case "w":
       return {
-        x: x5 + dx,
+        x: x6 + dx,
         y: y5,
         width: width - dx,
         height
       };
     case "e":
       return {
-        x: x5,
+        x: x6,
         y: y5,
         width: width + dx,
         height
@@ -28916,34 +29157,34 @@ function SpaceTool(canvas, dragging, eventBus, modeling, rules, toolManager, mou
     tool: "spaceTool.selection",
     dragging: "spaceTool"
   });
-  eventBus.on("spaceTool.selection.end", function(event2) {
+  eventBus.on("spaceTool.selection.end", function(event3) {
     eventBus.once("spaceTool.selection.ended", function() {
-      self2.activateMakeSpace(event2.originalEvent);
+      self2.activateMakeSpace(event3.originalEvent);
     });
   });
-  eventBus.on("spaceTool.move", HIGH_PRIORITY11, function(event2) {
-    var context = event2.context, initialized = context.initialized;
+  eventBus.on("spaceTool.move", HIGH_PRIORITY11, function(event3) {
+    var context = event3.context, initialized = context.initialized;
     if (!initialized) {
-      initialized = context.initialized = self2.init(event2, context);
+      initialized = context.initialized = self2.init(event3, context);
     }
     if (initialized) {
-      ensureConstraints3(event2);
+      ensureConstraints3(event3);
     }
   });
-  eventBus.on("spaceTool.end", function(event2) {
-    var context = event2.context, axis = context.axis, direction = context.direction, movingShapes = context.movingShapes, resizingShapes = context.resizingShapes, start = context.start;
+  eventBus.on("spaceTool.end", function(event3) {
+    var context = event3.context, axis = context.axis, direction = context.direction, movingShapes = context.movingShapes, resizingShapes = context.resizingShapes, start = context.start;
     if (!context.initialized) {
       return;
     }
-    ensureConstraints3(event2);
+    ensureConstraints3(event3);
     var delta2 = {
       x: 0,
       y: 0
     };
-    delta2[axis] = round8(event2["d" + axis]);
+    delta2[axis] = round8(event3["d" + axis]);
     self2.makeSpace(movingShapes, resizingShapes, delta2, direction, start);
-    eventBus.once("spaceTool.ended", function(event3) {
-      self2.activateSelection(event3.originalEvent, true, true);
+    eventBus.once("spaceTool.ended", function(event4) {
+      self2.activateSelection(event4.originalEvent, true, true);
     });
   });
 }
@@ -28956,8 +29197,8 @@ SpaceTool.$inject = [
   "toolManager",
   "mouse"
 ];
-SpaceTool.prototype.activateSelection = function(event2, autoActivate, reactivate) {
-  this._dragging.init(event2, "spaceTool.selection", {
+SpaceTool.prototype.activateSelection = function(event3, autoActivate, reactivate) {
+  this._dragging.init(event3, "spaceTool.selection", {
     autoActivate,
     cursor: CURSOR_CROSSHAIR,
     data: {
@@ -28968,8 +29209,8 @@ SpaceTool.prototype.activateSelection = function(event2, autoActivate, reactivat
     trapClick: false
   });
 };
-SpaceTool.prototype.activateMakeSpace = function(event2) {
-  this._dragging.init(event2, "spaceTool", {
+SpaceTool.prototype.activateMakeSpace = function(event3) {
+  this._dragging.init(event3, "spaceTool", {
     autoActivate: true,
     cursor: CURSOR_CROSSHAIR,
     data: {
@@ -28980,21 +29221,21 @@ SpaceTool.prototype.activateMakeSpace = function(event2) {
 SpaceTool.prototype.makeSpace = function(movingShapes, resizingShapes, delta2, direction, start) {
   return this._modeling.createSpace(movingShapes, resizingShapes, delta2, direction, start);
 };
-SpaceTool.prototype.init = function(event2, context) {
-  var axis = abs7(event2.dx) > abs7(event2.dy) ? "x" : "y", delta2 = event2["d" + axis], start = event2[axis] - delta2;
+SpaceTool.prototype.init = function(event3, context) {
+  var axis = abs7(event3.dx) > abs7(event3.dy) ? "x" : "y", delta2 = event3["d" + axis], start = event3[axis] - delta2;
   if (abs7(delta2) < 5) {
     return false;
   }
   if (delta2 < 0) {
     delta2 *= -1;
   }
-  if (hasPrimaryModifier(event2)) {
+  if (hasPrimaryModifier(event3)) {
     delta2 *= -1;
   }
   var direction = getDirection(axis, delta2);
   var root = this._canvas.getRootElement();
-  if (!hasSecondaryModifier(event2) && event2.hover) {
-    root = event2.hover;
+  if (!hasSecondaryModifier(event3) && event3.hover) {
+    root = event3.hover;
   }
   var children = [
     ...selfAndAllChildren(root, true),
@@ -29110,31 +29351,31 @@ function addPadding2(trbl) {
     left: trbl.left - PADDING
   };
 }
-function ensureConstraints3(event2) {
-  var context = event2.context, spaceToolConstraints = context.spaceToolConstraints;
+function ensureConstraints3(event3) {
+  var context = event3.context, spaceToolConstraints = context.spaceToolConstraints;
   if (!spaceToolConstraints) {
     return;
   }
-  var x5, y5;
+  var x6, y5;
   if (isNumber(spaceToolConstraints.left)) {
-    x5 = Math.max(event2.x, spaceToolConstraints.left);
-    event2.dx = event2.dx + x5 - event2.x;
-    event2.x = x5;
+    x6 = Math.max(event3.x, spaceToolConstraints.left);
+    event3.dx = event3.dx + x6 - event3.x;
+    event3.x = x6;
   }
   if (isNumber(spaceToolConstraints.right)) {
-    x5 = Math.min(event2.x, spaceToolConstraints.right);
-    event2.dx = event2.dx + x5 - event2.x;
-    event2.x = x5;
+    x6 = Math.min(event3.x, spaceToolConstraints.right);
+    event3.dx = event3.dx + x6 - event3.x;
+    event3.x = x6;
   }
   if (isNumber(spaceToolConstraints.top)) {
-    y5 = Math.max(event2.y, spaceToolConstraints.top);
-    event2.dy = event2.dy + y5 - event2.y;
-    event2.y = y5;
+    y5 = Math.max(event3.y, spaceToolConstraints.top);
+    event3.dy = event3.dy + y5 - event3.y;
+    event3.y = y5;
   }
   if (isNumber(spaceToolConstraints.bottom)) {
-    y5 = Math.min(event2.y, spaceToolConstraints.bottom);
-    event2.dy = event2.dy + y5 - event2.y;
-    event2.y = y5;
+    y5 = Math.min(event3.y, spaceToolConstraints.bottom);
+    event3.dy = event3.dy + y5 - event3.y;
+    event3.y = y5;
   }
 }
 function getSpaceToolConstraints(elements, axis, direction, start, minDimensions) {
@@ -29247,8 +29488,8 @@ function SpaceToolPreview(eventBus, elementRegistry, canvas, styles, previewSupp
       canvas.addMarker(element, MARKER_DRAGGING);
     });
   }
-  eventBus.on("spaceTool.selection.start", function(event2) {
-    var space2 = canvas.getLayer("space"), context = event2.context;
+  eventBus.on("spaceTool.selection.start", function(event3) {
+    var space2 = canvas.getLayer("space"), context = event3.context;
     var orientation = {
       x: "M 0,-10000 L 0,10000",
       y: "M -10000,0 L 10000,0"
@@ -29266,18 +29507,18 @@ function SpaceToolPreview(eventBus, elementRegistry, canvas, styles, previewSupp
     append(crosshairGroup, pathY);
     context.crosshairGroup = crosshairGroup;
   });
-  eventBus.on("spaceTool.selection.move", function(event2) {
-    var crosshairGroup = event2.context.crosshairGroup;
-    translate(crosshairGroup, event2.x, event2.y);
+  eventBus.on("spaceTool.selection.move", function(event3) {
+    var crosshairGroup = event3.context.crosshairGroup;
+    translate(crosshairGroup, event3.x, event3.y);
   });
-  eventBus.on("spaceTool.selection.cleanup", function(event2) {
-    var context = event2.context, crosshairGroup = context.crosshairGroup;
+  eventBus.on("spaceTool.selection.cleanup", function(event3) {
+    var context = event3.context, crosshairGroup = context.crosshairGroup;
     if (crosshairGroup) {
       remove(crosshairGroup);
     }
   });
-  eventBus.on("spaceTool.move", LOW_PRIORITY19, function(event2) {
-    var context = event2.context, line = context.line, axis = context.axis, movingShapes = context.movingShapes, resizingShapes = context.resizingShapes;
+  eventBus.on("spaceTool.move", LOW_PRIORITY19, function(event3) {
+    var context = event3.context, line = context.line, axis = context.axis, movingShapes = context.movingShapes, resizingShapes = context.resizingShapes;
     if (!context.initialized) {
       return;
     }
@@ -29348,12 +29589,12 @@ function SpaceToolPreview(eventBus, elementRegistry, canvas, styles, previewSupp
       context.frames = frames;
     }
     var orientation = {
-      x: "M" + event2.x + ", -10000 L" + event2.x + ", 10000",
-      y: "M -10000, " + event2.y + " L 10000, " + event2.y
+      x: "M" + event3.x + ", -10000 L" + event3.x + ", 10000",
+      y: "M -10000, " + event3.y + " L 10000, " + event3.y
     };
     attr(line, { d: orientation[axis] });
     var opposite = { x: "y", y: "x" };
-    var delta2 = { x: event2.dx, y: event2.dy };
+    var delta2 = { x: event3.dx, y: event3.dy };
     delta2[opposite[context.axis]] = 0;
     translate(context.dragGroup, delta2.x, delta2.y);
     forEach(context.frames, function(frame) {
@@ -29382,8 +29623,8 @@ function SpaceToolPreview(eventBus, elementRegistry, canvas, styles, previewSupp
       }
     });
   });
-  eventBus.on("spaceTool.cleanup", function(event2) {
-    var context = event2.context, movingShapes = context.movingShapes, movingConnections = context.movingConnections, resizingShapes = context.resizingShapes, line = context.line, dragGroup = context.dragGroup, frameGroup = context.frameGroup;
+  eventBus.on("spaceTool.cleanup", function(event3) {
+    var context = event3.context, movingShapes = context.movingShapes, movingConnections = context.movingConnections, resizingShapes = context.resizingShapes, line = context.line, dragGroup = context.dragGroup, frameGroup = context.frameGroup;
     forEach(movingShapes, function(shape) {
       canvas.removeMarker(shape, MARKER_DRAGGING);
     });
@@ -29575,17 +29816,17 @@ CommandStack.prototype._internalUndo = function(action) {
     this._fire(command, "reverted", action);
   });
 };
-CommandStack.prototype._fire = function(command, qualifier, event2) {
+CommandStack.prototype._fire = function(command, qualifier, event3) {
   if (arguments.length < 3) {
-    event2 = qualifier;
+    event3 = qualifier;
     qualifier = null;
   }
   const names = qualifier ? [command + "." + qualifier, qualifier] : [command];
   let result;
-  event2 = this._eventBus.createEvent(event2);
+  event3 = this._eventBus.createEvent(event3);
   for (const name2 of names) {
-    result = this._eventBus.fire("commandStack." + name2, event2);
-    if (event2.cancelBubble) {
+    result = this._eventBus.fire("commandStack." + name2, event3);
+    if (event3.cancelBubble) {
       break;
     }
   }
@@ -29809,8 +30050,8 @@ function AttachSupport(injector, eventBus, canvas, rules, modeling) {
       });
     });
   });
-  movePreview && eventBus.on("shape.move.start", function(event2) {
-    var context = event2.context, shapes = context.shapes;
+  movePreview && eventBus.on("shape.move.start", function(event3) {
+    var context = event3.context, shapes = context.shapes;
     if (shapes.length !== 1) {
       return;
     }
@@ -29902,8 +30143,8 @@ function AttachSupport(injector, eventBus, canvas, rules, modeling) {
       });
     }
   });
-  this.postExecute("shape.resize", function(event2) {
-    var context = event2.context, shape = context.shape, oldBounds = context.oldBounds, newBounds = context.newBounds, attachers = shape.attachers, hints = context.hints || {};
+  this.postExecute("shape.resize", function(event3) {
+    var context = event3.context, shape = context.shape, oldBounds = context.oldBounds, newBounds = context.newBounds, attachers = shape.attachers, hints = context.hints || {};
     if (hints.attachSupport === false) {
       return;
     }
@@ -29915,8 +30156,8 @@ function AttachSupport(injector, eventBus, canvas, rules, modeling) {
       });
     });
   });
-  this.preExecute("shape.delete", function(event2) {
-    var shape = event2.context.shape;
+  this.preExecute("shape.delete", function(event3) {
+    var shape = event3.context.shape;
     saveClear(shape.attachers, function(attacher) {
       modeling.removeShape(attacher);
     });
@@ -30000,21 +30241,21 @@ BpmnFactory.prototype._ensureId = function(element) {
     this._model.ids.claim(element.id, element);
     return;
   }
-  var prefix3;
+  var prefix4;
   if (is(element, "bpmn:Activity")) {
-    prefix3 = "Activity";
+    prefix4 = "Activity";
   } else if (is(element, "bpmn:Event")) {
-    prefix3 = "Event";
+    prefix4 = "Event";
   } else if (is(element, "bpmn:Gateway")) {
-    prefix3 = "Gateway";
+    prefix4 = "Gateway";
   } else if (isAny(element, ["bpmn:SequenceFlow", "bpmn:MessageFlow"])) {
-    prefix3 = "Flow";
+    prefix4 = "Flow";
   } else {
-    prefix3 = (element.$type || "").replace(/^[^:]*:/g, "");
+    prefix4 = (element.$type || "").replace(/^[^:]*:/g, "");
   }
-  prefix3 += "_";
+  prefix4 += "_";
   if (!element.id && this._needsId(element)) {
-    element.id = this._model.ids.nextPrefixed(prefix3, element);
+    element.id = this._model.ids.nextPrefixed(prefix4, element);
   }
 };
 BpmnFactory.prototype.create = function(type, attrs) {
@@ -30058,10 +30299,9 @@ BpmnFactory.prototype.createDiPlane = function(semantic, attrs) {
 };
 
 // node_modules/bpmn-js/lib/features/modeling/BpmnUpdater.js
-function BpmnUpdater(eventBus, bpmnFactory, connectionDocking, translate3) {
+function BpmnUpdater(eventBus, bpmnFactory, connectionDocking) {
   CommandInterceptor.call(this, eventBus);
   this._bpmnFactory = bpmnFactory;
-  this._translate = translate3;
   var self2 = this;
   function cropConnection(e7) {
     var context = e7.context, hints = context.hints || {}, connection;
@@ -30103,8 +30343,8 @@ function BpmnUpdater(eventBus, bpmnFactory, connectionDocking, translate3) {
     "connection.move",
     "connection.delete"
   ], ifBpmn(reverseUpdateParent));
-  function updateRoot(event2) {
-    var context = event2.context, oldRoot = context.oldRoot, children = oldRoot.children;
+  function updateRoot(event3) {
+    var context = event3.context, oldRoot = context.oldRoot, children = oldRoot.children;
     forEach(children, function(child) {
       if (is(child, "bpmn:BaseElement")) {
         self2.updateParent(child);
@@ -30120,21 +30360,21 @@ function BpmnUpdater(eventBus, bpmnFactory, connectionDocking, translate3) {
     }
     self2.updateBounds(shape);
   }
-  this.executed(["shape.move", "shape.create", "shape.resize"], ifBpmn(function(event2) {
-    if (event2.context.shape.type === "label") {
+  this.executed(["shape.move", "shape.create", "shape.resize"], ifBpmn(function(event3) {
+    if (event3.context.shape.type === "label") {
       return;
     }
-    updateBounds(event2);
+    updateBounds(event3);
   }));
-  this.reverted(["shape.move", "shape.create", "shape.resize"], ifBpmn(function(event2) {
-    if (event2.context.shape.type === "label") {
+  this.reverted(["shape.move", "shape.create", "shape.resize"], ifBpmn(function(event3) {
+    if (event3.context.shape.type === "label") {
       return;
     }
-    updateBounds(event2);
+    updateBounds(event3);
   }));
-  eventBus.on("shape.changed", function(event2) {
-    if (event2.element.type === "label") {
-      updateBounds({ context: { shape: event2.element } });
+  eventBus.on("shape.changed", function(event3) {
+    if (event3.element.type === "label") {
+      updateBounds({ context: { shape: event3.element } });
     }
   });
   function updateConnection(e7) {
@@ -30165,8 +30405,8 @@ function BpmnUpdater(eventBus, bpmnFactory, connectionDocking, translate3) {
     "connection.move",
     "connection.updateWaypoints"
   ], ifBpmn(updateConnectionWaypoints));
-  this.executed("connection.reconnect", ifBpmn(function(event2) {
-    var context = event2.context, connection = context.connection, oldSource = context.oldSource, newSource = context.newSource, connectionBo = getBusinessObject(connection), oldSourceBo = getBusinessObject(oldSource), newSourceBo = getBusinessObject(newSource);
+  this.executed("connection.reconnect", ifBpmn(function(event3) {
+    var context = event3.context, connection = context.connection, oldSource = context.oldSource, newSource = context.newSource, connectionBo = getBusinessObject(connection), oldSourceBo = getBusinessObject(oldSource), newSourceBo = getBusinessObject(newSource);
     if (connectionBo.conditionExpression && !isAny(newSourceBo, [
       "bpmn:Activity",
       "bpmn:ExclusiveGateway",
@@ -30180,8 +30420,8 @@ function BpmnUpdater(eventBus, bpmnFactory, connectionDocking, translate3) {
       delete oldSourceBo.default;
     }
   }));
-  this.reverted("connection.reconnect", ifBpmn(function(event2) {
-    var context = event2.context, connection = context.connection, oldSource = context.oldSource, newSource = context.newSource, connectionBo = getBusinessObject(connection), oldSourceBo = getBusinessObject(oldSource), newSourceBo = getBusinessObject(newSource);
+  this.reverted("connection.reconnect", ifBpmn(function(event3) {
+    var context = event3.context, connection = context.connection, oldSource = context.oldSource, newSource = context.newSource, connectionBo = getBusinessObject(connection), oldSourceBo = getBusinessObject(oldSource), newSourceBo = getBusinessObject(newSource);
     if (context.oldConditionExpression) {
       connectionBo.conditionExpression = context.oldConditionExpression;
     }
@@ -30197,8 +30437,8 @@ function BpmnUpdater(eventBus, bpmnFactory, connectionDocking, translate3) {
   this.reverted(["element.updateAttachment"], ifBpmn(updateAttachment));
   this.executed("element.updateLabel", ifBpmn(updateBPMNLabel));
   this.reverted("element.updateLabel", ifBpmn(updateBPMNLabel));
-  function updateBPMNLabel(event2) {
-    const { element } = event2.context, label = getLabel(element);
+  function updateBPMNLabel(event3) {
+    const { element } = event3.context, label = getLabel(element);
     const di = getDi(element), diLabel = di && di.get("label");
     if (isLabelExternal(element) || isPlane(element)) {
       return;
@@ -30214,8 +30454,7 @@ e(BpmnUpdater, CommandInterceptor);
 BpmnUpdater.$inject = [
   "eventBus",
   "bpmnFactory",
-  "connectionDocking",
-  "translate"
+  "connectionDocking"
 ];
 BpmnUpdater.prototype.updateAttachment = function(context) {
   var shape = context.shape, businessObject = shape.businessObject, host = shape.host;
@@ -30344,7 +30583,7 @@ BpmnUpdater.prototype.getLaneSet = function(container) {
   return laneSet;
 };
 BpmnUpdater.prototype.updateSemanticParent = function(businessObject, newParent, visualParent) {
-  var containment, translate3 = this._translate;
+  var containment;
   if (businessObject.$parent === newParent) {
     return;
   }
@@ -30404,13 +30643,7 @@ BpmnUpdater.prototype.updateSemanticParent = function(businessObject, newParent,
     containment = "dataInputAssociations";
   }
   if (!containment) {
-    throw new Error(translate3(
-      "no parent for {element} in {parent}",
-      {
-        element: businessObject.id,
-        parent: newParent.id
-      }
-    ));
+    throw new Error(`no parent for <${businessObject.id}> in <${newParent.id}>`);
   }
   var children;
   if (businessObject.$parent) {
@@ -30481,10 +30714,10 @@ BpmnUpdater.prototype._getLabel = function(di) {
   return di.label;
 };
 function ifBpmn(fn2) {
-  return function(event2) {
-    var context = event2.context, element = context.shape || context.connection || context.element;
+  return function(event3) {
+    var context = event3.context, element = context.shape || context.connection || context.element;
     if (is(element, "bpmn:BaseElement")) {
-      fn2(event2);
+      fn2(event3);
     }
   };
 }
@@ -30504,17 +30737,15 @@ function getEmbeddedLabelBounds(shape) {
 }
 
 // node_modules/bpmn-js/lib/features/modeling/ElementFactory.js
-function ElementFactory2(bpmnFactory, moddle, translate3) {
+function ElementFactory2(bpmnFactory, moddle) {
   ElementFactory.call(this);
   this._bpmnFactory = bpmnFactory;
   this._moddle = moddle;
-  this._translate = translate3;
 }
 e(ElementFactory2, ElementFactory);
 ElementFactory2.$inject = [
   "bpmnFactory",
-  "moddle",
-  "translate"
+  "moddle"
 ];
 ElementFactory2.prototype._baseCreate = ElementFactory.prototype.create;
 ElementFactory2.prototype.create = function(elementType, attrs) {
@@ -30525,12 +30756,12 @@ ElementFactory2.prototype.create = function(elementType, attrs) {
   return this.createElement(elementType, attrs);
 };
 ElementFactory2.prototype.createElement = function(elementType, attrs) {
-  var size2, translate3 = this._translate;
   attrs = assign({}, attrs || {});
+  var size2;
   var businessObject = attrs.businessObject, di = attrs.di;
   if (!businessObject) {
     if (!attrs.type) {
-      throw new Error(translate3("no shape type specified"));
+      throw new Error("no shape type specified");
     }
     businessObject = this._bpmnFactory.create(attrs.type);
     ensureCompatDiRef(businessObject);
@@ -32093,24 +32324,22 @@ var NULL_DIMENSIONS = {
   width: 0,
   height: 0
 };
-function UpdatePropertiesHandler(elementRegistry, moddle, translate3, modeling, textRenderer) {
+function UpdatePropertiesHandler(elementRegistry, moddle, modeling, textRenderer) {
   this._elementRegistry = elementRegistry;
   this._moddle = moddle;
-  this._translate = translate3;
   this._modeling = modeling;
   this._textRenderer = textRenderer;
 }
 UpdatePropertiesHandler.$inject = [
   "elementRegistry",
   "moddle",
-  "translate",
   "modeling",
   "textRenderer"
 ];
 UpdatePropertiesHandler.prototype.execute = function(context) {
-  var element = context.element, changed = [element], translate3 = this._translate;
+  var element = context.element, changed = [element];
   if (!element) {
-    throw new Error(translate3("element required"));
+    throw new Error("element required");
   }
   var elementRegistry = this._elementRegistry, ids3 = this._moddle.ids;
   var businessObject = element.businessObject, properties = unwrapBusinessObjects(context.properties), oldProperties = context.oldProperties || getProperties(element, properties);
@@ -32358,41 +32587,46 @@ AddLaneHandler.prototype.preExecute = function(context) {
 };
 
 // node_modules/bpmn-js/lib/features/modeling/cmd/SplitLaneHandler.js
-function SplitLaneHandler(modeling, translate3) {
+function SplitLaneHandler(modeling) {
   this._modeling = modeling;
-  this._translate = translate3;
 }
 SplitLaneHandler.$inject = [
-  "modeling",
-  "translate"
+  "modeling"
 ];
 SplitLaneHandler.prototype.preExecute = function(context) {
-  var modeling = this._modeling, translate3 = this._translate;
+  var modeling = this._modeling;
   var shape = context.shape, newLanesCount = context.count;
   var childLanes = getChildLanes(shape), existingLanesCount = childLanes.length;
   if (existingLanesCount > newLanesCount) {
-    throw new Error(translate3("more than {count} child lanes", { count: newLanesCount }));
+    throw new Error(`more than <${newLanesCount}> child lanes`);
   }
-  var newLanesHeight = Math.round(shape.height / newLanesCount);
-  var laneY, laneHeight, laneBounds, newLaneAttrs, idx;
+  var isHorizontalLane = isHorizontal(shape);
+  var laneBaseSize = isHorizontalLane ? shape.height : shape.width;
+  var newLanesSize = Math.round(laneBaseSize / newLanesCount);
+  var laneSize, laneBounds, newLaneAttrs, idx;
   for (idx = 0; idx < newLanesCount; idx++) {
-    laneY = shape.y + idx * newLanesHeight;
     if (idx === newLanesCount - 1) {
-      laneHeight = shape.height - newLanesHeight * idx;
+      laneSize = laneBaseSize - newLanesSize * idx;
     } else {
-      laneHeight = newLanesHeight;
+      laneSize = newLanesSize;
     }
-    laneBounds = {
+    laneBounds = isHorizontalLane ? {
       x: shape.x + LANE_INDENTATION,
-      y: laneY,
+      y: shape.y + idx * newLanesSize,
       width: shape.width - LANE_INDENTATION,
-      height: laneHeight
+      height: laneSize
+    } : {
+      x: shape.x + idx * newLanesSize,
+      y: shape.y + LANE_INDENTATION,
+      width: laneSize,
+      height: shape.height - LANE_INDENTATION
     };
     if (idx < existingLanesCount) {
       modeling.resizeShape(childLanes[idx], laneBounds);
     } else {
       newLaneAttrs = {
-        type: "bpmn:Lane"
+        type: "bpmn:Lane",
+        isHorizontal: isHorizontalLane
       };
       modeling.createShape(newLaneAttrs, laneBounds, shape);
     }
@@ -33135,8 +33369,8 @@ function _tryRepairConnectionSide(moved, other, newDocking, points) {
       return false;
     }
     return !!find(points2, function(p5, idx) {
-      var q5 = points2[idx - 1];
-      return q5 && pointDistance(p5, q5) < 3;
+      var q6 = points2[idx - 1];
+      return q6 && pointDistance(p5, q6) < 3;
     });
   }
   function repairBendpoint(candidate, oldPeer, newPeer) {
@@ -33242,6 +33476,44 @@ function withoutRedundantPoints(waypoints) {
 // node_modules/bpmn-js/lib/features/modeling/BpmnLayouter.js
 var ATTACH_ORIENTATION_PADDING = -10;
 var BOUNDARY_TO_HOST_THRESHOLD = 40;
+var PREFERRED_LAYOUTS_HORIZONTAL = {
+  default: ["h:h"],
+  fromGateway: ["v:h"],
+  toGateway: ["h:v"],
+  loop: {
+    fromTop: ["t:r"],
+    fromRight: ["r:b"],
+    fromLeft: ["l:t"],
+    fromBottom: ["b:l"]
+  },
+  boundaryLoop: {
+    alternateHorizontalSide: "b",
+    alternateVerticalSide: "l",
+    default: "v"
+  },
+  messageFlow: ["straight", "v:v"],
+  subProcess: ["straight", "h:h"],
+  isHorizontal: true
+};
+var PREFERRED_LAYOUTS_VERTICAL = {
+  default: ["v:v"],
+  fromGateway: ["h:v"],
+  toGateway: ["v:h"],
+  loop: {
+    fromTop: ["t:l"],
+    fromRight: ["r:t"],
+    fromLeft: ["l:b"],
+    fromBottom: ["b:r"]
+  },
+  boundaryLoop: {
+    alternateHorizontalSide: "t",
+    alternateVerticalSide: "r",
+    default: "h"
+  },
+  messageFlow: ["straight", "h:h"],
+  subProcess: ["straight", "v:v"],
+  isHorizontal: false
+};
 var oppositeOrientationMapping = {
   "top": "bottom",
   "top-right": "bottom-left",
@@ -33278,30 +33550,34 @@ BpmnLayouter.prototype.layoutConnection = function(connection, hints) {
       return [].concat([connectionStart], waypoints.slice(1, -1), [connectionEnd]);
     }
   }
+  var layout = isDirectionHorizontal(source) ? PREFERRED_LAYOUTS_HORIZONTAL : PREFERRED_LAYOUTS_VERTICAL;
   if (is(connection, "bpmn:MessageFlow")) {
-    manhattanOptions = getMessageFlowManhattanOptions(source, target);
+    manhattanOptions = getMessageFlowManhattanOptions(source, target, layout);
   } else if (is(connection, "bpmn:SequenceFlow") || isCompensationAssociation(source, target)) {
     if (source === target) {
       manhattanOptions = {
-        preferredLayouts: getLoopPreferredLayout(source, connection)
+        preferredLayouts: getLoopPreferredLayout(source, connection, layout)
       };
     } else if (is(source, "bpmn:BoundaryEvent")) {
       manhattanOptions = {
-        preferredLayouts: getBoundaryEventPreferredLayouts(source, target, connectionEnd)
+        preferredLayouts: getBoundaryEventPreferredLayouts(source, target, connectionEnd, layout)
       };
     } else if (isExpandedSubProcess(source) || isExpandedSubProcess(target)) {
-      manhattanOptions = getSubProcessManhattanOptions(source);
+      manhattanOptions = {
+        preferredLayouts: layout.subProcess,
+        preserveDocking: getSubProcessPreserveDocking(source)
+      };
     } else if (is(source, "bpmn:Gateway")) {
       manhattanOptions = {
-        preferredLayouts: ["v:h"]
+        preferredLayouts: layout.fromGateway
       };
     } else if (is(target, "bpmn:Gateway")) {
       manhattanOptions = {
-        preferredLayouts: ["h:v"]
+        preferredLayouts: layout.toGateway
       };
     } else {
       manhattanOptions = {
-        preferredLayouts: ["h:h"]
+        preferredLayouts: layout.default
       };
     }
   }
@@ -33322,9 +33598,9 @@ function getAttachOrientation(attachedElement) {
   var hostElement = attachedElement.host;
   return getOrientation(getMid(attachedElement), hostElement, ATTACH_ORIENTATION_PADDING);
 }
-function getMessageFlowManhattanOptions(source, target) {
+function getMessageFlowManhattanOptions(source, target, layout) {
   return {
-    preferredLayouts: ["straight", "v:v"],
+    preferredLayouts: layout.messageFlow,
     preserveDocking: getMessageFlowPreserveDocking(source, target)
   };
 }
@@ -33349,12 +33625,6 @@ function getMessageFlowPreserveDocking(source, target) {
   }
   return null;
 }
-function getSubProcessManhattanOptions(source) {
-  return {
-    preferredLayouts: ["straight", "h:h"],
-    preserveDocking: getSubProcessPreserveDocking(source)
-  };
-}
 function getSubProcessPreserveDocking(source) {
   return isExpandedSubProcess(source) ? "target" : "source";
 }
@@ -33374,12 +33644,12 @@ function isAnyOrientation(orientation, orientations) {
   return orientations.indexOf(orientation) !== -1;
 }
 function getHorizontalOrientation(orientation) {
-  var matches3 = /right|left/.exec(orientation);
-  return matches3 && matches3[0];
+  var matches4 = /right|left/.exec(orientation);
+  return matches4 && matches4[0];
 }
 function getVerticalOrientation(orientation) {
-  var matches3 = /top|bottom/.exec(orientation);
-  return matches3 && matches3[0];
+  var matches4 = /top|bottom/.exec(orientation);
+  return matches4 && matches4[0];
 }
 function isOppositeOrientation(a6, b5) {
   return oppositeOrientationMapping[a6] === b5;
@@ -33397,19 +33667,19 @@ function isOppositeVerticalOrientation(a6, b5) {
 function isHorizontalOrientation(orientation) {
   return orientation === "right" || orientation === "left";
 }
-function getLoopPreferredLayout(source, connection) {
+function getLoopPreferredLayout(source, connection, layout) {
   var waypoints = connection.waypoints;
   var orientation = waypoints && waypoints.length && getOrientation(waypoints[0], source);
   if (orientation === "top") {
-    return ["t:r"];
+    return layout.loop.fromTop;
   } else if (orientation === "right") {
-    return ["r:b"];
+    return layout.loop.fromRight;
   } else if (orientation === "left") {
-    return ["l:t"];
+    return layout.loop.fromLeft;
   }
-  return ["b:l"];
+  return layout.loop.fromBottom;
 }
-function getBoundaryEventPreferredLayouts(source, target, end) {
+function getBoundaryEventPreferredLayouts(source, target, end, layout) {
   var sourceMid = getMid(source), targetMid = getMid(target), attachOrientation = getAttachOrientation(source), sourceLayout, targetLayout;
   var isLoop = isSame2(source.host, target);
   var attachedToSide = isAnyOrientation(attachOrientation, ["top", "right", "bottom", "left"]);
@@ -33418,22 +33688,22 @@ function getBoundaryEventPreferredLayouts(source, target, end) {
     y: source.height / 2 + target.height / 2
   });
   if (isLoop) {
-    return getBoundaryEventLoopLayout(attachOrientation, attachedToSide, source, target, end);
+    return getBoundaryEventLoopLayout(attachOrientation, attachedToSide, source, target, end, layout);
   }
-  sourceLayout = getBoundaryEventSourceLayout(attachOrientation, targetOrientation, attachedToSide);
-  targetLayout = getBoundaryEventTargetLayout(attachOrientation, targetOrientation, attachedToSide);
+  sourceLayout = getBoundaryEventSourceLayout(attachOrientation, targetOrientation, attachedToSide, layout.isHorizontal);
+  targetLayout = getBoundaryEventTargetLayout(attachOrientation, targetOrientation, attachedToSide, layout.isHorizontal);
   return [sourceLayout + ":" + targetLayout];
 }
-function getBoundaryEventLoopLayout(attachOrientation, attachedToSide, source, target, end) {
-  var orientation = attachedToSide ? attachOrientation : getVerticalOrientation(attachOrientation), sourceLayout = orientationDirectionMapping[orientation], targetLayout;
+function getBoundaryEventLoopLayout(attachOrientation, attachedToSide, source, target, end, layout) {
+  var orientation = attachedToSide ? attachOrientation : layout.isHorizontal ? getVerticalOrientation(attachOrientation) : getHorizontalOrientation(attachOrientation), sourceLayout = orientationDirectionMapping[orientation], targetLayout;
   if (attachedToSide) {
     if (isHorizontalOrientation(attachOrientation)) {
-      targetLayout = shouldConnectToSameSide("y", source, target, end) ? "h" : "b";
+      targetLayout = shouldConnectToSameSide("y", source, target, end) ? "h" : layout.boundaryLoop.alternateHorizontalSide;
     } else {
-      targetLayout = shouldConnectToSameSide("x", source, target, end) ? "v" : "l";
+      targetLayout = shouldConnectToSameSide("x", source, target, end) ? "v" : layout.boundaryLoop.alternateVerticalSide;
     }
   } else {
-    targetLayout = "v";
+    targetLayout = layout.boundaryLoop.default;
   }
   return [sourceLayout + ":" + targetLayout];
 }
@@ -33447,22 +33717,23 @@ function shouldConnectToSameSide(axis, source, target, end) {
 function areCloseOnAxis(axis, a6, b5, threshold) {
   return Math.abs(a6[axis] - b5[axis]) < threshold;
 }
-function getBoundaryEventSourceLayout(attachOrientation, targetOrientation, attachedToSide) {
+function getBoundaryEventSourceLayout(attachOrientation, targetOrientation, attachedToSide, isHorizontal5) {
   if (attachedToSide) {
     return orientationDirectionMapping[attachOrientation];
   }
-  if (isSame2(
-    getVerticalOrientation(attachOrientation),
-    getVerticalOrientation(targetOrientation)
-  ) || isOppositeOrientation(
-    getHorizontalOrientation(attachOrientation),
-    getHorizontalOrientation(targetOrientation)
-  )) {
-    return orientationDirectionMapping[getVerticalOrientation(attachOrientation)];
+  var verticalAttachOrientation = getVerticalOrientation(attachOrientation), horizontalAttachOrientation = getHorizontalOrientation(attachOrientation), verticalTargetOrientation = getVerticalOrientation(targetOrientation), horizontalTargetOrientation = getHorizontalOrientation(targetOrientation);
+  if (isHorizontal5) {
+    if (isSame2(verticalAttachOrientation, verticalTargetOrientation) || isOppositeOrientation(horizontalAttachOrientation, horizontalTargetOrientation)) {
+      return orientationDirectionMapping[verticalAttachOrientation];
+    }
+  } else {
+    if (isSame2(horizontalAttachOrientation, horizontalTargetOrientation) || isOppositeOrientation(verticalAttachOrientation, verticalTargetOrientation)) {
+      return orientationDirectionMapping[horizontalAttachOrientation];
+    }
   }
-  return orientationDirectionMapping[getHorizontalOrientation(attachOrientation)];
+  return orientationDirectionMapping[isHorizontal5 ? horizontalAttachOrientation : verticalAttachOrientation];
 }
-function getBoundaryEventTargetLayout(attachOrientation, targetOrientation, attachedToSide) {
+function getBoundaryEventTargetLayout(attachOrientation, targetOrientation, attachedToSide, isHorizontal5) {
   if (attachedToSide) {
     if (isHorizontalOrientation(attachOrientation)) {
       if (isOppositeHorizontalOrientation(attachOrientation, targetOrientation) || isSame2(attachOrientation, targetOrientation)) {
@@ -33476,10 +33747,18 @@ function getBoundaryEventTargetLayout(attachOrientation, targetOrientation, atta
       return "h";
     }
   }
-  if (isHorizontalOrientation(targetOrientation) || isSame2(getVerticalOrientation(attachOrientation), getVerticalOrientation(targetOrientation)) && getHorizontalOrientation(targetOrientation)) {
-    return "h";
+  if (isHorizontal5) {
+    if (isSame2(getVerticalOrientation(attachOrientation), getVerticalOrientation(targetOrientation))) {
+      return "h";
+    } else {
+      return "v";
+    }
   } else {
-    return "v";
+    if (isSame2(getHorizontalOrientation(attachOrientation), getHorizontalOrientation(targetOrientation))) {
+      return "v";
+    } else {
+      return "h";
+    }
   }
 }
 
@@ -33920,8 +34199,8 @@ DirectEditing.prototype.cancel = function() {
   this._fire("cancel");
   this.close();
 };
-DirectEditing.prototype._fire = function(event2, context) {
-  this._eventBus.fire("directEditing." + event2, context || { active: this._active });
+DirectEditing.prototype._fire = function(event3, context) {
+  this._eventBus.fire("directEditing." + event3, context || { active: this._active });
 };
 DirectEditing.prototype.close = function() {
   this._textbox.destroy();
@@ -33962,8 +34241,8 @@ DirectEditing.prototype._handleKey = function(e7) {
     return this.complete();
   }
 };
-DirectEditing.prototype._handleResize = function(event2) {
-  this._fire("resize", event2);
+DirectEditing.prototype._handleResize = function(event3) {
+  this._fire("resize", event3);
 };
 DirectEditing.prototype.activate = function(element) {
   if (this.isActive()) {
@@ -35112,7 +35391,7 @@ ReplaceMenuProvider.prototype._createEntry = function(replaceOption, target, act
 ReplaceMenuProvider.prototype._getLoopCharacteristicsHeaderEntries = function(target) {
   var self2 = this;
   var translate3 = this._translate;
-  function toggleLoopEntry(event2, entry) {
+  function toggleLoopEntry(event3, entry) {
     if (entry.active) {
       self2._modeling.updateProperties(target, { loopCharacteristics: void 0 });
       return;
@@ -35170,7 +35449,7 @@ ReplaceMenuProvider.prototype._getCollectionHeaderEntries = function(target) {
   if (!dataObject) {
     return {};
   }
-  function toggleIsCollection(event2, entry) {
+  function toggleIsCollection(event3, entry) {
     self2._modeling.updateModdleProperties(
       target,
       dataObject,
@@ -35191,7 +35470,7 @@ ReplaceMenuProvider.prototype._getParticipantMultiplicityHeaderEntries = functio
   var self2 = this;
   var bpmnFactory = this._bpmnFactory;
   var translate3 = this._translate;
-  function toggleParticipantMultiplicity(event2, entry) {
+  function toggleParticipantMultiplicity(event3, entry) {
     var isActive = entry.active;
     var participantMultiplicity2;
     if (!isActive) {
@@ -35222,7 +35501,7 @@ ReplaceMenuProvider.prototype._getAdHocHeaderEntries = function(element) {
       className: "bpmn-icon-ad-hoc-marker",
       title: translate3("Ad-hoc"),
       active: isAdHoc,
-      action: function(event2, entry) {
+      action: function(event3, entry) {
         if (isAdHoc) {
           return replaceElement(element, { type: "bpmn:SubProcess" }, {
             autoResize: false,
@@ -35290,14 +35569,14 @@ function ContextPadProvider(config, injector, eventBus, contextPad, modeling, el
   if (config.autoPlace !== false) {
     this._autoPlace = injector.get("autoPlace", false);
   }
-  eventBus.on("create.end", 250, function(event2) {
-    var context = event2.context, shape = context.shape;
-    if (!hasPrimaryModifier(event2) || !contextPad.isOpen(shape)) {
+  eventBus.on("create.end", 250, function(event3) {
+    var context = event3.context, shape = context.shape;
+    if (!hasPrimaryModifier(event3) || !contextPad.isOpen(shape)) {
       return;
     }
     var entries = contextPad.getEntries(shape);
     if (entries.replace) {
-      entries.replace.action.click(event2, shape);
+      entries.replace.action.click(event3, shape);
     }
   });
 }
@@ -35326,7 +35605,7 @@ ContextPadProvider.prototype.getMultiElementContextPadEntries = function(element
         className: "bpmn-icon-trash",
         title: this._translate("Delete"),
         action: {
-          click: function(event2, elements2) {
+          click: function(event3, elements2) {
             modeling.removeElements(elements2.slice());
           }
         }
@@ -35353,8 +35632,8 @@ ContextPadProvider.prototype.getContextPadEntries = function(element) {
     return actions;
   }
   var businessObject = element.businessObject;
-  function startConnect(event2, element2) {
-    connect.start(event2, element2);
+  function startConnect(event3, element2) {
+    connect.start(event3, element2);
   }
   function removeElement2(e7, element2) {
     modeling.removeElements([element2]);
@@ -35370,19 +35649,19 @@ ContextPadProvider.prototype.getContextPadEntries = function(element) {
     return pos;
   }
   function appendAction(type, className, title, options2) {
-    function appendStart(event2, element2) {
+    function appendStart(event3, element2) {
       var shape = elementFactory.createShape(assign({ type }, options2));
-      create3.start(event2, shape, {
+      create3.start(event3, shape, {
         source: element2
       });
       appendPreview.cleanUp();
     }
-    var append2 = autoPlace ? function(_4, element2) {
+    var append2 = autoPlace ? function(_5, element2) {
       var shape = elementFactory.createShape(assign({ type }, options2));
       autoPlace.append(element2, shape);
       appendPreview.cleanUp();
     } : appendStart;
-    var previewAppend = autoPlace ? function(_4, element2) {
+    var previewAppend = autoPlace ? function(_5, element2) {
       appendPreview.create(element2, type, options2);
       return () => {
         appendPreview.cleanUp();
@@ -35400,7 +35679,7 @@ ContextPadProvider.prototype.getContextPadEntries = function(element) {
     };
   }
   function splitLaneHandler(count) {
-    return function(_4, element2) {
+    return function(_5, element2) {
       modeling.splitLane(element2, count);
       contextPad.open(element2, true);
     };
@@ -35413,14 +35692,14 @@ ContextPadProvider.prototype.getContextPadEntries = function(element) {
         className: "bpmn-icon-lane-insert-above",
         title: translate3("Add lane above"),
         action: {
-          click: function(event2, element2) {
+          click: function(event3, element2) {
             modeling.addLane(element2, "top");
           }
         }
       }
     });
     if (childLanes.length < 2) {
-      if (element.height >= 120) {
+      if (isHorizontal(element) ? element.height >= 120 : element.width >= 120) {
         assign(actions, {
           "lane-divide-two": {
             group: "lane-divide",
@@ -35432,7 +35711,7 @@ ContextPadProvider.prototype.getContextPadEntries = function(element) {
           }
         });
       }
-      if (element.height >= 180) {
+      if (isHorizontal(element) ? element.height >= 180 : element.width >= 180) {
         assign(actions, {
           "lane-divide-three": {
             group: "lane-divide",
@@ -35451,7 +35730,7 @@ ContextPadProvider.prototype.getContextPadEntries = function(element) {
         className: "bpmn-icon-lane-insert-below",
         title: translate3("Add lane below"),
         action: {
-          click: function(event2, element2) {
+          click: function(event3, element2) {
             modeling.addLane(element2, "bottom");
           }
         }
@@ -35534,9 +35813,9 @@ ContextPadProvider.prototype.getContextPadEntries = function(element) {
         className: "bpmn-icon-screw-wrench",
         title: translate3("Change element"),
         action: {
-          click: function(event2, element2) {
+          click: function(event3, element2) {
             var position = assign(getReplaceMenuPosition(element2), {
-              cursor: { x: event2.x, y: event2.y }
+              cursor: { x: event3.x, y: event3.y }
             });
             popupMenu.open(element2, "bpmn-replace", position, {
               title: translate3("Change element"),
@@ -35830,7 +36109,7 @@ DistributeElementsMenuProvider.prototype._getEntries = function(elements) {
       title: translate3("Distribute elements horizontally"),
       className: "bjs-align-elements-menu-entry",
       imageHtml: DistributeElementsIcons_default["horizontal"],
-      action: function(event2, entry) {
+      action: function(event3, entry) {
         distributeElements.trigger(elements, "horizontal");
         popupMenu.close();
       }
@@ -35839,7 +36118,7 @@ DistributeElementsMenuProvider.prototype._getEntries = function(elements) {
       group: "distribute",
       title: translate3("Distribute elements vertically"),
       imageHtml: DistributeElementsIcons_default["vertical"],
-      action: function(event2, entry) {
+      action: function(event3, entry) {
         distributeElements.trigger(elements, "vertical");
         popupMenu.close();
       }
@@ -36107,8 +36386,8 @@ BpmnEditorActions.prototype._registerDefaultActions = function(injector) {
     });
   }
   if (selection2 && contextPad) {
-    this._registerAction("replaceElement", function(event2) {
-      contextPad.triggerEntry("replace", "click", event2);
+    this._registerAction("replaceElement", function(event3) {
+      contextPad.triggerEntry("replace", "click", event3);
     });
   }
 };
@@ -36126,8 +36405,8 @@ function BpmnGridSnapping(eventBus) {
   eventBus.on([
     "create.init",
     "shape.move.init"
-  ], function(event2) {
-    var context = event2.context, shape = event2.shape;
+  ], function(event3) {
+    var context = event3.context, shape = event3.shape;
     if (isAny(shape, [
       "bpmn:Participant",
       "bpmn:SubProcess",
@@ -36174,34 +36453,34 @@ function GridSnapping(elementRegistry, eventBus, config) {
     "resize.end",
     "shape.move.move",
     "shape.move.end"
-  ], LOWER_PRIORITY2, function(event2) {
-    var originalEvent = event2.originalEvent;
+  ], LOWER_PRIORITY2, function(event3) {
+    var originalEvent = event3.originalEvent;
     if (!self2.active || originalEvent && isCmd(originalEvent)) {
       return;
     }
-    var context = event2.context, gridSnappingContext = context.gridSnappingContext;
+    var context = event3.context, gridSnappingContext = context.gridSnappingContext;
     if (!gridSnappingContext) {
       gridSnappingContext = context.gridSnappingContext = {};
     }
     ["x", "y"].forEach(function(axis) {
       var options2 = {};
-      var snapOffset = getSnapOffset(event2, axis, elementRegistry);
+      var snapOffset = getSnapOffset(event3, axis, elementRegistry);
       if (snapOffset) {
         options2.offset = snapOffset;
       }
-      var snapConstraints = getSnapConstraints(event2, axis);
+      var snapConstraints = getSnapConstraints(event3, axis);
       if (snapConstraints) {
         assign(options2, snapConstraints);
       }
-      if (!isSnapped(event2, axis)) {
-        self2.snapEvent(event2, axis, options2);
+      if (!isSnapped(event3, axis)) {
+        self2.snapEvent(event3, axis, options2);
       }
     });
   });
 }
-GridSnapping.prototype.snapEvent = function(event2, axis, options2) {
-  var snappedValue = this.snapValue(event2[axis], options2);
-  setSnapped(event2, axis, snappedValue);
+GridSnapping.prototype.snapEvent = function(event3, axis, options2) {
+  var snappedValue = this.snapValue(event3[axis], options2);
+  setSnapped(event3, axis, snappedValue);
 };
 GridSnapping.prototype.getGridSpacing = function() {
   return SPACING;
@@ -36246,8 +36525,8 @@ GridSnapping.$inject = [
   "eventBus",
   "config.gridSnapping"
 ];
-function getSnapConstraints(event2, axis) {
-  var context = event2.context, createConstraints = context.createConstraints, resizeConstraints = context.resizeConstraints || {}, gridSnappingContext = context.gridSnappingContext, snapConstraints = gridSnappingContext.snapConstraints;
+function getSnapConstraints(event3, axis) {
+  var context = event3.context, createConstraints = context.createConstraints, resizeConstraints = context.resizeConstraints || {}, gridSnappingContext = context.gridSnappingContext, snapConstraints = gridSnappingContext.snapConstraints;
   if (snapConstraints && snapConstraints[axis]) {
     return snapConstraints[axis];
   }
@@ -36300,8 +36579,8 @@ function getSnapConstraints(event2, axis) {
   }
   return snapConstraints[axis];
 }
-function getSnapOffset(event2, axis, elementRegistry) {
-  var context = event2.context, shape = event2.shape, gridSnappingContext = context.gridSnappingContext, snapLocation = gridSnappingContext.snapLocation, snapOffset = gridSnappingContext.snapOffset;
+function getSnapOffset(event3, axis, elementRegistry) {
+  var context = event3.context, shape = event3.shape, gridSnappingContext = context.gridSnappingContext, snapLocation = gridSnappingContext.snapLocation, snapOffset = gridSnappingContext.snapOffset;
   if (snapOffset && isNumber(snapOffset[axis])) {
     return snapOffset[axis];
   }
@@ -36354,8 +36633,8 @@ function ResizeBehavior2(eventBus, gridSnapping) {
   CommandInterceptor.call(this, eventBus);
   this._gridSnapping = gridSnapping;
   var self2 = this;
-  this.preExecute("shape.resize", function(event2) {
-    var context = event2.context, hints = context.hints || {}, autoResize = hints.autoResize;
+  this.preExecute("shape.resize", function(event3) {
+    var context = event3.context, hints = context.hints || {}, autoResize = hints.autoResize;
     if (!autoResize) {
       return;
     }
@@ -36443,21 +36722,21 @@ function SpaceToolBehavior2(eventBus, gridSnapping) {
   eventBus.on([
     "spaceTool.move",
     "spaceTool.end"
-  ], HIGH_PRIORITY14, function(event2) {
-    var context = event2.context;
+  ], HIGH_PRIORITY14, function(event3) {
+    var context = event3.context;
     if (!context.initialized) {
       return;
     }
     var axis = context.axis;
     var snapped;
     if (axis === "x") {
-      snapped = gridSnapping.snapValue(event2.dx);
-      event2.x = event2.x + snapped - event2.dx;
-      event2.dx = snapped;
+      snapped = gridSnapping.snapValue(event3.dx);
+      event3.x = event3.x + snapped - event3.dx;
+      event3.dx = snapped;
     } else {
-      snapped = gridSnapping.snapValue(event2.dy);
-      event2.y = event2.y + snapped - event2.dy;
-      event2.dy = snapped;
+      snapped = gridSnapping.snapValue(event3.dy);
+      event3.y = event3.y + snapped - event3.dy;
+      event3.dy = snapped;
     }
   });
 }
@@ -36525,8 +36804,8 @@ function GridSnappingParticipantBehavior(canvas, eventBus, gridSnapping) {
   eventBus.on([
     "create.start",
     "shape.move.start"
-  ], HIGHER_PRIORITY, function(event2) {
-    var context = event2.context, shape = context.shape, rootElement = canvas.getRootElement();
+  ], HIGHER_PRIORITY, function(event3) {
+    var context = event3.context, shape = context.shape, rootElement = canvas.getRootElement();
     if (!is(shape, "bpmn:Participant") || !is(rootElement, "bpmn:Process") || !rootElement.children.length) {
       return;
     }
@@ -36553,8 +36832,8 @@ function GridSnappingLayoutConnectionBehavior(eventBus, gridSnapping, modeling) 
   this.postExecuted([
     "connection.create",
     "connection.layout"
-  ], HIGH_PRIORITY16, function(event2) {
-    var context = event2.context, connection = context.connection, hints = context.hints || {}, waypoints = connection.waypoints;
+  ], HIGH_PRIORITY16, function(event3) {
+    var context = event3.context, connection = context.connection, hints = context.hints || {}, waypoints = connection.waypoints;
     if (hints.connectionStart || hints.connectionEnd || hints.createElementsBehavior === false) {
       return;
     }
@@ -36723,76 +37002,76 @@ BpmnKeyboardBindings.prototype.registerBindings = function(keyboard, editorActio
     }
   }
   addListener("selectElements", function(context) {
-    var event2 = context.keyEvent;
-    if (keyboard.isKey(["a", "A"], event2) && keyboard.isCmd(event2)) {
+    var event3 = context.keyEvent;
+    if (keyboard.isKey(["a", "A"], event3) && keyboard.isCmd(event3)) {
       editorActions.trigger("selectElements");
       return true;
     }
   });
   addListener("find", function(context) {
-    var event2 = context.keyEvent;
-    if (keyboard.isKey(["f", "F"], event2) && keyboard.isCmd(event2)) {
+    var event3 = context.keyEvent;
+    if (keyboard.isKey(["f", "F"], event3) && keyboard.isCmd(event3)) {
       editorActions.trigger("find");
       return true;
     }
   });
   addListener("spaceTool", function(context) {
-    var event2 = context.keyEvent;
-    if (keyboard.hasModifier(event2)) {
+    var event3 = context.keyEvent;
+    if (keyboard.hasModifier(event3)) {
       return;
     }
-    if (keyboard.isKey(["s", "S"], event2)) {
+    if (keyboard.isKey(["s", "S"], event3)) {
       editorActions.trigger("spaceTool");
       return true;
     }
   });
   addListener("lassoTool", function(context) {
-    var event2 = context.keyEvent;
-    if (keyboard.hasModifier(event2)) {
+    var event3 = context.keyEvent;
+    if (keyboard.hasModifier(event3)) {
       return;
     }
-    if (keyboard.isKey(["l", "L"], event2)) {
+    if (keyboard.isKey(["l", "L"], event3)) {
       editorActions.trigger("lassoTool");
       return true;
     }
   });
   addListener("handTool", function(context) {
-    var event2 = context.keyEvent;
-    if (keyboard.hasModifier(event2)) {
+    var event3 = context.keyEvent;
+    if (keyboard.hasModifier(event3)) {
       return;
     }
-    if (keyboard.isKey(["h", "H"], event2)) {
+    if (keyboard.isKey(["h", "H"], event3)) {
       editorActions.trigger("handTool");
       return true;
     }
   });
   addListener("globalConnectTool", function(context) {
-    var event2 = context.keyEvent;
-    if (keyboard.hasModifier(event2)) {
+    var event3 = context.keyEvent;
+    if (keyboard.hasModifier(event3)) {
       return;
     }
-    if (keyboard.isKey(["c", "C"], event2)) {
+    if (keyboard.isKey(["c", "C"], event3)) {
       editorActions.trigger("globalConnectTool");
       return true;
     }
   });
   addListener("directEditing", function(context) {
-    var event2 = context.keyEvent;
-    if (keyboard.hasModifier(event2)) {
+    var event3 = context.keyEvent;
+    if (keyboard.hasModifier(event3)) {
       return;
     }
-    if (keyboard.isKey(["e", "E"], event2)) {
+    if (keyboard.isKey(["e", "E"], event3)) {
       editorActions.trigger("directEditing");
       return true;
     }
   });
   addListener("replaceElement", function(context) {
-    var event2 = context.keyEvent;
-    if (keyboard.hasModifier(event2)) {
+    var event3 = context.keyEvent;
+    if (keyboard.hasModifier(event3)) {
       return;
     }
-    if (keyboard.isKey(["r", "R"], event2)) {
-      editorActions.trigger("replaceElement", event2);
+    if (keyboard.isKey(["r", "R"], event3)) {
+      editorActions.trigger("replaceElement", event3);
       return true;
     }
   });
@@ -36856,8 +37135,8 @@ var DIRECTIONS_DELTA = {
 function KeyboardMoveSelection(config, keyboard, modeling, rules, selection2) {
   var self2 = this;
   this._config = assign({}, DEFAULT_CONFIG2, config || {});
-  keyboard.addListener(HIGHER_PRIORITY2, function(event2) {
-    var keyEvent = event2.keyEvent;
+  keyboard.addListener(HIGHER_PRIORITY2, function(event3) {
+    var keyEvent = event3.keyEvent;
     var direction = KEY_TO_DIRECTION[keyEvent.key];
     if (!direction) {
       return;
@@ -36939,18 +37218,18 @@ function Resize(eventBus, rules, modeling, dragging) {
       modeling.resizeShape(shape, newBounds);
     }
   }
-  eventBus.on("resize.start", function(event2) {
-    handleStart(event2.context);
+  eventBus.on("resize.start", function(event3) {
+    handleStart(event3.context);
   });
-  eventBus.on("resize.move", function(event2) {
+  eventBus.on("resize.move", function(event3) {
     var delta2 = {
-      x: event2.dx,
-      y: event2.dy
+      x: event3.dx,
+      y: event3.dy
     };
-    handleMove(event2.context, delta2);
+    handleMove(event3.context, delta2);
   });
-  eventBus.on("resize.end", function(event2) {
-    handleEnd(event2.context);
+  eventBus.on("resize.end", function(event3) {
+    handleEnd(event3.context);
   });
 }
 Resize.prototype.canResize = function(context) {
@@ -36958,7 +37237,7 @@ Resize.prototype.canResize = function(context) {
   var ctx = pick(context, ["newBounds", "shape", "delta", "direction"]);
   return rules.allowed("shape.resize", ctx);
 };
-Resize.prototype.activate = function(event2, shape, contextOrDirection) {
+Resize.prototype.activate = function(event3, shape, contextOrDirection) {
   var dragging = this._dragging, context, direction;
   if (typeof contextOrDirection === "string") {
     contextOrDirection = {
@@ -36970,7 +37249,7 @@ Resize.prototype.activate = function(event2, shape, contextOrDirection) {
   if (!direction) {
     throw new Error("must provide a direction (n|w|s|e|nw|se|ne|sw)");
   }
-  dragging.init(event2, getReferencePoint2(shape, direction), "resize", {
+  dragging.init(event3, getReferencePoint2(shape, direction), "resize", {
     autoActivate: true,
     cursor: getCursor(direction),
     data: {
@@ -37016,15 +37295,15 @@ function getReferencePoint2(shape, direction) {
   return referencePoint;
 }
 function getCursor(direction) {
-  var prefix3 = "resize-";
+  var prefix4 = "resize-";
   if (direction === "n" || direction === "s") {
-    return prefix3 + "ns";
+    return prefix4 + "ns";
   } else if (direction === "e" || direction === "w") {
-    return prefix3 + "ew";
+    return prefix4 + "ew";
   } else if (direction === "nw" || direction === "se") {
-    return prefix3 + "nwse";
+    return prefix4 + "nwse";
   } else {
-    return prefix3 + "nesw";
+    return prefix4 + "nesw";
   }
 }
 
@@ -37058,11 +37337,11 @@ function ResizePreview(eventBus, canvas, previewSupport) {
     }
     canvas.removeMarker(shape, MARKER_RESIZING2);
   }
-  eventBus.on("resize.move", LOW_PRIORITY24, function(event2) {
-    updateFrame(event2.context);
+  eventBus.on("resize.move", LOW_PRIORITY24, function(event3) {
+    updateFrame(event3.context);
   });
-  eventBus.on("resize.cleanup", function(event2) {
-    removeFrame(event2.context);
+  eventBus.on("resize.cleanup", function(event3) {
+    removeFrame(event3.context);
   });
 }
 ResizePreview.$inject = [
@@ -37098,15 +37377,15 @@ function ResizeHandles(eventBus, canvas, selection2, resize) {
 }
 ResizeHandles.prototype.makeDraggable = function(element, gfx, direction) {
   var resize = this._resize;
-  function startResize(event2) {
-    if (isPrimaryButton(event2)) {
-      resize.activate(event2, element, direction);
+  function startResize(event3) {
+    if (isPrimaryButton(event3)) {
+      resize.activate(event3, element, direction);
     }
   }
   event.bind(gfx, "mousedown", startResize);
   event.bind(gfx, "touchstart", startResize);
 };
-ResizeHandles.prototype._createResizer = function(element, x5, y5, direction) {
+ResizeHandles.prototype._createResizer = function(element, x6, y5, direction) {
   var resizersParent = this._getResizersParent();
   var offset = getHandleOffset(direction);
   var group = create("g");
@@ -37132,7 +37411,7 @@ ResizeHandles.prototype._createResizer = function(element, x5, y5, direction) {
   });
   classes(hit).add(CLS_RESIZER + "-hit");
   append(group, hit);
-  transform2(group, x5, y5);
+  transform2(group, x6, y5);
   return group;
 };
 ResizeHandles.prototype.createResizer = function(element, direction) {
@@ -37205,8 +37484,8 @@ function LabelEditingProvider(eventBus, bpmnFactory, canvas, directEditing, mode
   this._modeling = modeling;
   this._textRenderer = textRenderer;
   directEditing.registerProvider(this);
-  eventBus.on("element.dblclick", function(event2) {
-    activateDirectEdit(event2.element, true);
+  eventBus.on("element.dblclick", function(event3) {
+    activateDirectEdit(event3.element, true);
   });
   eventBus.on([
     "autoPlace.start",
@@ -37224,8 +37503,8 @@ function LabelEditingProvider(eventBus, bpmnFactory, canvas, directEditing, mode
   eventBus.on([
     "shape.remove",
     "connection.remove"
-  ], HIGH_PRIORITY17, function(event2) {
-    if (directEditing.isActive(event2.element)) {
+  ], HIGH_PRIORITY17, function(event3) {
+    if (directEditing.isActive(event3.element)) {
       directEditing.cancel();
     }
   });
@@ -37234,11 +37513,11 @@ function LabelEditingProvider(eventBus, bpmnFactory, canvas, directEditing, mode
       directEditing.cancel();
     }
   });
-  eventBus.on("directEditing.activate", function(event2) {
+  eventBus.on("directEditing.activate", function(event3) {
     resizeHandles.removeResizers();
   });
-  eventBus.on("create.end", 500, function(event2) {
-    var context = event2.context, element = context.shape, canExecute = event2.context.canExecute, isTouch = event2.isTouch;
+  eventBus.on("create.end", 500, function(event3) {
+    var context = event3.context, element = context.shape, canExecute = event3.context.canExecute, isTouch = event3.isTouch;
     if (isTouch) {
       return;
     }
@@ -37250,8 +37529,8 @@ function LabelEditingProvider(eventBus, bpmnFactory, canvas, directEditing, mode
     }
     activateDirectEdit(element);
   });
-  eventBus.on("autoPlace.end", 500, function(event2) {
-    activateDirectEdit(event2.shape);
+  eventBus.on("autoPlace.end", 500, function(event3) {
+    activateDirectEdit(event3.shape);
   });
   function activateDirectEdit(element, force) {
     if (force || isAny(element, ["bpmn:Task", "bpmn:TextAnnotation", "bpmn:Participant"]) || isCollapsedSubProcess(element)) {
@@ -37279,6 +37558,11 @@ LabelEditingProvider.prototype.activate = function(element) {
   var bounds = this.getEditingBBox(element);
   assign(context, bounds);
   var options2 = {};
+  var style = context.style || {};
+  assign(style, {
+    backgroundColor: null,
+    border: null
+  });
   if (isAny(element, [
     "bpmn:Task",
     "bpmn:Participant",
@@ -37293,15 +37577,24 @@ LabelEditingProvider.prototype.activate = function(element) {
     assign(options2, {
       autoResize: true
     });
+    assign(style, {
+      backgroundColor: "#ffffff",
+      border: "1px solid #ccc"
+    });
   }
   if (is(element, "bpmn:TextAnnotation")) {
     assign(options2, {
       resizable: true,
       autoResize: true
     });
+    assign(style, {
+      backgroundColor: "#ffffff",
+      border: "1px solid #ccc"
+    });
   }
   assign(context, {
-    options: options2
+    options: options2,
+    style
   });
   return context;
 };
@@ -37592,8 +37885,8 @@ function createRoot2(parentNode) {
   parentNode.insertBefore(root, parentNode.firstChild);
   return root;
 }
-function setPosition2(el, x5, y5) {
-  assign2(el, { left: x5 + "px", top: y5 + "px" });
+function setPosition2(el, x6, y5) {
+  assign2(el, { left: x6 + "px", top: y5 + "px" });
 }
 function setVisible2(el, visible) {
   el.style.display = visible === false ? "none" : "";
@@ -37613,14 +37906,14 @@ function Tooltips(eventBus, canvas) {
   this._tooltips = {};
   this._tooltipRoot = createRoot2(canvas.getContainer());
   var self2 = this;
-  delegate.bind(this._tooltipRoot, tooltipSelector, "mousedown", function(event2) {
-    event2.stopPropagation();
+  delegate.bind(this._tooltipRoot, tooltipSelector, "mousedown", function(event3) {
+    event3.stopPropagation();
   });
-  delegate.bind(this._tooltipRoot, tooltipSelector, "mouseover", function(event2) {
-    self2.trigger("mouseover", event2);
+  delegate.bind(this._tooltipRoot, tooltipSelector, "mouseover", function(event3) {
+    self2.trigger("mouseover", event3);
   });
-  delegate.bind(this._tooltipRoot, tooltipSelector, "mouseout", function(event2) {
-    self2.trigger("mouseout", event2);
+  delegate.bind(this._tooltipRoot, tooltipSelector, "mouseout", function(event3) {
+    self2.trigger("mouseout", event3);
   });
   this._init();
 }
@@ -37642,8 +37935,8 @@ Tooltips.prototype.add = function(tooltip) {
   }
   return id;
 };
-Tooltips.prototype.trigger = function(action, event2) {
-  var node2 = event2.delegateTarget || event2.target;
+Tooltips.prototype.trigger = function(action, event3) {
+  var node2 = event3.delegateTarget || event3.target;
   var tooltip = this.get(attr2(node2, "data-tooltip-id"));
   if (!tooltip) {
     return;
@@ -37750,11 +38043,11 @@ Tooltips.prototype._init = function() {
     self2._updateTooltipVisibilty(viewbox);
     self2.show();
   }
-  this._eventBus.on("canvas.viewbox.changing", function(event2) {
+  this._eventBus.on("canvas.viewbox.changing", function(event3) {
     self2.hide();
   });
-  this._eventBus.on("canvas.viewbox.changed", function(event2) {
-    updateViewbox(event2.viewbox);
+  this._eventBus.on("canvas.viewbox.changed", function(event3) {
+    updateViewbox(event3.viewbox);
   });
 };
 
@@ -37778,10 +38071,10 @@ function ModelingFeedback(eventBus, tooltips3, translate3) {
       html: "<div>" + message + "</div>"
     });
   }
-  eventBus.on(["shape.move.rejected", "create.rejected"], function(event2) {
-    var context = event2.context, shape = context.shape, target = context.target;
+  eventBus.on(["shape.move.rejected", "create.rejected"], function(event3) {
+    var context = event3.context, shape = context.shape, target = context.target;
     if (is(target, "bpmn:Collaboration") && is(shape, "bpmn:FlowNode")) {
-      showError(event2, translate3(COLLAB_ERR_MSG));
+      showError(event3, translate3(COLLAB_ERR_MSG));
     }
   });
 }
@@ -37822,8 +38115,8 @@ function MoveEvents(eventBus, dragging, modeling, selection2, rules) {
       target
     });
   }
-  eventBus.on("shape.move.start", HIGH_PRIORITY18, function(event2) {
-    var context = event2.context, shape = event2.shape, shapes = selection2.get().slice();
+  eventBus.on("shape.move.start", HIGH_PRIORITY18, function(event3) {
+    var context = event3.context, shape = event3.shape, shapes = selection2.get().slice();
     if (shapes.indexOf(shape) === -1) {
       shapes = [shape];
     }
@@ -37834,15 +38127,15 @@ function MoveEvents(eventBus, dragging, modeling, selection2, rules) {
       shape
     });
   });
-  eventBus.on("shape.move.start", MEDIUM_PRIORITY, function(event2) {
-    var context = event2.context, validatedShapes = context.validatedShapes, canExecute;
+  eventBus.on("shape.move.start", MEDIUM_PRIORITY, function(event3) {
+    var context = event3.context, validatedShapes = context.validatedShapes, canExecute;
     canExecute = context.canExecute = canMove2(validatedShapes);
     if (!canExecute) {
       return false;
     }
   });
-  eventBus.on("shape.move.move", LOW_PRIORITY25, function(event2) {
-    var context = event2.context, validatedShapes = context.validatedShapes, hover = event2.hover, delta2 = { x: event2.dx, y: event2.dy }, position = { x: event2.x, y: event2.y }, canExecute;
+  eventBus.on("shape.move.move", LOW_PRIORITY25, function(event3) {
+    var context = event3.context, validatedShapes = context.validatedShapes, hover = event3.hover, delta2 = { x: event3.dx, y: event3.dy }, position = { x: event3.x, y: event3.y }, canExecute;
     canExecute = canMove2(validatedShapes, delta2, position, hover);
     context.delta = delta2;
     context.canExecute = canExecute;
@@ -37852,8 +38145,8 @@ function MoveEvents(eventBus, dragging, modeling, selection2, rules) {
     }
     context.target = hover;
   });
-  eventBus.on("shape.move.end", function(event2) {
-    var context = event2.context;
+  eventBus.on("shape.move.end", function(event3) {
+    var context = event3.context;
     var delta2 = context.delta, canExecute = context.canExecute, isAttach = canExecute === "attach", shapes = context.shapes;
     if (canExecute === false) {
       return false;
@@ -37868,17 +38161,17 @@ function MoveEvents(eventBus, dragging, modeling, selection2, rules) {
       attach: isAttach
     });
   });
-  eventBus.on("element.mousedown", function(event2) {
-    if (!isPrimaryButton(event2)) {
+  eventBus.on("element.mousedown", function(event3) {
+    if (!isPrimaryButton(event3)) {
       return;
     }
-    var originalEvent = getOriginal(event2);
+    var originalEvent = getOriginal(event3);
     if (!originalEvent) {
       throw new Error("must supply DOM mousedown event");
     }
-    return start(originalEvent, event2.element);
+    return start(originalEvent, event3.element);
   });
-  function start(event2, element, activate, context) {
+  function start(event3, element, activate, context) {
     if (isObject(activate)) {
       context = activate;
       activate = false;
@@ -37886,11 +38179,11 @@ function MoveEvents(eventBus, dragging, modeling, selection2, rules) {
     if (element.waypoints || !element.parent) {
       return;
     }
-    if (classes(event2.target).has("djs-hit-no-move")) {
+    if (classes(event3.target).has("djs-hit-no-move")) {
       return;
     }
     var referencePoint = mid3(element);
-    dragging.init(event2, referencePoint, "shape.move", {
+    dragging.init(event3, referencePoint, "shape.move", {
       cursor: "grabbing",
       autoActivate: activate,
       data: {
@@ -37942,11 +38235,11 @@ function MovePreview(eventBus, canvas, styles, previewSupport) {
     return flatten(allShapes.concat(allConnections));
   }
   function setMarker(element, marker) {
-    [MARKER_ATTACH3, MARKER_OK4, MARKER_NOT_OK4, MARKER_NEW_PARENT2].forEach(function(m6) {
-      if (m6 === marker) {
-        canvas.addMarker(element, m6);
+    [MARKER_ATTACH3, MARKER_OK4, MARKER_NOT_OK4, MARKER_NEW_PARENT2].forEach(function(m5) {
+      if (m5 === marker) {
+        canvas.addMarker(element, m5);
       } else {
-        canvas.removeMarker(element, m6);
+        canvas.removeMarker(element, m5);
       }
     });
   }
@@ -37961,8 +38254,8 @@ function MovePreview(eventBus, canvas, styles, previewSupport) {
       context.allDraggedElements = [element];
     }
   }
-  eventBus.on("shape.move.start", LOW_PRIORITY26, function(event2) {
-    var context = event2.context, dragShapes = context.shapes, allDraggedElements = context.allDraggedElements;
+  eventBus.on("shape.move.start", LOW_PRIORITY26, function(event3) {
+    var context = event3.context, dragShapes = context.shapes, allDraggedElements = context.allDraggedElements;
     var visuallyDraggedShapes = getVisualDragShapes(dragShapes);
     if (!context.dragGroup) {
       var dragGroup = create("g");
@@ -37988,27 +38281,27 @@ function MovePreview(eventBus, canvas, styles, previewSupport) {
     context.allDraggedElements = allDraggedElements;
     context.differentParents = haveDifferentParents(dragShapes);
   });
-  eventBus.on("shape.move.move", LOW_PRIORITY26, function(event2) {
-    var context = event2.context, dragGroup = context.dragGroup, target = context.target, parent = context.shape.parent, canExecute = context.canExecute;
+  eventBus.on("shape.move.move", LOW_PRIORITY26, function(event3) {
+    var context = event3.context, dragGroup = context.dragGroup, target = context.target, parent = context.shape.parent, canExecute = context.canExecute;
     if (target) {
       if (canExecute === "attach") {
         setMarker(target, MARKER_ATTACH3);
-      } else if (context.canExecute && target && target.id !== parent.id) {
+      } else if (context.canExecute && parent && target.id !== parent.id) {
         setMarker(target, MARKER_NEW_PARENT2);
       } else {
         setMarker(target, context.canExecute ? MARKER_OK4 : MARKER_NOT_OK4);
       }
     }
-    translate(dragGroup, event2.dx, event2.dy);
+    translate(dragGroup, event3.dx, event3.dy);
   });
-  eventBus.on(["shape.move.out", "shape.move.cleanup"], function(event2) {
-    var context = event2.context, target = context.target;
+  eventBus.on(["shape.move.out", "shape.move.cleanup"], function(event3) {
+    var context = event3.context, target = context.target;
     if (target) {
       setMarker(target, null);
     }
   });
-  eventBus.on("shape.move.cleanup", function(event2) {
-    var context = event2.context, allDraggedElements = context.allDraggedElements, dragGroup = context.dragGroup;
+  eventBus.on("shape.move.cleanup", function(event3) {
+    var context = event3.context, allDraggedElements = context.allDraggedElements, dragGroup = context.dragGroup;
     forEach(allDraggedElements, function(e7) {
       canvas.removeMarker(e7, MARKER_DRAGGING2);
     });
@@ -38058,127 +38351,6 @@ var move_default = {
   movePreview: ["type", MovePreview]
 };
 
-// node_modules/bpmn-js/lib/features/outline/OutlineUtil.js
-var DATA_OBJECT_REFERENCE_OUTLINE_PATH = "M44.7648 11.3263L36.9892 2.64074C36.0451 1.58628 34.5651 0.988708 33.1904 0.988708H5.98667C3.22688 0.988708 0.989624 3.34892 0.989624 6.26039V55.0235C0.989624 57.9349 3.22688 60.2952 5.98667 60.2952H40.966C43.7257 60.2952 45.963 57.9349 45.963 55.0235V14.9459C45.963 13.5998 45.6407 12.3048 44.7648 11.3263Z";
-var DATA_STORE_REFERENCE_OUTLINE_PATH = "M1.03845 48.1347C1.03845 49.3511 1.07295 50.758 1.38342 52.064C1.69949 53.3938 2.32428 54.7154 3.56383 55.6428C6.02533 57.4841 10.1161 58.7685 14.8212 59.6067C19.5772 60.4538 25.1388 60.8738 30.6831 60.8738C36.2276 60.8738 41.7891 60.4538 46.545 59.6067C51.2504 58.7687 55.3412 57.4842 57.8028 55.6429C59.0424 54.7156 59.6673 53.3938 59.9834 52.064C60.2938 50.7579 60.3285 49.351 60.3285 48.1344V13.8415C60.3285 12.6249 60.2938 11.218 59.9834 9.91171C59.6673 8.58194 59.0423 7.2602 57.8027 6.33294C55.341 4.49168 51.2503 3.20723 46.545 2.36914C41.7891 1.522 36.2276 1.10204 30.6831 1.10205C25.1388 1.10206 19.5772 1.52206 14.8213 2.36923C10.1162 3.20734 6.02543 4.49183 3.5639 6.33314C2.32433 7.26038 1.69951 8.58206 1.38343 9.91181C1.07295 11.2179 1.03845 12.6247 1.03845 13.8411V48.1347Z";
-var DATA_OBJECT_REFERENCE_STANDARD_SIZE = { width: 36, height: 50 };
-var DATA_STORE_REFERENCE_STANDARD_SIZE = { width: 50, height: 50 };
-function createPath(path, attrs, OUTLINE_STYLE) {
-  return create("path", {
-    d: path,
-    strokeWidth: 2,
-    transform: `translate(${attrs.x}, ${attrs.y})`,
-    ...OUTLINE_STYLE
-  });
-}
-
-// node_modules/bpmn-js/lib/features/outline/OutlineProvider.js
-var DEFAULT_OFFSET = 5;
-function OutlineProvider(outline, styles) {
-  this._styles = styles;
-  outline.registerProvider(this);
-}
-OutlineProvider.$inject = [
-  "outline",
-  "styles"
-];
-OutlineProvider.prototype.getOutline = function(element) {
-  const OUTLINE_STYLE = this._styles.cls("djs-outline", ["no-fill"]);
-  var outline;
-  if (isLabel(element)) {
-    return;
-  }
-  if (is(element, "bpmn:Gateway")) {
-    outline = create("rect");
-    assign(outline.style, {
-      "transform-box": "fill-box",
-      "transform": "rotate(45deg)",
-      "transform-origin": "center"
-    });
-    attr(outline, assign({
-      x: 2,
-      y: 2,
-      rx: 4,
-      width: element.width - 4,
-      height: element.height - 4
-    }, OUTLINE_STYLE));
-  } else if (isAny(element, ["bpmn:Task", "bpmn:SubProcess", "bpmn:Group"])) {
-    outline = create("rect");
-    attr(outline, assign({
-      x: -DEFAULT_OFFSET,
-      y: -DEFAULT_OFFSET,
-      rx: 14,
-      width: element.width + DEFAULT_OFFSET * 2,
-      height: element.height + DEFAULT_OFFSET * 2
-    }, OUTLINE_STYLE));
-  } else if (is(element, "bpmn:EndEvent")) {
-    outline = create("circle");
-    attr(outline, assign({
-      cx: element.width / 2,
-      cy: element.height / 2,
-      r: element.width / 2 + DEFAULT_OFFSET + 1
-    }, OUTLINE_STYLE));
-  } else if (is(element, "bpmn:Event")) {
-    outline = create("circle");
-    attr(outline, assign({
-      cx: element.width / 2,
-      cy: element.height / 2,
-      r: element.width / 2 + DEFAULT_OFFSET
-    }, OUTLINE_STYLE));
-  } else if (is(element, "bpmn:DataObjectReference") && isStandardSize(element, "bpmn:DataObjectReference")) {
-    outline = createPath(
-      DATA_OBJECT_REFERENCE_OUTLINE_PATH,
-      { x: -6, y: -6 },
-      OUTLINE_STYLE
-    );
-  } else if (is(element, "bpmn:DataStoreReference") && isStandardSize(element, "bpmn:DataStoreReference")) {
-    outline = createPath(
-      DATA_STORE_REFERENCE_OUTLINE_PATH,
-      { x: -6, y: -6 },
-      OUTLINE_STYLE
-    );
-  }
-  return outline;
-};
-OutlineProvider.prototype.updateOutline = function(element, outline) {
-  if (isLabel(element)) {
-    return;
-  }
-  if (isAny(element, ["bpmn:SubProcess", "bpmn:Group"])) {
-    attr(outline, {
-      width: element.width + DEFAULT_OFFSET * 2,
-      height: element.height + DEFAULT_OFFSET * 2
-    });
-    return true;
-  } else if (isAny(element, [
-    "bpmn:Event",
-    "bpmn:Gateway",
-    "bpmn:DataStoreReference",
-    "bpmn:DataObjectReference"
-  ])) {
-    return true;
-  }
-  return false;
-};
-function isStandardSize(element, type) {
-  var standardSize;
-  if (type === "bpmn:DataObjectReference") {
-    standardSize = DATA_OBJECT_REFERENCE_STANDARD_SIZE;
-  } else if (type === "bpmn:DataStoreReference") {
-    standardSize = DATA_STORE_REFERENCE_STANDARD_SIZE;
-  }
-  return element.width === standardSize.width && element.height === standardSize.height;
-}
-
-// node_modules/bpmn-js/lib/features/outline/index.js
-var outline_default2 = {
-  __depends__: [
-    outline_default
-  ],
-  __init__: ["outlineProvider"],
-  outlineProvider: ["type", OutlineProvider]
-};
-
 // node_modules/diagram-js/lib/features/palette/Palette.js
 var TOGGLE_SELECTOR = ".djs-palette-toggle";
 var ENTRY_SELECTOR = ".entry";
@@ -38192,8 +38364,8 @@ function Palette(eventBus, canvas) {
   this._eventBus = eventBus;
   this._canvas = canvas;
   var self2 = this;
-  eventBus.on("tool-manager.update", function(event2) {
-    var tool = event2.tool;
+  eventBus.on("tool-manager.update", function(event3) {
+    var tool = event3.tool;
     self2.updateToolHighlight(tool);
   });
   eventBus.on("i18n.changed", function() {
@@ -38210,8 +38382,8 @@ Palette.prototype.registerProvider = function(priority, provider) {
     provider = priority;
     priority = DEFAULT_PRIORITY7;
   }
-  this._eventBus.on("palette.getProviders", priority, function(event2) {
-    event2.providers.push(provider);
+  this._eventBus.on("palette.getProviders", priority, function(event3) {
+    event3.providers.push(provider);
   });
   this._rebuild();
 };
@@ -38239,18 +38411,18 @@ Palette.prototype._init = function() {
   var container = this._container = domify$1(Palette.HTML_MARKUP);
   parentContainer.appendChild(container);
   classes2(parentContainer).add(PALETTE_PREFIX + PALETTE_SHOWN_CLS);
-  delegate.bind(container, ELEMENT_SELECTOR, "click", function(event2) {
-    var target = event2.delegateTarget;
+  delegate.bind(container, ELEMENT_SELECTOR, "click", function(event3) {
+    var target = event3.delegateTarget;
     if (matches(target, TOGGLE_SELECTOR)) {
       return self2.toggle();
     }
-    self2.trigger("click", event2);
+    self2.trigger("click", event3);
   });
-  event.bind(container, "mousedown", function(event2) {
-    event2.stopPropagation();
+  event.bind(container, "mousedown", function(event3) {
+    event3.stopPropagation();
   });
-  delegate.bind(container, ENTRY_SELECTOR, "dragstart", function(event2) {
-    self2.trigger("dragstart", event2);
+  delegate.bind(container, ENTRY_SELECTOR, "dragstart", function(event3) {
+    self2.trigger("dragstart", event3);
   });
   eventBus.on("canvas.resized", this._layoutChanged, this);
   eventBus.fire("palette.create", {
@@ -38258,12 +38430,12 @@ Palette.prototype._init = function() {
   });
 };
 Palette.prototype._getProviders = function(id) {
-  var event2 = this._eventBus.createEvent({
+  var event3 = this._eventBus.createEvent({
     type: "palette.getProviders",
     providers: []
   });
-  this._eventBus.fire(event2);
-  return event2.providers;
+  this._eventBus.fire(event3);
+  return event3.providers;
 };
 Palette.prototype._toggleState = function(state) {
   state = state || {};
@@ -38318,35 +38490,35 @@ Palette.prototype._update = function() {
   });
   this.open();
 };
-Palette.prototype.trigger = function(action, event2, autoActivate) {
-  var entry, originalEvent, button = event2.delegateTarget || event2.target;
+Palette.prototype.trigger = function(action, event3, autoActivate) {
+  var entry, originalEvent, button = event3.delegateTarget || event3.target;
   if (!button) {
-    return event2.preventDefault();
+    return event3.preventDefault();
   }
   entry = attr2(button, "data-action");
-  originalEvent = event2.originalEvent || event2;
+  originalEvent = event3.originalEvent || event3;
   return this.triggerEntry(entry, action, originalEvent, autoActivate);
 };
-Palette.prototype.triggerEntry = function(entryId, action, event2, autoActivate) {
+Palette.prototype.triggerEntry = function(entryId, action, event3, autoActivate) {
   var entries = this._entries, entry, handler;
   entry = entries[entryId];
   if (!entry) {
     return;
   }
   handler = entry.action;
-  if (this._eventBus.fire("palette.trigger", { entry, event: event2 }) === false) {
+  if (this._eventBus.fire("palette.trigger", { entry, event: event3 }) === false) {
     return;
   }
   if (isFunction(handler)) {
     if (action === "click") {
-      return handler(event2, autoActivate);
+      return handler(event3, autoActivate);
     }
   } else {
     if (handler[action]) {
-      return handler[action](event2, autoActivate);
+      return handler[action](event3, autoActivate);
     }
   }
-  event2.preventDefault();
+  event3.preventDefault();
 };
 Palette.prototype._layoutChanged = function() {
   this._toggleState({});
@@ -38404,10 +38576,10 @@ Palette.prototype._getParentContainer = function() {
 };
 Palette.HTML_MARKUP = '<div class="djs-palette"><div class="djs-palette-entries"></div><div class="djs-palette-toggle"></div></div>';
 function addClasses2(element, classNames) {
-  var classes3 = classes2(element);
+  var classes4 = classes2(element);
   var actualClassNames = isArray(classNames) ? classNames : classNames.split(/\s+/g);
   actualClassNames.forEach(function(cls) {
-    classes3.add(cls);
+    classes4.add(cls);
   });
 }
 function addPaletteEntries(entries, provider) {
@@ -38466,44 +38638,44 @@ function LassoTool(eventBus, canvas, dragging, elementRegistry, selection2, tool
     tool: "lasso.selection",
     dragging: "lasso"
   });
-  eventBus.on("lasso.selection.end", function(event2) {
-    var target = event2.originalEvent.target;
-    if (!event2.hover && !(target instanceof SVGElement)) {
+  eventBus.on("lasso.selection.end", function(event3) {
+    var target = event3.originalEvent.target;
+    if (!event3.hover && !(target instanceof SVGElement)) {
       return;
     }
     eventBus.once("lasso.selection.ended", function() {
-      self2.activateLasso(event2.originalEvent, true);
+      self2.activateLasso(event3.originalEvent, true);
     });
   });
-  eventBus.on("lasso.end", 0, function(event2) {
-    var context = event2.context;
-    var bbox = toBBox(event2);
+  eventBus.on("lasso.end", 0, function(event3) {
+    var context = event3.context;
+    var bbox = toBBox(event3);
     var elements = elementRegistry.filter(function(element) {
       return element;
     });
-    var add3 = hasSecondaryModifier(event2);
+    var add3 = hasSecondaryModifier(event3);
     self2.select(elements, bbox, add3 ? context.selection : []);
   });
-  eventBus.on("lasso.start", function(event2) {
-    var context = event2.context;
-    context.bbox = toBBox(event2);
+  eventBus.on("lasso.start", function(event3) {
+    var context = event3.context;
+    context.bbox = toBBox(event3);
     visuals.create(context);
     context.selection = selection2.get();
   });
-  eventBus.on("lasso.move", function(event2) {
-    var context = event2.context;
-    context.bbox = toBBox(event2);
+  eventBus.on("lasso.move", function(event3) {
+    var context = event3.context;
+    context.bbox = toBBox(event3);
     visuals.update(context);
   });
-  eventBus.on("lasso.cleanup", function(event2) {
-    var context = event2.context;
+  eventBus.on("lasso.cleanup", function(event3) {
+    var context = event3.context;
     visuals.remove(context);
   });
-  eventBus.on("element.mousedown", 1500, function(event2) {
-    if (!hasSecondaryModifier(event2)) {
+  eventBus.on("element.mousedown", 1500, function(event3) {
+    if (!hasSecondaryModifier(event3)) {
       return;
     }
-    self2.activateLasso(event2.originalEvent);
+    self2.activateLasso(event3.originalEvent);
     return true;
   });
 }
@@ -38516,8 +38688,8 @@ LassoTool.$inject = [
   "toolManager",
   "mouse"
 ];
-LassoTool.prototype.activateLasso = function(event2, autoActivate) {
-  this._dragging.init(event2, "lasso", {
+LassoTool.prototype.activateLasso = function(event3, autoActivate) {
+  this._dragging.init(event3, "lasso", {
     autoActivate,
     cursor: LASSO_TOOL_CURSOR,
     data: {
@@ -38525,8 +38697,8 @@ LassoTool.prototype.activateLasso = function(event2, autoActivate) {
     }
   });
 };
-LassoTool.prototype.activateSelection = function(event2, autoActivate) {
-  this._dragging.init(event2, "lasso.selection", {
+LassoTool.prototype.activateSelection = function(event3, autoActivate) {
+  this._dragging.init(event3, "lasso.selection", {
     trapClick: false,
     autoActivate,
     cursor: LASSO_TOOL_CURSOR,
@@ -38554,14 +38726,14 @@ LassoTool.prototype.isActive = function() {
   var context = this._dragging.context();
   return context && /^lasso/.test(context.prefix);
 };
-function toBBox(event2) {
+function toBBox(event3) {
   var start = {
-    x: event2.x - event2.dx,
-    y: event2.y - event2.dy
+    x: event3.x - event3.dx,
+    y: event3.y - event3.dy
   };
   var end = {
-    x: event2.x,
-    y: event2.y
+    x: event3.x,
+    y: event3.y
   };
   var bbox;
   if (start.x <= end.x && start.y < end.y || start.x < end.x && start.y <= end.y) {
@@ -38624,11 +38796,11 @@ function HandTool(eventBus, canvas, dragging, injector, toolManager, mouse) {
     tool: "hand",
     dragging: "hand.move"
   });
-  eventBus.on("element.mousedown", HIGH_PRIORITY19, function(event2) {
-    if (!hasPrimaryModifier(event2)) {
+  eventBus.on("element.mousedown", HIGH_PRIORITY19, function(event3) {
+    if (!hasPrimaryModifier(event3)) {
       return;
     }
-    self2.activateMove(event2.originalEvent, true);
+    self2.activateMove(event3.originalEvent, true);
     return false;
   });
   keyboard && keyboard.addListener(HIGH_PRIORITY19, function(e7) {
@@ -38644,27 +38816,27 @@ function HandTool(eventBus, canvas, dragging, injector, toolManager, mouse) {
     }
     self2.toggle();
   }, "keyboard.keyup");
-  eventBus.on("hand.end", function(event2) {
-    var target = event2.originalEvent.target;
-    if (!event2.hover && !(target instanceof SVGElement)) {
+  eventBus.on("hand.end", function(event3) {
+    var target = event3.originalEvent.target;
+    if (!event3.hover && !(target instanceof SVGElement)) {
       return false;
     }
     eventBus.once("hand.ended", function() {
-      self2.activateMove(event2.originalEvent, { reactivate: true });
+      self2.activateMove(event3.originalEvent, { reactivate: true });
     });
   });
-  eventBus.on("hand.move.move", function(event2) {
+  eventBus.on("hand.move.move", function(event3) {
     var scale = canvas.viewbox().scale;
     canvas.scroll({
-      dx: event2.dx * scale,
-      dy: event2.dy * scale
+      dx: event3.dx * scale,
+      dy: event3.dy * scale
     });
   });
-  eventBus.on("hand.move.end", function(event2) {
-    var context = event2.context, reactivate = context.reactivate;
-    if (!hasPrimaryModifier(event2) && reactivate) {
-      eventBus.once("hand.move.ended", function(event3) {
-        self2.activateHand(event3.originalEvent, true, true);
+  eventBus.on("hand.move.end", function(event3) {
+    var context = event3.context, reactivate = context.reactivate;
+    if (!hasPrimaryModifier(event3) && reactivate) {
+      eventBus.once("hand.move.ended", function(event4) {
+        self2.activateHand(event4.originalEvent, true, true);
       });
     }
     return false;
@@ -38678,12 +38850,12 @@ HandTool.$inject = [
   "toolManager",
   "mouse"
 ];
-HandTool.prototype.activateMove = function(event2, autoActivate, context) {
+HandTool.prototype.activateMove = function(event3, autoActivate, context) {
   if (typeof autoActivate === "object") {
     context = autoActivate;
     autoActivate = false;
   }
-  this._dragging.init(event2, "hand.move", {
+  this._dragging.init(event3, "hand.move", {
     autoActivate,
     cursor: HAND_CURSOR,
     data: {
@@ -38691,8 +38863,8 @@ HandTool.prototype.activateMove = function(event2, autoActivate, context) {
     }
   });
 };
-HandTool.prototype.activateHand = function(event2, autoActivate, reactivate) {
-  this._dragging.init(event2, "hand", {
+HandTool.prototype.activateHand = function(event3, autoActivate, reactivate) {
+  this._dragging.init(event3, "hand", {
     trapClick: false,
     autoActivate,
     cursor: HAND_CURSOR,
@@ -38743,8 +38915,8 @@ function GlobalConnect(eventBus, dragging, connect, canvas, toolManager, rules, 
     tool: "global-connect",
     dragging: "global-connect.drag"
   });
-  eventBus.on("global-connect.hover", function(event2) {
-    var context = event2.context, startTarget = event2.hover;
+  eventBus.on("global-connect.hover", function(event3) {
+    var context = event3.context, startTarget = event3.hover;
     var canStartConnect = context.canStartConnect = self2.canStartConnect(startTarget);
     if (canStartConnect === null) {
       return;
@@ -38752,16 +38924,16 @@ function GlobalConnect(eventBus, dragging, connect, canvas, toolManager, rules, 
     context.startTarget = startTarget;
     canvas.addMarker(startTarget, canStartConnect ? MARKER_OK5 : MARKER_NOT_OK5);
   });
-  eventBus.on(["global-connect.out", "global-connect.cleanup"], function(event2) {
-    var startTarget = event2.context.startTarget, canStartConnect = event2.context.canStartConnect;
+  eventBus.on(["global-connect.out", "global-connect.cleanup"], function(event3) {
+    var startTarget = event3.context.startTarget, canStartConnect = event3.context.canStartConnect;
     if (startTarget) {
       canvas.removeMarker(startTarget, canStartConnect ? MARKER_OK5 : MARKER_NOT_OK5);
     }
   });
-  eventBus.on(["global-connect.ended"], function(event2) {
-    var context = event2.context, startTarget = context.startTarget, startPosition = {
-      x: event2.x,
-      y: event2.y
+  eventBus.on(["global-connect.ended"], function(event3) {
+    var context = event3.context, startTarget = context.startTarget, startPosition = {
+      x: event3.x,
+      y: event3.y
     };
     var canStartConnect = self2.canStartConnect(startTarget);
     if (!canStartConnect) {
@@ -38785,8 +38957,8 @@ GlobalConnect.$inject = [
   "rules",
   "mouse"
 ];
-GlobalConnect.prototype.start = function(event2, autoActivate) {
-  this._dragging.init(event2, "global-connect", {
+GlobalConnect.prototype.start = function(event3, autoActivate) {
+  this._dragging.init(event3, "global-connect", {
     autoActivate,
     trapClick: false,
     data: {
@@ -38846,9 +39018,9 @@ PaletteProvider.$inject = [
 PaletteProvider.prototype.getPaletteEntries = function() {
   var actions = {}, create3 = this._create, elementFactory = this._elementFactory, spaceTool = this._spaceTool, lassoTool = this._lassoTool, handTool = this._handTool, globalConnect = this._globalConnect, translate3 = this._translate;
   function createAction2(type, group, className, title, options2) {
-    function createListener(event2) {
+    function createListener(event3) {
       var shape = elementFactory.createShape(assign({ type }, options2));
-      create3.start(event2, shape);
+      create3.start(event3, shape);
     }
     return {
       group,
@@ -38860,7 +39032,7 @@ PaletteProvider.prototype.getPaletteEntries = function() {
       }
     };
   }
-  function createSubprocess(event2) {
+  function createSubprocess(event3) {
     var subProcess = elementFactory.createShape({
       type: "bpmn:SubProcess",
       x: 0,
@@ -38873,14 +39045,14 @@ PaletteProvider.prototype.getPaletteEntries = function() {
       y: 82,
       parent: subProcess
     });
-    create3.start(event2, [subProcess, startEvent], {
+    create3.start(event3, [subProcess, startEvent], {
       hints: {
         autoSelect: [subProcess]
       }
     });
   }
-  function createParticipant(event2) {
-    create3.start(event2, elementFactory.createParticipantShape());
+  function createParticipant(event3) {
+    create3.start(event3, elementFactory.createParticipantShape());
   }
   assign(actions, {
     "hand-tool": {
@@ -38888,8 +39060,8 @@ PaletteProvider.prototype.getPaletteEntries = function() {
       className: "bpmn-icon-hand-tool",
       title: translate3("Activate hand tool"),
       action: {
-        click: function(event2) {
-          handTool.activateHand(event2);
+        click: function(event3) {
+          handTool.activateHand(event3);
         }
       }
     },
@@ -38898,8 +39070,8 @@ PaletteProvider.prototype.getPaletteEntries = function() {
       className: "bpmn-icon-lasso-tool",
       title: translate3("Activate lasso tool"),
       action: {
-        click: function(event2) {
-          lassoTool.activateSelection(event2);
+        click: function(event3) {
+          lassoTool.activateSelection(event3);
         }
       }
     },
@@ -38908,8 +39080,8 @@ PaletteProvider.prototype.getPaletteEntries = function() {
       className: "bpmn-icon-space-tool",
       title: translate3("Activate create/remove space tool"),
       action: {
-        click: function(event2) {
-          spaceTool.activateSelection(event2);
+        click: function(event3) {
+          spaceTool.activateSelection(event3);
         }
       }
     },
@@ -38918,8 +39090,8 @@ PaletteProvider.prototype.getPaletteEntries = function() {
       className: "bpmn-icon-connection-multi",
       title: translate3("Activate global connect tool"),
       action: {
-        click: function(event2) {
-          globalConnect.start(event2);
+        click: function(event3) {
+          globalConnect.start(event3);
         }
       }
     },
@@ -39052,8 +39224,8 @@ function BpmnReplacePreview(eventBus, elementRegistry, elementFactory, canvas, p
       }
     });
   }
-  eventBus.on("shape.move.move", LOW_PRIORITY27, function(event2) {
-    var context = event2.context, canExecute = context.canExecute;
+  eventBus.on("shape.move.move", LOW_PRIORITY27, function(event3) {
+    var context = event3.context, canExecute = context.canExecute;
     if (!context.visualReplacements) {
       context.visualReplacements = {};
     }
@@ -39095,16 +39267,16 @@ function BpmnConnectSnapping(eventBus) {
     "connect.hover",
     "connect.move",
     "connect.end"
-  ], HIGHER_PRIORITY3, function(event2) {
-    var context = event2.context, canExecute = context.canExecute, start = context.start, hover = context.hover, source = context.source, target = context.target;
-    if (event2.originalEvent && isCmd(event2.originalEvent)) {
+  ], HIGHER_PRIORITY3, function(event3) {
+    var context = event3.context, canExecute = context.canExecute, start = context.start, hover = context.hover, source = context.source, target = context.target;
+    if (event3.originalEvent && isCmd(event3.originalEvent)) {
       return;
     }
     if (!context.initialConnectionStart) {
       context.initialConnectionStart = context.connectionStart;
     }
     if (canExecute && hover) {
-      snapToShape(event2, hover, getTargetBoundsPadding(hover));
+      snapToShape(event3, hover, getTargetBoundsPadding(hover));
     }
     if (hover && isAnyType(canExecute, [
       "bpmn:Association",
@@ -39114,20 +39286,20 @@ function BpmnConnectSnapping(eventBus) {
     ])) {
       context.connectionStart = mid(start);
       if (isAny(hover, ["bpmn:Event", "bpmn:Gateway"])) {
-        snapToPosition(event2, mid(hover));
+        snapToPosition(event3, mid(hover));
       }
       if (isAny(hover, ["bpmn:Task", "bpmn:SubProcess"])) {
-        snapToTargetMid(event2, hover);
+        snapToTargetMid(event3, hover);
       }
       if (is(source, "bpmn:BoundaryEvent") && target === source.host) {
-        snapBoundaryEventLoop(event2);
+        snapBoundaryEventLoop(event3);
       }
     } else if (isType(canExecute, "bpmn:MessageFlow")) {
       if (is(start, "bpmn:Event")) {
         context.connectionStart = mid(start);
       }
       if (is(hover, "bpmn:Event")) {
-        snapToPosition(event2, mid(hover));
+        snapToPosition(event3, mid(hover));
       }
     } else {
       context.connectionStart = context.initialConnectionStart;
@@ -39135,26 +39307,26 @@ function BpmnConnectSnapping(eventBus) {
   });
 }
 BpmnConnectSnapping.$inject = ["eventBus"];
-function snapToShape(event2, target, padding) {
+function snapToShape(event3, target, padding) {
   AXES.forEach(function(axis) {
     var dimensionForAxis = getDimensionForAxis(axis, target);
-    if (event2[axis] < target[axis] + padding) {
-      setSnapped(event2, axis, target[axis] + padding);
-    } else if (event2[axis] > target[axis] + dimensionForAxis - padding) {
-      setSnapped(event2, axis, target[axis] + dimensionForAxis - padding);
+    if (event3[axis] < target[axis] + padding) {
+      setSnapped(event3, axis, target[axis] + padding);
+    } else if (event3[axis] > target[axis] + dimensionForAxis - padding) {
+      setSnapped(event3, axis, target[axis] + dimensionForAxis - padding);
     }
   });
 }
-function snapToTargetMid(event2, target) {
+function snapToTargetMid(event3, target) {
   var targetMid = mid(target);
   AXES.forEach(function(axis) {
-    if (isMid(event2, target, axis)) {
-      setSnapped(event2, axis, targetMid[axis]);
+    if (isMid(event3, target, axis)) {
+      setSnapped(event3, axis, targetMid[axis]);
     }
   });
 }
-function snapBoundaryEventLoop(event2) {
-  var context = event2.context, source = context.source, target = context.target;
+function snapBoundaryEventLoop(event3) {
+  var context = event3.context, source = context.source, target = context.target;
   if (isReverse3(context)) {
     return;
   }
@@ -39166,20 +39338,20 @@ function snapBoundaryEventLoop(event2) {
     axes.push("y");
   }
   axes.forEach(function(axis) {
-    var coordinate = event2[axis], newCoordinate;
+    var coordinate = event3[axis], newCoordinate;
     if (abs8(coordinate - sourceMid[axis]) < BOUNDARY_TO_HOST_THRESHOLD2) {
       if (coordinate > sourceMid[axis]) {
         newCoordinate = sourceMid[axis] + BOUNDARY_TO_HOST_THRESHOLD2;
       } else {
         newCoordinate = sourceMid[axis] - BOUNDARY_TO_HOST_THRESHOLD2;
       }
-      setSnapped(event2, axis, newCoordinate);
+      setSnapped(event3, axis, newCoordinate);
     }
   });
 }
-function snapToPosition(event2, position) {
-  setSnapped(event2, "x", position.x);
-  setSnapped(event2, "y", position.y);
+function snapToPosition(event3, position) {
+  setSnapped(event3, "x", position.x);
+  setSnapped(event3, "y", position.y);
 }
 function isType(attrs, type) {
   return attrs && attrs.type === type;
@@ -39199,8 +39371,8 @@ function getTargetBoundsPadding(target) {
     return TARGET_BOUNDS_PADDING;
   }
 }
-function isMid(event2, target, axis) {
-  return event2[axis] > target[axis] + TARGET_CENTER_PADDING && event2[axis] < target[axis] + getDimensionForAxis(axis, target) - TARGET_CENTER_PADDING;
+function isMid(event3, target, axis) {
+  return event3[axis] > target[axis] + TARGET_CENTER_PADDING && event3[axis] < target[axis] + getDimensionForAxis(axis, target) - TARGET_CENTER_PADDING;
 }
 function isReverse3(context) {
   var hover = context.hover, source = context.source;
@@ -39281,20 +39453,20 @@ function CreateMoveSnapping(elementRegistry, eventBus, snapping) {
   eventBus.on([
     "create.start",
     "shape.move.start"
-  ], function(event2) {
-    self2.initSnap(event2);
+  ], function(event3) {
+    self2.initSnap(event3);
   });
   eventBus.on([
     "create.move",
     "create.end",
     "shape.move.move",
     "shape.move.end"
-  ], HIGHER_PRIORITY4, function(event2) {
-    var context = event2.context, shape = context.shape, snapContext = context.snapContext, target = context.target;
-    if (event2.originalEvent && isCmd(event2.originalEvent)) {
+  ], HIGHER_PRIORITY4, function(event3) {
+    var context = event3.context, shape = context.shape, snapContext = context.snapContext, target = context.target;
+    if (event3.originalEvent && isCmd(event3.originalEvent)) {
       return;
     }
-    if (isSnapped(event2) || !target) {
+    if (isSnapped(event3) || !target) {
       return;
     }
     var snapPoints = snapContext.pointsForTarget(target);
@@ -39302,7 +39474,7 @@ function CreateMoveSnapping(elementRegistry, eventBus, snapping) {
       snapPoints = self2.addSnapTargetPoints(snapPoints, shape, target);
       snapPoints.initialized = true;
     }
-    snapping.snap(event2, snapPoints);
+    snapping.snap(event3, snapPoints);
   });
   eventBus.on([
     "create.cleanup",
@@ -39316,19 +39488,19 @@ CreateMoveSnapping.$inject = [
   "eventBus",
   "snapping"
 ];
-CreateMoveSnapping.prototype.initSnap = function(event2) {
+CreateMoveSnapping.prototype.initSnap = function(event3) {
   var elementRegistry = this._elementRegistry;
-  var context = event2.context, shape = context.shape, snapContext = context.snapContext;
+  var context = event3.context, shape = context.shape, snapContext = context.snapContext;
   if (!snapContext) {
     snapContext = context.snapContext = new SnapContext();
   }
   var shapeMid;
   if (elementRegistry.get(shape.id)) {
-    shapeMid = mid(shape, event2);
+    shapeMid = mid(shape, event3);
   } else {
     shapeMid = {
-      x: event2.x + mid(shape).x,
-      y: event2.y + mid(shape).y
+      x: event3.x + mid(shape).x,
+      y: event3.y + mid(shape).y
     };
   }
   var shapeTopLeft = {
@@ -39339,19 +39511,19 @@ CreateMoveSnapping.prototype.initSnap = function(event2) {
     y: shapeMid.y + shape.height / 2
   };
   snapContext.setSnapOrigin("mid", {
-    x: shapeMid.x - event2.x,
-    y: shapeMid.y - event2.y
+    x: shapeMid.x - event3.x,
+    y: shapeMid.y - event3.y
   });
   if (isLabel(shape)) {
     return snapContext;
   }
   snapContext.setSnapOrigin("top-left", {
-    x: shapeTopLeft.x - event2.x,
-    y: shapeTopLeft.y - event2.y
+    x: shapeTopLeft.x - event3.x,
+    y: shapeTopLeft.y - event3.y
   });
   snapContext.setSnapOrigin("bottom-right", {
-    x: shapeBottomRight.x - event2.x,
-    y: shapeBottomRight.y - event2.y
+    x: shapeBottomRight.x - event3.x,
+    y: shapeBottomRight.y - event3.y
   });
   return snapContext;
 };
@@ -39403,11 +39575,11 @@ function BpmnCreateMoveSnapping(eventBus, injector) {
     "create.end",
     "shape.move.move",
     "shape.move.end"
-  ], HIGH_PRIORITY20, function(event2) {
-    var context = event2.context, canExecute = context.canExecute, target = context.target;
+  ], HIGH_PRIORITY20, function(event3) {
+    var context = event3.context, canExecute = context.canExecute, target = context.target;
     var canAttach2 = canExecute && (canExecute === "attach" || canExecute.attach);
-    if (canAttach2 && !isSnapped(event2)) {
-      snapBoundaryEvent(event2, target);
+    if (canAttach2 && !isSnapped(event3)) {
+      snapBoundaryEvent(event3, target);
     }
   });
 }
@@ -39416,19 +39588,19 @@ BpmnCreateMoveSnapping.$inject = [
   "eventBus",
   "injector"
 ];
-BpmnCreateMoveSnapping.prototype.initSnap = function(event2) {
-  var snapContext = CreateMoveSnapping.prototype.initSnap.call(this, event2);
-  var shape = event2.shape;
+BpmnCreateMoveSnapping.prototype.initSnap = function(event3) {
+  var snapContext = CreateMoveSnapping.prototype.initSnap.call(this, event3);
+  var shape = event3.shape;
   var isMove = !!this._elementRegistry.get(shape.id);
   forEach(shape.outgoing, function(connection) {
     var docking = connection.waypoints[0];
     docking = docking.original || docking;
-    snapContext.setSnapOrigin(connection.id + "-docking", getDockingSnapOrigin(docking, isMove, event2));
+    snapContext.setSnapOrigin(connection.id + "-docking", getDockingSnapOrigin(docking, isMove, event3));
   });
   forEach(shape.incoming, function(connection) {
     var docking = connection.waypoints[connection.waypoints.length - 1];
     docking = docking.original || docking;
-    snapContext.setSnapOrigin(connection.id + "-docking", getDockingSnapOrigin(docking, isMove, event2));
+    snapContext.setSnapOrigin(connection.id + "-docking", getDockingSnapOrigin(docking, isMove, event3));
   });
   if (is(shape, "bpmn:Participant")) {
     snapContext.setSnapLocations(["top-left", "bottom-right", "mid"]);
@@ -39473,10 +39645,10 @@ BpmnCreateMoveSnapping.prototype.getSnapTargets = function(shape, target) {
     return !is(snapTarget, "bpmn:Lane");
   });
 };
-function snapBoundaryEvent(event2, target) {
+function snapBoundaryEvent(event3, target) {
   var targetTRBL = asTRBL(target);
-  var direction = getBoundaryAttachment(event2, target);
-  var context = event2.context, shape = context.shape;
+  var direction = getBoundaryAttachment(event3, target);
+  var context = event3.context, shape = context.shape;
   var offset;
   if (shape.parent) {
     offset = { x: 0, y: 0 };
@@ -39484,14 +39656,14 @@ function snapBoundaryEvent(event2, target) {
     offset = getMid(shape);
   }
   if (/top/.test(direction)) {
-    setSnapped(event2, "y", targetTRBL.top - offset.y);
+    setSnapped(event3, "y", targetTRBL.top - offset.y);
   } else if (/bottom/.test(direction)) {
-    setSnapped(event2, "y", targetTRBL.bottom - offset.y);
+    setSnapped(event3, "y", targetTRBL.bottom - offset.y);
   }
   if (/left/.test(direction)) {
-    setSnapped(event2, "x", targetTRBL.left - offset.x);
+    setSnapped(event3, "x", targetTRBL.left - offset.x);
   } else if (/right/.test(direction)) {
-    setSnapped(event2, "x", targetTRBL.right - offset.x);
+    setSnapped(event3, "x", targetTRBL.right - offset.x);
   }
 }
 function areAll(elements, type) {
@@ -39505,26 +39677,26 @@ function isContainer(element) {
   }
   return is(element, "bpmn:Participant");
 }
-function setSnappedIfConstrained(event2) {
-  var context = event2.context, createConstraints = context.createConstraints;
+function setSnappedIfConstrained(event3) {
+  var context = event3.context, createConstraints = context.createConstraints;
   if (!createConstraints) {
     return;
   }
   var top = createConstraints.top, right = createConstraints.right, bottom = createConstraints.bottom, left = createConstraints.left;
-  if (left && left >= event2.x || right && right <= event2.x) {
-    setSnapped(event2, "x", event2.x);
+  if (left && left >= event3.x || right && right <= event3.x) {
+    setSnapped(event3, "x", event3.x);
   }
-  if (top && top >= event2.y || bottom && bottom <= event2.y) {
-    setSnapped(event2, "y", event2.y);
+  if (top && top >= event3.y || bottom && bottom <= event3.y) {
+    setSnapped(event3, "y", event3.y);
   }
 }
 function includes9(array, value) {
   return array.indexOf(value) !== -1;
 }
-function getDockingSnapOrigin(docking, isMove, event2) {
+function getDockingSnapOrigin(docking, isMove, event3) {
   return isMove ? {
-    x: docking.x - event2.x,
-    y: docking.y - event2.y
+    x: docking.x - event3.x,
+    y: docking.y - event3.y
   } : {
     x: docking.x,
     y: docking.y
@@ -39535,18 +39707,18 @@ function getDockingSnapOrigin(docking, isMove, event2) {
 var HIGHER_PRIORITY5 = 1250;
 function ResizeSnapping(eventBus, snapping) {
   var self2 = this;
-  eventBus.on(["resize.start"], function(event2) {
-    self2.initSnap(event2);
+  eventBus.on(["resize.start"], function(event3) {
+    self2.initSnap(event3);
   });
   eventBus.on([
     "resize.move",
     "resize.end"
-  ], HIGHER_PRIORITY5, function(event2) {
-    var context = event2.context, shape = context.shape, parent = shape.parent, direction = context.direction, snapContext = context.snapContext;
-    if (event2.originalEvent && isCmd(event2.originalEvent)) {
+  ], HIGHER_PRIORITY5, function(event3) {
+    var context = event3.context, shape = context.shape, parent = shape.parent, direction = context.direction, snapContext = context.snapContext;
+    if (event3.originalEvent && isCmd(event3.originalEvent)) {
       return;
     }
-    if (isSnapped(event2)) {
+    if (isSnapped(event3)) {
       return;
     }
     var snapPoints = snapContext.pointsForTarget(parent);
@@ -39555,26 +39727,26 @@ function ResizeSnapping(eventBus, snapping) {
       snapPoints.initialized = true;
     }
     if (isHorizontal4(direction)) {
-      setSnapped(event2, "x", event2.x);
+      setSnapped(event3, "x", event3.x);
     }
     if (isVertical(direction)) {
-      setSnapped(event2, "y", event2.y);
+      setSnapped(event3, "y", event3.y);
     }
-    snapping.snap(event2, snapPoints);
+    snapping.snap(event3, snapPoints);
   });
   eventBus.on(["resize.cleanup"], function() {
     snapping.hide();
   });
 }
-ResizeSnapping.prototype.initSnap = function(event2) {
-  var context = event2.context, shape = context.shape, direction = context.direction, snapContext = context.snapContext;
+ResizeSnapping.prototype.initSnap = function(event3) {
+  var context = event3.context, shape = context.shape, direction = context.direction, snapContext = context.snapContext;
   if (!snapContext) {
     snapContext = context.snapContext = new SnapContext();
   }
   var snapOrigin = getSnapOrigin(shape, direction);
   snapContext.setSnapOrigin("corner", {
-    x: snapOrigin.x - event2.x,
-    y: snapOrigin.y - event2.y
+    x: snapOrigin.x - event3.x,
+    y: snapOrigin.y - event3.y
   });
   return snapContext;
 };
@@ -39635,17 +39807,17 @@ function Snapping(canvas) {
   this._asyncHide = debounce(bind(this.hide, this), SNAP_LINE_HIDE_DELAY);
 }
 Snapping.$inject = ["canvas"];
-Snapping.prototype.snap = function(event2, snapPoints) {
-  var context = event2.context, snapContext = context.snapContext, snapLocations = snapContext.getSnapLocations();
+Snapping.prototype.snap = function(event3, snapPoints) {
+  var context = event3.context, snapContext = context.snapContext, snapLocations = snapContext.getSnapLocations();
   var snapping = {
-    x: isSnapped(event2, "x"),
-    y: isSnapped(event2, "y")
+    x: isSnapped(event3, "x"),
+    y: isSnapped(event3, "y")
   };
   forEach(snapLocations, function(location) {
     var snapOrigin = snapContext.getSnapOrigin(location);
     var snapCurrent = {
-      x: event2.x + snapOrigin.x,
-      y: event2.y + snapOrigin.y
+      x: event3.x + snapOrigin.x,
+      y: event3.y + snapOrigin.y
     };
     forEach(["x", "y"], function(axis) {
       var locationSnapping;
@@ -39668,7 +39840,7 @@ Snapping.prototype.snap = function(event2, snapPoints) {
   forEach(["x", "y"], function(axis) {
     var axisSnapping = snapping[axis];
     if (isObject(axisSnapping)) {
-      setSnapped(event2, axis, axisSnapping.originValue);
+      setSnapped(event3, axis, axisSnapping.originValue);
     }
   });
 };
@@ -39747,7 +39919,7 @@ var snapping_default2 = {
 };
 
 // node_modules/diagram-js/lib/features/search-pad/SearchPad.js
-function SearchPad(canvas, eventBus, overlays, selection2) {
+function SearchPad(canvas, eventBus, overlays, selection2, translate3) {
   this._open = false;
   this._results = [];
   this._eventMaps = [];
@@ -39755,7 +39927,8 @@ function SearchPad(canvas, eventBus, overlays, selection2) {
   this._eventBus = eventBus;
   this._overlays = overlays;
   this._selection = selection2;
-  this._container = domify$1(SearchPad.BOX_HTML);
+  this._translate = translate3;
+  this._container = this._getBoxHtml();
   this._searchInput = query(SearchPad.INPUT_SELECTOR, this._container);
   this._resultsContainer = query(SearchPad.RESULTS_CONTAINER_SELECTOR, this._container);
   this._canvas.getContainer().appendChild(this._container);
@@ -39765,7 +39938,8 @@ SearchPad.$inject = [
   "canvas",
   "eventBus",
   "overlays",
-  "selection"
+  "selection",
+  "translate"
 ];
 SearchPad.prototype._bindEvents = function() {
   var self2 = this;
@@ -39821,8 +39995,8 @@ SearchPad.prototype._bindEvents = function() {
   });
 };
 SearchPad.prototype._unbindEvents = function() {
-  this._eventMaps.forEach(function(m6) {
-    delegate.unbind(m6.el, m6.type, m6.listener);
+  this._eventMaps.forEach(function(m5) {
+    delegate.unbind(m5.el, m5.type, m5.listener);
   });
 };
 SearchPad.prototype._search = function(pattern) {
@@ -39960,6 +40134,14 @@ SearchPad.prototype._resetOverlay = function(element) {
     this._overlayId = this._overlays.add(element, overlay);
   }
 };
+SearchPad.prototype._getBoxHtml = function() {
+  const box = domify$1(SearchPad.BOX_HTML);
+  const input = query(SearchPad.INPUT_SELECTOR, box);
+  if (input) {
+    input.setAttribute("aria-label", this._translate("Search in diagram"));
+  }
+  return box;
+};
 function constructOverlay(box) {
   var offset = 6;
   var w6 = box.width + offset * 2;
@@ -40013,6 +40195,7 @@ SearchPad.RESULT_SECONDARY_HTML = '<p class="djs-search-result-secondary"></p>';
 // node_modules/diagram-js/lib/features/search-pad/index.js
 var search_pad_default = {
   __depends__: [
+    translate_default,
     overlays_default,
     selection_default
   ],
@@ -40140,7 +40323,6 @@ Modeler.prototype._modelingModules = [
   modeling_default,
   modeling_feedback_default,
   move_default,
-  outline_default2,
   palette_default2,
   replace_preview_default,
   resize_default,
@@ -40189,7 +40371,7 @@ function d3(n4, t7, i7, o5, r7) {
   var f6 = { type: n4, props: t7, key: i7, ref: o5, __k: null, __: null, __b: 0, __e: null, __d: void 0, __c: null, constructor: void 0, __v: null == r7 ? ++u3 : r7, __i: -1, __u: 0 };
   return null == r7 && null != l3.vnode && l3.vnode(f6), f6;
 }
-function _2() {
+function _3() {
   return { current: null };
 }
 function g3(n4) {
@@ -40198,13 +40380,13 @@ function g3(n4) {
 function b3(n4, l5) {
   this.props = n4, this.context = l5;
 }
-function m4(n4, l5) {
+function m3(n4, l5) {
   if (null == l5)
-    return n4.__ ? m4(n4.__, n4.__i + 1) : null;
+    return n4.__ ? m3(n4.__, n4.__i + 1) : null;
   for (var u6; l5 < n4.__k.length; l5++)
     if (null != (u6 = n4.__k[l5]) && null != u6.__e)
       return u6.__e;
-  return "function" == typeof n4.type ? m4(n4) : null;
+  return "function" == typeof n4.type ? m3(n4) : null;
 }
 function k3(n4) {
   var l5, u6;
@@ -40218,27 +40400,27 @@ function k3(n4) {
   }
 }
 function w3(n4) {
-  (!n4.__d && (n4.__d = true) && i3.push(n4) && !x2.__r++ || o3 !== l3.debounceRendering) && ((o3 = l3.debounceRendering) || r4)(x2);
+  (!n4.__d && (n4.__d = true) && i3.push(n4) && !x3.__r++ || o3 !== l3.debounceRendering) && ((o3 = l3.debounceRendering) || r4)(x3);
 }
-function x2() {
+function x3() {
   var n4, u6, t7, o5, r7, e7, c5, s5, a6;
   for (i3.sort(f3); n4 = i3.shift(); )
-    n4.__d && (u6 = i3.length, o5 = void 0, e7 = (r7 = (t7 = n4).__v).__e, s5 = [], a6 = [], (c5 = t7.__P) && ((o5 = v3({}, r7)).__v = r7.__v + 1, l3.vnode && l3.vnode(o5), L2(c5, o5, r7, t7.__n, void 0 !== c5.ownerSVGElement, 32 & r7.__u ? [e7] : null, s5, null == e7 ? m4(r7) : e7, !!(32 & r7.__u), a6), o5.__.__k[o5.__i] = o5, M2(s5, o5, a6), o5.__e != e7 && k3(o5)), i3.length > u6 && i3.sort(f3));
-  x2.__r = 0;
+    n4.__d && (u6 = i3.length, o5 = void 0, e7 = (r7 = (t7 = n4).__v).__e, s5 = [], a6 = [], (c5 = t7.__P) && ((o5 = v3({}, r7)).__v = r7.__v + 1, l3.vnode && l3.vnode(o5), L2(c5, o5, r7, t7.__n, void 0 !== c5.ownerSVGElement, 32 & r7.__u ? [e7] : null, s5, null == e7 ? m3(r7) : e7, !!(32 & r7.__u), a6), o5.__.__k[o5.__i] = o5, M2(s5, o5, a6), o5.__e != e7 && k3(o5)), i3.length > u6 && i3.sort(f3));
+  x3.__r = 0;
 }
-function C(n4, l5, u6, t7, i7, o5, r7, f6, e7, a6, h5) {
-  var v5, p5, y5, d5, _4, g6 = t7 && t7.__k || s3, b5 = l5.length;
-  for (u6.__d = e7, P2(u6, l5, g6), e7 = u6.__d, v5 = 0; v5 < b5; v5++)
-    null != (y5 = u6.__k[v5]) && "boolean" != typeof y5 && "function" != typeof y5 && (p5 = -1 === y5.__i ? c3 : g6[y5.__i] || c3, y5.__i = v5, L2(n4, y5, p5, i7, o5, r7, f6, e7, a6, h5), d5 = y5.__e, y5.ref && p5.ref != y5.ref && (p5.ref && z3(p5.ref, null, y5), h5.push(y5.ref, y5.__c || d5, y5)), null == _4 && null != d5 && (_4 = d5), 65536 & y5.__u || p5.__k === y5.__k ? e7 = S2(y5, e7, n4) : "function" == typeof y5.type && void 0 !== y5.__d ? e7 = y5.__d : d5 && (e7 = d5.nextSibling), y5.__d = void 0, y5.__u &= -196609);
-  u6.__d = e7, u6.__e = _4;
+function C3(n4, l5, u6, t7, i7, o5, r7, f6, e7, a6, h5) {
+  var v5, p5, y5, d5, _5, g6 = t7 && t7.__k || s3, b5 = l5.length;
+  for (u6.__d = e7, P3(u6, l5, g6), e7 = u6.__d, v5 = 0; v5 < b5; v5++)
+    null != (y5 = u6.__k[v5]) && "boolean" != typeof y5 && "function" != typeof y5 && (p5 = -1 === y5.__i ? c3 : g6[y5.__i] || c3, y5.__i = v5, L2(n4, y5, p5, i7, o5, r7, f6, e7, a6, h5), d5 = y5.__e, y5.ref && p5.ref != y5.ref && (p5.ref && z3(p5.ref, null, y5), h5.push(y5.ref, y5.__c || d5, y5)), null == _5 && null != d5 && (_5 = d5), 65536 & y5.__u || p5.__k === y5.__k ? e7 = S2(y5, e7, n4) : "function" == typeof y5.type && void 0 !== y5.__d ? e7 = y5.__d : d5 && (e7 = d5.nextSibling), y5.__d = void 0, y5.__u &= -196609);
+  u6.__d = e7, u6.__e = _5;
 }
-function P2(n4, l5, u6) {
+function P3(n4, l5, u6) {
   var t7, i7, o5, r7, f6, e7 = l5.length, c5 = u6.length, s5 = c5, a6 = 0;
   for (n4.__k = [], t7 = 0; t7 < e7; t7++)
-    null != (i7 = n4.__k[t7] = null == (i7 = l5[t7]) || "boolean" == typeof i7 || "function" == typeof i7 ? null : "string" == typeof i7 || "number" == typeof i7 || "bigint" == typeof i7 || i7.constructor == String ? d3(null, i7, null, null, i7) : h3(i7) ? d3(g3, { children: i7 }, null, null, null) : void 0 === i7.constructor && i7.__b > 0 ? d3(i7.type, i7.props, i7.key, i7.ref ? i7.ref : null, i7.__v) : i7) ? (i7.__ = n4, i7.__b = n4.__b + 1, f6 = H2(i7, u6, r7 = t7 + a6, s5), i7.__i = f6, o5 = null, -1 !== f6 && (s5--, (o5 = u6[f6]) && (o5.__u |= 131072)), null == o5 || null === o5.__v ? (-1 == f6 && a6--, "function" != typeof i7.type && (i7.__u |= 65536)) : f6 !== r7 && (f6 === r7 + 1 ? a6++ : f6 > r7 ? s5 > e7 - r7 ? a6 += f6 - r7 : a6-- : a6 = f6 < r7 && f6 == r7 - 1 ? f6 - r7 : 0, f6 !== t7 + a6 && (i7.__u |= 65536))) : (o5 = u6[t7]) && null == o5.key && o5.__e && (o5.__e == n4.__d && (n4.__d = m4(o5)), N2(o5, o5, false), u6[t7] = null, s5--);
+    null != (i7 = n4.__k[t7] = null == (i7 = l5[t7]) || "boolean" == typeof i7 || "function" == typeof i7 ? null : "string" == typeof i7 || "number" == typeof i7 || "bigint" == typeof i7 || i7.constructor == String ? d3(null, i7, null, null, i7) : h3(i7) ? d3(g3, { children: i7 }, null, null, null) : void 0 === i7.constructor && i7.__b > 0 ? d3(i7.type, i7.props, i7.key, i7.ref ? i7.ref : null, i7.__v) : i7) ? (i7.__ = n4, i7.__b = n4.__b + 1, f6 = H2(i7, u6, r7 = t7 + a6, s5), i7.__i = f6, o5 = null, -1 !== f6 && (s5--, (o5 = u6[f6]) && (o5.__u |= 131072)), null == o5 || null === o5.__v ? (-1 == f6 && a6--, "function" != typeof i7.type && (i7.__u |= 65536)) : f6 !== r7 && (f6 === r7 + 1 ? a6++ : f6 > r7 ? s5 > e7 - r7 ? a6 += f6 - r7 : a6-- : a6 = f6 < r7 && f6 == r7 - 1 ? f6 - r7 : 0, f6 !== t7 + a6 && (i7.__u |= 65536))) : (o5 = u6[t7]) && null == o5.key && o5.__e && (o5.__e == n4.__d && (n4.__d = m3(o5)), N2(o5, o5, false), u6[t7] = null, s5--);
   if (s5)
     for (t7 = 0; t7 < c5; t7++)
-      null != (o5 = u6[t7]) && 0 == (131072 & o5.__u) && (o5.__e == n4.__d && (n4.__d = m4(o5)), N2(o5, o5));
+      null != (o5 = u6[t7]) && 0 == (131072 & o5.__u) && (o5.__e == n4.__d && (n4.__d = m3(o5)), N2(o5, o5));
 }
 function S2(n4, l5, u6) {
   var t7, i7;
@@ -40276,7 +40458,7 @@ function H2(n4, l5, u6, t7) {
 function I2(n4, l5, u6) {
   "-" === l5[0] ? n4.setProperty(l5, null == u6 ? "" : u6) : n4[l5] = null == u6 ? "" : "number" != typeof u6 || a3.test(l5) ? u6 : u6 + "px";
 }
-function T3(n4, l5, u6, t7, i7) {
+function T2(n4, l5, u6, t7, i7) {
   var o5;
   n:
     if ("style" === l5)
@@ -40291,7 +40473,7 @@ function T3(n4, l5, u6, t7, i7) {
             t7 && u6[l5] === t7[l5] || I2(n4.style, l5, u6[l5]);
       }
     else if ("o" === l5[0] && "n" === l5[1])
-      o5 = l5 !== (l5 = l5.replace(/(PointerCapture)$|Capture$/, "$1")), l5 = l5.toLowerCase() in n4 ? l5.toLowerCase().slice(2) : l5.slice(2), n4.l || (n4.l = {}), n4.l[l5 + o5] = u6, u6 ? t7 ? u6.u = t7.u : (u6.u = Date.now(), n4.addEventListener(l5, o5 ? D2 : A2, o5)) : n4.removeEventListener(l5, o5 ? D2 : A2, o5);
+      o5 = l5 !== (l5 = l5.replace(/(PointerCapture)$|Capture$/, "$1")), l5 = l5.toLowerCase() in n4 ? l5.toLowerCase().slice(2) : l5.slice(2), n4.l || (n4.l = {}), n4.l[l5 + o5] = u6, u6 ? t7 ? u6.u = t7.u : (u6.u = Date.now(), n4.addEventListener(l5, o5 ? D3 : A3, o5)) : n4.removeEventListener(l5, o5 ? D3 : A3, o5);
     else {
       if (i7)
         l5 = l5.replace(/xlink(H|:h)/, "h").replace(/sName$/, "s");
@@ -40304,7 +40486,7 @@ function T3(n4, l5, u6, t7, i7) {
       "function" == typeof u6 || (null == u6 || false === u6 && "-" !== l5[4] ? n4.removeAttribute(l5) : n4.setAttribute(l5, u6));
     }
 }
-function A2(n4) {
+function A3(n4) {
   var u6 = this.l[n4.type + false];
   if (n4.t) {
     if (n4.t <= u6.u)
@@ -40313,21 +40495,21 @@ function A2(n4) {
     n4.t = Date.now();
   return u6(l3.event ? l3.event(n4) : n4);
 }
-function D2(n4) {
+function D3(n4) {
   return this.l[n4.type + true](l3.event ? l3.event(n4) : n4);
 }
 function L2(n4, u6, t7, i7, o5, r7, f6, e7, c5, s5) {
-  var a6, p5, y5, d5, _4, m6, k6, w6, x5, P4, S3, $4, H4, I4, T6, A5 = u6.type;
+  var a6, p5, y5, d5, _5, m5, k6, w6, x6, P5, S3, $4, H4, I4, T5, A6 = u6.type;
   if (void 0 !== u6.constructor)
     return null;
   128 & t7.__u && (c5 = !!(32 & t7.__u), r7 = [e7 = u6.__e = t7.__e]), (a6 = l3.__b) && a6(u6);
   n:
-    if ("function" == typeof A5)
+    if ("function" == typeof A6)
       try {
-        if (w6 = u6.props, x5 = (a6 = A5.contextType) && i7[a6.__c], P4 = a6 ? x5 ? x5.props.value : a6.__ : i7, t7.__c ? k6 = (p5 = u6.__c = t7.__c).__ = p5.__E : ("prototype" in A5 && A5.prototype.render ? u6.__c = p5 = new A5(w6, P4) : (u6.__c = p5 = new b3(w6, P4), p5.constructor = A5, p5.render = O2), x5 && x5.sub(p5), p5.props = w6, p5.state || (p5.state = {}), p5.context = P4, p5.__n = i7, y5 = p5.__d = true, p5.__h = [], p5._sb = []), null == p5.__s && (p5.__s = p5.state), null != A5.getDerivedStateFromProps && (p5.__s == p5.state && (p5.__s = v3({}, p5.__s)), v3(p5.__s, A5.getDerivedStateFromProps(w6, p5.__s))), d5 = p5.props, _4 = p5.state, p5.__v = u6, y5)
-          null == A5.getDerivedStateFromProps && null != p5.componentWillMount && p5.componentWillMount(), null != p5.componentDidMount && p5.__h.push(p5.componentDidMount);
+        if (w6 = u6.props, x6 = (a6 = A6.contextType) && i7[a6.__c], P5 = a6 ? x6 ? x6.props.value : a6.__ : i7, t7.__c ? k6 = (p5 = u6.__c = t7.__c).__ = p5.__E : ("prototype" in A6 && A6.prototype.render ? u6.__c = p5 = new A6(w6, P5) : (u6.__c = p5 = new b3(w6, P5), p5.constructor = A6, p5.render = O2), x6 && x6.sub(p5), p5.props = w6, p5.state || (p5.state = {}), p5.context = P5, p5.__n = i7, y5 = p5.__d = true, p5.__h = [], p5._sb = []), null == p5.__s && (p5.__s = p5.state), null != A6.getDerivedStateFromProps && (p5.__s == p5.state && (p5.__s = v3({}, p5.__s)), v3(p5.__s, A6.getDerivedStateFromProps(w6, p5.__s))), d5 = p5.props, _5 = p5.state, p5.__v = u6, y5)
+          null == A6.getDerivedStateFromProps && null != p5.componentWillMount && p5.componentWillMount(), null != p5.componentDidMount && p5.__h.push(p5.componentDidMount);
         else {
-          if (null == A5.getDerivedStateFromProps && w6 !== d5 && null != p5.componentWillReceiveProps && p5.componentWillReceiveProps(w6, P4), !p5.__e && (null != p5.shouldComponentUpdate && false === p5.shouldComponentUpdate(w6, p5.__s, P4) || u6.__v === t7.__v)) {
+          if (null == A6.getDerivedStateFromProps && w6 !== d5 && null != p5.componentWillReceiveProps && p5.componentWillReceiveProps(w6, P5), !p5.__e && (null != p5.shouldComponentUpdate && false === p5.shouldComponentUpdate(w6, p5.__s, P5) || u6.__v === t7.__v)) {
             for (u6.__v !== t7.__v && (p5.props = w6, p5.state = p5.__s, p5.__d = false), u6.__e = t7.__e, u6.__k = t7.__k, u6.__k.forEach(function(n5) {
               n5 && (n5.__ = u6);
             }), S3 = 0; S3 < p5._sb.length; S3++)
@@ -40335,11 +40517,11 @@ function L2(n4, u6, t7, i7, o5, r7, f6, e7, c5, s5) {
             p5._sb = [], p5.__h.length && f6.push(p5);
             break n;
           }
-          null != p5.componentWillUpdate && p5.componentWillUpdate(w6, p5.__s, P4), null != p5.componentDidUpdate && p5.__h.push(function() {
-            p5.componentDidUpdate(d5, _4, m6);
+          null != p5.componentWillUpdate && p5.componentWillUpdate(w6, p5.__s, P5), null != p5.componentDidUpdate && p5.__h.push(function() {
+            p5.componentDidUpdate(d5, _5, m5);
           });
         }
-        if (p5.context = P4, p5.props = w6, p5.__P = n4, p5.__e = false, $4 = l3.__r, H4 = 0, "prototype" in A5 && A5.prototype.render) {
+        if (p5.context = P5, p5.props = w6, p5.__P = n4, p5.__e = false, $4 = l3.__r, H4 = 0, "prototype" in A6 && A6.prototype.render) {
           for (p5.state = p5.__s, p5.__d = false, $4 && $4(u6), a6 = p5.render(p5.props, p5.state, p5.context), I4 = 0; I4 < p5._sb.length; I4++)
             p5.__h.push(p5._sb[I4]);
           p5._sb = [];
@@ -40347,7 +40529,7 @@ function L2(n4, u6, t7, i7, o5, r7, f6, e7, c5, s5) {
           do {
             p5.__d = false, $4 && $4(u6), a6 = p5.render(p5.props, p5.state, p5.context), p5.state = p5.__s;
           } while (p5.__d && ++H4 < 25);
-        p5.state = p5.__s, null != p5.getChildContext && (i7 = v3(v3({}, i7), p5.getChildContext())), y5 || null == p5.getSnapshotBeforeUpdate || (m6 = p5.getSnapshotBeforeUpdate(d5, _4)), C(n4, h3(T6 = null != a6 && a6.type === g3 && null == a6.key ? a6.props.children : a6) ? T6 : [T6], u6, t7, i7, o5, r7, f6, e7, c5, s5), p5.base = u6.__e, u6.__u &= -161, p5.__h.length && f6.push(p5), k6 && (p5.__E = p5.__ = null);
+        p5.state = p5.__s, null != p5.getChildContext && (i7 = v3(v3({}, i7), p5.getChildContext())), y5 || null == p5.getSnapshotBeforeUpdate || (m5 = p5.getSnapshotBeforeUpdate(d5, _5)), C3(n4, h3(T5 = null != a6 && a6.type === g3 && null == a6.key ? a6.props.children : a6) ? T5 : [T5], u6, t7, i7, o5, r7, f6, e7, c5, s5), p5.base = u6.__e, u6.__u &= -161, p5.__h.length && f6.push(p5), k6 && (p5.__E = p5.__ = null);
       } catch (n5) {
         u6.__v = null, c5 || null != r7 ? (u6.__e = e7, u6.__u |= c5 ? 160 : 32, r7[r7.indexOf(e7)] = null) : (u6.__e = t7.__e, u6.__k = t7.__k), l3.__e(n5, u6, t7);
       }
@@ -40370,35 +40552,35 @@ function M2(n4, u6, t7) {
   });
 }
 function j3(l5, u6, t7, i7, o5, r7, f6, e7, s5) {
-  var a6, v5, y5, d5, _4, g6, b5, k6 = t7.props, w6 = u6.props, x5 = u6.type;
-  if ("svg" === x5 && (o5 = true), null != r7) {
+  var a6, v5, y5, d5, _5, g6, b5, k6 = t7.props, w6 = u6.props, x6 = u6.type;
+  if ("svg" === x6 && (o5 = true), null != r7) {
     for (a6 = 0; a6 < r7.length; a6++)
-      if ((_4 = r7[a6]) && "setAttribute" in _4 == !!x5 && (x5 ? _4.localName === x5 : 3 === _4.nodeType)) {
-        l5 = _4, r7[a6] = null;
+      if ((_5 = r7[a6]) && "setAttribute" in _5 == !!x6 && (x6 ? _5.localName === x6 : 3 === _5.nodeType)) {
+        l5 = _5, r7[a6] = null;
         break;
       }
   }
   if (null == l5) {
-    if (null === x5)
+    if (null === x6)
       return document.createTextNode(w6);
-    l5 = o5 ? document.createElementNS("http://www.w3.org/2000/svg", x5) : document.createElement(x5, w6.is && w6), r7 = null, e7 = false;
+    l5 = o5 ? document.createElementNS("http://www.w3.org/2000/svg", x6) : document.createElement(x6, w6.is && w6), r7 = null, e7 = false;
   }
-  if (null === x5)
+  if (null === x6)
     k6 === w6 || e7 && l5.data === w6 || (l5.data = w6);
   else {
     if (r7 = r7 && n3.call(l5.childNodes), k6 = t7.props || c3, !e7 && null != r7)
       for (k6 = {}, a6 = 0; a6 < l5.attributes.length; a6++)
-        k6[(_4 = l5.attributes[a6]).name] = _4.value;
+        k6[(_5 = l5.attributes[a6]).name] = _5.value;
     for (a6 in k6)
-      _4 = k6[a6], "children" == a6 || ("dangerouslySetInnerHTML" == a6 ? y5 = _4 : "key" === a6 || a6 in w6 || T3(l5, a6, null, _4, o5));
+      _5 = k6[a6], "children" == a6 || ("dangerouslySetInnerHTML" == a6 ? y5 = _5 : "key" === a6 || a6 in w6 || T2(l5, a6, null, _5, o5));
     for (a6 in w6)
-      _4 = w6[a6], "children" == a6 ? d5 = _4 : "dangerouslySetInnerHTML" == a6 ? v5 = _4 : "value" == a6 ? g6 = _4 : "checked" == a6 ? b5 = _4 : "key" === a6 || e7 && "function" != typeof _4 || k6[a6] === _4 || T3(l5, a6, _4, k6[a6], o5);
+      _5 = w6[a6], "children" == a6 ? d5 = _5 : "dangerouslySetInnerHTML" == a6 ? v5 = _5 : "value" == a6 ? g6 = _5 : "checked" == a6 ? b5 = _5 : "key" === a6 || e7 && "function" != typeof _5 || k6[a6] === _5 || T2(l5, a6, _5, k6[a6], o5);
     if (v5)
       e7 || y5 && (v5.__html === y5.__html || v5.__html === l5.innerHTML) || (l5.innerHTML = v5.__html), u6.__k = [];
-    else if (y5 && (l5.innerHTML = ""), C(l5, h3(d5) ? d5 : [d5], u6, t7, i7, o5 && "foreignObject" !== x5, r7, f6, r7 ? r7[0] : t7.__k && m4(t7, 0), e7, s5), null != r7)
+    else if (y5 && (l5.innerHTML = ""), C3(l5, h3(d5) ? d5 : [d5], u6, t7, i7, o5 && "foreignObject" !== x6, r7, f6, r7 ? r7[0] : t7.__k && m3(t7, 0), e7, s5), null != r7)
       for (a6 = r7.length; a6--; )
         null != r7[a6] && p3(r7[a6]);
-    e7 || (a6 = "value", void 0 !== g6 && (g6 !== l5[a6] || "progress" === x5 && !g6 || "option" === x5 && g6 !== k6[a6]) && T3(l5, a6, g6, k6[a6], false), a6 = "checked", void 0 !== b5 && b5 !== l5[a6] && T3(l5, a6, b5, k6[a6], false));
+    e7 || (a6 = "value", void 0 !== g6 && (g6 !== l5[a6] || "progress" === x6 && !g6 || "option" === x6 && g6 !== k6[a6]) && T2(l5, a6, g6, k6[a6], false), a6 = "checked", void 0 !== b5 && b5 !== l5[a6] && T2(l5, a6, b5, k6[a6], false));
   }
   return l5;
 }
@@ -40428,12 +40610,12 @@ function N2(n4, u6, t7) {
 function O2(n4, l5, u6) {
   return this.constructor(n4, u6);
 }
-function q2(u6, t7, i7) {
+function q3(u6, t7, i7) {
   var o5, r7, f6, e7;
   l3.__ && l3.__(u6, t7), r7 = (o5 = "function" == typeof i7) ? null : i7 && i7.__k || t7.__k, f6 = [], e7 = [], L2(t7, u6 = (!o5 && i7 || t7).__k = y3(g3, null, [u6]), r7 || c3, c3, void 0 !== t7.ownerSVGElement, !o5 && i7 ? [i7] : r7 ? null : t7.firstChild ? n3.call(t7.childNodes) : null, f6, !o5 && i7 ? i7 : r7 ? r7.__e : t7.firstChild, o5, e7), M2(f6, u6, e7);
 }
 function B3(n4, l5) {
-  q2(n4, l5, B3);
+  q3(n4, l5, B3);
 }
 function E(l5, u6, t7) {
   var i7, o5, r7, f6, e7 = v3({}, l5.props);
@@ -40441,7 +40623,7 @@ function E(l5, u6, t7) {
     "key" == r7 ? i7 = u6[r7] : "ref" == r7 ? o5 = u6[r7] : e7[r7] = void 0 === u6[r7] && void 0 !== f6 ? f6[r7] : u6[r7];
   return arguments.length > 2 && (e7.children = arguments.length > 3 ? n3.call(arguments, 2) : t7), d3(l5.type, e7, i7 || l5.key, o5 || l5.ref, null);
 }
-function F2(n4, l5) {
+function F3(n4, l5) {
   var u6 = { __c: l5 = "__cC" + e4++, __: n4, Consumer: function(n5, l6) {
     return n5.children(l6);
   }, Provider: function(n5) {
@@ -40481,7 +40663,7 @@ n3 = s3.slice, l3 = { __e: function(n4, l5, u6, t7) {
   this.__v && (this.__e = true, n4 && this.__h.push(n4), w3(this));
 }, b3.prototype.render = g3, i3 = [], r4 = "function" == typeof Promise ? Promise.prototype.then.bind(Promise.resolve()) : setTimeout, f3 = function(n4, l5) {
   return n4.__v.__b - l5.__v.__b;
-}, x2.__r = 0, e4 = 0;
+}, x3.__r = 0, e4 = 0;
 
 // node_modules/@bpmn-io/properties-panel/preact/hooks/dist/hooks.module.js
 var t5;
@@ -40495,7 +40677,7 @@ var e5 = l3.__b;
 var a4 = l3.__r;
 var v4 = l3.diffed;
 var l4 = l3.__c;
-var m5 = l3.unmount;
+var m4 = l3.unmount;
 function d4(t7, u6) {
   l3.__h && l3.__h(r5, t7, o4 || u6), o4 = 0;
   var i7 = r5.__H || (r5.__H = { __: [], __h: [] });
@@ -40548,12 +40730,12 @@ function y4(u6, i7) {
   var o5 = d4(t5++, 4);
   !l3.__s && z4(o5.__H, i7) && (o5.__ = u6, o5.i = i7, r5.__h.push(o5));
 }
-function _3(n4) {
-  return o4 = 5, F3(function() {
+function _4(n4) {
+  return o4 = 5, F4(function() {
     return { current: n4 };
   }, []);
 }
-function A3(n4, t7, r7) {
+function A4(n4, t7, r7) {
   o4 = 6, y4(function() {
     return "function" == typeof n4 ? (n4(t7()), function() {
       return n4(null);
@@ -40562,23 +40744,23 @@ function A3(n4, t7, r7) {
     }) : void 0;
   }, null == r7 ? r7 : r7.concat(n4));
 }
-function F3(n4, r7) {
+function F4(n4, r7) {
   var u6 = d4(t5++, 7);
   return z4(u6.__H, r7) ? (u6.__V = n4(), u6.i = r7, u6.__h = n4, u6.__V) : u6.__;
 }
-function T4(n4, t7) {
-  return o4 = 8, F3(function() {
+function T3(n4, t7) {
+  return o4 = 8, F4(function() {
     return n4;
   }, t7);
 }
-function q3(n4) {
+function q4(n4) {
   var u6 = r5.context[n4.__c], i7 = d4(t5++, 9);
   return i7.c = n4, u6 ? (null == i7.__ && (i7.__ = true, u6.sub(r5)), u6.props.value) : n4.__;
 }
-function x3(t7, r7) {
+function x4(t7, r7) {
   l3.useDebugValue && l3.useDebugValue(r7 ? r7(t7) : t7);
 }
-function V() {
+function V2() {
   var n4 = d4(t5++, 11);
   if (!n4.__) {
     for (var u6 = r5.__v; null !== u6 && !u6.__m && null !== u6.__; )
@@ -40624,7 +40806,7 @@ l3.__b = function(n4) {
     }
   }), l4 && l4(t7, r7);
 }, l3.unmount = function(t7) {
-  m5 && m5(t7);
+  m4 && m4(t7);
   var r7, u6 = t7.__c;
   u6 && u6.__H && (u6.__H.__.forEach(function(n4) {
     try {
@@ -40664,7 +40846,7 @@ function g5(n4, t7) {
     n4[e7] = t7[e7];
   return n4;
 }
-function C2(n4, t7) {
+function C4(n4, t7) {
   for (var e7 in n4)
     if ("__source" !== e7 && !(e7 in t7))
       return true;
@@ -40679,7 +40861,7 @@ function E2(n4) {
 function w5(n4, e7) {
   function r7(n5) {
     var t7 = this.props.ref, r8 = t7 == n5.ref;
-    return !r8 && t7 && (t7.call ? t7(null) : t7.current = null), e7 ? !e7(this.props, n5) || !r8 : C2(this.props, n5);
+    return !r8 && t7 && (t7.call ? t7(null) : t7.current = null), e7 ? !e7(this.props, n5) || !r8 : C4(this.props, n5);
   }
   function u6(e8) {
     return this.shouldComponentUpdate = r7, y3(n4, e8);
@@ -40687,11 +40869,11 @@ function w5(n4, e7) {
   return u6.displayName = "Memo(" + (n4.displayName || n4.name) + ")", u6.prototype.isReactComponent = true, u6.__f = true, u6;
 }
 (E2.prototype = new b3()).isPureReactComponent = true, E2.prototype.shouldComponentUpdate = function(n4, t7) {
-  return C2(this.props, n4) || C2(this.state, t7);
+  return C4(this.props, n4) || C4(this.state, t7);
 };
-var x4 = l3.__b;
+var x5 = l3.__b;
 l3.__b = function(n4) {
-  n4.type && n4.type.__f && n4.ref && (n4.props.ref = n4.ref, n4.ref = null), x4 && x4(n4);
+  n4.type && n4.type.__f && n4.ref && (n4.props.ref = n4.ref, n4.ref = null), x5 && x5(n4);
 };
 var R = "undefined" != typeof Symbol && Symbol.for && Symbol.for("react.forward_ref") || 3911;
 function N3(n4) {
@@ -40704,7 +40886,7 @@ function N3(n4) {
 var k5 = function(n4, t7) {
   return null == n4 ? null : $2($2(n4).map(t7));
 };
-var A4 = { map: k5, forEach: k5, count: function(n4) {
+var A5 = { map: k5, forEach: k5, count: function(n4) {
   return n4 ? $2(n4).length : 0;
 }, only: function(n4) {
   var t7 = $2(n4);
@@ -40721,12 +40903,12 @@ l3.__e = function(n4, t7, e7, r7) {
   }
   O3(n4, t7, e7, r7);
 };
-var T5 = l3.unmount;
-function F4(n4, t7, e7) {
+var T4 = l3.unmount;
+function F5(n4, t7, e7) {
   return n4 && (n4.__c && n4.__c.__H && (n4.__c.__H.__.forEach(function(n5) {
     "function" == typeof n5.__c && n5.__c();
   }), n4.__c.__H = null), null != (n4 = g5({}, n4)).__c && (n4.__c.__P === e7 && (n4.__c.__P = t7), n4.__c = null), n4.__k = n4.__k && n4.__k.map(function(n5) {
-    return F4(n5, t7, e7);
+    return F5(n5, t7, e7);
   })), n4;
 }
 function I3(n4, t7, e7) {
@@ -40741,7 +40923,7 @@ function U(n4) {
   var t7 = n4.__.__c;
   return t7 && t7.__a && t7.__a(n4);
 }
-function D3(n4) {
+function D4(n4) {
   var e7, r7, u6;
   function o5(o6) {
     if (e7 || (e7 = n4()).then(function(n5) {
@@ -40761,7 +40943,7 @@ function M3() {
 }
 l3.unmount = function(n4) {
   var t7 = n4.__c;
-  t7 && t7.__R && t7.__R(), t7 && 32 & n4.__u && (n4.type = null), T5 && T5(n4);
+  t7 && t7.__R && t7.__R(), t7 && 32 & n4.__u && (n4.type = null), T4 && T4(n4);
 }, (L3.prototype = new b3()).__c = function(n4, t7) {
   var e7 = t7.__c, r7 = this;
   null == r7.t && (r7.t = []), r7.t.push(e7);
@@ -40787,14 +40969,14 @@ l3.unmount = function(n4) {
   if (this.__b) {
     if (this.__v.__k) {
       var r7 = document.createElement("div"), o5 = this.__v.__k[0].__c;
-      this.__v.__k[0] = F4(this.__b, r7, o5.__O = o5.__P);
+      this.__v.__k[0] = F5(this.__b, r7, o5.__O = o5.__P);
     }
     this.__b = null;
   }
   var i7 = e7.__a && y3(g3, null, n4.fallback);
   return i7 && (i7.__u &= -33), [y3(g3, null, e7.__a ? null : n4.children), i7];
 };
-var V2 = function(n4, t7, e7) {
+var V3 = function(n4, t7, e7) {
   if (++e7[1] === e7[0] && n4.o.delete(t7), n4.props.revealOrder && ("t" !== n4.props.revealOrder[0] || !n4.o.size))
     for (e7 = n4.u; e7; ) {
       for (; e7.length > 3; )
@@ -40809,27 +40991,27 @@ function W(n4) {
     return n4.context;
   }, n4.children;
 }
-function P3(n4) {
+function P4(n4) {
   var e7 = this, r7 = n4.i;
   e7.componentWillUnmount = function() {
-    q2(null, e7.l), e7.l = null, e7.i = null;
+    q3(null, e7.l), e7.l = null, e7.i = null;
   }, e7.i && e7.i !== r7 && e7.componentWillUnmount(), e7.l || (e7.i = r7, e7.l = { nodeType: 1, parentNode: r7, childNodes: [], appendChild: function(n5) {
     this.childNodes.push(n5), e7.i.appendChild(n5);
   }, insertBefore: function(n5, t7) {
     this.childNodes.push(n5), e7.i.appendChild(n5);
   }, removeChild: function(n5) {
     this.childNodes.splice(this.childNodes.indexOf(n5) >>> 1, 1), e7.i.removeChild(n5);
-  } }), q2(y3(W, { context: e7.context }, n4.__v), e7.l);
+  } }), q3(y3(W, { context: e7.context }, n4.__v), e7.l);
 }
 function j5(n4, e7) {
-  var r7 = y3(P3, { __v: n4, i: e7 });
+  var r7 = y3(P4, { __v: n4, i: e7 });
   return r7.containerInfo = e7, r7;
 }
 (M3.prototype = new b3()).__a = function(n4) {
   var t7 = this, e7 = U(t7.__v), r7 = t7.o.get(n4);
   return r7[0]++, function(u6) {
     var o5 = function() {
-      t7.props.revealOrder ? (r7.push(u6), V2(t7, n4, r7)) : u6();
+      t7.props.revealOrder ? (r7.push(u6), V3(t7, n4, r7)) : u6();
     };
     e7 ? e7(o5) : o5();
   };
@@ -40843,7 +41025,7 @@ function j5(n4, e7) {
 }, M3.prototype.componentDidUpdate = M3.prototype.componentDidMount = function() {
   var n4 = this;
   this.o.forEach(function(t7, e7) {
-    V2(n4, e7, t7);
+    V3(n4, e7, t7);
   });
 };
 var z5 = "undefined" != typeof Symbol && Symbol.for && Symbol.for("react.element") || 60103;
@@ -40854,8 +41036,8 @@ var Y = "undefined" != typeof document;
 var $3 = function(n4) {
   return ("undefined" != typeof Symbol && "symbol" == typeof Symbol() ? /fil|che|rad/ : /fil|che|ra/).test(n4);
 };
-function q4(n4, t7, e7) {
-  return null == t7.__k && (t7.textContent = ""), q2(n4, t7), "function" == typeof e7 && e7(), n4 ? n4.__c : null;
+function q5(n4, t7, e7) {
+  return null == t7.__k && (t7.textContent = ""), q3(n4, t7), "function" == typeof e7 && e7(), n4 ? n4.__c : null;
 }
 function G(n4, t7, e7) {
   return B3(n4, t7), "function" == typeof e7 && e7(), n4 ? n4.__c : null;
@@ -40927,7 +41109,7 @@ function sn(n4) {
   return fn(n4) ? E.apply(null, arguments) : n4;
 }
 function hn(n4) {
-  return !!n4.__k && (q2(null, n4), true);
+  return !!n4.__k && (q3(null, n4), true);
 }
 function vn(n4) {
   return n4 && (n4.base || 1 === n4.nodeType && n4) || null;
@@ -40969,7 +41151,7 @@ function En(n4) {
     return true;
   }
 }
-var wn = { useState: h4, useId: V, useReducer: s4, useEffect: p4, useLayoutEffect: y4, useInsertionEffect: Sn, useTransition: bn, useDeferredValue: _n, useSyncExternalStore: Cn, startTransition: yn, useRef: _3, useImperativeHandle: A3, useMemo: F3, useCallback: T4, useContext: q3, useDebugValue: x3, version: "17.0.2", Children: A4, render: q4, hydrate: G, unmountComponentAtNode: hn, createPortal: j5, createElement: y3, createContext: F2, createFactory: cn, cloneElement: sn, createRef: _2, Fragment: g3, isValidElement: fn, isElement: gn, isFragment: an, findDOMNode: vn, Component: b3, PureComponent: E2, memo: w5, forwardRef: N3, flushSync: pn, unstable_batchedUpdates: dn, StrictMode: mn, Suspense: L3, SuspenseList: M3, lazy: D3, __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED: on };
+var wn = { useState: h4, useId: V2, useReducer: s4, useEffect: p4, useLayoutEffect: y4, useInsertionEffect: Sn, useTransition: bn, useDeferredValue: _n, useSyncExternalStore: Cn, startTransition: yn, useRef: _4, useImperativeHandle: A4, useMemo: F4, useCallback: T3, useContext: q4, useDebugValue: x4, version: "17.0.2", Children: A5, render: q5, hydrate: G, unmountComponentAtNode: hn, createPortal: j5, createElement: y3, createContext: F3, createFactory: cn, cloneElement: sn, createRef: _3, Fragment: g3, isValidElement: fn, isElement: gn, isFragment: an, findDOMNode: vn, Component: b3, PureComponent: E2, memo: w5, forwardRef: N3, flushSync: pn, unstable_batchedUpdates: dn, StrictMode: mn, Suspense: L3, SuspenseList: M3, lazy: D4, __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED: on };
 
 // node_modules/@bpmn-io/properties-panel/preact/jsx-runtime/dist/jsxRuntime.module.js
 var f5 = 0;
@@ -41607,7 +41789,7 @@ function trackVariables(context = {}, Context3 = VariableContext) {
         });
       }
       if (term === FilterExpression) {
-        const [sourcePart, _4] = variables2.children.slice(-2);
+        const [sourcePart, _5] = variables2.children.slice(-2);
         variables2 = variables2.assign({
           value: sourcePart == null ? void 0 : sourcePart.computedValue()
         });
@@ -42167,23 +42349,23 @@ var DefaultBlockParsers = {
     while (cx.nextLine() && line.depth >= cx.stack.length) {
       if (line.pos == line.text.length) {
         addCodeText(pendingMarks, cx.lineStart - 1, cx.lineStart);
-        for (let m6 of line.markers)
-          pendingMarks.push(m6);
+        for (let m5 of line.markers)
+          pendingMarks.push(m5);
       } else if (line.indent < base) {
         break;
       } else {
         if (pendingMarks.length) {
-          for (let m6 of pendingMarks) {
-            if (m6.type == Type.CodeText)
-              addCodeText(marks, m6.from, m6.to);
+          for (let m5 of pendingMarks) {
+            if (m5.type == Type.CodeText)
+              addCodeText(marks, m5.from, m5.to);
             else
-              marks.push(m6);
+              marks.push(m5);
           }
           pendingMarks = [];
         }
         addCodeText(marks, cx.lineStart - 1, cx.lineStart);
-        for (let m6 of line.markers)
-          marks.push(m6);
+        for (let m5 of line.markers)
+          marks.push(m5);
         to = cx.lineStart + line.text.length;
         let codeStart = cx.lineStart + line.findColumn(line.baseIndent + 4);
         if (codeStart < to)
@@ -42191,7 +42373,7 @@ var DefaultBlockParsers = {
       }
     }
     if (pendingMarks.length) {
-      pendingMarks = pendingMarks.filter((m6) => m6.type != Type.CodeText);
+      pendingMarks = pendingMarks.filter((m5) => m5.type != Type.CodeText);
       if (pendingMarks.length)
         line.markers = pendingMarks.concat(line.markers);
     }
@@ -42213,16 +42395,16 @@ var DefaultBlockParsers = {
         while (i7 < line.text.length && line.text.charCodeAt(i7) == ch)
           i7++;
       if (i7 - line.pos >= len && line.skipSpace(i7) == line.text.length) {
-        for (let m6 of line.markers)
-          marks.push(m6);
+        for (let m5 of line.markers)
+          marks.push(m5);
         marks.push(elt(Type.CodeMark, cx.lineStart + line.pos, cx.lineStart + i7));
         cx.nextLine();
         break;
       } else {
         if (!first2)
           addCodeText(marks, cx.lineStart - 1, cx.lineStart);
-        for (let m6 of line.markers)
-          marks.push(m6);
+        for (let m5 of line.markers)
+          marks.push(m5);
         let textStart = cx.lineStart + line.basePos, textEnd = cx.lineStart + line.text.length;
         if (textStart < textEnd)
           addCodeText(marks, textStart, textEnd);
@@ -42301,8 +42483,8 @@ var DefaultBlockParsers = {
         trailing = false;
         break;
       }
-      for (let m6 of line.markers)
-        marks.push(m6);
+      for (let m5 of line.markers)
+        marks.push(m5);
     }
     if (trailing)
       cx.nextLine();
@@ -42415,7 +42597,7 @@ var SetextHeadingParser = class {
   }
 };
 var DefaultLeafBlocks = {
-  LinkReference(_4, leaf) {
+  LinkReference(_5, leaf) {
     return leaf.content.charCodeAt(0) == 91 ? new LinkReferenceParser(leaf) : null;
   },
   SetextHeading() {
@@ -42423,9 +42605,9 @@ var DefaultLeafBlocks = {
   }
 };
 var DefaultEndLeaf = [
-  (_4, line) => isAtxHeading(line) >= 0,
-  (_4, line) => isFencedCode(line) >= 0,
-  (_4, line) => isBlockquote(line) >= 0,
+  (_5, line) => isAtxHeading(line) >= 0,
+  (_5, line) => isFencedCode(line) >= 0,
+  (_5, line) => isBlockquote(line) >= 0,
   (p5, line) => isBulletList(line, p5, true) >= 0,
   (p5, line) => isOrderedList(line, p5, true) >= 0,
   (p5, line) => isHorizontalRule(line, p5, true) >= 0,
@@ -42509,8 +42691,8 @@ var BlockContext = class {
           if (parser4.nextLine(this, line, leaf))
             return null;
         leaf.content += "\n" + line.scrub();
-        for (let m6 of line.markers)
-          leaf.marks.push(m6);
+        for (let m5 of line.markers)
+          leaf.marks.push(m5);
       }
     this.finishLeaf(leaf);
     return null;
@@ -42970,7 +43152,7 @@ var Escapable = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 var Punctuation = /[!"#$%&'()*+,\-.\/:;<=>?@\[\\\]^_`{|}~\xA1\u2010-\u2027]/;
 try {
   Punctuation = new RegExp("[\\p{Pc}|\\p{Pd}|\\p{Pe}|\\p{Pf}|\\p{Pi}|\\p{Po}|\\p{Ps}]", "u");
-} catch (_4) {
+} catch (_5) {
 }
 var DefaultInline = {
   Escape(cx, next, start) {
@@ -42985,8 +43167,8 @@ var DefaultInline = {
   Entity(cx, next, start) {
     if (next != 38)
       return -1;
-    let m6 = /^(?:#\d+|#x[a-f\d]+|\w+);/i.exec(cx.slice(start + 1, start + 31));
-    return m6 ? cx.append(elt(Type.Entity, start, start + 1 + m6[0].length)) : -1;
+    let m5 = /^(?:#\d+|#x[a-f\d]+|\w+);/i.exec(cx.slice(start + 1, start + 31));
+    return m5 ? cx.append(elt(Type.Entity, start, start + 1 + m5[0].length)) : -1;
   },
   InlineCode(cx, next, start) {
     if (next != 96 || start && cx.char(start - 1) == 96)
@@ -43028,10 +43210,10 @@ var DefaultInline = {
     let procInst = /^\?[^]*?\?>/.exec(after);
     if (procInst)
       return cx.append(elt(Type.ProcessingInstruction, start, start + 1 + procInst[0].length));
-    let m6 = /^(?:![A-Z][^]*?>|!\[CDATA\[[^]*?\]\]>|\/\s*[a-zA-Z][\w-]*\s*>|\s*[a-zA-Z][\w-]*(\s+[a-zA-Z:_][\w-.:]*(?:\s*=\s*(?:[^\s"'=<>`]+|'[^']*'|"[^"]*"))?)*\s*(\/\s*)?>)/.exec(after);
-    if (!m6)
+    let m5 = /^(?:![A-Z][^]*?>|!\[CDATA\[[^]*?\]\]>|\/\s*[a-zA-Z][\w-]*\s*>|\s*[a-zA-Z][\w-]*(\s+[a-zA-Z:_][\w-.:]*(?:\s*=\s*(?:[^\s"'=<>`]+|'[^']*'|"[^"]*"))?)*\s*(\/\s*)?>)/.exec(after);
+    if (!m5)
       return -1;
-    return cx.append(elt(Type.HTMLTag, start, start + 1 + m6[0].length));
+    return cx.append(elt(Type.HTMLTag, start, start + 1 + m5[0].length));
   },
   Emphasis(cx, next, start) {
     if (next != 95 && next != 42)
@@ -43569,7 +43751,7 @@ var Table = {
   ],
   parseBlock: [{
     name: "Table",
-    leaf(_4, leaf) {
+    leaf(_5, leaf) {
       return hasPipe(leaf.content, 0) ? new TableParser() : null;
     },
     endLeaf(cx, line, leaf) {
@@ -45237,6 +45419,7 @@ var autocompletionConf = new import_state2.Compartment();
 function FeelEditor({
   extensions: editorExtensions = [],
   container,
+  contentAttributes = {},
   tooltipContainer,
   onChange = () => {
   },
@@ -45280,6 +45463,7 @@ function FeelEditor({
     (0, import_language5.bracketMatching)(),
     changeHandler,
     (0, import_autocomplete3.closeBrackets)(),
+    import_view3.EditorView.contentAttributes.of(contentAttributes),
     (0, import_language5.indentOnInput)(),
     keyHandler,
     import_view3.keymap.of([
@@ -45778,8 +45962,8 @@ var valueOrHandler = function valueOrHandler2(value) {
   }
   return typeof value === "function" ? value.apply(void 0, params) : value;
 };
-var getActualTarget = function getActualTarget2(event2) {
-  return event2.target.shadowRoot && typeof event2.composedPath === "function" ? event2.composedPath()[0] : event2.target;
+var getActualTarget = function getActualTarget2(event3) {
+  return event3.target.shadowRoot && typeof event3.composedPath === "function" ? event3.composedPath()[0] : event3.target;
 };
 var internalTrapStack = [];
 var createFocusTrap = function createFocusTrap2(elements, userOptions) {
@@ -45833,8 +46017,8 @@ var createFocusTrap = function createFocusTrap2(elements, userOptions) {
   var getOption = function getOption2(configOverrideOptions, optionName, configOptionName) {
     return configOverrideOptions && configOverrideOptions[optionName] !== void 0 ? configOverrideOptions[optionName] : config[configOptionName || optionName];
   };
-  var findContainerIndex = function findContainerIndex2(element, event2) {
-    var composedPath = typeof (event2 === null || event2 === void 0 ? void 0 : event2.composedPath) === "function" ? event2.composedPath() : void 0;
+  var findContainerIndex = function findContainerIndex2(element, event3) {
+    var composedPath = typeof (event3 === null || event3 === void 0 ? void 0 : event3.composedPath) === "function" ? event3.composedPath() : void 0;
     return state.containerGroups.findIndex(function(_ref) {
       var container = _ref.container, tabbableNodes = _ref.tabbableNodes;
       return container.contains(element) || // fall back to explicit tabbable search which will take into consideration any
@@ -45988,12 +46172,12 @@ var createFocusTrap = function createFocusTrap2(elements, userOptions) {
     return node2 ? node2 : node2 === false ? false : previousActiveElement;
   };
   var findNextNavNode = function findNextNavNode2(_ref2) {
-    var target = _ref2.target, event2 = _ref2.event, _ref2$isBackward = _ref2.isBackward, isBackward = _ref2$isBackward === void 0 ? false : _ref2$isBackward;
-    target = target || getActualTarget(event2);
+    var target = _ref2.target, event3 = _ref2.event, _ref2$isBackward = _ref2.isBackward, isBackward = _ref2$isBackward === void 0 ? false : _ref2$isBackward;
+    target = target || getActualTarget(event3);
     updateTabbableNodes();
     var destinationNode = null;
     if (state.tabbableGroups.length > 0) {
-      var containerIndex = findContainerIndex(target, event2);
+      var containerIndex = findContainerIndex(target, event3);
       var containerGroup = containerIndex >= 0 ? state.containerGroups[containerIndex] : void 0;
       if (containerIndex < 0) {
         if (isBackward) {
@@ -46013,7 +46197,7 @@ var createFocusTrap = function createFocusTrap2(elements, userOptions) {
           var destinationGroupIndex = startOfGroupIndex === 0 ? state.tabbableGroups.length - 1 : startOfGroupIndex - 1;
           var destinationGroup = state.tabbableGroups[destinationGroupIndex];
           destinationNode = getTabIndex(target) >= 0 ? destinationGroup.lastTabbableNode : destinationGroup.lastDomTabbableNode;
-        } else if (!isTabEvent(event2)) {
+        } else if (!isTabEvent(event3)) {
           destinationNode = containerGroup.nextTabbableNode(target, false);
         }
       } else {
@@ -46028,7 +46212,7 @@ var createFocusTrap = function createFocusTrap2(elements, userOptions) {
           var _destinationGroupIndex = lastOfGroupIndex === state.tabbableGroups.length - 1 ? 0 : lastOfGroupIndex + 1;
           var _destinationGroup = state.tabbableGroups[_destinationGroupIndex];
           destinationNode = getTabIndex(target) >= 0 ? _destinationGroup.firstTabbableNode : _destinationGroup.firstDomTabbableNode;
-        } else if (!isTabEvent(event2)) {
+        } else if (!isTabEvent(event3)) {
           destinationNode = containerGroup.nextTabbableNode(target);
         }
       }
@@ -46059,15 +46243,15 @@ var createFocusTrap = function createFocusTrap2(elements, userOptions) {
     }
     e7.preventDefault();
   };
-  var checkFocusIn = function checkFocusIn2(event2) {
-    var target = getActualTarget(event2);
-    var targetContained = findContainerIndex(target, event2) >= 0;
+  var checkFocusIn = function checkFocusIn2(event3) {
+    var target = getActualTarget(event3);
+    var targetContained = findContainerIndex(target, event3) >= 0;
     if (targetContained || target instanceof Document) {
       if (targetContained) {
         state.mostRecentlyFocusedNode = target;
       }
     } else {
-      event2.stopImmediatePropagation();
+      event3.stopImmediatePropagation();
       var nextNode;
       var navAcrossContainers = true;
       if (state.mostRecentlyFocusedNode) {
@@ -46120,28 +46304,28 @@ var createFocusTrap = function createFocusTrap2(elements, userOptions) {
     }
     state.recentNavEvent = void 0;
   };
-  var checkKeyNav = function checkKeyNav2(event2) {
+  var checkKeyNav = function checkKeyNav2(event3) {
     var isBackward = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : false;
-    state.recentNavEvent = event2;
+    state.recentNavEvent = event3;
     var destinationNode = findNextNavNode({
-      event: event2,
+      event: event3,
       isBackward
     });
     if (destinationNode) {
-      if (isTabEvent(event2)) {
-        event2.preventDefault();
+      if (isTabEvent(event3)) {
+        event3.preventDefault();
       }
       tryFocus(destinationNode);
     }
   };
-  var checkKey = function checkKey2(event2) {
-    if (isEscapeEvent(event2) && valueOrHandler(config.escapeDeactivates, event2) !== false) {
-      event2.preventDefault();
+  var checkKey = function checkKey2(event3) {
+    if (isEscapeEvent(event3) && valueOrHandler(config.escapeDeactivates, event3) !== false) {
+      event3.preventDefault();
       trap.deactivate();
       return;
     }
-    if (config.isKeyForward(event2) || config.isKeyBackward(event2)) {
-      checkKeyNav(event2, config.isKeyBackward(event2));
+    if (config.isKeyForward(event3) || config.isKeyBackward(event3)) {
+      checkKeyNav(event3, config.isKeyBackward(event3));
     }
   };
   var checkClick = function checkClick2(e7) {
@@ -46528,18 +46712,18 @@ function Header(props) {
     })]
   });
 }
-var DescriptionContext = F2({
+var DescriptionContext = F3({
   description: {},
   getDescriptionForId: () => {
   }
 });
-var ErrorsContext = F2({
+var ErrorsContext = F3({
   errors: {}
 });
-var EventContext = F2({
+var EventContext = F3({
   eventBus: null
 });
-var LayoutContext = F2({
+var LayoutContext = F3({
   layout: {},
   setLayout: () => {
   },
@@ -46548,7 +46732,7 @@ var LayoutContext = F2({
   setLayoutForKey: () => {
   }
 });
-var TooltipContext = F2({
+var TooltipContext = F3({
   tooltip: {},
   getTooltipForId: () => {
   }
@@ -46556,7 +46740,7 @@ var TooltipContext = F2({
 function useTooltipContext(id, element) {
   const {
     getTooltipForId
-  } = q3(TooltipContext);
+  } = q4(TooltipContext);
   return getTooltipForId(id, element);
 }
 function TooltipWrapper(props) {
@@ -46586,12 +46770,12 @@ function Tooltip(props) {
   const [visible, setShow] = h4(false);
   const [focusedViaKeyboard, setFocusedViaKeyboard] = h4(false);
   let timeout = null;
-  const wrapperRef = _3(null);
-  const tooltipRef = _3(null);
-  const showTooltip = async (event2) => {
+  const wrapperRef = _4(null);
+  const tooltipRef = _4(null);
+  const showTooltip = async (event3) => {
     const show = () => setShow(true);
     if (!visible && !timeout) {
-      if (event2 instanceof MouseEvent) {
+      if (event3 instanceof MouseEvent) {
         timeout = setTimeout(show, 200);
       } else {
         show();
@@ -46607,12 +46791,12 @@ function Tooltip(props) {
     e7.code === "Escape" && hideTooltip();
   };
   const isTooltipHovered = ({
-    x: x5,
+    x: x6,
     y: y5
   }) => {
     const tooltip = tooltipRef.current;
     const wrapper = wrapperRef.current;
-    return tooltip && (inBounds(x5, y5, wrapper.getBoundingClientRect()) || inBounds(x5, y5, tooltip.getBoundingClientRect()));
+    return tooltip && (inBounds(x6, y5, wrapper.getBoundingClientRect()) || inBounds(x6, y5, tooltip.getBoundingClientRect()));
   };
   p4(() => {
     const {
@@ -46679,14 +46863,14 @@ function Tooltip(props) {
     children: [props.children, visible ? parent ? j5(renderTooltip(), parent.current) : renderTooltip() : null]
   });
 }
-function inBounds(x5, y5, bounds) {
+function inBounds(x6, y5, bounds) {
   const {
     top,
     right,
     bottom,
     left
   } = bounds;
-  return x5 >= left && x5 <= right && y5 >= top && y5 <= bottom;
+  return x6 >= left && x6 <= right && y5 >= top && y5 <= bottom;
 }
 function getTooltipPosition(refElement) {
   const refPosition = refElement.getBoundingClientRect();
@@ -46703,47 +46887,47 @@ function prefixId$9(id) {
 function useDescriptionContext(id, element) {
   const {
     getDescriptionForId
-  } = q3(DescriptionContext);
+  } = q4(DescriptionContext);
   return getDescriptionForId(id, element);
 }
 function useError(id) {
   const {
     errors
-  } = q3(ErrorsContext);
+  } = q4(ErrorsContext);
   return errors[id];
 }
 function useErrors() {
   const {
     errors
-  } = q3(ErrorsContext);
+  } = q4(ErrorsContext);
   return errors;
 }
-function useEvent(event2, callback, eventBus) {
-  const eventContext = q3(EventContext);
+function useEvent(event3, callback, eventBus) {
+  const eventContext = q4(EventContext);
   if (!eventBus) {
     ({
       eventBus
     } = eventContext);
   }
-  const didMount = _3(false);
+  const didMount = _4(false);
   if (eventBus && !didMount.current) {
-    eventBus.on(event2, callback);
+    eventBus.on(event3, callback);
   }
   p4(() => {
     if (eventBus && didMount.current) {
-      eventBus.on(event2, callback);
+      eventBus.on(event3, callback);
     }
     didMount.current = true;
     return () => {
       if (eventBus) {
-        eventBus.off(event2, callback);
+        eventBus.off(event3, callback);
       }
     };
-  }, [callback, event2, eventBus]);
+  }, [callback, event3, eventBus]);
 }
 var KEY_LENGTH = 6;
 function useKeyFactory(dependencies = []) {
-  const map4 = F3(() => /* @__PURE__ */ new Map(), dependencies);
+  const map4 = F4(() => /* @__PURE__ */ new Map(), dependencies);
   const getKey = (el) => {
     let key = map4.get(el);
     if (!key) {
@@ -46758,15 +46942,15 @@ function useLayoutState(path, defaultValue) {
   const {
     getLayoutForKey,
     setLayoutForKey
-  } = q3(LayoutContext);
+  } = q4(LayoutContext);
   const layoutForKey = getLayoutForKey(path, defaultValue);
-  const setState = T4((newValue) => {
+  const setState = T3((newValue) => {
     setLayoutForKey(path, newValue);
   }, [setLayoutForKey]);
   return [layoutForKey, setState];
 }
 function usePrevious(value) {
-  const ref = _3();
+  const ref = _4();
   p4(() => {
     ref.current = value;
   });
@@ -46775,11 +46959,11 @@ function usePrevious(value) {
 function useShowEntryEvent(id) {
   const {
     onShow
-  } = q3(LayoutContext);
-  const ref = _3();
-  const focus = _3(false);
-  const onShowEntry = T4((event2) => {
-    if (event2.id === id) {
+  } = q4(LayoutContext);
+  const ref = _4();
+  const focus = _4(false);
+  const onShowEntry = T3((event3) => {
+    if (event3.id === id) {
       onShow();
       if (!focus.current) {
         focus.current = true;
@@ -46802,7 +46986,7 @@ function useShowEntryEvent(id) {
 }
 function useStickyIntersectionObserver(ref, scrollContainerSelector, setSticky) {
   const [scrollContainer, setScrollContainer] = h4(query(scrollContainerSelector));
-  const updateScrollContainer = T4(() => {
+  const updateScrollContainer = T3(() => {
     const newScrollContainer = query(scrollContainerSelector);
     if (newScrollContainer !== scrollContainer) {
       setScrollContainer(newScrollContainer);
@@ -46845,9 +47029,9 @@ function useStickyIntersectionObserver(ref, scrollContainerSelector, setSticky) 
   }, [ref.current, scrollContainer, setSticky]);
 }
 function useStaticCallback(callback) {
-  const callbackRef = _3(callback);
+  const callbackRef = _4(callback);
   callbackRef.current = callback;
-  return T4((...args) => callbackRef.current(...args), []);
+  return T3((...args) => callbackRef.current(...args), []);
 }
 function Group(props) {
   const {
@@ -46857,9 +47041,9 @@ function Group(props) {
     label,
     shouldOpen = false
   } = props;
-  const groupRef = _3(null);
+  const groupRef = _4(null);
   const [open3, setOpen] = useLayoutState(["groups", id, "open"], shouldOpen);
-  const onShow = T4(() => setOpen(true), [setOpen]);
+  const onShow = T3(() => setOpen(true), [setOpen]);
   const toggleOpen = () => setOpen(!open3);
   const [edited, setEdited] = h4(false);
   const [sticky, setSticky] = h4(false);
@@ -46885,7 +47069,7 @@ function Group(props) {
   const hasErrors = entries.some((entry) => allErrors[entry.id]);
   useStickyIntersectionObserver(groupRef, "div.bio-properties-panel-scroll-container", setSticky);
   const propertiesPanelContext = {
-    ...q3(LayoutContext),
+    ...q4(LayoutContext),
     onShow
   };
   return u5("div", {
@@ -46995,7 +47179,7 @@ var noop$6 = () => {
 };
 var useBufferedFocus$1 = function(editor, ref) {
   const [buffer, setBuffer] = h4(void 0);
-  ref.current = F3(() => ({
+  ref.current = F4(() => ({
     focus: (offset) => {
       if (editor) {
         editor.focus(offset);
@@ -47028,7 +47212,7 @@ var CodeEditor$1 = N3((props, ref) => {
     hostLanguage = null,
     singleLine = false
   } = props;
-  const inputRef = _3();
+  const inputRef = _4();
   const [editor, setEditor] = h4();
   const [localValue, setLocalValue] = h4(value || "");
   useBufferedFocus$1(editor, ref);
@@ -47092,7 +47276,7 @@ var noop$5 = () => {
 };
 var useBufferedFocus = function(editor, ref) {
   const [buffer, setBuffer] = h4(void 0);
-  ref.current = F3(() => ({
+  ref.current = F4(() => ({
     focus: (offset) => {
       if (editor) {
         editor.focus(offset);
@@ -47113,6 +47297,7 @@ var useBufferedFocus = function(editor, ref) {
 };
 var CodeEditor = N3((props, ref) => {
   const {
+    contentAttributes,
     enableGutters,
     value,
     onInput,
@@ -47124,7 +47309,7 @@ var CodeEditor = N3((props, ref) => {
     tooltipContainer,
     variables: variables2
   } = props;
-  const inputRef = _3();
+  const inputRef = _4();
   const [editor, setEditor] = h4();
   const [localValue, setLocalValue] = h4(value || "");
   useBufferedFocus(editor, ref);
@@ -47152,7 +47337,8 @@ var CodeEditor = N3((props, ref) => {
       tooltipContainer,
       value: localValue,
       variables: variables2,
-      extensions: [...enableGutters ? [(0, import_view4.lineNumbers)()] : [], import_view4.EditorView.lineWrapping]
+      extensions: [...enableGutters ? [(0, import_view4.lineNumbers)()] : [], import_view4.EditorView.lineWrapping],
+      contentAttributes
     });
     setEditor(editor2);
     return () => {
@@ -47237,7 +47423,7 @@ function FeelIcon2(props) {
     children: u5(FeelIcon$1, {})
   });
 }
-var FeelPopupContext = F2({
+var FeelPopupContext = F3({
   open: () => {
   },
   close: () => {
@@ -47247,24 +47433,24 @@ var FeelPopupContext = F2({
 function createDragger(fn2, dragPreview) {
   let self2;
   let startX, startY;
-  function onDragStart(event2) {
+  function onDragStart(event3) {
     self2 = this;
-    startX = event2.clientX;
-    startY = event2.clientY;
-    if (event2.dataTransfer) {
-      event2.dataTransfer.setDragImage(dragPreview || emptyCanvas(), 0, 0);
+    startX = event3.clientX;
+    startY = event3.clientY;
+    if (event3.dataTransfer) {
+      event3.dataTransfer.setDragImage(dragPreview || emptyCanvas(), 0, 0);
     }
     document.addEventListener("dragover", onDrag, true);
     document.addEventListener("dragenter", preventDefault3, true);
     document.addEventListener("dragend", onEnd);
     document.addEventListener("drop", preventDefault3);
   }
-  function onDrag(event2) {
+  function onDrag(event3) {
     const delta2 = {
-      x: event2.clientX - startX,
-      y: event2.clientY - startY
+      x: event3.clientX - startX,
+      y: event3.clientY - startY
     };
-    return fn2.call(self2, event2, delta2);
+    return fn2.call(self2, event3, delta2);
   }
   function onEnd() {
     document.removeEventListener("dragover", onDrag, true);
@@ -47274,9 +47460,9 @@ function createDragger(fn2, dragPreview) {
   }
   return onDragStart;
 }
-function preventDefault3(event2) {
-  event2.preventDefault();
-  event2.stopPropagation();
+function preventDefault3(event3) {
+  event3.preventDefault();
+  event3.stopPropagation();
 }
 function emptyCanvas() {
   return domify$1('<canvas width="0" height="0" />');
@@ -47298,13 +47484,13 @@ function PopupComponent(props, globalRef) {
     closeOnEscape = true,
     title
   } = props;
-  const focusTrapRef = _3(null);
-  const localRef = _3(null);
+  const focusTrapRef = _4(null);
+  const localRef = _4(null);
   const popupRef = globalRef || localRef;
-  const containerNode = F3(() => getContainerNode(container), [container]);
-  const handleKeydown = (event2) => {
-    event2.stopPropagation();
-    if (closeOnEscape && event2.key === "Escape") {
+  const containerNode = F4(() => getContainerNode(container), [container]);
+  const handleKeydown = (event3) => {
+    event3.stopPropagation();
+    if (closeOnEscape && event3.key === "Escape") {
       onClose();
     }
   };
@@ -47375,14 +47561,14 @@ function Title(props) {
     title,
     ...rest
   } = props;
-  const context = _3({
+  const context = _4({
     startPosition: null,
     newPosition: null
   });
-  const dragPreviewRef = _3();
-  const titleRef = _3();
-  const onMove = (event2, delta2) => {
-    cancel(event2);
+  const dragPreviewRef = _4();
+  const titleRef = _4();
+  const onMove = (event3, delta2) => {
+    cancel(event3);
     const {
       x: dx,
       y: dy
@@ -47399,10 +47585,10 @@ function Title(props) {
       delta: delta2
     });
   };
-  const onMoveStart = (event2) => {
+  const onMoveStart = (event3) => {
     const onDragStart = createDragger(onMove, dragPreviewRef.current);
-    onDragStart(event2);
-    event2.stopPropagation();
+    onDragStart(event3);
+    event3.stopPropagation();
     const popupParent = getPopupParent(titleRef.current);
     const bounds = popupParent.getBoundingClientRect();
     context.current.startPosition = {
@@ -47463,9 +47649,9 @@ function Footer(props) {
 function getPopupParent(node2) {
   return node2.closest(".bio-properties-panel-popup");
 }
-function cancel(event2) {
-  event2.preventDefault();
-  event2.stopPropagation();
+function cancel(event3) {
+  event3.preventDefault();
+  event3.stopPropagation();
 }
 function getContainerNode(node2) {
   if (typeof node2 === "string") {
@@ -47496,7 +47682,7 @@ function FEELPopupRoot(props) {
   const emit = (type, context) => {
     eventBus.fire("feelPopup." + type, context);
   };
-  const isOpen = T4(() => {
+  const isOpen = T3(() => {
     return !!open3;
   }, [open3]);
   useUpdateEffect(() => {
@@ -47511,10 +47697,10 @@ function FEELPopupRoot(props) {
     setSourceElement(_sourceElement);
     emit("open");
   };
-  const handleClose = (event2 = {}) => {
+  const handleClose = (event3 = {}) => {
     const {
       id
-    } = event2;
+    } = event3;
     if (id && id !== source) {
       return;
     }
@@ -47580,19 +47766,19 @@ function FeelPopupComponent(props) {
     variables: variables2,
     emit
   } = props;
-  const editorRef = _3();
-  const popupRef = _3();
-  const isAutoCompletionOpen = _3(false);
+  const editorRef = _4();
+  const popupRef = _4();
+  const isAutoCompletionOpen = _4(false);
   const handleSetReturnFocus = () => {
     sourceElement && sourceElement.focus();
   };
-  const onKeyDownCapture = (event2) => {
-    if (event2.key === "Escape") {
-      isAutoCompletionOpen.current = autoCompletionOpen(event2.target);
+  const onKeyDownCapture = (event3) => {
+    if (event3.key === "Escape") {
+      isAutoCompletionOpen.current = autoCompletionOpen(event3.target);
     }
   };
-  const onKeyDown = (event2) => {
-    if (event2.key === "Escape") {
+  const onKeyDown = (event3) => {
+    if (event3.key === "Escape") {
       if (!isAutoCompletionOpen.current) {
         onClose();
         isAutoCompletionOpen.current = false;
@@ -47688,7 +47874,7 @@ function autoCompletionOpen(element) {
   return element.closest(".cm-editor").querySelector(".cm-tooltip-autocomplete");
 }
 function useUpdateEffect(effect, deps) {
-  const isMounted = _3(false);
+  const isMounted = _4(false);
   p4(() => {
     if (isMounted.current) {
       return effect();
@@ -47820,7 +48006,7 @@ function NumberField(props) {
     onBlur
   } = props;
   const [localValue, setLocalValue] = h4(value);
-  const handleInputCallback = F3(() => {
+  const handleInputCallback = F4(() => {
     return debounce2((target) => {
       if (target.validity.valid) {
         onInput(target.value ? parseFloat(target.value) : void 0);
@@ -47887,21 +48073,21 @@ function FeelTextfieldComponent(props) {
   } = props;
   const [localValue, _setLocalValue] = h4(value);
   const editorRef = useShowEntryEvent(id);
-  const containerRef = _3();
+  const containerRef = _4();
   const feelActive = isString(localValue) && localValue.startsWith("=") || feel2 === "required";
   const feelOnlyValue = isString(localValue) && localValue.startsWith("=") ? localValue.substring(1) : localValue;
   const [focus, _setFocus] = h4(void 0);
   const {
     open: openPopup,
     source: popupSource
-  } = q3(FeelPopupContext);
+  } = q4(FeelPopupContext);
   const popuOpen = popupSource === id;
   const setFocus = (offset = 0) => {
     const hasFocus = containerRef.current.contains(document.activeElement);
     const position = hasFocus ? document.activeElement.selectionStart : Infinity;
     _setFocus(position + offset);
   };
-  const handleInputCallback = F3(() => {
+  const handleInputCallback = F4(() => {
     return debounce2((newValue) => {
       onInput(newValue);
     });
@@ -47975,17 +48161,17 @@ function FeelTextfieldComponent(props) {
     setLocalValue(value);
   }, [value]);
   p4(() => {
-    const copyHandler = (event2) => {
+    const copyHandler = (event3) => {
       if (!feelActive) {
         return;
       }
-      event2.clipboardData.setData("application/FEEL", event2.clipboardData.getData("text"));
+      event3.clipboardData.setData("application/FEEL", event3.clipboardData.getData("text"));
     };
-    const pasteHandler = (event2) => {
+    const pasteHandler = (event3) => {
       if (feelActive || popuOpen) {
         return;
       }
-      const data = event2.clipboardData.getData("application/FEEL");
+      const data = event3.clipboardData.getData("application/FEEL");
       if (data) {
         setTimeout(() => {
           handleFeelToggle();
@@ -48029,9 +48215,12 @@ function FeelTextfieldComponent(props) {
         disabled: feel2 !== "optional" || disabled,
         onClick: handleFeelToggle
       }), feelActive ? u5(CodeEditor, {
-        id: prefixId$5(id),
         name: id,
         onInput: handleLocalInput,
+        contentAttributes: {
+          "id": prefixId$5(id),
+          "aria-label": label
+        },
         disabled,
         popupOpen: popuOpen,
         onFeelToggle: () => {
@@ -48070,7 +48259,7 @@ var OptionalFeelInput = N3((props, ref) => {
     onFocus,
     onBlur
   } = props;
-  const inputRef = _3();
+  const inputRef = _4();
   ref.current = {
     focus: (position) => {
       const input = inputRef.current;
@@ -48114,7 +48303,7 @@ var OptionalFeelNumberField = N3((props, ref) => {
     onFocus,
     onBlur
   } = props;
-  const inputRef = _3();
+  const inputRef = _4();
   ref.current = {
     focus: (position) => {
       const input = inputRef.current;
@@ -48154,7 +48343,7 @@ var OptionalFeelTextArea = N3((props, ref) => {
     onFocus,
     onBlur
   } = props;
-  const inputRef = _3();
+  const inputRef = _4();
   ref.current = {
     focus: () => {
       const input = inputRef.current;
@@ -48190,7 +48379,7 @@ var OptionalFeelToggleSwitch = N3((props, ref) => {
     onBlur,
     switcherLabel
   } = props;
-  const inputRef = _3();
+  const inputRef = _4();
   ref.current = {
     focus: () => {
       const input = inputRef.current;
@@ -48219,7 +48408,7 @@ var OptionalFeelCheckbox = N3((props, ref) => {
     onFocus,
     onBlur
   } = props;
-  const inputRef = _3();
+  const inputRef = _4();
   const handleChange = ({
     target
   }) => {
@@ -48288,7 +48477,7 @@ function FeelEntry(props) {
     }
     setValidationError(newValidationError);
   });
-  const onError = T4((err) => {
+  const onError = T3((err) => {
     setLocalError(err);
   }, []);
   const temporaryError = useError(id);
@@ -48363,7 +48552,7 @@ function withAutoClosePopup(Component2) {
     } = props;
     const {
       close
-    } = q3(FeelPopupContext);
+    } = q4(FeelPopupContext);
     const closePopup = useStaticCallback(close);
     p4(() => {
       return () => {
@@ -48419,7 +48608,7 @@ function PropertiesPanel(props) {
     getLayoutForKey,
     setLayoutForKey
   };
-  const description = F3(() => createDescriptionContext(descriptionConfig), [descriptionConfig]);
+  const description = F4(() => createDescriptionContext(descriptionConfig), [descriptionConfig]);
   p4(() => {
     if (typeof descriptionLoaded === "function") {
       descriptionLoaded(description);
@@ -48432,7 +48621,7 @@ function PropertiesPanel(props) {
     description,
     getDescriptionForId
   };
-  const tooltip = F3(() => createTooltipContext(tooltipConfig), [tooltipConfig]);
+  const tooltip = F4(() => createTooltipContext(tooltipConfig), [tooltipConfig]);
   p4(() => {
     if (typeof tooltipLoaded === "function") {
       tooltipLoaded(tooltip);
@@ -48532,7 +48721,7 @@ function createTooltipContext(overrides = {}) {
   };
 }
 function useUpdateLayoutEffect(effect, deps) {
-  const isMounted = _3(false);
+  const isMounted = _4(false);
   y4(() => {
     if (isMounted.current) {
       return effect();
@@ -48554,10 +48743,10 @@ function CollapsibleEntry(props) {
   const toggleOpen = () => setOpen(!open3);
   const {
     onShow
-  } = q3(LayoutContext);
+  } = q4(LayoutContext);
   const propertiesPanelContext = {
-    ...q3(LayoutContext),
-    onShow: T4(() => {
+    ...q4(LayoutContext),
+    onShow: T3(() => {
       setOpen(true);
       if (isFunction(onShow)) {
         onShow();
@@ -48646,10 +48835,10 @@ function ListGroup(props) {
     shouldOpen = true,
     shouldSort = true
   } = props;
-  const groupRef = _3(null);
+  const groupRef = _4(null);
   const [open3, setOpen] = useLayoutState(["groups", id, "open"], false);
   const [sticky, setSticky] = h4(false);
-  const onShow = T4(() => setOpen(true), [setOpen]);
+  const onShow = T3(() => setOpen(true), [setOpen]);
   const [ordering, setOrdering] = h4([]);
   const [newItemAdded, setNewItemAdded] = h4(false);
   const [addTriggered, setAddTriggered] = h4(false);
@@ -48713,7 +48902,7 @@ function ListGroup(props) {
   const toggleOpen = () => setOpen(!open3);
   const hasItems = !!items.length;
   const propertiesPanelContext = {
-    ...q3(LayoutContext),
+    ...q4(LayoutContext),
     onShow
   };
   const handleAddClick = (e7) => {
@@ -48930,8 +49119,8 @@ function List2(props) {
       setOpen(false);
     }
   }, [open3, hasItems]);
-  function addItem(event2) {
-    event2.stopPropagation();
+  function addItem(event3) {
+    event3.stopPropagation();
     onAdd();
     if (!open3) {
       setOpen(true);
@@ -49037,7 +49226,7 @@ function ItemsList(props) {
   });
 }
 function useSortedItems(currentItems, compareFn, shouldReset = false) {
-  const itemsRef = _3(currentItems.slice());
+  const itemsRef = _4(currentItems.slice());
   if (shouldReset) {
     itemsRef.current = currentItems.slice();
     if (compareFn) {
@@ -49208,7 +49397,7 @@ function Simple(props) {
   } = props;
   const value = getValue(element);
   const [localValue, setLocalValue] = h4(value);
-  const handleInputCallback = F3(() => {
+  const handleInputCallback = F4(() => {
     return debounce2((target) => setValue(target.value.length ? target.value : void 0));
   }, [setValue, debounce2]);
   const handleInput = (e7) => {
@@ -49263,7 +49452,7 @@ function TextArea(props) {
   } = props;
   const [localValue, setLocalValue] = h4(value);
   const ref = useShowEntryEvent(id);
-  const handleInputCallback = F3(() => {
+  const handleInputCallback = F4(() => {
     return debounce2((target) => onInput(target.value.length ? target.value : void 0));
   }, [onInput, debounce2]);
   const handleInput = (e7) => {
@@ -49390,7 +49579,7 @@ function Textfield(props) {
   } = props;
   const [localValue, setLocalValue] = h4(value || "");
   const ref = useShowEntryEvent(id);
-  const handleInputCallback = F3(() => {
+  const handleInputCallback = F4(() => {
     return debounce2((target) => onInput(target.value.length ? target.value : void 0));
   }, [onInput, debounce2]);
   const handleInput = (e7) => {
@@ -49560,7 +49749,7 @@ function arrayMoveMutable(array, fromIndex, toIndex) {
 
 // node_modules/bpmn-js-properties-panel/dist/index.esm.js
 var import_extract_process_variables = __toESM(require_dist2());
-var BpmnPropertiesPanelContext = F2({
+var BpmnPropertiesPanelContext = F3({
   selectedElement: null,
   injector: null,
   getService() {
@@ -49570,7 +49759,7 @@ var BpmnPropertiesPanelContext = F2({
 function useService(type, strict) {
   const {
     getService
-  } = q3(BpmnPropertiesPanelContext);
+  } = q4(BpmnPropertiesPanelContext);
   return getService(type, strict);
 }
 function _extends$1o() {
@@ -51824,47 +52013,51 @@ function getConcreteType(element) {
   }
   return type;
 }
-var PanelHeaderProvider = {
-  getDocumentationRef: (element) => {
-    const elementTemplates = getTemplatesService();
-    if (elementTemplates) {
-      return getTemplateDocumentation(element, elementTemplates);
-    }
-  },
-  getElementLabel: (element) => {
-    if (is(element, "bpmn:Process")) {
-      return getBusinessObject(element).name;
-    }
-    return getLabel(element);
-  },
-  getElementIcon: (element) => {
-    const concreteType = getConcreteType(element);
-    const config = useService("config.elementTemplateIconRenderer", false);
-    const {
-      iconProperty = "zeebe:modelerTemplateIcon"
-    } = config || {};
-    const templateIcon = getBusinessObject(element).get(iconProperty);
-    if (templateIcon) {
-      return () => u5("img", {
-        class: "bio-properties-panel-header-template-icon",
-        width: "32",
-        height: "32",
-        src: templateIcon
-      });
-    }
-    return iconsByType[concreteType];
-  },
-  getTypeLabel: (element) => {
-    const elementTemplates = getTemplatesService();
-    if (elementTemplates) {
-      const template = getTemplate(element, elementTemplates);
-      if (template && template.name) {
-        return template.name;
+var PanelHeaderProvider = (translate3) => {
+  if (!translate3)
+    translate3 = (text) => text;
+  return {
+    getDocumentationRef: (element) => {
+      const elementTemplates = getTemplatesService();
+      if (elementTemplates) {
+        return getTemplateDocumentation(element, elementTemplates);
       }
+    },
+    getElementLabel: (element) => {
+      if (is(element, "bpmn:Process")) {
+        return getBusinessObject(element).name;
+      }
+      return getLabel(element);
+    },
+    getElementIcon: (element) => {
+      const concreteType = getConcreteType(element);
+      const config = useService("config.elementTemplateIconRenderer", false);
+      const {
+        iconProperty = "zeebe:modelerTemplateIcon"
+      } = config || {};
+      const templateIcon = getBusinessObject(element).get(iconProperty);
+      if (templateIcon) {
+        return () => u5("img", {
+          class: "bio-properties-panel-header-template-icon",
+          width: "32",
+          height: "32",
+          src: templateIcon
+        });
+      }
+      return iconsByType[concreteType];
+    },
+    getTypeLabel: (element) => {
+      const elementTemplates = getTemplatesService();
+      if (elementTemplates) {
+        const template = getTemplate(element, elementTemplates);
+        if (template && template.name) {
+          return translate3(template.name);
+        }
+      }
+      const concreteType = getConcreteType(element);
+      return translate3(concreteType.replace(/(\B[A-Z])/g, " $1").replace(/(\bNon Interrupting)/g, "($1)"));
     }
-    const concreteType = getConcreteType(element);
-    return concreteType.replace(/(\B[A-Z])/g, " $1").replace(/(\bNon Interrupting)/g, "($1)");
-  }
+  };
 };
 function isCancelActivity(element) {
   const businessObject = getBusinessObject(element);
@@ -52155,7 +52348,7 @@ function BpmnPropertiesPanel(props) {
     }
   };
   const providers = getProviders(selectedElement);
-  const groups = F3(() => {
+  const groups = F4(() => {
     return reduce(providers, function(groups2, provider) {
       if (isArray(selectedElement)) {
         return [];
@@ -52165,7 +52358,7 @@ function BpmnPropertiesPanel(props) {
     }, []);
   }, [providers, selectedElement]);
   const [layoutConfig, setLayoutConfig] = h4(initialLayoutConfig || {});
-  const onLayoutChanged = T4((newLayout) => {
+  const onLayoutChanged = T3((newLayout) => {
     eventBus.fire("propertiesPanel.layoutChanged", {
       layout: newLayout
     });
@@ -52194,7 +52387,7 @@ function BpmnPropertiesPanel(props) {
     value: bpmnPropertiesPanelContext,
     children: u5(PropertiesPanel, {
       element: selectedElement,
-      headerProvider: PanelHeaderProvider,
+      headerProvider: PanelHeaderProvider(translate3),
       placeholderProvider: PanelPlaceholderProvider(translate3),
       groups,
       layoutConfig,
@@ -52244,10 +52437,10 @@ var BpmnPropertiesPanelRenderer = class {
     eventBus.on("diagram.destroy", () => {
       this.detach();
     });
-    eventBus.on("root.added", (event2) => {
+    eventBus.on("root.added", (event3) => {
       const {
         element
-      } = event2;
+      } = event3;
       this._render(element);
     });
   }
@@ -52295,8 +52488,8 @@ var BpmnPropertiesPanelRenderer = class {
       console.error("Properties provider does not implement #getGroups(element) API");
       return;
     }
-    this._eventBus.on("propertiesPanel.getProviders", priority, function(event2) {
-      event2.providers.push(provider);
+    this._eventBus.on("propertiesPanel.getProviders", priority, function(event3) {
+      event3.providers.push(provider);
     });
     this._eventBus.fire("propertiesPanel.providersChanged");
   }
@@ -52310,12 +52503,12 @@ var BpmnPropertiesPanelRenderer = class {
     });
   }
   _getProviders() {
-    const event2 = this._eventBus.createEvent({
+    const event3 = this._eventBus.createEvent({
       type: "propertiesPanel.getProviders",
       providers: []
     });
-    this._eventBus.fire(event2);
-    return event2.providers;
+    this._eventBus.fire(event3);
+    return event3.providers;
   }
   _render(element) {
     const canvas = this._injector.get("canvas");
@@ -52325,7 +52518,7 @@ var BpmnPropertiesPanelRenderer = class {
     if (isImplicitRoot(element)) {
       return;
     }
-    q2(u5(BpmnPropertiesPanel, {
+    q3(u5(BpmnPropertiesPanel, {
       element,
       injector: this._injector,
       getProviders: this._getProviders.bind(this),
@@ -52338,7 +52531,7 @@ var BpmnPropertiesPanelRenderer = class {
   }
   _destroy() {
     if (this._container) {
-      q2(null, this._container);
+      q3(null, this._container);
       this._eventBus.fire("propertiesPanel.destroyed");
     }
   }
@@ -52348,18 +52541,18 @@ function isImplicitRoot(element) {
   return element && (element.isImplicit || element.id === "__implicitroot");
 }
 function setupKeyboard(container, eventBus, commandStack) {
-  function cancel2(event2) {
-    event2.preventDefault();
-    event2.stopPropagation();
+  function cancel2(event3) {
+    event3.preventDefault();
+    event3.stopPropagation();
   }
-  function handleKeys(event2) {
-    if (isUndo(event2)) {
+  function handleKeys(event3) {
+    if (isUndo(event3)) {
       commandStack.undo();
-      return cancel2(event2);
+      return cancel2(event3);
     }
-    if (isRedo(event2)) {
+    if (isRedo(event3)) {
       commandStack.redo();
-      return cancel2(event2);
+      return cancel2(event3);
     }
   }
   eventBus.on("keyboard.bind", function() {
@@ -52752,9 +52945,9 @@ function createElement(type, properties, parent, bpmnFactory) {
   }
   return element;
 }
-function nextId(prefix3) {
+function nextId(prefix4) {
   const ids3 = new index_esm_default([32, 32, 1]);
-  return ids3.nextPrefixed(prefix3);
+  return ids3.nextPrefixed(prefix4);
 }
 function getRoot(businessObject) {
   let parent = businessObject;
@@ -53206,10 +53399,10 @@ function Id$3(props) {
       id: value
     });
   };
-  const getValue = T4((element2) => {
+  const getValue = T3((element2) => {
     return getBusinessObject(element2).id;
   }, [element]);
-  const validate = T4((value) => {
+  const validate = T3((value) => {
     const businessObject = getBusinessObject(element);
     return isIdValid(businessObject, value, translate3);
   }, [element, translate3]);
@@ -53677,7 +53870,7 @@ function ProcessId(props) {
       }
     });
   };
-  const validate = T4((value) => {
+  const validate = T3((value) => {
     return isIdValid(process2, value, translate3);
   }, [process2, translate3]);
   return TextfieldEntry({
@@ -54335,7 +54528,7 @@ function useServiceIfAvailable(service, fallback) {
 }
 function withTooltipContainer(Component2) {
   return (props) => {
-    const tooltipContainer = F3(() => {
+    const tooltipContainer = F4(() => {
       const config = useService("config");
       return config && config.propertiesPanel && config.propertiesPanel.feelTooltipContainer;
     }, []);
@@ -54603,7 +54796,7 @@ function getHeaders(element) {
   return taskHeaders ? taskHeaders.get("values") : [];
 }
 var DMN_IMPLEMENTATION_OPTION = "dmn";
-var JOB_WORKER_IMPLEMENTATION_OPTION$1 = "jobWorker";
+var JOB_WORKER_IMPLEMENTATION_OPTION$2 = "jobWorker";
 var DEFAULT_IMPLEMENTATION_OPTION$1 = "";
 function BusinessRuleImplementationProps(props) {
   const {
@@ -54631,7 +54824,7 @@ function BusinessRuleImplementation(props) {
       return DMN_IMPLEMENTATION_OPTION;
     }
     if (getTaskDefinition$2(element)) {
-      return JOB_WORKER_IMPLEMENTATION_OPTION$1;
+      return JOB_WORKER_IMPLEMENTATION_OPTION$2;
     }
     return DEFAULT_IMPLEMENTATION_OPTION$1;
   };
@@ -54640,7 +54833,7 @@ function BusinessRuleImplementation(props) {
     if (value === DMN_IMPLEMENTATION_OPTION) {
       extensionElement = getCalledDecision$1(element);
       extensionElementType = "zeebe:CalledDecision";
-    } else if (value === JOB_WORKER_IMPLEMENTATION_OPTION$1) {
+    } else if (value === JOB_WORKER_IMPLEMENTATION_OPTION$2) {
       extensionElement = getTaskDefinition$2(element);
       extensionElementType = "zeebe:TaskDefinition";
     } else {
@@ -54659,7 +54852,7 @@ function BusinessRuleImplementation(props) {
       value: DMN_IMPLEMENTATION_OPTION,
       label: translate3("DMN decision")
     }, {
-      value: JOB_WORKER_IMPLEMENTATION_OPTION$1,
+      value: JOB_WORKER_IMPLEMENTATION_OPTION$2,
       label: translate3("Job worker")
     }];
     return options2;
@@ -55054,7 +55247,8 @@ var USER_TASK_FORM_ID_PREFIX = "UserTaskForm_";
 var FORM_TYPES = {
   CAMUNDA_FORM_EMBEDDED: "camunda-form-embedded",
   CAMUNDA_FORM_LINKED: "camunda-form-linked",
-  CUSTOM_FORM: "custom-form"
+  CUSTOM_FORM: "custom-form",
+  EXTERNAL_REFERENCE: "external-reference"
 };
 function getFormDefinition(element) {
   const businessObject = getBusinessObject(element);
@@ -55092,9 +55286,12 @@ function getFormType$1(element) {
   if (!formDefinition) {
     return;
   }
-  const formId = formDefinition.get("formId"), formKey = formDefinition.get("formKey");
+  const formId = formDefinition.get("formId"), formKey = formDefinition.get("formKey"), externalReference = formDefinition.get("externalReference");
   if (isDefined(formId)) {
     return FORM_TYPES.CAMUNDA_FORM_LINKED;
+  }
+  if (isDefined(externalReference)) {
+    return FORM_TYPES.EXTERNAL_REFERENCE;
   }
   if (isDefined(formKey)) {
     if (getUserTaskForm(element)) {
@@ -55103,6 +55300,11 @@ function getFormType$1(element) {
     return FORM_TYPES.CUSTOM_FORM;
   }
 }
+function isZeebeUserTask(element) {
+  const bo = getBusinessObject(element);
+  return getExtensionElementsList(bo, "zeebe:UserTask").length > 0;
+}
+var NONE_VALUE = "none";
 function FormProps$1(props) {
   const {
     element
@@ -55113,7 +55315,7 @@ function FormProps$1(props) {
   const entries = [{
     id: "formType",
     component: FormType$1,
-    isEdited: isEdited$3
+    isEdited: (node2) => node2.value !== NONE_VALUE
   }];
   const formType = getFormType$1(element);
   if (formType === FORM_TYPES.CAMUNDA_FORM_EMBEDDED) {
@@ -55131,8 +55333,14 @@ function FormProps$1(props) {
   } else if (formType === FORM_TYPES.CUSTOM_FORM) {
     entries.push({
       id: "customFormKey",
-      component: CustomFormKey,
+      component: CustomForm,
       isEdited
+    });
+  } else if (formType === FORM_TYPES.EXTERNAL_REFERENCE) {
+    entries.push({
+      id: "externalReference",
+      component: ExternalReference,
+      isEdited: isEdited$6
     });
   }
   return entries;
@@ -55143,33 +55351,13 @@ function FormType$1(props) {
   } = props;
   const injector = useService("injector"), translate3 = useService("translate");
   const getValue = () => {
-    return getFormType$1(element) || "";
+    return getFormType$1(element) || NONE_VALUE;
   };
   const setValue = (value) => {
-    if (value === FORM_TYPES.CAMUNDA_FORM_EMBEDDED) {
-      setUserTaskForm(injector, element, "");
-    } else if (value === FORM_TYPES.CAMUNDA_FORM_LINKED) {
-      setFormId(injector, element, "");
-    } else if (value === FORM_TYPES.CUSTOM_FORM) {
-      setCustomFormKey(injector, element, "");
-    } else {
-      removeFormDefinition(injector, element);
-    }
+    setFormType(injector, element, value);
   };
   const getOptions = () => {
-    return [{
-      value: "",
-      label: translate3("<none>")
-    }, {
-      value: FORM_TYPES.CAMUNDA_FORM_LINKED,
-      label: translate3("Camunda Form (linked)")
-    }, {
-      value: FORM_TYPES.CAMUNDA_FORM_EMBEDDED,
-      label: translate3("Camunda Form (embedded)")
-    }, {
-      value: FORM_TYPES.CUSTOM_FORM,
-      label: translate3("Custom form key")
-    }];
+    return getFormTypeOptions(translate3, element);
   };
   return SelectEntry({
     element,
@@ -55179,6 +55367,46 @@ function FormType$1(props) {
     setValue,
     getOptions
   });
+}
+function setFormType(injector, element, value) {
+  if (value === FORM_TYPES.CAMUNDA_FORM_EMBEDDED) {
+    setUserTaskForm(injector, element, "");
+  } else if (value === FORM_TYPES.CAMUNDA_FORM_LINKED) {
+    setFormId(injector, element, "");
+  } else if (value === FORM_TYPES.CUSTOM_FORM) {
+    setCustomFormKey(injector, element, "");
+  } else if (value === FORM_TYPES.EXTERNAL_REFERENCE) {
+    setExternalReference(injector, element, "");
+  } else {
+    removeFormDefinition(injector, element);
+  }
+}
+function getFormTypeOptions(translate3, element) {
+  if (isZeebeUserTask(element)) {
+    return [{
+      value: NONE_VALUE,
+      label: translate3("<none>")
+    }, {
+      value: FORM_TYPES.CAMUNDA_FORM_LINKED,
+      label: translate3("Camunda Form")
+    }, {
+      value: FORM_TYPES.EXTERNAL_REFERENCE,
+      label: translate3("External form reference")
+    }];
+  }
+  return [{
+    value: NONE_VALUE,
+    label: translate3("<none>")
+  }, {
+    value: FORM_TYPES.CAMUNDA_FORM_LINKED,
+    label: translate3("Camunda Form (linked)")
+  }, {
+    value: FORM_TYPES.CAMUNDA_FORM_EMBEDDED,
+    label: translate3("Camunda Form (embedded)")
+  }, {
+    value: FORM_TYPES.CUSTOM_FORM,
+    label: translate3("Custom form key")
+  }];
 }
 function FormConfiguration(props) {
   const {
@@ -55221,13 +55449,14 @@ function FormId(props) {
     debounce: debounce2
   });
 }
-function CustomFormKey(props) {
+function CustomForm(props) {
   const {
     element
   } = props;
   const debounce2 = useService("debounceInput"), injector = useService("injector"), translate3 = useService("translate");
   const getValue = () => {
-    return getFormDefinition(element).get("formKey");
+    const formDefinition = getFormDefinition(element);
+    return formDefinition.get("formKey");
   };
   const setValue = (value) => {
     setCustomFormKey(injector, element, isUndefined(value) ? "" : value);
@@ -55235,7 +55464,29 @@ function CustomFormKey(props) {
   return TextfieldEntry({
     element,
     id: "customFormKey",
-    label: translate3("Form key"),
+    label: translate3("Custom form key"),
+    getValue,
+    setValue,
+    debounce: debounce2
+  });
+}
+function ExternalReference(props) {
+  const {
+    element
+  } = props;
+  const debounce2 = useService("debounceInput"), injector = useService("injector"), translate3 = useService("translate");
+  const getValue = () => {
+    const formDefinition = getFormDefinition(element);
+    return formDefinition.get("externalReference");
+  };
+  const setValue = (value) => {
+    setExternalReference(injector, element, isUndefined(value) ? "" : value);
+  };
+  return FeelEntryWithVariableContext({
+    element,
+    id: "externalReference",
+    label: translate3("External form reference"),
+    feel: "optional",
     getValue,
     setValue,
     debounce: debounce2
@@ -55331,6 +55582,16 @@ function setCustomFormKey(injector, element, formKey) {
   const commandStack = injector.get("commandStack");
   commandStack.execute("properties-panel.multi-command-executor", [...commands, createUpdateModdlePropertiesCommand(element, formDefinition, {
     formKey
+  })]);
+}
+function setExternalReference(injector, element, externalReference) {
+  let {
+    commands,
+    formDefinition
+  } = getOrCreateFormDefintition(injector, element);
+  const commandStack = injector.get("commandStack");
+  commandStack.execute("properties-panel.multi-command-executor", [...commands, createUpdateModdlePropertiesCommand(element, formDefinition, {
+    externalReference
   })]);
 }
 function setUserTaskForm(injector, element, body) {
@@ -55491,8 +55752,8 @@ function removeFactory$c({
   element,
   header
 }) {
-  return function(event2) {
-    event2.stopPropagation();
+  return function(event3) {
+    event3.stopPropagation();
     let commands = [];
     const taskHeaders = getTaskHeaders$1(element);
     if (!taskHeaders) {
@@ -55530,8 +55791,8 @@ function addFactory$9({
   commandStack,
   element
 }) {
-  return function(event2) {
-    event2.stopPropagation();
+  return function(event3) {
+    event3.stopPropagation();
     let commands = [];
     const businessObject = getBusinessObject(element);
     let extensionElements = businessObject.get("extensionElements");
@@ -55788,10 +56049,13 @@ function areInputParametersSupported$1(element) {
   return isAny(element, ["bpmn:UserTask", "bpmn:SubProcess", "bpmn:CallActivity", "bpmn:BusinessRuleTask", "bpmn:ScriptTask"]) || isZeebeServiceTask(element) || isSignalThrowEvent(element);
 }
 function areOutputParametersSupported$1(element) {
-  if (is(element, "bpmn:EndEvent") && getErrorEventDefinition(element)) {
+  if (is(element, "bpmn:EndEvent") && (getErrorEventDefinition(element) || getTerminateEventDefinition(element))) {
     return false;
   }
   return isAny(element, ["zeebe:ZeebeServiceTask", "bpmn:UserTask", "bpmn:SubProcess", "bpmn:ReceiveTask", "bpmn:CallActivity", "bpmn:Event", "bpmn:BusinessRuleTask"]);
+}
+function getTerminateEventDefinition(element) {
+  return getEventDefinition$1(element, "bpmn:TerminateEventDefinition");
 }
 function createIOMapping(properties, parent, bpmnFactory) {
   return createElement("zeebe:IoMapping", properties, parent, bpmnFactory);
@@ -55844,8 +56108,8 @@ function removeFactory$b({
   element,
   parameter
 }) {
-  return function(event2) {
-    event2.stopPropagation();
+  return function(event3) {
+    event3.stopPropagation();
     const commands = [];
     const ioMapping = getIoMapping(element);
     if (!ioMapping) {
@@ -55883,8 +56147,8 @@ function addFactory$8({
   bpmnFactory,
   commandStack
 }) {
-  return function(event2) {
-    event2.stopPropagation();
+  return function(event3) {
+    event3.stopPropagation();
     const commands = [];
     const businessObject = getBusinessObject(element);
     let extensionElements = businessObject.get("extensionElements");
@@ -56446,8 +56710,8 @@ function removeFactory$a({
   element,
   parameter
 }) {
-  return function(event2) {
-    event2.stopPropagation();
+  return function(event3) {
+    event3.stopPropagation();
     let commands = [];
     const ioMapping = getIoMapping(element);
     if (!ioMapping) {
@@ -56485,8 +56749,8 @@ function addFactory$7({
   bpmnFactory,
   commandStack
 }) {
-  return function(event2) {
-    event2.stopPropagation();
+  return function(event3) {
+    event3.stopPropagation();
     let commands = [];
     const businessObject = getBusinessObject(element);
     let extensionElements = businessObject.get("extensionElements");
@@ -56540,7 +56804,7 @@ function addFactory$7({
   };
 }
 var SCRIPT_IMPLEMENTATION_OPTION = "script";
-var JOB_WORKER_IMPLEMENTATION_OPTION = "jobWorker";
+var JOB_WORKER_IMPLEMENTATION_OPTION$1 = "jobWorker";
 var DEFAULT_IMPLEMENTATION_OPTION = "";
 function ScriptImplementationProps(props) {
   const {
@@ -56568,7 +56832,7 @@ function ScriptImplementation(props) {
       return SCRIPT_IMPLEMENTATION_OPTION;
     }
     if (getTaskDefinition$1(element)) {
-      return JOB_WORKER_IMPLEMENTATION_OPTION;
+      return JOB_WORKER_IMPLEMENTATION_OPTION$1;
     }
     return DEFAULT_IMPLEMENTATION_OPTION;
   };
@@ -56577,7 +56841,7 @@ function ScriptImplementation(props) {
     if (value === SCRIPT_IMPLEMENTATION_OPTION) {
       extensionElement = getScript$1(element);
       extensionElementType = "zeebe:Script";
-    } else if (value === JOB_WORKER_IMPLEMENTATION_OPTION) {
+    } else if (value === JOB_WORKER_IMPLEMENTATION_OPTION$1) {
       extensionElement = getTaskDefinition$1(element);
       extensionElementType = "zeebe:TaskDefinition";
     } else {
@@ -56596,7 +56860,7 @@ function ScriptImplementation(props) {
       value: SCRIPT_IMPLEMENTATION_OPTION,
       label: translate3("FEEL expression")
     }, {
-      value: JOB_WORKER_IMPLEMENTATION_OPTION,
+      value: JOB_WORKER_IMPLEMENTATION_OPTION$1,
       label: translate3("Job worker")
     }];
     return options2;
@@ -57105,8 +57369,7 @@ function TaskDefinitionRetries(props) {
     feel: "optional",
     getValue,
     setValue,
-    debounce: debounce2,
-    tooltip: translate3("Specifies the number of times the job is retried when a worker signals failure. The default is three.")
+    debounce: debounce2
   });
 }
 function getTaskDefinition(element) {
@@ -57531,6 +57794,77 @@ function getTimerEventDefinitionValueDescription$1(timerDefinitionType, translat
       });
   }
 }
+var ZEEBE_USER_TASK_IMPLEMENTATION_OPTION = "zeebeUserTask";
+var JOB_WORKER_IMPLEMENTATION_OPTION = "jobWorker";
+function UserTaskImplementationProps(props) {
+  const {
+    element
+  } = props;
+  if (!is(element, "bpmn:UserTask")) {
+    return [];
+  }
+  return [{
+    id: "userTaskImplementation",
+    component: UserTaskImplementation,
+    isEdited: () => isUserTaskImplementationEdited(element)
+  }];
+}
+function UserTaskImplementation(props) {
+  const {
+    element,
+    id
+  } = props;
+  const commandStack = useService("commandStack");
+  const bpmnFactory = useService("bpmnFactory");
+  const translate3 = useService("translate");
+  const getValue = () => {
+    if (getZeebeUserTask(element)) {
+      return ZEEBE_USER_TASK_IMPLEMENTATION_OPTION;
+    }
+    return JOB_WORKER_IMPLEMENTATION_OPTION;
+  };
+  const setValue = (value) => {
+    if (value === ZEEBE_USER_TASK_IMPLEMENTATION_OPTION) {
+      createZeebeUserTask(element, bpmnFactory, commandStack);
+    } else if (value === JOB_WORKER_IMPLEMENTATION_OPTION) {
+      removeZeebeUserTask(element, commandStack);
+    }
+  };
+  const getOptions = () => {
+    const options2 = [{
+      value: ZEEBE_USER_TASK_IMPLEMENTATION_OPTION,
+      label: translate3("Zeebe user task")
+    }, {
+      value: JOB_WORKER_IMPLEMENTATION_OPTION,
+      label: translate3("Job worker")
+    }];
+    return options2;
+  };
+  return SelectEntry({
+    element,
+    id,
+    label: translate3("Type"),
+    getValue,
+    setValue,
+    getOptions
+  });
+}
+function createZeebeUserTask(element, bpmnFactory, commandStack) {
+  const businessObject = getBusinessObject(element);
+  const zeebeUserTask = createElement("zeebe:UserTask", {}, businessObject, bpmnFactory);
+  addExtensionElements(element, businessObject, zeebeUserTask, bpmnFactory, commandStack);
+}
+function removeZeebeUserTask(element, commandStack) {
+  const zeebeUserTask = getZeebeUserTask(element);
+  removeExtensionElements(element, getBusinessObject(element), zeebeUserTask, commandStack);
+}
+function isUserTaskImplementationEdited(element) {
+  return getZeebeUserTask(element);
+}
+function getZeebeUserTask(element) {
+  const businessObject = getBusinessObject(element);
+  return getExtensionElementsList(businessObject, "zeebe:UserTask")[0];
+}
 function ExtensionProperty(props) {
   const {
     idPrefix,
@@ -57656,8 +57990,8 @@ function removeFactory$9({
   property,
   namespace
 }) {
-  return function(event2) {
-    event2.stopPropagation();
+  return function(event3) {
+    event3.stopPropagation();
     const commands = [];
     const businessObject = getRelevantBusinessObject(element);
     const extensionElements = businessObject.get("extensionElements");
@@ -57698,8 +58032,8 @@ function addFactory$6({
   element,
   namespace
 }) {
-  return function(event2) {
-    event2.stopPropagation();
+  return function(event3) {
+    event3.stopPropagation();
     let commands = [];
     const businessObject = getRelevantBusinessObject(element);
     let extensionElements = businessObject.get("extensionElements");
@@ -57773,7 +58107,7 @@ function getPropertiesList(element, namespace = "camunda") {
   return properties && properties.get(getPropertyName(namespace));
 }
 var LOW_PRIORITY$1 = 500;
-var ZEEBE_GROUPS = [BusinessRuleImplementationGroup, CalledDecisionGroup, ScriptImplementationGroup, ScriptGroup$1, TaskDefinitionGroup, AssignmentDefinitionGroup, FormGroup$1, ConditionGroup$1, TargetGroup, InputPropagationGroup, InputGroup$1, OutputPropagationGroup, OutputGroup$1, HeaderGroup, ExtensionPropertiesGroup$1];
+var ZEEBE_GROUPS = [BusinessRuleImplementationGroup, CalledDecisionGroup, ScriptImplementationGroup, ScriptGroup$1, UserTaskImplementationGroup, TaskDefinitionGroup, AssignmentDefinitionGroup, FormGroup$1, ConditionGroup$1, TargetGroup, InputPropagationGroup, InputGroup$1, OutputPropagationGroup, OutputGroup$1, HeaderGroup, ExtensionPropertiesGroup$1];
 var ZeebePropertiesProvider = class {
   constructor(propertiesPanel, injector) {
     propertiesPanel.registerProvider(LOW_PRIORITY$1, this);
@@ -57798,10 +58132,11 @@ var ZeebePropertiesProvider = class {
   }
 };
 ZeebePropertiesProvider.$inject = ["propertiesPanel", "injector"];
-function CalledDecisionGroup(element) {
+function CalledDecisionGroup(element, injector) {
+  const translate3 = injector.get("translate");
   const group = {
     id: "calledDecision",
-    label: "Called decision",
+    label: translate3("Called decision"),
     entries: [...CalledDecisionProps({
       element
     })],
@@ -57809,10 +58144,11 @@ function CalledDecisionGroup(element) {
   };
   return group.entries.length ? group : null;
 }
-function ScriptGroup$1(element) {
+function ScriptGroup$1(element, injector) {
+  const translate3 = injector.get("translate");
   const group = {
     id: "script",
-    label: "Script",
+    label: translate3("Script"),
     entries: [...ScriptProps$1({
       element
     })],
@@ -57820,10 +58156,11 @@ function ScriptGroup$1(element) {
   };
   return group.entries.length ? group : null;
 }
-function TaskDefinitionGroup(element) {
+function TaskDefinitionGroup(element, injector) {
+  const translate3 = injector.get("translate");
   const group = {
     id: "taskDefinition",
-    label: "Task definition",
+    label: translate3("Task definition"),
     entries: [...TaskDefinitionProps({
       element
     })],
@@ -57832,9 +58169,10 @@ function TaskDefinitionGroup(element) {
   return group.entries.length ? group : null;
 }
 function InputGroup$1(element, injector) {
+  const translate3 = injector.get("translate");
   const group = {
     id: "inputs",
-    label: "Inputs",
+    label: translate3("Inputs"),
     component: ListGroup,
     ...InputProps$1({
       element,
@@ -57844,9 +58182,10 @@ function InputGroup$1(element, injector) {
   return group.items ? group : null;
 }
 function OutputGroup$1(element, injector) {
+  const translate3 = injector.get("translate");
   const group = {
     id: "outputs",
-    label: "Outputs",
+    label: translate3("Outputs"),
     component: ListGroup,
     ...OutputProps$1({
       element,
@@ -57855,10 +58194,11 @@ function OutputGroup$1(element, injector) {
   };
   return group.items ? group : null;
 }
-function ConditionGroup$1(element) {
+function ConditionGroup$1(element, injector) {
+  const translate3 = injector.get("translate");
   const group = {
     id: "condition",
-    label: "Condition",
+    label: translate3("Condition"),
     entries: [...ConditionProps$1({
       element
     })],
@@ -57867,9 +58207,10 @@ function ConditionGroup$1(element) {
   return group.entries.length ? group : null;
 }
 function FormGroup$1(element, injector) {
+  const translate3 = injector.get("translate");
   const group = {
     id: "form",
-    label: "Form",
+    label: translate3("Form"),
     entries: [...FormProps$1({
       element,
       injector
@@ -57878,10 +58219,11 @@ function FormGroup$1(element, injector) {
   };
   return group.entries.length ? group : null;
 }
-function TargetGroup(element) {
+function TargetGroup(element, injector) {
+  const translate3 = injector.get("translate");
   const group = {
     id: "calledElement",
-    label: "Called element",
+    label: translate3("Called element"),
     entries: [...TargetProps({
       element
     })],
@@ -57890,9 +58232,10 @@ function TargetGroup(element) {
   return group.entries.length ? group : null;
 }
 function HeaderGroup(element, injector) {
+  const translate3 = injector.get("translate");
   const group = {
     id: "headers",
-    label: "Headers",
+    label: translate3("Headers"),
     component: ListGroup,
     ...HeaderProps({
       element,
@@ -57901,10 +58244,11 @@ function HeaderGroup(element, injector) {
   };
   return group.items ? group : null;
 }
-function OutputPropagationGroup(element) {
+function OutputPropagationGroup(element, injector) {
+  const translate3 = injector.get("translate");
   const group = {
     id: "outputPropagation",
-    label: "Output propagation",
+    label: translate3("Output propagation"),
     entries: [...OutputPropagationProps({
       element
     })],
@@ -57912,10 +58256,11 @@ function OutputPropagationGroup(element) {
   };
   return group.entries.length ? group : null;
 }
-function InputPropagationGroup(element) {
+function InputPropagationGroup(element, injector) {
+  const translate3 = injector.get("translate");
   const group = {
     id: "inputPropagation",
-    label: "Input propagation",
+    label: translate3("Input propagation"),
     entries: [...InputPropagationProps({
       element
     })],
@@ -57923,10 +58268,11 @@ function InputPropagationGroup(element) {
   };
   return group.entries.length ? group : null;
 }
-function BusinessRuleImplementationGroup(element) {
+function BusinessRuleImplementationGroup(element, injector) {
+  const translate3 = injector.get("translate");
   const group = {
     id: "businessRuleImplementation",
-    label: "Implementation",
+    label: translate3("Implementation"),
     entries: [...BusinessRuleImplementationProps({
       element
     })],
@@ -57934,10 +58280,11 @@ function BusinessRuleImplementationGroup(element) {
   };
   return group.entries.length ? group : null;
 }
-function ScriptImplementationGroup(element) {
+function ScriptImplementationGroup(element, injector) {
+  const translate3 = injector.get("translate");
   const group = {
     id: "scriptImplementation",
-    label: "Implementation",
+    label: translate3("Implementation"),
     entries: [...ScriptImplementationProps({
       element
     })],
@@ -57945,10 +58292,23 @@ function ScriptImplementationGroup(element) {
   };
   return group.entries.length ? group : null;
 }
-function AssignmentDefinitionGroup(element) {
+function UserTaskImplementationGroup(element, injector) {
+  const translate3 = injector.get("translate");
+  const group = {
+    id: "userTaskImplementation",
+    label: translate3("Implementation"),
+    entries: [...UserTaskImplementationProps({
+      element
+    })],
+    component: Group
+  };
+  return group.entries.length ? group : null;
+}
+function AssignmentDefinitionGroup(element, injector) {
+  const translate3 = injector.get("translate");
   const group = {
     id: "assignmentDefinition",
-    label: "Assignment",
+    label: translate3("Assignment"),
     entries: [...AssignmentDefinitionProps({
       element
     }), ...TaskScheduleProps({
@@ -57959,8 +58319,9 @@ function AssignmentDefinitionGroup(element) {
   return group.entries.length ? group : null;
 }
 function ExtensionPropertiesGroup$1(element, injector) {
+  const translate3 = injector.get("translate");
   const group = {
-    label: "Extension properties",
+    label: translate3("Extension properties"),
     id: "Zeebe__ExtensionProperties",
     component: ListGroup,
     ...ExtensionPropertiesProps({
@@ -59369,11 +59730,11 @@ function ScriptProps(props) {
   const {
     element,
     script,
-    prefix: prefix3
+    prefix: prefix4
   } = props;
   const entries = [];
   const scriptType = getScriptType(script || element);
-  const idPrefix = prefix3 || "";
+  const idPrefix = prefix4 || "";
   entries.push({
     id: idPrefix + "scriptFormat",
     component: Format,
@@ -60248,8 +60609,8 @@ function ConnectorInputProps(props) {
       })
     };
   });
-  function add3(event2) {
-    event2.stopPropagation();
+  function add3(event3) {
+    event3.stopPropagation();
     const commands = [];
     let inputOutput = getInputOutput(connector);
     if (!inputOutput) {
@@ -60283,8 +60644,8 @@ function removeFactory$8(props) {
     element,
     parameter
   } = props;
-  return function(event2) {
-    event2.stopPropagation();
+  return function(event3) {
+    event3.stopPropagation();
     const inputOutput = getInputOutput(connector);
     if (!inputOutput) {
       return;
@@ -60328,8 +60689,8 @@ function ConnectorOutputProps(props) {
       })
     };
   });
-  function add3(event2) {
-    event2.stopPropagation();
+  function add3(event3) {
+    event3.stopPropagation();
     const commands = [];
     let inputOutput = getInputOutput(connector);
     if (!inputOutput) {
@@ -60363,8 +60724,8 @@ function removeFactory$7(props) {
     element,
     parameter
   } = props;
-  return function(event2) {
-    event2.stopPropagation();
+  return function(event3) {
+    event3.stopPropagation();
     const inputOutput = getInputOutput(connector);
     if (!inputOutput) {
       return;
@@ -60795,8 +61156,8 @@ function removeFactory$6({
   element,
   errorEventDefinition
 }) {
-  return function(event2) {
-    event2.stopPropagation();
+  return function(event3) {
+    event3.stopPropagation();
     const businessObject = getBusinessObject(element);
     removeExtensionElements(element, businessObject, errorEventDefinition, commandStack);
   };
@@ -60806,8 +61167,8 @@ function addFactory$5({
   commandStack,
   element
 }) {
-  return function(event2) {
-    event2.stopPropagation();
+  return function(event3) {
+    event3.stopPropagation();
     const businessObject = getBusinessObject(element);
     const error4 = createElement("camunda:ErrorEventDefinition", {}, void 0, bpmnFactory);
     addExtensionElements(element, businessObject, error4, bpmnFactory, commandStack);
@@ -61098,8 +61459,8 @@ function removeFactory$5({
   element,
   field
 }) {
-  return function(event2) {
-    event2.stopPropagation();
+  return function(event3) {
+    event3.stopPropagation();
     const businessObject = getServiceTaskLikeBusinessObject(element);
     removeExtensionElements(element, businessObject, field, commandStack);
   };
@@ -61109,8 +61470,8 @@ function addFactory$4({
   commandStack,
   element
 }) {
-  return function(event2) {
-    event2.stopPropagation();
+  return function(event3) {
+    event3.stopPropagation();
     const businessObject = getServiceTaskLikeBusinessObject(element);
     const fieldInjection = createElement("camunda:Field", {
       name: void 0,
@@ -61880,8 +62241,8 @@ function addFactory$3({
   commandStack,
   element
 }) {
-  return function(event2) {
-    event2.stopPropagation();
+  return function(event3) {
+    event3.stopPropagation();
     const commands = [];
     const formData = getFormData$1(element);
     const formField = createElement("camunda:FormField", {}, formData, bpmnFactory);
@@ -61903,8 +62264,8 @@ function removeFactory$4({
   element,
   formField
 }) {
-  return function(event2) {
-    event2.stopPropagation();
+  return function(event3) {
+    event3.stopPropagation();
     const formData = getFormData$1(element), formFields = getFormFieldsList(element);
     if (!formFields || !formFields.length) {
       return;
@@ -63416,8 +63777,8 @@ function removeFactory$3({
   element,
   mapping
 }) {
-  return function(event2) {
-    event2.stopPropagation();
+  return function(event3) {
+    event3.stopPropagation();
     const businessObject = getSignalEventDefinition$1(element) || getBusinessObject(element);
     removeExtensionElements(element, businessObject, mapping, commandStack);
   };
@@ -63427,8 +63788,8 @@ function addFactory$2({
   commandStack,
   element
 }) {
-  return function(event2) {
-    event2.stopPropagation();
+  return function(event3) {
+    event3.stopPropagation();
     const businessObject = getSignalEventDefinition$1(element) || getBusinessObject(element);
     const newMapping = createElement("camunda:In", {
       source: ""
@@ -63480,8 +63841,8 @@ function InputProps(props) {
       })
     };
   });
-  function add3(event2) {
-    event2.stopPropagation();
+  function add3(event3) {
+    event3.stopPropagation();
     commandStack.execute("properties-panel.multi-command-executor", AddParameterCmd(element, "camunda:InputParameter", bpmnFactory));
   }
   return {
@@ -63496,8 +63857,8 @@ function removeFactory$2(props) {
     element,
     parameter
   } = props;
-  return function(event2) {
-    event2.stopPropagation();
+  return function(event3) {
+    event3.stopPropagation();
     const inputOutput = getInputOutput(element);
     if (!inputOutput) {
       return;
@@ -64053,8 +64414,8 @@ function removeFactory$1({
   element,
   mapping
 }) {
-  return function(event2) {
-    event2.stopPropagation();
+  return function(event3) {
+    event3.stopPropagation();
     const businessObject = getBusinessObject(element);
     removeExtensionElements(element, businessObject, mapping, commandStack);
   };
@@ -64064,8 +64425,8 @@ function addFactory$1({
   commandStack,
   element
 }) {
-  return function(event2) {
-    event2.stopPropagation();
+  return function(event3) {
+    event3.stopPropagation();
     const businessObject = getBusinessObject(element);
     const newMapping = createElement("camunda:Out", {
       source: ""
@@ -64126,8 +64487,8 @@ function removeFactory({
   element,
   parameter
 }) {
-  return function(event2) {
-    event2.stopPropagation();
+  return function(event3) {
+    event3.stopPropagation();
     const inputOutput = getInputOutput(element);
     if (!inputOutput) {
       return;
@@ -64146,8 +64507,8 @@ function addFactory({
   commandStack,
   element
 }) {
-  return function(event2) {
-    event2.stopPropagation();
+  return function(event3) {
+    event3.stopPropagation();
     commandStack.execute("properties-panel.multi-command-executor", AddParameterCmd(element, "camunda:OutputParameter", bpmnFactory));
   };
 }
@@ -64530,8 +64891,8 @@ function removeListenerFactory({
   listener,
   commandStack
 }) {
-  return function removeListener(event2) {
-    event2.stopPropagation();
+  return function removeListener(event3) {
+    event3.stopPropagation();
     removeExtensionElements(element, getListenersContainer(element), listener, commandStack);
   };
 }
@@ -64772,8 +65133,8 @@ function addListenerFactory({
   element,
   listenerGroup
 }) {
-  return function(event2) {
-    event2.stopPropagation();
+  return function(event3) {
+    event3.stopPropagation();
     const listener = bpmnFactory.create(listenerGroup, {
       event: getDefaultEvent(element, listenerGroup),
       class: ""
@@ -64795,9 +65156,9 @@ function addExecutionListenerFactory(props) {
   });
 }
 function getListenerLabel(listener, translate3 = (value) => value) {
-  const event2 = listener.get("event");
+  const event3 = listener.get("event");
   const implementationType = getListenerType(listener);
-  return `${translate3(EVENT_TO_LABEL[event2])}: ${translate3(IMPLEMENTATION_TYPE_TO_LABEL[implementationType])}`;
+  return `${translate3(EVENT_TO_LABEL[event3])}: ${translate3(IMPLEMENTATION_TYPE_TO_LABEL[implementationType])}`;
 }
 function getListenerTypeOptions(translate3) {
   return Object.entries(IMPLEMENTATION_TYPE_TO_LABEL).map(([value, label]) => ({
@@ -64852,8 +65213,8 @@ function getDefaultEventTypeProperties(type, bpmnFactory) {
       };
   }
 }
-function getPrefixedId(prefix3, id) {
-  return `${prefix3}-${id}`;
+function getPrefixedId(prefix4, id) {
+  return `${prefix4}-${id}`;
 }
 function compareName(field, anotherField) {
   const [name2 = "", anotherName = ""] = [field.name, anotherField.name];
@@ -66369,8 +66730,8 @@ function isInterrupting3(element) {
 function isAny2(element, types3) {
   return types3.some((type) => is(element, type));
 }
-function isTypedEvent2(event2, eventDefinitionType) {
-  return some(getBusinessObject(event2).eventDefinitions, (definition) => {
+function isTypedEvent2(event3, eventDefinitionType) {
+  return some(getBusinessObject(event3).eventDefinitions, (definition) => {
     return eventDefinitionType ? is(definition, eventDefinitionType) : true;
   });
 }
@@ -66492,11 +66853,11 @@ function Simulator(injector, eventBus, elementRegistry) {
       initiator,
       scope
     } = context;
-    const event2 = getEvent(_event);
+    const event3 = getEvent(_event);
     const subscriptions2 = scope.subscriptions;
     const matchingSubscriptions = filterSet(
       subscriptions2,
-      (subscription) => eventsMatch(event2, subscription.event)
+      (subscription) => eventsMatch(event3, subscription.event)
     );
     const nonInterrupting = matchingSubscriptions.filter(
       (subscription) => !subscription.event.interrupting
@@ -66521,12 +66882,12 @@ function Simulator(injector, eventBus, elementRegistry) {
     });
     return [interrupt.triggerFn(initiator)].flat().filter((s5) => s5);
   }
-  function subscribe(scope, event2, triggerFn) {
-    event2 = getEvent(event2);
-    const element = event2.element;
+  function subscribe(scope, event3, triggerFn) {
+    event3 = getEvent(event3);
+    const element = event3.element;
     const subscription = {
       scope,
-      event: event2,
+      event: event3,
       element,
       triggerFn,
       remove() {
@@ -66543,12 +66904,12 @@ function Simulator(injector, eventBus, elementRegistry) {
   function unsubscribe(subscription) {
     const {
       scope,
-      event: event2
+      event: event3
     } = subscription;
     subscriptions.delete(subscription);
     scope.subscriptions.delete(subscription);
-    if (event2.element) {
-      elementChanged(event2.element);
+    if (event3.element) {
+      elementChanged(event3.element);
     }
   }
   function createInternalRef(element) {
@@ -66693,11 +67054,11 @@ function Simulator(injector, eventBus, elementRegistry) {
       scope
     } = filter2;
     const elements = filter2.elements || element && [element];
-    const event2 = _event && getEvent(_event);
-    return (subscription) => (!event2 || eventsMatch(event2, subscription.event)) && (!elements || elements.includes(subscription.element)) && (!scope || scope === subscription.scope);
+    const event3 = _event && getEvent(_event);
+    return (subscription) => (!event3 || eventsMatch(event3, subscription.event)) && (!elements || elements.includes(subscription.element)) && (!scope || scope === subscription.scope);
   }
-  function scopeSubscriptionFilter(event2) {
-    const matchesSubscription = event2 === "function" ? event2 : subscriptionFilter(event2);
+  function scopeSubscriptionFilter(event3) {
+    const matchesSubscription = event3 === "function" ? event3 : subscriptionFilter(event3);
     return (scope) => Array.from(scope.subscriptions).some(matchesSubscription);
   }
   function scopeFilter(filter2) {
@@ -66774,14 +67135,14 @@ function Simulator(injector, eventBus, elementRegistry) {
       scope
     });
   }
-  function emit(event2, payload = {}) {
-    return eventBus.fire(`tokenSimulation.simulator.${event2}`, payload);
+  function emit(event3, payload = {}) {
+    return eventBus.fire(`tokenSimulation.simulator.${event3}`, payload);
   }
-  function on2(event2, callback) {
-    eventBus.on("tokenSimulation.simulator." + event2, callback);
+  function on2(event3, callback) {
+    eventBus.on("tokenSimulation.simulator." + event3, callback);
   }
-  function off(event2, callback) {
-    eventBus.off("tokenSimulation.simulator." + event2, callback);
+  function off(event3, callback) {
+    eventBus.off("tokenSimulation.simulator." + event3, callback);
   }
   function setConfig(element, updatedConfig) {
     const existingConfig = getConfig(element);
@@ -66804,11 +67165,11 @@ function Simulator(injector, eventBus, elementRegistry) {
       const startEvents = element.children.filter(isStartEvent);
       const implicitStartEvents = element.children.filter(isImplicitStartEvent);
       for (const startEvent of startEvents) {
-        const event2 = {
+        const event3 = {
           ...getEvent(startEvent),
           interrupting: false
         };
-        subscribe(scope, event2, (initiator) => signal({
+        subscribe(scope, event3, (initiator) => signal({
           element,
           startEvent,
           initiator
@@ -66816,8 +67177,8 @@ function Simulator(injector, eventBus, elementRegistry) {
       }
       if (!startEvents.length) {
         for (const implicitStartEvent of implicitStartEvents) {
-          const event2 = getNoneEvent(implicitStartEvent);
-          subscribe(scope, event2, (initiator) => signal({
+          const event3 = getNoneEvent(implicitStartEvent);
+          subscribe(scope, event3, (initiator) => signal({
             element,
             initiator
           }));
@@ -66873,7 +67234,7 @@ function Simulator(injector, eventBus, elementRegistry) {
     if (!scopes2.length) {
       return;
     }
-    const event2 = {
+    const event3 = {
       type: "all-completed",
       persistent: false
     };
@@ -66884,12 +67245,12 @@ function Simulator(injector, eventBus, elementRegistry) {
         off("destroyScope", destroyListener);
         trigger({
           scope,
-          event: event2
+          event: event3
         });
       }
     };
     on2("destroyScope", destroyListener);
-    return event2;
+    return event3;
   }
   function waitAtElement(element, wait = true) {
     setConfig(element, {
@@ -66944,8 +67305,8 @@ function NoopBehavior() {
     console.log("ignored #enter", context.element);
   };
 }
-function isRethrow(event2, interrupt) {
-  return event2.type === interrupt.type && event2.boundary && !interrupt.boundary;
+function isRethrow(event3, interrupt) {
+  return event3.type === interrupt.type && event3.boundary && !interrupt.boundary;
 }
 function isImplicitMessageCatch(element) {
   return is(element, "bpmn:ReceiveTask") || element.incoming.some((element2) => is(element2, "bpmn:MessageFlow"));
@@ -67027,9 +67388,9 @@ BoundaryEventBehavior2.prototype.signal = function(context) {
   const cancelActivity = getBusinessObject(element).cancelActivity;
   if (cancelActivity) {
     this._scopeBehavior.interrupt(hostScope, scope);
-    const event2 = this._scopeBehavior.tryExit(hostScope, scope);
-    if (event2) {
-      const subscription = this._simulator.subscribe(hostScope, event2, (initiator) => {
+    const event3 = this._scopeBehavior.tryExit(hostScope, scope);
+    if (event3) {
+      const subscription = this._simulator.subscribe(hostScope, event3, (initiator) => {
         subscription.remove();
         return this._simulator.exit(context);
       });
@@ -67085,9 +67446,9 @@ IntermediateThrowEventBehavior.prototype.enter = function(context) {
   } = context;
   const eventBehavior = this._eventBehaviors.get(element);
   if (eventBehavior) {
-    const event2 = eventBehavior(context);
-    if (event2) {
-      return this._activityBehavior.signalOnEvent(context, event2);
+    const event3 = eventBehavior(context);
+    if (event3) {
+      return this._activityBehavior.signalOnEvent(context, event3);
     }
   }
   this._activityBehavior.enter(context);
@@ -67259,8 +67620,8 @@ InclusiveGatewayBehavior.prototype._tryJoin = function(context) {
   if (elementScopes[0] !== scope) {
     return;
   }
-  const event2 = this._simulator.waitForScopes(scope, remainingScopes);
-  const subscription = this._simulator.subscribe(scope, event2, () => {
+  const event3 = this._simulator.waitForScopes(scope, remainingScopes);
+  const subscription = this._simulator.subscribe(scope, event3, () => {
     subscription.remove();
     this._tryJoin(context);
   });
@@ -67347,9 +67708,9 @@ ActivityBehavior.$inject = [
   "transactionBehavior"
 ];
 ActivityBehavior.prototype.signal = function(context) {
-  const event2 = this._triggerMessages(context);
-  if (event2) {
-    return this.signalOnEvent(context, event2);
+  const event3 = this._triggerMessages(context);
+  if (event3) {
+    return this.signalOnEvent(context, event3);
   }
   this._simulator.exit(context);
 };
@@ -67361,9 +67722,9 @@ ActivityBehavior.prototype.enter = function(context) {
   if (continueEvent) {
     return this.signalOnEvent(context, continueEvent);
   }
-  const event2 = this._triggerMessages(context);
-  if (event2) {
-    return this.signalOnEvent(context, event2);
+  const event3 = this._triggerMessages(context);
+  if (event3) {
+    return this.signalOnEvent(context, event3);
   }
   this._simulator.exit(context);
 };
@@ -67388,12 +67749,12 @@ ActivityBehavior.prototype.exit = function(context) {
     this._scopeBehavior.tryExit(parentScope, scope);
   }
 };
-ActivityBehavior.prototype.signalOnEvent = function(context, event2) {
+ActivityBehavior.prototype.signalOnEvent = function(context, event3) {
   const {
     scope,
     element
   } = context;
-  const subscription = this._simulator.subscribe(scope, event2, (initiator) => {
+  const subscription = this._simulator.subscribe(scope, event3, (initiator) => {
     subscription.remove();
     return this._simulator.signal({
       scope,
@@ -67821,18 +68182,18 @@ MessageFlowBehavior2.prototype.exit = function(context) {
     scope: initiator
   } = context;
   const target = element.target;
-  const event2 = isCatchEvent(target) ? target : {
+  const event3 = isCatchEvent(target) ? target : {
     type: "message",
     element,
     name: element.id
   };
   const subscription = this._simulator.findSubscription({
-    event: event2,
+    event: event3,
     elements: [target, target.parent]
   });
   if (subscription) {
     this._simulator.trigger({
-      event: event2,
+      event: event3,
       initiator,
       scope: subscription.scope
     });
@@ -67851,13 +68212,13 @@ function is4(element, types3) {
     return is(element, type);
   });
 }
-function getEventDefinition4(event2, eventDefinitionType) {
-  return find(getBusinessObject(event2).eventDefinitions, (definition) => {
+function getEventDefinition4(event3, eventDefinitionType) {
+  return find(getBusinessObject(event3).eventDefinitions, (definition) => {
     return is4(definition, eventDefinitionType);
   });
 }
-function isTypedEvent3(event2, eventDefinitionType) {
-  return some(getBusinessObject(event2).eventDefinitions, (definition) => {
+function isTypedEvent3(event3, eventDefinitionType) {
+  return some(getBusinessObject(event3).eventDefinitions, (definition) => {
     return is4(definition, eventDefinitionType);
   });
 }
@@ -68050,11 +68411,11 @@ ScopeBehavior.prototype.tryExit = function(scope, initiator) {
   });
   for (const subscription of preExitSubscriptions) {
     const {
-      event: event2,
+      event: event3,
       scope: scope2
     } = subscription;
     const scopes = this._simulator.trigger({
-      event: event2,
+      event: event3,
       scope: scope2,
       initiator
     });
@@ -68196,7 +68557,7 @@ var simulator_default = {
       eventBus.on([
         "tokenSimulation.toggleMode",
         "tokenSimulation.resetSimulation"
-      ], HIGH_PRIORITY21, (event2) => {
+      ], HIGH_PRIORITY21, (event3) => {
         simulator.reset();
       });
     }]
@@ -68291,18 +68652,18 @@ function ScopeFilter(eventBus, simulator) {
   ], () => {
     this._filter = DEFAULT_SCOPE_FILTER;
   });
-  eventBus.on(SCOPE_DESTROYED_EVENT, (event2) => {
+  eventBus.on(SCOPE_DESTROYED_EVENT, (event3) => {
     const {
       scope
-    } = event2;
+    } = event3;
     if (this._scope === scope && scope.parent) {
       this.toggle(scope.parent);
     }
   });
-  eventBus.on(SCOPE_CREATE_EVENT, (event2) => {
+  eventBus.on(SCOPE_CREATE_EVENT, (event3) => {
     const {
       scope
-    } = event2;
+    } = event3;
     if (!scope.parent && this._scope && !isAncestor(this._scope, scope)) {
       this.toggle(null);
     }
@@ -68343,6 +68704,151 @@ function isAncestor(parent, scope) {
 var scope_filter_default = {
   scopeFilter: ["type", ScopeFilter]
 };
+
+// node_modules/bpmn-js-token-simulation/node_modules/min-dom/dist/index.js
+var import_domify = __toESM(require_domify(), 1);
+function _mergeNamespaces2(n4, m5) {
+  m5.forEach(function(e7) {
+    e7 && typeof e7 !== "string" && !Array.isArray(e7) && Object.keys(e7).forEach(function(k6) {
+      if (k6 !== "default" && !(k6 in n4)) {
+        var d5 = Object.getOwnPropertyDescriptor(e7, k6);
+        Object.defineProperty(n4, k6, d5.get ? d5 : {
+          enumerable: true,
+          get: function() {
+            return e7[k6];
+          }
+        });
+      }
+    });
+  });
+  return Object.freeze(n4);
+}
+var toString3 = Object.prototype.toString;
+function classes3(el) {
+  return new ClassList3(el);
+}
+function ClassList3(el) {
+  if (!el || !el.nodeType) {
+    throw new Error("A DOM element reference is required");
+  }
+  this.el = el;
+  this.list = el.classList;
+}
+ClassList3.prototype.add = function(name2) {
+  this.list.add(name2);
+  return this;
+};
+ClassList3.prototype.remove = function(name2) {
+  if ("[object RegExp]" == toString3.call(name2)) {
+    return this.removeMatching(name2);
+  }
+  this.list.remove(name2);
+  return this;
+};
+ClassList3.prototype.removeMatching = function(re) {
+  const arr = this.array();
+  for (let i7 = 0; i7 < arr.length; i7++) {
+    if (re.test(arr[i7])) {
+      this.remove(arr[i7]);
+    }
+  }
+  return this;
+};
+ClassList3.prototype.toggle = function(name2, force) {
+  if ("undefined" !== typeof force) {
+    if (force !== this.list.toggle(name2, force)) {
+      this.list.toggle(name2);
+    }
+  } else {
+    this.list.toggle(name2);
+  }
+  return this;
+};
+ClassList3.prototype.array = function() {
+  return Array.from(this.list);
+};
+ClassList3.prototype.has = ClassList3.prototype.contains = function(name2) {
+  return this.list.contains(name2);
+};
+function clear3(el) {
+  var c5;
+  while (el.childNodes.length) {
+    c5 = el.childNodes[0];
+    el.removeChild(c5);
+  }
+  return el;
+}
+function matches3(element, selector) {
+  return element && typeof element.matches === "function" && element.matches(selector);
+}
+function closest2(element, selector, checkYourSelf) {
+  var currentElem = checkYourSelf ? element : element.parentNode;
+  while (currentElem && currentElem.nodeType !== document.DOCUMENT_NODE && currentElem.nodeType !== document.DOCUMENT_FRAGMENT_NODE) {
+    if (matches3(currentElem, selector)) {
+      return currentElem;
+    }
+    currentElem = currentElem.parentNode;
+  }
+  return matches3(currentElem, selector) ? currentElem : null;
+}
+var componentEvent2 = {};
+var bind$12;
+var unbind$12;
+var prefix3;
+function detect2() {
+  bind$12 = window.addEventListener ? "addEventListener" : "attachEvent";
+  unbind$12 = window.removeEventListener ? "removeEventListener" : "detachEvent";
+  prefix3 = bind$12 !== "addEventListener" ? "on" : "";
+}
+var bind_12 = componentEvent2.bind = function(el, type, fn2, capture) {
+  if (!bind$12)
+    detect2();
+  el[bind$12](prefix3 + type, fn2, capture || false);
+  return fn2;
+};
+var unbind_12 = componentEvent2.unbind = function(el, type, fn2, capture) {
+  if (!unbind$12)
+    detect2();
+  el[unbind$12](prefix3 + type, fn2, capture || false);
+  return fn2;
+};
+var event2 = /* @__PURE__ */ _mergeNamespaces2({
+  __proto__: null,
+  bind: bind_12,
+  default: componentEvent2,
+  unbind: unbind_12
+}, [componentEvent2]);
+var forceCaptureEvents2 = ["focus", "blur"];
+function bind3(el, selector, type, fn2, capture) {
+  if (forceCaptureEvents2.indexOf(type) !== -1) {
+    capture = true;
+  }
+  return event2.bind(el, type, function(e7) {
+    var target = e7.target || e7.srcElement;
+    e7.delegateTarget = closest2(target, selector, true);
+    if (e7.delegateTarget) {
+      fn2.call(el, e7);
+    }
+  }, capture);
+}
+function unbind2(el, type, fn2, capture) {
+  if (forceCaptureEvents2.indexOf(type) !== -1) {
+    capture = true;
+  }
+  return event2.unbind(el, type, fn2, capture);
+}
+var delegate2 = {
+  bind: bind3,
+  unbind: unbind2
+};
+function query2(selector, el) {
+  el = el || document;
+  return el.querySelector(selector);
+}
+function all2(selector, el) {
+  el = el || document;
+  return el.querySelectorAll(selector);
+}
 
 // node_modules/bpmn-js-token-simulation/lib/animation/Animation.js
 var STYLE = getComputedStyle(document.documentElement);
@@ -68391,7 +68897,7 @@ function Animation(config, canvas, eventBus, scopeFilter) {
   eventBus.on(PLAY_SIMULATION_EVENT, () => {
     this.play();
   });
-  eventBus.on(SCOPE_FILTER_CHANGED_EVENT, (event2) => {
+  eventBus.on(SCOPE_FILTER_CHANGED_EVENT, (event3) => {
     this.each((animation) => {
       if (this._scopeFilter.isShown(animation.scope)) {
         animation.show();
@@ -68400,10 +68906,10 @@ function Animation(config, canvas, eventBus, scopeFilter) {
       }
     });
   });
-  eventBus.on(SCOPE_DESTROYED_EVENT, (event2) => {
+  eventBus.on(SCOPE_DESTROYED_EVENT, (event3) => {
     const {
       scope
-    } = event2;
+    } = event3;
     this.clearAnimations(scope);
   });
 }
@@ -68493,9 +68999,9 @@ Animation.prototype._getGroup = function(scope) {
     root = canvas.findRoot(scope.element);
     layer = canvas._findPlaneForRoot(root).layer;
   } else {
-    layer = query(".viewport", canvas._svg);
+    layer = query2(".viewport", canvas._svg);
   }
-  var group = query(".bts-animation-tokens", layer);
+  var group = query2(".bts-animation-tokens", layer);
   if (!group) {
     group = create('<g class="bts-animation-tokens" />');
     appendTo(
@@ -68563,8 +69069,8 @@ TokenAnimation.prototype.tick = function(tElapsed) {
   const point = this._path.getPointAtLength(currentLength);
   this.move(point.x, point.y);
 };
-TokenAnimation.prototype.move = function(x5, y5) {
-  attr(this.gfx, "transform", `translate(${x5}, ${y5})`);
+TokenAnimation.prototype.move = function(x6, y5) {
+  attr(this.gfx, "transform", `translate(${x6}, ${y5})`);
 };
 TokenAnimation.prototype.create = function() {
   const waypoints = this.waypoints;
@@ -68587,8 +69093,8 @@ TokenAnimation.prototype.create = function() {
     return length2 + part.length;
   }, 0);
   const d5 = waypoints.reduce((d6, waypoint, index4) => {
-    const x5 = waypoint.x - TOKEN_SIZE / 2, y5 = waypoint.y - TOKEN_SIZE / 2;
-    d6.push([index4 > 0 ? "L" : "M", x5, y5]);
+    const x6 = waypoint.x - TOKEN_SIZE / 2, y5 = waypoint.y - TOKEN_SIZE / 2;
+    d6.push([index4 > 0 ? "L" : "M", x6, y5]);
     return d6;
   }, []).flat().join(" ");
   const totalDuration = getAnimationDuration(totalLength, this._randomize);
@@ -68677,10 +69183,10 @@ function ColoredScopes(eventBus) {
       auxiliary: getContrastYIQ(primary) >= 128 ? "#111" : "#fff"
     };
   }
-  eventBus.on(SCOPE_CREATE_EVENT, HIGH_PRIORITY22, (event2) => {
+  eventBus.on(SCOPE_CREATE_EVENT, HIGH_PRIORITY22, (event3) => {
     const {
       scope
-    } = event2;
+    } = event3;
     scope.colors = getColors(scope);
   });
 }
@@ -68876,11 +69382,11 @@ TriggerHandler.prototype.createTriggerContextPad = function(element) {
   `;
   const action = (subscriptions) => {
     const {
-      event: event2,
+      event: event3,
       scope
     } = subscriptions[0];
     return this._simulator.trigger({
-      event: event2,
+      event: event3,
       scope
     });
   };
@@ -68926,30 +69432,30 @@ function ContextPads(eventBus, elementRegistry, overlays, injector, canvas, scop
     this.closeContextPads();
     this.openContextPads();
   });
-  eventBus.on(SCOPE_FILTER_CHANGED_EVENT, (event2) => {
-    const showElements = all(
+  eventBus.on(SCOPE_FILTER_CHANGED_EVENT, (event3) => {
+    const showElements = all2(
       ".djs-overlay-ts-context-menu [data-scope-ids]",
       overlays._overlayRoot
     );
     for (const element of showElements) {
       const scopeIds = element.dataset.scopeIds.split(",");
       const shown = scopeIds.some((id) => scopeFilter.isShown(id));
-      classes2(element).toggle("hidden", !shown);
+      classes3(element).toggle("hidden", !shown);
     }
-    const hideElements = all(
+    const hideElements = all2(
       ".djs-overlay-ts-context-menu [data-hide-scope-ids]",
       overlays._overlayRoot
     );
     for (const element of hideElements) {
       const scopeIds = element.dataset.hideScopeIds.split(",");
       const shown = scopeIds.some((id) => scopeFilter.isShown(id));
-      classes2(element).toggle("hidden", shown);
+      classes3(element).toggle("hidden", shown);
     }
   });
-  eventBus.on(ELEMENT_CHANGED_EVENT, LOW_PRIORITY29, (event2) => {
+  eventBus.on(ELEMENT_CHANGED_EVENT, LOW_PRIORITY29, (event3) => {
     const {
       element
-    } = event2;
+    } = event3;
     this.updateElementContextPads(element);
   });
 }
@@ -68985,7 +69491,7 @@ ContextPads.prototype._addOverlay = function(element, options2) {
   if (!handlerHash) {
     throw new Error("<handlerHash> required");
   }
-  const overlayId = this._overlays.add(element, "ts-context-menu", {
+  const overlayId = this._overlays.add(element, "bts-context-menu", {
     ...options2,
     position: {
       top: OFFSET_TOP,
@@ -69036,26 +69542,26 @@ ContextPads.prototype._updateElementContextPads = function(element, handler) {
     let existingOverlay = existingOverlays.find(
       (o5) => o5.hash === hash
     );
-    const html = existingOverlay && existingOverlay.html || domify$1(_html);
+    const html = existingOverlay && existingOverlay.html || (0, import_domify.default)(_html);
     if (_contexts) {
       const contexts = _contexts();
       html.dataset.scopeIds = contexts.map((c5) => c5.scope.id).join(",");
       const shownScopes = contexts.filter((c5) => this._scopeFilter.isShown(c5.scope));
-      classes2(html).toggle("hidden", shownScopes.length === 0);
+      classes3(html).toggle("hidden", shownScopes.length === 0);
     }
     if (_hideContexts) {
       const contexts = _hideContexts();
       html.dataset.hideScopeIds = contexts.map((c5) => c5.scope.id).join(",");
       const shownScopes = contexts.filter((c5) => this._scopeFilter.isShown(c5.scope));
-      classes2(html).toggle("hidden", shownScopes.length > 0);
+      classes3(html).toggle("hidden", shownScopes.length > 0);
     }
     if (existingOverlay) {
       updatedOverlays.push(existingOverlay);
       continue;
     }
     if (_action) {
-      event.bind(html, "click", (event2) => {
-        event2.preventDefault();
+      event2.bind(html, "click", (event3) => {
+        event3.preventDefault();
         const contexts = _contexts ? _contexts().filter((c5) => this._scopeFilter.isShown(c5.scope)) : null;
         _action(contexts);
       });
@@ -69114,10 +69620,10 @@ var context_pads_default = {
 
 // node_modules/bpmn-js-token-simulation/lib/features/simulation-state/SimulationState.js
 function SimulationState(eventBus, simulator, elementNotifications) {
-  eventBus.on(SCOPE_DESTROYED_EVENT, (event2) => {
+  eventBus.on(SCOPE_DESTROYED_EVENT, (event3) => {
     const {
       scope
-    } = event2;
+    } = event3;
     const {
       destroyInitiator,
       element: scopeElement
@@ -69172,13 +69678,13 @@ ElementNotifications.prototype.addElementNotification = function(element, option
   } = options2;
   const colors2 = scope.colors;
   const colorMarkup = colors2 ? `style="color: ${colors2.auxiliary}; background: ${colors2.primary}"` : "";
-  const html = domify$1(`
+  const html = (0, import_domify.default)(`
     <div class="bts-element-notification ${type || ""}" ${colorMarkup}>
       ${icon || ""}
       <span class="bts-text">${text}</span>
     </div>
   `);
-  this._overlays.add(element, "element-notification", {
+  this._overlays.add(element, "bts-element-notification", {
     position,
     html,
     show: {
@@ -69187,7 +69693,7 @@ ElementNotifications.prototype.addElementNotification = function(element, option
   });
 };
 ElementNotifications.prototype.clear = function() {
-  this._overlays.remove({ type: "element-notification" });
+  this._overlays.remove({ type: "bts-element-notification" });
 };
 ElementNotifications.prototype.removeElementNotification = function(element) {
   this._overlays.remove({ element });
@@ -69210,12 +69716,12 @@ function Notifications(eventBus, canvas, scopeFilter) {
   eventBus.on([
     TOGGLE_MODE_EVENT,
     RESET_SIMULATION_EVENT
-  ], (event2) => {
+  ], (event3) => {
     this.clear();
   });
 }
 Notifications.prototype._init = function() {
-  this.container = domify$1('<div class="bts-notifications"></div>');
+  this.container = (0, import_domify.default)('<div class="bts-notifications"></div>');
   this._canvas.getContainer().appendChild(this.container);
 };
 Notifications.prototype.showNotification = function(options2) {
@@ -69232,7 +69738,7 @@ Notifications.prototype.showNotification = function(options2) {
   const iconMarkup = icon.startsWith("<") ? icon : `<i class="${icon}"></i>`;
   const colors2 = scope && scope.colors;
   const colorMarkup = colors2 ? `style="color: ${colors2.auxiliary}; background: ${colors2.primary}"` : "";
-  const notification = domify$1(`
+  const notification = (0, import_domify.default)(`
     <div class="bts-notification ${type}">
       <span class="bts-icon">${iconMarkup}</span>
       <span class="bts-text" title="${text}">${text}</span>
@@ -69291,38 +69797,38 @@ function ShowScopes(eventBus, canvas, scopeFilter, elementColors, simulationStyl
   this._simulationStyles = simulationStyles;
   this._highlight = null;
   this._init();
-  eventBus.on(TOGGLE_MODE_EVENT, (event2) => {
-    const active = event2.active;
+  eventBus.on(TOGGLE_MODE_EVENT, (event3) => {
+    const active = event3.active;
     if (active) {
-      classes2(this._container).remove("hidden");
+      classes3(this._container).remove("hidden");
     } else {
-      classes2(this._container).add("hidden");
-      clear2(this._container);
+      classes3(this._container).add("hidden");
+      clear3(this._container);
       this.unhighlightScope();
     }
   });
-  eventBus.on(SCOPE_FILTER_CHANGED_EVENT, (event2) => {
+  eventBus.on(SCOPE_FILTER_CHANGED_EVENT, (event3) => {
     const allElements = this.getScopeElements();
     for (const element of allElements) {
       const scopeId = element.dataset.scopeId;
-      classes2(element).toggle("inactive", !this._scopeFilter.isShown(scopeId));
+      classes3(element).toggle("inactive", !this._scopeFilter.isShown(scopeId));
     }
   });
-  eventBus.on(SCOPE_CREATE_EVENT, (event2) => {
-    this.addScope(event2.scope);
+  eventBus.on(SCOPE_CREATE_EVENT, (event3) => {
+    this.addScope(event3.scope);
   });
-  eventBus.on(SCOPE_DESTROYED_EVENT, (event2) => {
-    this.removeScope(event2.scope);
+  eventBus.on(SCOPE_DESTROYED_EVENT, (event3) => {
+    this.removeScope(event3.scope);
   });
-  eventBus.on(SCOPE_CHANGED_EVENT, (event2) => {
-    this.updateScope(event2.scope);
+  eventBus.on(SCOPE_CHANGED_EVENT, (event3) => {
+    this.updateScope(event3.scope);
   });
   eventBus.on(RESET_SIMULATION_EVENT, () => {
     this.removeAllInstances();
   });
 }
 ShowScopes.prototype._init = function() {
-  this._container = domify$1('<div class="bts-scopes hidden"></div>');
+  this._container = (0, import_domify.default)('<div class="bts-scopes hidden"></div>');
   this._canvas.getContainer().appendChild(this._container);
 };
 ShowScopes.prototype.addScope = function(scope) {
@@ -69339,31 +69845,31 @@ ShowScopes.prototype.addScope = function(scope) {
   }
   const colors2 = scope.colors;
   const colorMarkup = colors2 ? `style="color: ${colors2.auxiliary}; background: ${colors2.primary}"` : "";
-  const html = domify$1(`
+  const html = (0, import_domify.default)(`
     <div data-scope-id="${scope.id}" class="bts-scope"
          title="View Process Instance ${scope.id}" ${colorMarkup}>
       ${scope.getTokens()}
     </div>
   `);
-  event.bind(html, "click", () => {
+  event2.bind(html, "click", () => {
     this._scopeFilter.toggle(scope);
   });
-  event.bind(html, "mouseenter", () => {
+  event2.bind(html, "mouseenter", () => {
     this.highlightScope(scopeElement);
   });
-  event.bind(html, "mouseleave", () => {
+  event2.bind(html, "mouseleave", () => {
     this.unhighlightScope();
   });
   if (!this._scopeFilter.isShown(scope)) {
-    classes2(html).add("inactive");
+    classes3(html).add("inactive");
   }
   this._container.appendChild(html);
 };
 ShowScopes.prototype.getScopeElements = function() {
-  return all("[data-scope-id]", this._container);
+  return all2("[data-scope-id]", this._container);
 };
 ShowScopes.prototype.getScopeElement = function(scope) {
-  return query(`[data-scope-id="${scope.id}"]`, this._container);
+  return query2(`[data-scope-id="${scope.id}"]`, this._container);
 };
 ShowScopes.prototype.updateScope = function(scope) {
   const element = this.getScopeElement(scope);
@@ -69385,7 +69891,7 @@ ShowScopes.prototype.highlightScope = function(element) {
   this._highlight = element;
   this._elementColors.add(element, ID2, this._getHighlightColors(), VERY_HIGH_PRIORITY);
   if (!element.parent) {
-    classes2(this._canvas.getContainer()).add("highlight");
+    classes3(this._canvas.getContainer()).add("highlight");
   }
 };
 ShowScopes.prototype.unhighlightScope = function() {
@@ -69395,7 +69901,7 @@ ShowScopes.prototype.unhighlightScope = function() {
   const element = this._highlight;
   this._elementColors.remove(element, ID2);
   if (!element.parent) {
-    classes2(this._canvas.getContainer()).remove("highlight");
+    classes3(this._canvas.getContainer()).remove("highlight");
   }
   this._highlight = null;
 };
@@ -69464,23 +69970,68 @@ function getElementName(element) {
   const name2 = element && element.businessObject.name;
   return name2 && escapeHTML(name2);
 }
+function getIconForIntermediateEvent(element, throwOrCatch) {
+  const eventTypeString = getEventTypeString(element);
+  if (eventTypeString === "none") {
+    return "bpmn-icon-intermediate-event-none";
+  }
+  return `bpmn-icon-intermediate-event-${throwOrCatch}-${eventTypeString}`;
+}
+function getEventTypeString(element) {
+  const bo = getBusinessObject(element);
+  if (bo.eventDefinitions.length === 0) {
+    return "none";
+  }
+  const eventDefinition = bo.eventDefinitions[0];
+  if (is4(eventDefinition, "bpmn:MessageEventDefinition")) {
+    return "message";
+  }
+  if (is4(eventDefinition, "bpmn:TimerEventDefinition")) {
+    return "timer";
+  }
+  if (is4(eventDefinition, "bpmn:SignalEventDefinition")) {
+    return "signal";
+  }
+  if (is4(eventDefinition, "bpmn:ErrorEventDefinition")) {
+    return "error";
+  }
+  if (is4(eventDefinition, "bpmn:EscalationEventDefinition")) {
+    return "escalation";
+  }
+  if (is4(eventDefinition, "bpmn:CompensateEventDefinition")) {
+    return "compensation";
+  }
+  if (is4(eventDefinition, "bpmn:ConditionalEventDefinition")) {
+    return "condition";
+  }
+  if (is4(eventDefinition, "bpmn:LinkEventDefinition")) {
+    return "link";
+  }
+  if (is4(eventDefinition, "bpmn:CancelEventDefinition")) {
+    return "cancel";
+  }
+  if (is4(eventDefinition, "bpmn:TerminateEventDefinition")) {
+    return "terminate";
+  }
+  return "none";
+}
 function Log(eventBus, notifications, tokenSimulationPalette, canvas, scopeFilter, simulator) {
   this._notifications = notifications;
   this._tokenSimulationPalette = tokenSimulationPalette;
   this._canvas = canvas;
   this._scopeFilter = scopeFilter;
   this._init();
-  eventBus.on(SCOPE_FILTER_CHANGED_EVENT, (event2) => {
-    const allElements = all(".bts-entry[data-scope-id]", this._container);
+  eventBus.on(SCOPE_FILTER_CHANGED_EVENT, (event3) => {
+    const allElements = all2(".bts-entry[data-scope-id]", this._container);
     for (const element of allElements) {
       const scopeId = element.dataset.scopeId;
-      classes2(element).toggle("inactive", !this._scopeFilter.isShown(scopeId));
+      classes3(element).toggle("inactive", !this._scopeFilter.isShown(scopeId));
     }
   });
-  eventBus.on(SCOPE_DESTROYED_EVENT, (event2) => {
+  eventBus.on(SCOPE_DESTROYED_EVENT, (event3) => {
     const {
       scope
-    } = event2;
+    } = event3;
     const {
       element: scopeElement
     } = scope;
@@ -69501,10 +70052,10 @@ function Log(eventBus, notifications, tokenSimulationPalette, canvas, scopeFilte
       scope
     });
   });
-  eventBus.on(SCOPE_CREATE_EVENT, (event2) => {
+  eventBus.on(SCOPE_CREATE_EVENT, (event3) => {
     const {
       scope
-    } = event2;
+    } = event3;
     const {
       element: scopeElement
     } = scope;
@@ -69524,104 +70075,133 @@ function Log(eventBus, notifications, tokenSimulationPalette, canvas, scopeFilte
       scope
     });
   });
-  eventBus.on(TRACE_EVENT, (event2) => {
+  eventBus.on(TRACE_EVENT, (event3) => {
     const {
       action,
       scope: elementScope,
       element
-    } = event2;
+    } = event3;
     if (action !== "exit") {
       return;
     }
     const scope = elementScope.parent;
     const elementName = getElementName(element);
-    if (is4(element, "bpmn:BusinessRuleTask")) {
-      this.log({
-        text: elementName || "Business Rule Task",
-        icon: "bpmn-icon-business-rule",
-        scope
-      });
-    } else if (is4(element, "bpmn:CallActivity")) {
-      this.log({
-        text: elementName || "Call Activity",
-        icon: "bpmn-icon-call-activity",
-        scope
-      });
-    } else if (is4(element, "bpmn:IntermediateCatchEvent") || is4(element, "bpmn:IntermediateThrowEvent")) {
-      this.log({
-        text: elementName || "Intermediate Event",
-        icon: "bpmn-icon-intermediate-event-none",
-        scope
-      });
-    }
-    if (is4(element, "bpmn:BoundaryEvent")) {
-      this.log({
-        text: elementName || "Boundary Event",
-        icon: "bpmn-icon-intermediate-event-none",
-        scope
-      });
-    } else if (is4(element, "bpmn:ManualTask")) {
-      this.log({
-        text: elementName || "Manual Task",
-        icon: "bpmn-icon-manual",
-        scope
-      });
-    } else if (is4(element, "bpmn:ScriptTask")) {
-      this.log({
-        text: elementName || "Script Task",
-        icon: "bpmn-icon-script",
-        scope
-      });
-    } else if (is4(element, "bpmn:ServiceTask")) {
-      this.log({
+    if (is4(element, "bpmn:ServiceTask")) {
+      return this.log({
         text: elementName || "Service Task",
         icon: "bpmn-icon-service",
         scope
       });
-    } else if (is4(element, "bpmn:Task")) {
-      this.log({
-        text: elementName || "Task",
-        icon: "bpmn-icon-task",
-        scope
-      });
-    } else if (is4(element, "bpmn:UserTask")) {
-      this.log({
+    }
+    if (is4(element, "bpmn:UserTask")) {
+      return this.log({
         text: elementName || "User Task",
         icon: "bpmn-icon-user",
         scope
       });
-    } else if (is4(element, "bpmn:ExclusiveGateway")) {
-      if (element.outgoing.length < 2) {
-        return;
-      }
-      const sequenceFlowName = getElementName(element.sequenceFlow);
-      let text = elementName || "Gateway";
-      if (sequenceFlowName) {
-        text = text.concat(` ${AngleRightIcon()} ${sequenceFlowName}`);
-      }
-      this.log({
-        text,
+    }
+    if (is4(element, "bpmn:CallActivity")) {
+      return this.log({
+        text: elementName || "Call Activity",
+        icon: "bpmn-icon-call-activity",
+        scope
+      });
+    }
+    if (is4(element, "bpmn:ScriptTask")) {
+      return this.log({
+        text: elementName || "Script Task",
+        icon: "bpmn-icon-script",
+        scope
+      });
+    }
+    if (is4(element, "bpmn:BusinessRuleTask")) {
+      return this.log({
+        text: elementName || "Business Rule Task",
+        icon: "bpmn-icon-business-rule",
+        scope
+      });
+    }
+    if (is4(element, "bpmn:ManualTask")) {
+      return this.log({
+        text: elementName || "Manual Task",
+        icon: "bpmn-icon-manual-task",
+        scope
+      });
+    }
+    if (is4(element, "bpmn:ReceiveTask")) {
+      return this.log({
+        text: elementName || "Receive Task",
+        icon: "bpmn-icon-receive",
+        scope
+      });
+    }
+    if (is4(element, "bpmn:SendTask")) {
+      return this.log({
+        text: elementName || "Send Task",
+        icon: "bpmn-icon-send",
+        scope
+      });
+    }
+    if (is4(element, "bpmn:Task")) {
+      return this.log({
+        text: elementName || "Task",
+        icon: "bpmn-icon-task",
+        scope
+      });
+    }
+    if (is4(element, "bpmn:ExclusiveGateway")) {
+      return this.log({
+        text: elementName || "Exclusive Gateway",
         icon: "bpmn-icon-gateway-xor",
         scope
       });
-    } else if (is4(element, "bpmn:EndEvent")) {
-      if (isTypedEvent3(getBusinessObject(element), "bpmn:TerminateEventDefinition")) {
-        this.log({
-          text: elementName || "Terminate End Event",
-          icon: "bpmn-icon-end-event-terminate",
-          scope
-        });
-      } else {
-        this.log({
-          text: elementName || "End Event",
-          icon: "bpmn-icon-end-event-none",
-          scope
-        });
-      }
-    } else if (is4(element, "bpmn:StartEvent")) {
-      this.log({
+    }
+    if (is4(element, "bpmn:ParallelGateway")) {
+      return this.log({
+        text: elementName || "Parallel Gateway",
+        icon: "bpmn-icon-gateway-parallel",
+        scope
+      });
+    }
+    if (is4(element, "bpmn:InclusiveGateway")) {
+      return this.log({
+        text: elementName || "Inclusive Gateway",
+        icon: "bpmn-icon-gateway-or",
+        scope
+      });
+    }
+    if (is4(element, "bpmn:StartEvent")) {
+      return this.log({
         text: elementName || "Start Event",
-        icon: "bpmn-icon-start-event-none",
+        icon: `bpmn-icon-start-event-${getEventTypeString(element)}`,
+        scope
+      });
+    }
+    if (is4(element, "bpmn:IntermediateCatchEvent")) {
+      return this.log({
+        text: elementName || "Intermediate Event",
+        icon: getIconForIntermediateEvent(element, "catch"),
+        scope
+      });
+    }
+    if (is4(element, "bpmn:IntermediateThrowEvent")) {
+      return this.log({
+        text: elementName || "Intermediate Event",
+        icon: getIconForIntermediateEvent(element, "throw"),
+        scope
+      });
+    }
+    if (is4(element, "bpmn:BoundaryEvent")) {
+      return this.log({
+        text: elementName || "Boundary Event",
+        icon: getIconForIntermediateEvent(element, "catch"),
+        scope
+      });
+    }
+    if (is4(element, "bpmn:EndEvent")) {
+      return this.log({
+        text: elementName || "End Event",
+        icon: `bpmn-icon-end-event-${getEventTypeString(element)}`,
         scope
       });
     }
@@ -69629,13 +70209,13 @@ function Log(eventBus, notifications, tokenSimulationPalette, canvas, scopeFilte
   eventBus.on([
     TOGGLE_MODE_EVENT,
     RESET_SIMULATION_EVENT
-  ], (event2) => {
+  ], (event3) => {
     this.clear();
     this.toggle(false);
   });
 }
 Log.prototype._init = function() {
-  this._container = domify$1(`
+  this._container = (0, import_domify.default)(`
     <div class="bts-log hidden djs-scrollable">
       <div class="bts-header">
         ${LogIcon("bts-log-icon")}
@@ -69649,40 +70229,40 @@ Log.prototype._init = function() {
       </div>
     </div>
   `);
-  this._placeholder = query(".bts-placeholder", this._container);
-  this._content = query(".bts-content", this._container);
-  event.bind(this._content, "mousedown", (event2) => {
-    event2.stopPropagation();
+  this._placeholder = query2(".bts-placeholder", this._container);
+  this._content = query2(".bts-content", this._container);
+  event2.bind(this._content, "mousedown", (event3) => {
+    event3.stopPropagation();
   });
-  this._close = query(".bts-close", this._container);
-  event.bind(this._close, "click", () => {
+  this._close = query2(".bts-close", this._container);
+  event2.bind(this._close, "click", () => {
     this.toggle(false);
   });
-  this._icon = query(".bts-log-icon", this._container);
-  event.bind(this._icon, "click", () => {
+  this._icon = query2(".bts-log-icon", this._container);
+  event2.bind(this._icon, "click", () => {
     this.toggle();
   });
   this._canvas.getContainer().appendChild(this._container);
-  this.paletteEntry = domify$1(`
+  this.paletteEntry = (0, import_domify.default)(`
     <div class="bts-entry" title="Toggle Simulation Log">
       ${LogIcon()}
     </div>
   `);
-  event.bind(this.paletteEntry, "click", () => {
+  event2.bind(this.paletteEntry, "click", () => {
     this.toggle();
   });
   this._tokenSimulationPalette.addEntry(this.paletteEntry, 3);
 };
 Log.prototype.isShown = function() {
   const container = this._container;
-  return !classes2(container).has("hidden");
+  return !classes3(container).has("hidden");
 };
 Log.prototype.toggle = function(shown = !this.isShown()) {
   const container = this._container;
   if (shown) {
-    classes2(container).remove("hidden");
+    classes3(container).remove("hidden");
   } else {
-    classes2(container).add("hidden");
+    classes3(container).add("hidden");
   }
 };
 Log.prototype.log = function(options2) {
@@ -69693,21 +70273,21 @@ Log.prototype.log = function(options2) {
     scope
   } = options2;
   const content = this._content;
-  classes2(this._placeholder).add("hidden");
+  classes3(this._placeholder).add("hidden");
   if (!this.isShown()) {
     this._notifications.showNotification(options2);
   }
   const iconMarkup = icon.startsWith("<") ? icon : `<i class="${icon}"></i>`;
   const colors2 = scope && scope.colors;
   const colorMarkup = colors2 ? `style="background: ${colors2.primary}; color: ${colors2.auxiliary}"` : "";
-  const logEntry = domify$1(`
+  const logEntry = (0, import_domify.default)(`
     <p class="bts-entry ${type} ${scope && this._scopeFilter.isShown(scope) ? "" : "inactive"}" ${scope ? `data-scope-id="${scope.id}"` : ""}>
       <span class="bts-icon">${iconMarkup}</span>
       <span class="bts-text" title="${text}">${text}</span>
       ${scope ? `<span class="bts-scope" data-scope-id="${scope.id}" ${colorMarkup}>${scope.id}</span>` : ""}
     </p>
   `);
-  delegate.bind(logEntry, ".bts-scope[data-scope-id]", "click", (event2) => {
+  delegate2.bind(logEntry, ".bts-scope[data-scope-id]", "click", (event3) => {
     this._scopeFilter.toggle(scope);
   });
   const shouldScroll = Math.abs(content.clientHeight + content.scrollTop - content.scrollHeight) < 2;
@@ -69720,7 +70300,7 @@ Log.prototype.clear = function() {
   while (this._content.firstChild) {
     this._content.removeChild(this._content.firstChild);
   }
-  this._placeholder = domify$1('<p class="bts-entry placeholder">No Entries</p>');
+  this._placeholder = (0, import_domify.default)('<p class="bts-entry placeholder">No Entries</p>');
   this._content.appendChild(this._placeholder);
 };
 Log.$inject = [
@@ -69757,8 +70337,8 @@ function ElementSupport(eventBus, elementRegistry, canvas, notifications, elemen
   this._elementNotifications = elementNotifications;
   this._notifications = notifications;
   this._canvasParent = canvas.getContainer().parentNode;
-  eventBus.on(TOGGLE_MODE_EVENT, (event2) => {
-    if (event2.active) {
+  eventBus.on(TOGGLE_MODE_EVENT, (event3) => {
+    if (event3.active) {
       this.enable();
     } else {
       this.clear();
@@ -69791,7 +70371,7 @@ ElementSupport.prototype.enable = function() {
   this._unsupportedElements = unsupportedElements;
 };
 ElementSupport.prototype.clear = function() {
-  classes2(this._canvasParent).remove("warning");
+  classes3(this._canvasParent).remove("warning");
 };
 ElementSupport.prototype.showWarning = function(element) {
   this._elementNotifications.addElementNotification(element, {
@@ -69830,7 +70410,7 @@ function PauseSimulation(eventBus, tokenSimulationPalette, notifications, canvas
   this.isActive = false;
   this.isPaused = true;
   this._init();
-  eventBus.on(SCOPE_CREATE_EVENT, HIGH_PRIORITY23, (event2) => {
+  eventBus.on(SCOPE_CREATE_EVENT, HIGH_PRIORITY23, (event3) => {
     this.activate();
     this.unpause();
   });
@@ -69841,17 +70421,17 @@ function PauseSimulation(eventBus, tokenSimulationPalette, notifications, canvas
     this.deactivate();
     this.pause();
   });
-  eventBus.on(TRACE_EVENT, HIGH_PRIORITY23, (event2) => {
+  eventBus.on(TRACE_EVENT, HIGH_PRIORITY23, (event3) => {
     this.unpause();
   });
 }
 PauseSimulation.prototype._init = function() {
-  this.paletteEntry = domify$1(`
+  this.paletteEntry = (0, import_domify.default)(`
     <div class="bts-entry disabled" title="Play/Pause Simulation">
       ${PLAY_MARKUP}
     </div>
   `);
-  event.bind(this.paletteEntry, "click", this.toggle.bind(this));
+  event2.bind(this.paletteEntry, "click", this.toggle.bind(this));
   this._tokenSimulationPalette.addEntry(this.paletteEntry, 1);
 };
 PauseSimulation.prototype.toggle = function() {
@@ -69865,8 +70445,8 @@ PauseSimulation.prototype.pause = function() {
   if (!this.isActive) {
     return;
   }
-  classes2(this.paletteEntry).remove("active");
-  classes2(this.canvasParent).add("paused");
+  classes3(this.paletteEntry).remove("active");
+  classes3(this.canvasParent).add("paused");
   this.paletteEntry.innerHTML = PLAY_MARKUP;
   this._eventBus.fire(PAUSE_SIMULATION_EVENT);
   this._notifications.showNotification({
@@ -69878,8 +70458,8 @@ PauseSimulation.prototype.unpause = function() {
   if (!this.isActive || !this.isPaused) {
     return;
   }
-  classes2(this.paletteEntry).add("active");
-  classes2(this.canvasParent).remove("paused");
+  classes3(this.paletteEntry).add("active");
+  classes3(this.canvasParent).remove("paused");
   this.paletteEntry.innerHTML = PAUSE_MARKUP;
   this._eventBus.fire(PLAY_SIMULATION_EVENT);
   this._notifications.showNotification({
@@ -69889,12 +70469,12 @@ PauseSimulation.prototype.unpause = function() {
 };
 PauseSimulation.prototype.activate = function() {
   this.isActive = true;
-  classes2(this.paletteEntry).remove("disabled");
+  classes3(this.paletteEntry).remove("disabled");
 };
 PauseSimulation.prototype.deactivate = function() {
   this.isActive = false;
-  classes2(this.paletteEntry).remove("active");
-  classes2(this.paletteEntry).add("disabled");
+  classes3(this.paletteEntry).remove("active");
+  classes3(this.paletteEntry).add("disabled");
 };
 PauseSimulation.$inject = [
   "eventBus",
@@ -69921,22 +70501,22 @@ function ResetSimulation(eventBus, tokenSimulationPalette, notifications) {
   this._notifications = notifications;
   this._init();
   eventBus.on(SCOPE_CREATE_EVENT, () => {
-    classes2(this._paletteEntry).remove("disabled");
+    classes3(this._paletteEntry).remove("disabled");
   });
-  eventBus.on(TOGGLE_MODE_EVENT, (event2) => {
-    const active = this._active = event2.active;
+  eventBus.on(TOGGLE_MODE_EVENT, (event3) => {
+    const active = this._active = event3.active;
     if (!active) {
       this.resetSimulation();
     }
   });
 }
 ResetSimulation.prototype._init = function() {
-  this._paletteEntry = domify$1(`
+  this._paletteEntry = (0, import_domify.default)(`
     <div class="bts-entry disabled" title="Reset Simulation">
       ${ResetIcon()}
     </div>
   `);
-  event.bind(this._paletteEntry, "click", () => {
+  event2.bind(this._paletteEntry, "click", () => {
     this.resetSimulation();
     this._notifications.showNotification({
       text: "Reset Simulation",
@@ -69946,7 +70526,7 @@ ResetSimulation.prototype._init = function() {
   this._tokenSimulationPalette.addEntry(this._paletteEntry, 2);
 };
 ResetSimulation.prototype.resetSimulation = function() {
-  classes2(this._paletteEntry).add("disabled");
+  classes3(this._paletteEntry).add("disabled");
   this._eventBus.fire(RESET_SIMULATION_EVENT);
 };
 ResetSimulation.$inject = [
@@ -69978,18 +70558,18 @@ function TokenCount(eventBus, overlays, simulator, scopeFilter, simulationStyles
   this._simulator = simulator;
   this._simulationStyles = simulationStyles;
   this.overlayIds = {};
-  eventBus.on(ELEMENT_CHANGED_EVENT, LOW_PRIORITY30, (event2) => {
+  eventBus.on(ELEMENT_CHANGED_EVENT, LOW_PRIORITY30, (event3) => {
     const {
       element
-    } = event2;
+    } = event3;
     this.removeTokenCounts(element);
     this.addTokenCounts(element);
   });
-  eventBus.on(SCOPE_FILTER_CHANGED_EVENT, (event2) => {
-    const allElements = all(".bts-token-count[data-scope-id]", overlays._overlayRoot);
+  eventBus.on(SCOPE_FILTER_CHANGED_EVENT, (event3) => {
+    const allElements = all2(".bts-token-count[data-scope-id]", overlays._overlayRoot);
     for (const element of allElements) {
       const scopeId = element.dataset.scopeId;
-      classes2(element).toggle("inactive", !this._scopeFilter.isShown(scopeId));
+      classes3(element).toggle("inactive", !this._scopeFilter.isShown(scopeId));
     }
   });
 }
@@ -70009,13 +70589,13 @@ TokenCount.prototype.addTokenCount = function(element, scopes) {
   const tokenMarkup = scopes.map((scope) => {
     return this._getTokenHTML(element, scope);
   }).join("");
-  const html = domify$1(`
+  const html = (0, import_domify.default)(`
     <div class="bts-token-count-parent">
       ${tokenMarkup}
     </div>
   `);
   const position = { bottom: OFFSET_BOTTOM, left: OFFSET_LEFT2 };
-  const overlayId = this._overlays.add(element, "token-count", {
+  const overlayId = this._overlays.add(element, "bts-token-count", {
     position,
     html,
     show: {
@@ -70081,23 +70661,23 @@ function SetAnimationSpeed(canvas, animation, eventBus) {
   this._animation = animation;
   this._eventBus = eventBus;
   this._init(animation.getAnimationSpeed());
-  eventBus.on(TOGGLE_MODE_EVENT, (event2) => {
-    const active = event2.active;
+  eventBus.on(TOGGLE_MODE_EVENT, (event3) => {
+    const active = event3.active;
     if (!active) {
-      classes2(this._container).add("hidden");
+      classes3(this._container).add("hidden");
     } else {
-      classes2(this._container).remove("hidden");
+      classes3(this._container).remove("hidden");
     }
   });
-  eventBus.on(ANIMATION_SPEED_CHANGED_EVENT, (event2) => {
-    this.setActive(event2.speed);
+  eventBus.on(ANIMATION_SPEED_CHANGED_EVENT, (event3) => {
+    this.setActive(event3.speed);
   });
 }
 SetAnimationSpeed.prototype.getToggleSpeed = function(element) {
   return parseFloat(element.dataset.speed);
 };
 SetAnimationSpeed.prototype._init = function(animationSpeed) {
-  this._container = domify$1(`
+  this._container = (0, import_domify.default)(`
     <div class="bts-set-animation-speed hidden">
       ${TachometerIcon()}
       <div class="bts-animation-speed-buttons">
@@ -70111,17 +70691,17 @@ SetAnimationSpeed.prototype._init = function(animationSpeed) {
       </div>
     </div>
   `);
-  delegate.bind(this._container, "[data-speed]", "click", (event2) => {
-    const toggle2 = event2.delegateTarget;
+  delegate2.bind(this._container, "[data-speed]", "click", (event3) => {
+    const toggle2 = event3.delegateTarget;
     const speed = this.getToggleSpeed(toggle2);
     this._animation.setAnimationSpeed(speed);
   });
   this._canvas.getContainer().appendChild(this._container);
 };
 SetAnimationSpeed.prototype.setActive = function(speed) {
-  all("[data-speed]", this._container).forEach((toggle2) => {
+  all2("[data-speed]", this._container).forEach((toggle2) => {
     const active = this.getToggleSpeed(toggle2) === speed;
-    classes2(toggle2)[active ? "add" : "remove"]("active");
+    classes3(toggle2)[active ? "add" : "remove"]("active");
   });
 };
 SetAnimationSpeed.$inject = [
@@ -70160,8 +70740,8 @@ function ExclusiveGatewaySettings(eventBus, elementRegistry, elementColors, simu
   this._elementColors = elementColors;
   this._simulator = simulator;
   this._simulationStyles = simulationStyles;
-  eventBus.on(TOGGLE_MODE_EVENT, (event2) => {
-    if (event2.active) {
+  eventBus.on(TOGGLE_MODE_EVENT, (event3) => {
+    if (event3.active) {
       this.setSequenceFlowsDefault();
     } else {
       this.resetSequenceFlows();
@@ -70228,8 +70808,8 @@ function ElementColors(elementRegistry, eventBus, graphicsFactory) {
   this._graphicsFactory = graphicsFactory;
   this._originalColors = {};
   this._customColors = {};
-  eventBus.on(TOGGLE_MODE_EVENT, VERY_HIGH_PRIORITY2, (event2) => {
-    const active = event2.active;
+  eventBus.on(TOGGLE_MODE_EVENT, VERY_HIGH_PRIORITY2, (event3) => {
+    const active = event3.active;
     if (active) {
       this._saveOriginalColors();
     } else {
@@ -70373,8 +70953,8 @@ var ID4 = "neutral-element-colors";
 function NeutralElementColors(eventBus, elementRegistry, elementColors) {
   this._elementRegistry = elementRegistry;
   this._elementColors = elementColors;
-  eventBus.on(TOGGLE_MODE_EVENT, (event2) => {
-    const { active } = event2;
+  eventBus.on(TOGGLE_MODE_EVENT, (event3) => {
+    const { active } = event3;
     if (active) {
       this._setNeutralColors();
     }
@@ -70412,8 +70992,8 @@ function InclusiveGatewaySettings(eventBus, elementRegistry, elementColors, simu
   this._elementColors = elementColors;
   this._simulator = simulator;
   this._simulationStyles = simulationStyles;
-  eventBus.on(TOGGLE_MODE_EVENT, (event2) => {
-    if (event2.active) {
+  eventBus.on(TOGGLE_MODE_EVENT, (event3) => {
+    if (event3.active) {
       this.setDefaults();
     } else {
       this.reset();
@@ -70529,14 +71109,14 @@ function Palette2(eventBus, canvas) {
   eventBus.on(TOGGLE_MODE_EVENT, function(context) {
     var active = context.active;
     if (active) {
-      classes2(self2.container).remove("hidden");
+      classes3(self2.container).remove("hidden");
     } else {
-      classes2(self2.container).add("hidden");
+      classes3(self2.container).add("hidden");
     }
   });
 }
 Palette2.prototype._init = function() {
-  this.container = domify$1('<div class="bts-palette hidden"></div>');
+  this.container = (0, import_domify.default)('<div class="bts-palette hidden"></div>');
   this._canvas.getContainer().appendChild(this.container);
 };
 Palette2.prototype.addEntry = function(entry, index4) {
@@ -70586,13 +71166,12 @@ var base_default = {
 
 // node_modules/bpmn-js-token-simulation/lib/features/disable-modeling/DisableModeling.js
 var HIGH_PRIORITY25 = 10001;
-function DisableModeling(eventBus, contextPad, dragging, directEditing, editorActions, modeling, palette, paletteProvider) {
+function DisableModeling(eventBus, contextPad, dragging, directEditing, editorActions, modeling, palette) {
   let modelingDisabled = false;
-  eventBus.on(TOGGLE_MODE_EVENT, HIGH_PRIORITY25, (event2) => {
-    modelingDisabled = event2.active;
+  eventBus.on(TOGGLE_MODE_EVENT, HIGH_PRIORITY25, (event3) => {
+    modelingDisabled = event3.active;
     if (modelingDisabled) {
       directEditing.cancel();
-      contextPad.close();
       dragging.cancel();
     }
     palette._update();
@@ -70619,7 +71198,6 @@ function DisableModeling(eventBus, contextPad, dragging, directEditing, editorAc
       return fn2.apply(this, args);
     });
   }
-  ignoreIfModelingDisabled(contextPad, "open");
   ignoreIfModelingDisabled(dragging, "init");
   ignoreIfModelingDisabled(directEditing, "activate");
   ignoreIfModelingDisabled(dragging, "init");
@@ -70672,8 +71250,7 @@ DisableModeling.$inject = [
   "directEditing",
   "editorActions",
   "modeling",
-  "palette",
-  "paletteProvider"
+  "palette"
 ];
 function isAnyAction(actions, action) {
   return actions.indexOf(action) > -1;
@@ -70704,17 +71281,17 @@ function ToggleMode(eventBus, canvas, selection2, contextPad) {
   });
   eventBus.on("diagram.init", () => {
     this._canvasParent = this._canvas.getContainer().parentNode;
-    this._palette = query(".djs-palette", this._canvas.getContainer());
+    this._palette = query2(".djs-palette", this._canvas.getContainer());
     this._init();
   });
 }
 ToggleMode.prototype._init = function() {
-  this._container = domify$1(`
+  this._container = (0, import_domify.default)(`
     <div class="bts-toggle-mode">
       Token Simulation <span class="bts-toggle">${ToggleOffIcon()}</span>
     </div>
   `);
-  event.bind(this._container, "click", () => this.toggleMode());
+  event2.bind(this._container, "click", () => this.toggleMode());
   this._canvas.getContainer().appendChild(this._container);
 };
 ToggleMode.prototype.toggleMode = function(active = !this._active) {
@@ -70723,12 +71300,12 @@ ToggleMode.prototype.toggleMode = function(active = !this._active) {
   }
   if (active) {
     this._container.innerHTML = `Token Simulation <span class="bts-toggle">${ToggleOnIcon()}</span>`;
-    classes2(this._canvasParent).add("simulation");
-    classes2(this._palette).add("hidden");
+    classes3(this._canvasParent).add("simulation");
+    classes3(this._palette).add("hidden");
   } else {
     this._container.innerHTML = `Token Simulation <span class="bts-toggle">${ToggleOffIcon()}</span>`;
-    classes2(this._canvasParent).remove("simulation");
-    classes2(this._palette).remove("hidden");
+    classes3(this._canvasParent).remove("simulation");
+    classes3(this._palette).remove("hidden");
     const elements = this._selection.get();
     if (elements.length === 1) {
       this._contextPad.open(elements[0]);
@@ -70778,8 +71355,8 @@ function EditorActions2(eventBus, toggleMode, pauseSimulation, resetSimulation, 
       log.toggle();
     }
   });
-  eventBus.on(TOGGLE_MODE_EVENT, (event2) => {
-    active = event2.active;
+  eventBus.on(TOGGLE_MODE_EVENT, (event3) => {
+    active = event3.active;
   });
 }
 EditorActions2.$inject = [
@@ -70829,8 +71406,8 @@ function KeyboardBindings2(eventBus, injector) {
     }
   }
   eventBus.on("keyboard.init", function() {
-    keyboard.addListener(VERY_HIGH_PRIORITY3, function(event2) {
-      var keyEvent = event2.keyEvent;
+    keyboard.addListener(VERY_HIGH_PRIORITY3, function(event3) {
+      var keyEvent = event3.keyEvent;
       handleKeyEvent(keyEvent);
     });
   });
@@ -70844,8 +71421,8 @@ function KeyboardBindings2(eventBus, injector) {
   });
 }
 KeyboardBindings2.$inject = ["eventBus", "injector"];
-function isKey2(keys2, event2) {
-  return keys2.indexOf(event2.key) > -1;
+function isKey2(keys2, event3) {
+  return keys2.indexOf(event3.key) > -1;
 }
 
 // node_modules/bpmn-js-token-simulation/lib/features/keyboard-bindings/index.js
@@ -70875,17 +71452,17 @@ function SimulationTrace(eventBus) {
   this._log = this._log.bind(this);
 }
 SimulationTrace.$inject = ["eventBus"];
-SimulationTrace.prototype._log = function(event2) {
-  this._events.push(assign({}, event2));
+SimulationTrace.prototype._log = function(event3) {
+  this._events.push(assign({}, event3));
 };
 SimulationTrace.prototype.start = function() {
-  forEach(EventHelper_exports, (event2) => {
-    this._eventBus.on(event2, VERY_HIGH_PRIORITY4, this._log);
+  forEach(EventHelper_exports, (event3) => {
+    this._eventBus.on(event3, VERY_HIGH_PRIORITY4, this._log);
   });
 };
 SimulationTrace.prototype.stop = function() {
-  forEach(EventHelper_exports, (event2) => {
-    this._eventBus.off(event2, this._log);
+  forEach(EventHelper_exports, (event3) => {
+    this._eventBus.off(event3, this._log);
   });
 };
 SimulationTrace.prototype.getAll = function() {
@@ -70911,7 +71488,7 @@ SimulationSupport.prototype.toggleSimulation = function(active) {
 };
 SimulationSupport.prototype.getElementTrigger = function(id) {
   return this._bpmnjs.invoke(["bpmnjs", function(bpmnjs) {
-    return query(
+    return query2(
       `.djs-overlays[data-container-id='${id}'] .bts-context-pad:not(.hidden)`,
       bpmnjs._container
     );
@@ -70919,7 +71496,7 @@ SimulationSupport.prototype.getElementTrigger = function(id) {
 };
 SimulationSupport.prototype.getScopeTrigger = function(scope) {
   return this._bpmnjs.invoke(["bpmnjs", function(bpmnjs) {
-    return query(
+    return query2(
       `.bts-scopes [data-scope-id='${scope.id}']`,
       bpmnjs._container
     );
@@ -70939,8 +71516,8 @@ SimulationSupport.prototype.triggerScope = function(scope) {
 SimulationSupport.prototype.scopeDestroyed = function(scope = null) {
   return new Promise((resolve) => {
     return this._bpmnjs.invoke(["eventBus", function(eventBus) {
-      const listener = function(event2) {
-        if (scope && event2.scope !== scope) {
+      const listener = function(event3) {
+        if (scope && event3.scope !== scope) {
           return;
         }
         const scopeElements = [
@@ -70948,11 +71525,11 @@ SimulationSupport.prototype.scopeDestroyed = function(scope = null) {
           "bpmn:Process",
           "bpmn:SubProcess"
         ];
-        if (scopeElements.every((t7) => !is4(event2.scope.element, t7))) {
+        if (scopeElements.every((t7) => !is4(event3.scope.element, t7))) {
           return;
         }
         eventBus.off(SCOPE_DESTROYED_EVENT, listener);
-        return resolve(event2);
+        return resolve(event3);
       };
       eventBus.on(SCOPE_DESTROYED_EVENT, listener);
     }]);
@@ -70962,9 +71539,9 @@ SimulationSupport.prototype.elementEnter = function(id = null) {
   return new Promise((resolve) => {
     return this._bpmnjs.invoke(["eventBus", function(eventBus) {
       const wrap2 = id ? (fn2) => ifElement(id, fn2) : (fn2) => fn2;
-      const listener = wrap2(function(event2) {
+      const listener = wrap2(function(event3) {
         eventBus.off(ENTER_EVENT, listener);
-        return resolve(event2);
+        return resolve(event3);
       });
       eventBus.on(ENTER_EVENT, listener);
     }]);
@@ -70974,9 +71551,9 @@ SimulationSupport.prototype.elementExit = function(id = null) {
   return new Promise((resolve) => {
     return this._bpmnjs.invoke(["eventBus", function(eventBus) {
       const wrap2 = id ? (fn2) => ifElement(id, fn2) : (fn2) => fn2;
-      const listener = wrap2(function(event2) {
+      const listener = wrap2(function(event3) {
         eventBus.off(EXIT_EVENT2, listener);
-        return resolve(event2);
+        return resolve(event3);
       });
       eventBus.on(EXIT_EVENT2, listener);
     }]);
@@ -70984,10 +71561,10 @@ SimulationSupport.prototype.elementExit = function(id = null) {
 };
 SimulationSupport.prototype.getHistory = function(history) {
   return this._bpmnjs.invoke(["simulationTrace", function(simulationTrace) {
-    return simulationTrace.getAll().filter(function(event2) {
-      return event2.action === "exit" && (is4(event2.element, "bpmn:StartEvent") || is4(event2.element, "bpmn:BoundaryEvent")) || event2.action === "enter";
-    }).map(function(event2) {
-      return event2.element.id;
+    return simulationTrace.getAll().filter(function(event3) {
+      return event3.action === "exit" && (is4(event3.element, "bpmn:StartEvent") || is4(event3.element, "bpmn:BoundaryEvent")) || event3.action === "enter";
+    }).map(function(event3) {
+      return event3.element.id;
     });
   }]);
 };
@@ -71004,8 +71581,8 @@ SimulationSupport.prototype._triggerClick = function(element, options2 = {}) {
     cancelable: true
   };
   options2 = Object.assign({}, defaultOptions, options2);
-  const event2 = document.createEvent("MouseEvents");
-  event2.initMouseEvent(
+  const event3 = document.createEvent("MouseEvents");
+  event3.initMouseEvent(
     "click",
     options2.bubbles,
     options2.cancelable,
@@ -71022,13 +71599,13 @@ SimulationSupport.prototype._triggerClick = function(element, options2 = {}) {
     options2.button,
     element
   );
-  element.dispatchEvent(event2);
+  element.dispatchEvent(event3);
 };
 function ifElement(id, fn2) {
-  return function(event2) {
-    var element = event2.element;
+  return function(event3) {
+    var element = event3.element;
     if (element.id === id) {
-      fn2(event2);
+      fn2(event3);
     }
   };
 }
@@ -71036,12 +71613,12 @@ function ifElement(id, fn2) {
 // node_modules/bpmn-js-token-simulation/lib/simulation-support/index.js
 var simulation_support_default = {
   __init__: ["eventBus", function(eventBus) {
-    eventBus.on(TRACE_EVENT, function(event2) {
-      if (event2.action === "enter") {
-        eventBus.fire(ENTER_EVENT, event2);
+    eventBus.on(TRACE_EVENT, function(event3) {
+      if (event3.action === "enter") {
+        eventBus.fire(ENTER_EVENT, event3);
       }
-      if (event2.action === "exit") {
-        eventBus.fire(EXIT_EVENT2, event2);
+      if (event3.action === "exit") {
+        eventBus.fire(EXIT_EVENT2, event3);
       }
     });
   }],
@@ -71084,12 +71661,12 @@ ColorContextPadProvider.prototype._createPopupAction = function(elements) {
       title: translate3("Set color"),
       html: `<div class="entry">${colorImageSvg}</div>`,
       action: {
-        click: (event2, element) => {
+        click: (event3, element) => {
           var position = {
             ...getStartPosition(canvas, contextPad, elements),
             cursor: {
-              x: event2.x,
-              y: event2.y
+              x: event3.x,
+              y: event3.y
             }
           };
           popupMenu.open(elements, "color-picker", position);
@@ -71201,8 +71778,8 @@ function Grid(canvas, eventBus) {
     self2._init();
     self2.toggle(true);
   });
-  eventBus.on("gridSnapping.toggle", function(event2) {
-    var active = event2.active;
+  eventBus.on("gridSnapping.toggle", function(event3) {
+    var active = event3.active;
     self2.toggle(active);
     self2._centerGridAroundViewbox();
   });
@@ -71319,8 +71896,8 @@ function Minimap(config, injector, eventBus, canvas, elementRegistry) {
   svgManager.add(new import_hammerjs.default.Pan());
   svgManager.on("panstart", mousedown(true));
   svgManager.add(new import_hammerjs.default.Tap());
-  svgManager.on("tap", function(event2) {
-    centerViewbox(getPoint(event2));
+  svgManager.on("tap", function(event3) {
+    centerViewbox(getPoint(event3));
   });
   var viewportDomManager = new import_hammerjs.default.Manager(this._viewportDom);
   viewportDomManager.add(new import_hammerjs.default.Pan());
@@ -71373,8 +71950,8 @@ function Minimap(config, injector, eventBus, canvas, elementRegistry) {
       event.bind(document, "mouseup", onMouseup);
     };
   }
-  function onMousemove(event2) {
-    var point = getPoint(event2);
+  function onMousemove(event3) {
+    var point = getPoint(event3);
     if (self2._state.isDragging) {
       if (!self2._state._svgClientRect || isZeroDimensional(self2._state._svgClientRect)) {
         self2._state._svgClientRect = self2._svg.getBoundingClientRect();
@@ -71423,22 +72000,22 @@ function Minimap(config, injector, eventBus, canvas, elementRegistry) {
   }
   event.bind(this._viewportDom, "mousedown", mousedown(false));
   event.bind(this._svg, "mousedown", mousedown(true));
-  event.bind(this._parent, "wheel", function(event2) {
-    event2.preventDefault();
-    event2.stopPropagation();
-    if (!event2.ctrlKey) {
+  event.bind(this._parent, "wheel", function(event3) {
+    event3.preventDefault();
+    event3.stopPropagation();
+    if (!event3.ctrlKey) {
       return;
     }
     if (!self2._state._svgClientRect || isZeroDimensional(self2._state._svgClientRect)) {
       self2._state._svgClientRect = self2._svg.getBoundingClientRect();
     }
-    if (!isPointInside(event2, self2._state._svgClientRect)) {
+    if (!isPointInside(event3, self2._state._svgClientRect)) {
       return;
     }
-    var factor = event2.deltaMode === 0 ? 0.02 : 0.32;
+    var factor = event3.deltaMode === 0 ? 0.02 : 0.32;
     var delta2 = Math.sqrt(
-      Math.pow(event2.deltaY, 2) + Math.pow(event2.deltaX, 2)
-    ) * sign2(event2.deltaY) * -factor;
+      Math.pow(event3.deltaY, 2) + Math.pow(event3.deltaX, 2)
+    ) * sign2(event3.deltaY) * -factor;
     self2._state.zoomDelta += delta2;
     if (Math.abs(self2._state.zoomDelta) > DELTA_THRESHOLD2) {
       var direction = delta2 > 0 ? 1 : -1;
@@ -71450,16 +72027,16 @@ function Minimap(config, injector, eventBus, canvas, elementRegistry) {
       canvas.zoom(cap2(RANGE2, newLogZoomLevel), diagramPoint);
       self2._state.zoomDelta = 0;
       var diagramPoint = mapMousePositionToDiagramPoint({
-        x: event2.clientX - self2._state._svgClientRect.left,
-        y: event2.clientY - self2._state._svgClientRect.top
+        x: event3.clientX - self2._state._svgClientRect.left,
+        y: event3.clientY - self2._state._svgClientRect.top
       }, self2._svg, self2._lastViewbox);
       setViewboxCenteredAroundPoint(diagramPoint, self2._canvas);
       self2._update();
     }
   });
-  event.bind(this._toggle, "click", function(event2) {
-    event2.preventDefault();
-    event2.stopPropagation();
+  event.bind(this._toggle, "click", function(event3) {
+    event3.preventDefault();
+    event3.stopPropagation();
     self2.toggle();
   });
   eventBus.on(["shape.added", "connection.added"], function(context) {
@@ -71496,9 +72073,9 @@ function Minimap(config, injector, eventBus, canvas, elementRegistry) {
       self2._state._svgClientRect = self2._svg.getBoundingClientRect();
     }
   });
-  eventBus.on(["root.set", "plane.set"], function(event2) {
+  eventBus.on(["root.set", "plane.set"], function(event3) {
     self2._clear();
-    var element = event2.element || event2.plane.rootElement;
+    var element = event3.element || event3.plane.rootElement;
     element.children.forEach(function(el) {
       self2._addElement(el);
     });
@@ -71533,8 +72110,8 @@ Minimap.prototype._init = function() {
   var viewport = this._viewport = create("rect");
   classes(viewport).add("viewport");
   append(viewportGroup, viewport);
-  event.bind(parent, "mousedown", function(event2) {
-    event2.stopPropagation();
+  event.bind(parent, "mousedown", function(event3) {
+    event3.stopPropagation();
   });
   var viewportDom = this._viewportDom = document.createElement("div");
   classes2(viewportDom).add("viewport-dom");
@@ -71548,16 +72125,16 @@ Minimap.prototype._update = function() {
   if (!validViewbox(viewbox)) {
     return;
   }
-  var x5, y5, width, height;
+  var x6, y5, width, height;
   var widthDifference = outerViewbox.width - innerViewbox.width, heightDifference = outerViewbox.height - innerViewbox.height;
   if (innerViewbox.width < outerViewbox.width) {
-    x5 = innerViewbox.x - widthDifference / 2;
+    x6 = innerViewbox.x - widthDifference / 2;
     width = outerViewbox.width;
     if (innerViewbox.x + innerViewbox.width < outerViewbox.width) {
-      x5 = Math.min(0, innerViewbox.x);
+      x6 = Math.min(0, innerViewbox.x);
     }
   } else {
-    x5 = innerViewbox.x;
+    x6 = innerViewbox.x;
     width = innerViewbox.width;
   }
   if (innerViewbox.height < outerViewbox.height) {
@@ -71570,18 +72147,18 @@ Minimap.prototype._update = function() {
     y5 = innerViewbox.y;
     height = innerViewbox.height;
   }
-  x5 = x5 - MINIMAP_VIEWBOX_PADDING;
+  x6 = x6 - MINIMAP_VIEWBOX_PADDING;
   y5 = y5 - MINIMAP_VIEWBOX_PADDING;
   width = width + MINIMAP_VIEWBOX_PADDING * 2;
   height = height + MINIMAP_VIEWBOX_PADDING * 2;
   this._lastViewbox = {
-    x: x5,
+    x: x6,
     y: y5,
     width,
     height
   };
   attr(this._svg, {
-    viewBox: x5 + ", " + y5 + ", " + width + ", " + height
+    viewBox: x6 + ", " + y5 + ", " + width + ", " + height
   });
   attr(this._viewport, {
     x: viewbox.x,
@@ -71680,7 +72257,7 @@ Minimap.prototype._addElement = function(element) {
   if (!this.isOnActivePlane(element)) {
     return;
   }
-  var parent, x5, y5;
+  var parent, x6, y5;
   var newElementGfx = this._createElement(element);
   var newElementParentGfx = query("#" + escapeCSS(element.parent.id), this._elementsGroup);
   if (newElementGfx) {
@@ -71702,22 +72279,22 @@ Minimap.prototype._addElement = function(element) {
     }
     if (isConnection2(element)) {
       parent = element.parent;
-      x5 = 0;
+      x6 = 0;
       y5 = 0;
       if (typeof parent.x !== "undefined" && typeof parent.y !== "undefined") {
-        x5 = -parent.x;
+        x6 = -parent.x;
         y5 = -parent.y;
       }
-      attr(newElementGfx, { transform: "translate(" + x5 + " " + y5 + ")" });
+      attr(newElementGfx, { transform: "translate(" + x6 + " " + y5 + ")" });
     } else {
-      x5 = element.x;
+      x6 = element.x;
       y5 = element.y;
       if (newElementParentGfx) {
         parent = element.parent;
-        x5 -= parent.x;
+        x6 -= parent.x;
         y5 -= parent.y;
       }
-      attr(newElementGfx, { transform: "translate(" + x5 + " " + y5 + ")" });
+      attr(newElementGfx, { transform: "translate(" + x6 + " " + y5 + ")" });
     }
     if (element.children && element.children.length) {
       element.children.forEach(function(child) {
@@ -71793,17 +72370,17 @@ function fitAspectRatio(bounds, targetAspectRatio) {
       height
     });
   } else if (aspectRatio < targetAspectRatio) {
-    var width = newBounds.height * targetAspectRatio, x5 = newBounds.x - (width - newBounds.width) / 2;
+    var width = newBounds.height * targetAspectRatio, x6 = newBounds.x - (width - newBounds.width) / 2;
     assign(newBounds, {
-      x: x5,
+      x: x6,
       width
     });
   }
   return newBounds;
 }
-function map3(x5, inMin, inMax, outMin, outMax) {
+function map3(x6, inMin, inMax, outMin, outMax) {
   var inRange2 = inMax - inMin, outRange = outMax - outMin;
-  return (x5 - inMin) * outRange / inRange2 + outMin;
+  return (x6 - inMin) * outRange / inRange2 + outMin;
 }
 function getIndexOfChildInParentChildren(childGfx, parentGfx) {
   var childrenGroup = query(".djs-children", parentGfx.parentNode);
@@ -71869,8 +72446,8 @@ function getOverlayClipPath(outer, inner) {
   ].join(", ");
   return "polygon(" + coordinates + ")";
 }
-function toCoordinatesString(x5, y5) {
-  return x5 + "px " + y5 + "px";
+function toCoordinatesString(x6, y5) {
+  return x6 + "px " + y5 + "px";
 }
 function validViewbox(viewBox) {
   return every(viewBox, function(value) {
@@ -71880,13 +72457,13 @@ function validViewbox(viewBox) {
     return isNumber(value) && isFinite(value);
   });
 }
-function getPoint(event2) {
-  if (event2.center) {
-    return event2.center;
+function getPoint(event3) {
+  if (event3.center) {
+    return event3.center;
   }
   return {
-    x: event2.clientX,
-    y: event2.clientY
+    x: event3.clientX,
+    y: event3.clientY
   };
 }
 var index3 = {
@@ -72002,8 +72579,8 @@ var e6 = function() {
         return;
       var p5 = void 0;
       this.templates[d5] ? p5 = this.templates[d5] : this.templates[d5] = p5 = this._getPointTemplate(d5, n4);
-      var m6 = (u6 - i8) / (a6 - i8);
-      this.shadowCtx.globalAlpha = m6 < 0.01 ? 0.01 : m6, this.shadowCtx.drawImage(p5, l5, c5), l5 < this.renderBoundaries[0] && (this.renderBoundaries[0] = l5), c5 < this.renderBoundaries[1] && (this.renderBoundaries[1] = c5), l5 + 2 * d5 > this.renderBoundaries[2] && (this.renderBoundaries[2] = l5 + 2 * d5), c5 + 2 * d5 > this.renderBoundaries[3] && (this.renderBoundaries[3] = c5 + 2 * d5);
+      var m5 = (u6 - i8) / (a6 - i8);
+      this.shadowCtx.globalAlpha = m5 < 0.01 ? 0.01 : m5, this.shadowCtx.drawImage(p5, l5, c5), l5 < this.renderBoundaries[0] && (this.renderBoundaries[0] = l5), c5 < this.renderBoundaries[1] && (this.renderBoundaries[1] = c5), l5 + 2 * d5 > this.renderBoundaries[2] && (this.renderBoundaries[2] = l5 + 2 * d5), c5 + 2 * d5 > this.renderBoundaries[3] && (this.renderBoundaries[3] = c5 + 2 * d5);
     }
   }, i7.prototype._colorize = function() {
     var t7 = this.renderBoundaries[0], i8 = this.renderBoundaries[1], a6 = this.renderBoundaries[2] - t7, e7 = this.renderBoundaries[3] - i8, r7 = this.width, n4 = this.height;
@@ -72059,12 +72636,10 @@ var BpmnModelerView = class extends import_obsidian2.TextFileView {
   getViewData() {
     return this.data;
   }
-  setViewData(data, clear3) {
+  setViewData(data, clear4) {
     this.bpmnXml = data;
-    const thisRef = this;
     this.bpmnModeler.importXML(this.bpmnXml).catch(function(err) {
-      thisRef.clear();
-      thisRef.contentEl.createEl("div", { text: err.message });
+      console.error(err);
     });
   }
   async onOpen() {
@@ -72235,7 +72810,6 @@ var BpmnModelerView = class extends import_obsidian2.TextFileView {
     clearInterval(this.intervalId);
   }
   clear() {
-    this.contentEl.empty();
   }
   getViewType() {
     return VIEW_TYPE_BPMN;
