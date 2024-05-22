@@ -44,7 +44,7 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       },
       {
         "id": "aae44d8e45a8128d",
@@ -141,7 +141,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Пользовательские инструкции/Инструкция заведующего кафедрой.md",
+                "file": "Пользовательские инструкции/Инструкция преподавателя.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -158,7 +158,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Пользовательские инструкции/Инструкция заведующего кафедрой.md",
+                "file": "Пользовательские инструкции/Инструкция преподавателя.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -181,7 +181,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Пользовательские инструкции/Инструкция заведующего кафедрой.md"
+                "file": "Пользовательские инструкции/Инструкция преподавателя.md"
               }
             }
           }
@@ -205,12 +205,12 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "fcc6050f682b0806",
+  "active": "7779f13d4cbd7c96",
   "lastOpenFiles": [
-    "Пользовательские инструкции/attachments/Pasted image 20240522161840.png",
-    "Пользовательские инструкции/attachments/Pasted image 20240522161554.png",
     "Инструкция сотрудника кафедры.md",
     "Пользовательские инструкции/Инструкция заведующего кафедрой.md",
+    "Пользовательские инструкции/attachments/Pasted image 20240522161840.png",
+    "Пользовательские инструкции/attachments/Pasted image 20240522161554.png",
     "attachments/Pasted image 20240522155424.png",
     "attachments/Pasted image 20240522155149.png",
     "Пользовательские инструкции/Инструкция преподавателя.md",
@@ -221,7 +221,6 @@
     "Пользовательские инструкции/attachments/Pasted image 20240522150331.png",
     "Пользовательские инструкции/attachments/Pasted image 20240521180023.png",
     "Пользовательские инструкции/attachments/Pasted image 20240521175224.png",
-    "Пользовательские инструкции/attachments/Pasted image 20240521175122.png",
     "Пользовательские инструкции/assets",
     "Пользовательские инструкции/image/Инструкцияпреподавателя",
     "Пользовательские инструкции/image",
