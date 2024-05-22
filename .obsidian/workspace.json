@@ -44,7 +44,7 @@
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       },
       {
         "id": "aae44d8e45a8128d",
@@ -141,7 +141,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Инструкция сотрудника кафедры.md",
+                "file": "Пользовательские инструкции/Инструкция заведующего кафедрой.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -158,7 +158,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Инструкция сотрудника кафедры.md",
+                "file": "Пользовательские инструкции/Инструкция заведующего кафедрой.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -181,7 +181,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Инструкция сотрудника кафедры.md"
+                "file": "Пользовательские инструкции/Инструкция заведующего кафедрой.md"
               }
             }
           }
@@ -205,10 +205,10 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "2876d45d6c0b9717",
+  "active": "fcc6050f682b0806",
   "lastOpenFiles": [
-    "Пользовательские инструкции/Инструкция преподавателя.md",
     "Инструкция сотрудника кафедры.md",
+    "Пользовательские инструкции/Инструкция преподавателя.md",
     "Пользовательские инструкции/Инструкция заведующего кафедрой.md",
     "Пользовательские инструкции/attachments/Pasted image 20240522161840.png",
     "Пользовательские инструкции/attachments/Pasted image 20240522161554.png",
