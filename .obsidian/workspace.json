@@ -8,18 +8,6 @@
         "type": "tabs",
         "children": [
           {
-            "id": "03c3b6847822ff76",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Техническое задание на разработку системы.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "7779f13d4cbd7c96",
             "type": "leaf",
             "state": {
@@ -56,7 +44,7 @@
             }
           }
         ],
-        "currentTab": 3
+        "currentTab": 2
       },
       {
         "id": "aae44d8e45a8128d",
@@ -218,27 +206,28 @@
   },
   "active": "b19f69fcace4f34a",
   "lastOpenFiles": [
+    "Пользовательские инструкции/attachments/Pasted image 20240522180058.png",
+    "Пользовательские инструкции/attachments/Pasted image 20240522175923.png",
+    "Пользовательские инструкции/attachments/Pasted image 20240522175825.png",
     "Пользовательские инструкции/Инструкция преподавателя.md",
+    "Техническое задание на разработку системы.md",
     "Пользовательские инструкции/Инструкция сотрудника учебного управления.md",
+    "Пользовательские инструкции/attachments/Pasted image 20240522175441.png",
+    "Пользовательские инструкции/attachments/Pasted image 20240522175338.png",
+    "Пользовательские инструкции/attachments/Pasted image 20240522174722.png",
+    "Пользовательские инструкции/attachments/Pasted image 20240522174606.png",
+    "Пользовательские инструкции/attachments/Pasted image 20240522174514.png",
     "Пользовательские инструкции/Инструкция заведующего кафедрой.md",
     "Пользовательские инструкции/Инструкция сотрудника кафедры.md",
     "Пользовательские инструкции/attachments/Pasted image 20240522161840.png",
     "Пользовательские инструкции/attachments/Pasted image 20240522161554.png",
     "attachments/Pasted image 20240522155424.png",
-    "attachments/Pasted image 20240522155149.png",
-    "attachments/Pasted image 20240522151742.png",
-    "attachments/Pasted image 20240522151324.png",
-    "attachments/Pasted image 20240522150455.png",
     "attachments",
-    "Пользовательские инструкции/attachments/Pasted image 20240522150331.png",
-    "Пользовательские инструкции/attachments/Pasted image 20240521180023.png",
-    "Пользовательские инструкции/attachments/Pasted image 20240521175224.png",
     "Пользовательские инструкции/assets",
     "Пользовательские инструкции/image/Инструкцияпреподавателя",
     "Пользовательские инструкции/image",
     "Пользовательские инструкции/attachments",
     "Пользовательские инструкции",
-    "Техническое задание на разработку системы.md",
     "model_1.bpmn",
     "README.md"
   ]
