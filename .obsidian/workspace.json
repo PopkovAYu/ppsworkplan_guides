@@ -49,7 +49,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Протокол приемочных испытаний.md",
+                "file": "Протокол-приемочных-испытаний.md",
                 "mode": "source",
                 "source": false
               }
@@ -61,7 +61,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "index.md",
+                "file": "home.md",
                 "mode": "source",
                 "source": false
               }
@@ -134,7 +134,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "index.md",
+                "file": "home.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -151,7 +151,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "index.md",
+                "file": "home.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -174,7 +174,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "index.md"
+                "file": "home.md"
               }
             }
           }
@@ -200,11 +200,11 @@
   },
   "active": "f512557c73d62f54",
   "lastOpenFiles": [
-    "Протокол приемочных испытаний.md",
-    "index.md",
-    "index.md",
+    "Протокол-приемочных-испытаний.md",
+    "home.md",
+    "home.md",
     "Техническое задание на разработку системы.md",
-    "Без названия.md",
+    "Без-названия.md",
     "Пользовательские инструкции/Инструкция сотрудника учебного управления.md",
     "Пользовательские инструкции/Инструкция преподавателя.md",
     "Пользовательские инструкции/Инструкция заведующего кафедрой.md",
