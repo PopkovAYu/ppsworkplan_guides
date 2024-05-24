@@ -8,5 +8,6 @@
   "settings-search",
   "templater-obsidian",
   "better-export-pdf",
-  "obsidian-link-converter"
+  "obsidian-link-converter",
+  "gitlab-wiki-export"
 ]
