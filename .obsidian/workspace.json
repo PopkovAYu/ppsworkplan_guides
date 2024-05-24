@@ -44,12 +44,12 @@
             }
           },
           {
-            "id": "93ed17f51d9f60c1",
+            "id": "edb16cf90cd7f148",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "index.md",
+                "file": "Протокол приемочных испытаний.md",
                 "mode": "source",
                 "source": false
               }
@@ -122,7 +122,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "index.md",
+                "file": "Протокол приемочных испытаний.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -139,7 +139,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "index.md",
+                "file": "Протокол приемочных испытаний.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -162,7 +162,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "index.md"
+                "file": "Протокол приемочных испытаний.md"
               }
             }
           }
@@ -186,16 +186,17 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "93ed17f51d9f60c1",
+  "active": "edb16cf90cd7f148",
   "lastOpenFiles": [
-    "Пользовательские инструкции/Инструкция сотрудника учебного управления.md",
     "index.md",
+    "Протокол приемочных испытаний.md",
+    "Техническое задание на разработку системы.md",
+    "Без названия.md",
+    "Пользовательские инструкции/Инструкция сотрудника учебного управления.md",
     "Пользовательские инструкции/Инструкция преподавателя.md",
     "Пользовательские инструкции/Инструкция заведующего кафедрой.md",
     "Пользовательские инструкции/Инструкция сотрудника кафедры.md",
     "README.md",
-    "Техническое задание на разработку системы.md",
-    "Протокол приемочных испытаний.md",
     "Пользовательские инструкции/attachments/Pasted image 20240522180058.png",
     "Пользовательские инструкции/attachments/Pasted image 20240522175923.png",
     "Пользовательские инструкции/attachments/Pasted image 20240522175825.png",
