@@ -54,9 +54,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "f512557c73d62f54",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "index.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 3
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -122,7 +134,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Протокол приемочных испытаний.md",
+                "file": "index.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -139,7 +151,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Протокол приемочных испытаний.md",
+                "file": "index.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -162,7 +174,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Протокол приемочных испытаний.md"
+                "file": "index.md"
               }
             }
           }
@@ -186,10 +198,11 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "edb16cf90cd7f148",
+  "active": "f512557c73d62f54",
   "lastOpenFiles": [
-    "index.md",
     "Протокол приемочных испытаний.md",
+    "index.md",
+    "index.md",
     "Техническое задание на разработку системы.md",
     "Без названия.md",
     "Пользовательские инструкции/Инструкция сотрудника учебного управления.md",
