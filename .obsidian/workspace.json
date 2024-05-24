@@ -59,8 +59,10 @@
             "id": "f512557c73d62f54",
             "type": "leaf",
             "state": {
-              "type": "graph",
-              "state": {}
+              "type": "image",
+              "state": {
+                "file": "Пользовательские инструкции/attachments/Pasted-image-20240522150455.png"
+              }
             }
           }
         ],
@@ -114,7 +116,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 655.5
   },
   "right": {
     "id": "d138cc53ffe52628",
@@ -130,7 +132,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Пользовательские инструкции/Инструкция преподавателя.md",
+                "file": "Пользовательские инструкции/attachments/Pasted-image-20240522150455.png",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -147,7 +149,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Пользовательские инструкции/Инструкция преподавателя.md",
+                "file": "Пользовательские инструкции/attachments/Pasted-image-20240522150455.png",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -170,7 +172,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Пользовательские инструкции/Инструкция преподавателя.md"
+                "file": "Пользовательские инструкции/attachments/Pasted-image-20240522150455.png"
               }
             }
           }
@@ -194,8 +196,9 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "f512557c73d62f54",
+  "active": "818b1de88b82e51f",
   "lastOpenFiles": [
+    "Пользовательские инструкции/Инструкция сотрудника кафедры.md",
     "ИПРП.md",
     "Протокол приемочных испытаний.md",
     "home.md",
@@ -204,7 +207,6 @@
     "Пользовательские инструкции/Инструкция сотрудника учебного управления.md",
     "Пользовательские инструкции/Инструкция преподавателя.md",
     "Пользовательские инструкции/Инструкция заведующего кафедрой.md",
-    "Пользовательские инструкции/Инструкция сотрудника кафедры.md",
     "README.md",
     "Пользовательские инструкции/attachments/Pasted image 20240522180058.png",
     "Пользовательские инструкции/attachments/Pasted image 20240522175923.png",
