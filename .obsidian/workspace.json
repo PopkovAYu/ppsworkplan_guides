@@ -116,7 +116,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 655.5
+    "width": 319.5
   },
   "right": {
     "id": "d138cc53ffe52628",
@@ -196,7 +196,7 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "818b1de88b82e51f",
+  "active": "f512557c73d62f54",
   "lastOpenFiles": [
     "Пользовательские инструкции/Инструкция сотрудника кафедры.md",
     "ИПРП.md",
