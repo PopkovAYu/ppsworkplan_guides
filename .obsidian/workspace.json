@@ -18,8 +18,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "1fe61a9ff327d0ad",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Протокол приемочного тестирования.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -85,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Программа приемочного тестирования АИС ГИПРП.md",
+                "file": "Протокол приемочного тестирования.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Программа приемочного тестирования АИС ГИПРП.md",
+                "file": "Протокол приемочного тестирования.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Программа приемочного тестирования АИС ГИПРП.md"
+                "file": "Протокол приемочного тестирования.md"
               }
             }
           }
@@ -149,8 +162,10 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "edb16cf90cd7f148",
+  "active": "1fe61a9ff327d0ad",
   "lastOpenFiles": [
+    "Программа приемочного тестирования АИС ГИПРП.md",
+    "Протокол приемочного тестирования.md",
     "attachments/Pasted image 20240528160356.png",
     "attachments/Pasted image 20240528160158.png",
     "attachments/Pasted image 20240528155537.png",
@@ -162,7 +177,6 @@
     "Пользовательские инструкции/attachments/Pasted-image-20240522150455.png",
     "Пользовательские инструкции/Инструкция сотрудника кафедры.md",
     "ИПРП.md",
-    "Программа приемочного тестирования АИС ГИПРП.md",
     "home.md",
     "Техническое задание на разработку системы.md",
     "Пользовательские инструкции/Инструкция сотрудника учебного управления.md",
@@ -172,7 +186,6 @@
     "Пользовательские инструкции/attachments/Pasted image 20240522180058.png",
     "Пользовательские инструкции/attachments/Pasted image 20240522175923.png",
     "Пользовательские инструкции/attachments/Pasted image 20240522175825.png",
-    "Пользовательские инструкции/attachments/Pasted image 20240522175441.png",
     "Пользовательские инструкции/assets",
     "Пользовательские инструкции/image/Инструкцияпреподавателя",
     "Пользовательские инструкции/image",
