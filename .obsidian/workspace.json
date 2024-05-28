@@ -8,42 +8,6 @@
         "type": "tabs",
         "children": [
           {
-            "id": "7779f13d4cbd7c96",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Пользовательские инструкции/Инструкция преподавателя.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "fcc6050f682b0806",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Пользовательские инструкции/Инструкция заведующего кафедрой.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "b19f69fcace4f34a",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Пользовательские инструкции/Инструкция сотрудника учебного управления.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
             "id": "edb16cf90cd7f148",
             "type": "leaf",
             "state": {
@@ -54,19 +18,8 @@
                 "source": false
               }
             }
-          },
-          {
-            "id": "f512557c73d62f54",
-            "type": "leaf",
-            "state": {
-              "type": "image",
-              "state": {
-                "file": "Пользовательские инструкции/attachments/Pasted-image-20240522150455.png"
-              }
-            }
           }
-        ],
-        "currentTab": 4
+        ]
       }
     ],
     "direction": "vertical"
@@ -132,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Пользовательские инструкции/attachments/Pasted-image-20240522150455.png",
+                "file": "Протокол приемочных испытаний.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -149,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Пользовательские инструкции/attachments/Pasted-image-20240522150455.png",
+                "file": "Протокол приемочных испытаний.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -172,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Пользовательские инструкции/attachments/Pasted-image-20240522150455.png"
+                "file": "Протокол приемочных испытаний.md"
               }
             }
           }
@@ -196,14 +149,15 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "f512557c73d62f54",
+  "active": "edb16cf90cd7f148",
   "lastOpenFiles": [
+    "Без-названия.md",
+    "Пользовательские инструкции/attachments/Pasted-image-20240522150455.png",
     "Пользовательские инструкции/Инструкция сотрудника кафедры.md",
     "ИПРП.md",
     "Протокол приемочных испытаний.md",
     "home.md",
     "Техническое задание на разработку системы.md",
-    "Без-названия.md",
     "Пользовательские инструкции/Инструкция сотрудника учебного управления.md",
     "Пользовательские инструкции/Инструкция преподавателя.md",
     "Пользовательские инструкции/Инструкция заведующего кафедрой.md",
@@ -217,7 +171,6 @@
     "Пользовательские инструкции/attachments/Pasted image 20240522174606.png",
     "Пользовательские инструкции/attachments/Pasted image 20240522174514.png",
     "Пользовательские инструкции/attachments/Pasted image 20240522161840.png",
-    "Пользовательские инструкции/attachments/Pasted image 20240522161554.png",
     "attachments",
     "Пользовательские инструкции/assets",
     "Пользовательские инструкции/image/Инструкцияпреподавателя",
