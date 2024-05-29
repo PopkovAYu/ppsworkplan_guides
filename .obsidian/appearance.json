@@ -2,5 +2,7 @@
   "accentColor": "",
   "cssTheme": "",
   "baseFontSize": 14,
-  "enabledCssSnippets": []
+  "enabledCssSnippets": [
+    "test_snippet"
+  ]
 }
