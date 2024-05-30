@@ -3,6 +3,7 @@
   "cssTheme": "",
   "baseFontSize": 14,
   "enabledCssSnippets": [
-    "test_snippet"
+    "test_snippet",
+    "text_align"
   ]
 }
