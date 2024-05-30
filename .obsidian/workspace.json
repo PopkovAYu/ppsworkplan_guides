@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Акт приемочных испытаний.md",
+                "file": "Протокол приемочного тестирования.md",
                 "mode": "source",
                 "source": false
               }
@@ -98,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Акт приемочных испытаний.md",
+                "file": "Протокол приемочного тестирования.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Акт приемочных испытаний.md",
+                "file": "Протокол приемочного тестирования.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Акт приемочных испытаний.md"
+                "file": "Протокол приемочного тестирования.md"
               }
             }
           }
@@ -164,13 +164,13 @@
   },
   "active": "a467e4a136c7830b",
   "lastOpenFiles": [
-    "Протокол приемочного тестирования.md",
+    "Программа приемочного тестирования АИС ГИПРП.md",
     "Акт приемочных испытаний.md",
+    "Протокол приемочного тестирования.md",
     "templates/Right.md",
     "templates/Left.md",
     "templates/Center.md",
     "templates",
-    "Программа приемочного тестирования АИС ГИПРП.md",
     "home.md",
     "Техническое задание на разработку системы.md",
     "attachments/Pasted image 20240528160356.png",
