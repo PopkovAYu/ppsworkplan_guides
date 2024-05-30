@@ -10,5 +10,7 @@
   "newLinkFormat": "relative",
   "useMarkdownLinks": true,
   "attachmentFolderPath": "./attachments",
-  "showUnsupportedFiles": true
+  "showUnsupportedFiles": true,
+  "strictLineBreaks": false,
+  "propertiesInDocument": "visible"
 }
