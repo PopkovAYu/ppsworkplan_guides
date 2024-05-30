@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Подпись под документом.md",
+                "file": "Акт о внедрении.md",
                 "mode": "source",
                 "source": false
               }
@@ -110,7 +110,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Подпись под документом.md",
+                "file": "Акт о внедрении.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -127,7 +127,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Подпись под документом.md",
+                "file": "Акт о внедрении.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Подпись под документом.md"
+                "file": "Акт о внедрении.md"
               }
             }
           }
@@ -176,8 +176,8 @@
   },
   "active": "b00cd38243eb0e52",
   "lastOpenFiles": [
+    "templates/Подпись под документом.md",
     "Акт о внедрении.md",
-    "Подпись под документом.md",
     "Программа приемочного тестирования АИС ГИПРП.md",
     "Протокол приемочного тестирования.md",
     "templates/Right.md",
