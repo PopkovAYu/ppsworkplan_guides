@@ -61,7 +61,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "templates/Утверждаю.md",
+                "file": "templates/Шапка ТУСУР.md",
                 "mode": "source",
                 "source": false
               }
@@ -134,7 +134,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "templates/Утверждаю.md",
+                "file": "templates/Шапка ТУСУР.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -151,7 +151,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "templates/Утверждаю.md",
+                "file": "templates/Шапка ТУСУР.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -174,7 +174,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "templates/Утверждаю.md"
+                "file": "templates/Шапка ТУСУР.md"
               }
             }
           }
@@ -200,9 +200,9 @@
   },
   "active": "2fa0b8a211077e8c",
   "lastOpenFiles": [
+    "templates/Утверждаю.md",
     "templates/Подпись под документом.md",
     "templates/Шапка ТУСУР.md",
-    "templates/Утверждаю.md",
     "Акт о внедрении.md",
     "Техническое задание на разработку системы.md",
     "Протокол приемочного тестирования.md",
