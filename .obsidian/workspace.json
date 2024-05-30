@@ -30,9 +30,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "b00cd38243eb0e52",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Подпись под документом.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -98,7 +110,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Акт о внедрении.md",
+                "file": "Подпись под документом.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +127,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Акт о внедрении.md",
+                "file": "Подпись под документом.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +150,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Акт о внедрении.md"
+                "file": "Подпись под документом.md"
               }
             }
           }
@@ -162,11 +174,12 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "a467e4a136c7830b",
+  "active": "b00cd38243eb0e52",
   "lastOpenFiles": [
+    "Акт о внедрении.md",
+    "Подпись под документом.md",
     "Программа приемочного тестирования АИС ГИПРП.md",
     "Протокол приемочного тестирования.md",
-    "Акт о внедрении.md",
     "templates/Right.md",
     "templates/Left.md",
     "templates/Center.md",
