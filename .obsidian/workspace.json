@@ -4,36 +4,6 @@
     "type": "split",
     "children": [
       {
-        "id": "d3475d5d59cc4b8f",
-        "type": "tabs",
-        "children": [
-          {
-            "id": "edb16cf90cd7f148",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Программа приемочного тестирования АИС ГИПРП.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "1fe61a9ff327d0ad",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "home.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          }
-        ]
-      },
-      {
         "id": "1310f0d39bdf2a4e",
         "type": "tabs",
         "children": [
