@@ -11,6 +11,7 @@
   "useMarkdownLinks": true,
   "attachmentFolderPath": "./attachments",
   "showUnsupportedFiles": true,
-  "strictLineBreaks": false,
-  "propertiesInDocument": "visible"
+  "strictLineBreaks": true,
+  "propertiesInDocument": "visible",
+  "readableLineLength": true
 }
