@@ -42,9 +42,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "6d2937c3931b3ea4",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "templates/Утверждаю.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 2
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -110,7 +122,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Акт о внедрении.md",
+                "file": "templates/Утверждаю.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -127,7 +139,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Акт о внедрении.md",
+                "file": "templates/Утверждаю.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -150,7 +162,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Акт о внедрении.md"
+                "file": "templates/Утверждаю.md"
               }
             }
           }
@@ -174,12 +186,13 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "b00cd38243eb0e52",
+  "active": "6d2937c3931b3ea4",
   "lastOpenFiles": [
+    "templates/Подпись под документом.md",
+    "templates/Утверждаю.md",
+    "Акт о внедрении.md",
     "~$т о внедрении.docx",
     "Акт о внедрении.docx",
-    "templates/Подпись под документом.md",
-    "Акт о внедрении.md",
     "Программа приемочного тестирования АИС ГИПРП.md",
     "Протокол приемочного тестирования.md",
     "templates/Right.md",

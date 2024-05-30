@@ -7,5 +7,6 @@
     "text_align"
   ],
   "interfaceFontFamily": "American Typewriter",
-  "textFontFamily": "Times New Roman"
+  "textFontFamily": "Times New Roman",
+  "theme": "moonstone"
 }
