@@ -54,9 +54,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "2fa0b8a211077e8c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "templates/Утверждаю.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 3
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -186,21 +198,22 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "6d2937c3931b3ea4",
+  "active": "2fa0b8a211077e8c",
   "lastOpenFiles": [
-    "templates/Подпись под документом.md",
-    "templates/Утверждаю.md",
+    "templates/Шапка ТУСУР.md",
     "Акт о внедрении.md",
+    "Техническое задание на разработку системы.md",
+    "Протокол приемочного тестирования.md",
+    "Программа приемочного тестирования АИС ГИПРП.md",
+    "templates/Утверждаю.md",
+    "templates/Подпись под документом.md",
     "~$т о внедрении.docx",
     "Акт о внедрении.docx",
-    "Программа приемочного тестирования АИС ГИПРП.md",
-    "Протокол приемочного тестирования.md",
     "templates/Right.md",
     "templates/Left.md",
     "templates/Center.md",
     "templates",
     "home.md",
-    "Техническое задание на разработку системы.md",
     "attachments/Pasted image 20240528160356.png",
     "attachments/Pasted image 20240528160158.png",
     "attachments/Pasted image 20240528155537.png",
