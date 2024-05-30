@@ -61,9 +61,9 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "home.md",
-                "mode": "source",
-                "source": false
+                "file": "Программа приемочного тестирования АИС ГИПРП.md",
+                "mode": "preview",
+                "source": true
               }
             }
           }
@@ -134,7 +134,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "home.md",
+                "file": "Программа приемочного тестирования АИС ГИПРП.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -151,7 +151,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "home.md",
+                "file": "Программа приемочного тестирования АИС ГИПРП.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -174,7 +174,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "home.md"
+                "file": "Программа приемочного тестирования АИС ГИПРП.md"
               }
             }
           },
@@ -187,7 +187,7 @@
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 3
       }
     ],
     "direction": "horizontal",
@@ -203,26 +203,26 @@
       "command-palette:Открыть палитру команд": false,
       "table-editor-obsidian:Advanced Tables Toolbar": false,
       "bpmn-plugin:New BPMN": false,
-      "templater-obsidian:Templater": false,
-      "obsidian-markdown-formatting-assistant-plugin:Open Markdown Formatting Assistant": false
+      "templater-obsidian:Templater": false
     }
   },
-  "active": "d26e09b871a182df",
+  "active": "2fa0b8a211077e8c",
   "lastOpenFiles": [
+    "Акт о внедрении.md",
+    "Акт о внедрении.html",
+    "home.md",
     "Техническое задание на разработку системы.md",
     "Протокол приемочного тестирования.md",
     "Программа приемочного тестирования АИС ГИПРП.md",
     "templates/Шапка ТУСУР.md",
     "templates/Утверждаю.md",
     "templates/Подпись под документом.md",
-    "Акт о внедрении.md",
     "~$т о внедрении.docx",
     "Акт о внедрении.docx",
     "templates/Right.md",
     "templates/Left.md",
     "templates/Center.md",
     "templates",
-    "home.md",
     "attachments/Pasted image 20240528160356.png",
     "attachments/Pasted image 20240528160158.png",
     "attachments/Pasted image 20240528155537.png",
@@ -245,7 +245,6 @@
     "Пользовательские инструкции/image/Инструкцияпреподавателя",
     "Пользовательские инструкции/image",
     "Пользовательские инструкции/attachments",
-    "Пользовательские инструкции",
-    "model_1.bpmn"
+    "Пользовательские инструкции"
   ]
 }
