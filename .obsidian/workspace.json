@@ -177,21 +177,14 @@
                 "file": "Программа приемочного тестирования АИС ГИПРП.md"
               }
             }
-          },
-          {
-            "id": "d26e09b871a182df",
-            "type": "leaf",
-            "state": {
-              "type": "side-panel-control-view",
-              "state": {}
-            }
           }
         ],
         "currentTab": 3
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -206,14 +199,14 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "2fa0b8a211077e8c",
+  "active": "4c3a9ca265cb4475",
   "lastOpenFiles": [
+    "Программа приемочного тестирования АИС ГИПРП.md",
     "Акт о внедрении.md",
     "Акт о внедрении.html",
     "home.md",
     "Техническое задание на разработку системы.md",
     "Протокол приемочного тестирования.md",
-    "Программа приемочного тестирования АИС ГИПРП.md",
     "templates/Шапка ТУСУР.md",
     "templates/Утверждаю.md",
     "templates/Подпись под документом.md",
