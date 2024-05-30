@@ -66,9 +66,21 @@
                 "source": true
               }
             }
+          },
+          {
+            "id": "35f695c32f2e712a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "templates/Утверждаю.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 4
+        "currentTab": 5
       }
     ],
     "direction": "vertical"
@@ -134,7 +146,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Программа приемочного тестирования АИС ГИПРП.md",
+                "file": "templates/Утверждаю.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -151,7 +163,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Программа приемочного тестирования АИС ГИПРП.md",
+                "file": "templates/Утверждаю.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -174,7 +186,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Программа приемочного тестирования АИС ГИПРП.md"
+                "file": "templates/Утверждаю.md"
               }
             }
           }
@@ -183,8 +195,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -194,19 +205,19 @@
       "daily-notes:Сегодняшняя заметка": false,
       "templates:Вставить шаблон": false,
       "command-palette:Открыть палитру команд": false,
-      "table-editor-obsidian:Advanced Tables Toolbar": false,
       "bpmn-plugin:New BPMN": false,
       "templater-obsidian:Templater": false
     }
   },
-  "active": "4c3a9ca265cb4475",
+  "active": "35f695c32f2e712a",
   "lastOpenFiles": [
     "Программа приемочного тестирования АИС ГИПРП.md",
+    "Без названия.md",
+    "Протокол приемочного тестирования.md",
     "Акт о внедрении.md",
     "Акт о внедрении.html",
     "home.md",
     "Техническое задание на разработку системы.md",
-    "Протокол приемочного тестирования.md",
     "templates/Шапка ТУСУР.md",
     "templates/Утверждаю.md",
     "templates/Подпись под документом.md",
