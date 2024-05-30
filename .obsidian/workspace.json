@@ -25,7 +25,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Протокол приемочного тестирования.md",
+                "file": "Акт о внедрении.md",
                 "mode": "source",
                 "source": false
               }
@@ -98,7 +98,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Протокол приемочного тестирования.md",
+                "file": "Акт о внедрении.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -115,7 +115,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Протокол приемочного тестирования.md",
+                "file": "Акт о внедрении.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -138,7 +138,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Протокол приемочного тестирования.md"
+                "file": "Акт о внедрении.md"
               }
             }
           }
@@ -165,8 +165,8 @@
   "active": "a467e4a136c7830b",
   "lastOpenFiles": [
     "Программа приемочного тестирования АИС ГИПРП.md",
-    "Акт приемочных испытаний.md",
     "Протокол приемочного тестирования.md",
+    "Акт о внедрении.md",
     "templates/Right.md",
     "templates/Left.md",
     "templates/Center.md",

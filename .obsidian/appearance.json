@@ -6,5 +6,6 @@
     "test_snippet",
     "text_align"
   ],
-  "interfaceFontFamily": "Times New Roman"
+  "interfaceFontFamily": "American Typewriter",
+  "textFontFamily": "Times New Roman"
 }
