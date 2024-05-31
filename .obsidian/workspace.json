@@ -73,7 +73,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "templates/Утверждаю.md",
+                "file": "Акт о внедрении.md",
                 "mode": "source",
                 "source": false
               }
@@ -146,7 +146,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "templates/Утверждаю.md",
+                "file": "Акт о внедрении.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -163,7 +163,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "templates/Утверждаю.md",
+                "file": "Акт о внедрении.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -186,7 +186,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "templates/Утверждаю.md"
+                "file": "Акт о внедрении.md"
               }
             }
           }
@@ -211,6 +211,9 @@
   },
   "active": "35f695c32f2e712a",
   "lastOpenFiles": [
+    "templates/Подпись под документом.md",
+    "templates/Шапка ТУСУР.md",
+    "templates/Утверждаю.md",
     "templates/attachments/Акт приемочных испытаний.pdf",
     "templates/attachments",
     "Программа приемочного тестирования АИС ГИПРП.md",
@@ -220,9 +223,6 @@
     "Акт о внедрении.html",
     "home.md",
     "Техническое задание на разработку системы.md",
-    "templates/Шапка ТУСУР.md",
-    "templates/Утверждаю.md",
-    "templates/Подпись под документом.md",
     "~$т о внедрении.docx",
     "Акт о внедрении.docx",
     "templates/Right.md",
@@ -249,7 +249,6 @@
     "Пользовательские инструкции/attachments/Pasted image 20240522175825.png",
     "Пользовательские инструкции/assets",
     "Пользовательские инструкции/image/Инструкцияпреподавателя",
-    "Пользовательские инструкции/image",
-    "Пользовательские инструкции/attachments"
+    "Пользовательские инструкции/image"
   ]
 }
