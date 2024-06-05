@@ -73,7 +73,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Акт о внедрении.md",
+                "file": "Акт о внедрении 1.md",
                 "mode": "source",
                 "source": false
               }
@@ -146,7 +146,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Акт о внедрении.md",
+                "file": "Акт о внедрении 1.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -163,7 +163,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Акт о внедрении.md",
+                "file": "Акт о внедрении 1.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -186,7 +186,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Акт о внедрении.md"
+                "file": "Акт о внедрении 1.md"
               }
             }
           }
@@ -211,6 +211,8 @@
   },
   "active": "35f695c32f2e712a",
   "lastOpenFiles": [
+    "Акт о внедрении.md",
+    "Акт о внедрении 1.md",
     "templates/Подпись под документом.md",
     "templates/Шапка ТУСУР.md",
     "templates/Утверждаю.md",
@@ -219,7 +221,6 @@
     "Программа приемочного тестирования АИС ГИПРП.md",
     "Без названия.md",
     "Протокол приемочного тестирования.md",
-    "Акт о внедрении.md",
     "Акт о внедрении.html",
     "home.md",
     "Техническое задание на разработку системы.md",
